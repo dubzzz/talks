@@ -102,6 +102,10 @@ Reveal.initialize({
     // The display mode that will be used to show slides
     display: 'block',
 
+    // Add timer coming from project: https://github.com/tkrkt/reveal.js-elapsed-time-bar
+    allottedTime: 30 * 60 * 1000,
+    keyboard: { 82 /*r*/: () => { ElapsedTimeBar.reset(); } },
+
     // Optional modules
     dependencies: [
         // https://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/classList.js
@@ -114,5 +118,6 @@ Reveal.initialize({
         { src: './highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
         // https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/zoom-js/zoom.js
         { src: './zoom.js', async: true },
+        { src: 'elapsed-time-bar.js' },
     ]
 });
