@@ -10,6 +10,9 @@
     <!-- https://cdn.jsdelivr.net/reveal.js/3.0.0/lib/css/zenburn.css -->
     <link rel="stylesheet" href="./zenburn.css" id="highlight-css">
     <style>
+.reveal .slide-number {
+	font-size: 0.5em;
+}
 .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
     font-weight: normal;
     text-transform: none; 
@@ -170,12 +173,12 @@ li.active, .left-menu > li:last-child, .left-menu > li:last-child > ul > li:last
                     </div>
                 </section>
                 <section style="display:flex;flex-direction:row;justify-content:space-evenly;">
-                    <div style="display:inline-block;margin:10px;">
+                    <div style="display:inline-block;margin:48px;">
                         <img src="./images/theory.jpg" style="border-radius:50%;height:128px;" />
                         <h2>Theory</h2>
                         <p>Face the unpredictable</p>
                     </div>
-                    <div style="display:inline-block;margin:10px;">
+                    <div style="display:inline-block;margin:48px;">
                         <img src="./images/practice.png" style="border-radius:50%;height:128px;" />
                         <h2>Practice</h2>
                         <p>Let's break some stuff</p>
@@ -391,17 +394,17 @@ li.active, .left-menu > li:last-child, .left-menu > li:last-child > ul > li:last
                     </div>
                 </section>
                 <section style="display:flex;flex-direction:row;justify-content:space-evenly;">
-                    <div style="display:inline-block;margin:10px;">
+                    <div style="display:inline-block;margin:24px;">
                         <img src="./images/easy.jpg" style="border-radius:50%;height:128px;" />
                         <h3>Easy inputs</h3>
                         <p class="vsmallnote">trekhleb/javascript-algorithms</p>
                     </div>
-                    <div style="display:inline-block;margin:10px;">
+                    <div style="display:inline-block;margin:24px;">
                         <img src="./images/medium.jpg" style="border-radius:50%;height:128px;" />
                         <h3>Complex objects</h3>
                         <p class="vsmallnote">sindresorhus/query-string</p>
                     </div>
-                    <div style="display:inline-block;margin:10px;">
+                    <div style="display:inline-block;margin:24px;">
                         <img src="./images/hard.jpg" style="border-radius:50%;height:128px;" />
                         <h3>UI test</h3>
                         <p class="vsmallnote">2048 game</p>
@@ -588,6 +591,5 @@ test("should send back a valid start", () =>
     <script src="./reveal.min.js"></script>
     <!-- Custom reveal configuration -->
     <script src="./reveal-config.js"></script>
-    <script src="./mouse-listener.js"></script>
   </body>
 </html>
