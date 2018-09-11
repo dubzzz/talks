@@ -79,13 +79,43 @@
 					</header>
 				</div>
 			</section>
-			
-			<!-- Getting started -->
-			
 			<section class="wrapper style1">
 				<div class="container">
-					<div class="row gtr-200">
-						Coco
+					<div>
+						<p class="guide-step">Add <em>fast-check</em> to your project:</p>
+						<pre><code class="sh">npm install --save-dev fast-check</code></pre>
+						<p class="guide-step">Example of integration with <em>Jest</em> or <em>Mocha</em>:</p>
+						<pre><code class="js">import * as fc from 'fast-check';
+
+const sort = arr => arr.slice(0).sort((a,b) => a-b);
+
+test('should order elements from the smallest to the highest', () => fc.assert(
+	fc.property(
+		fc.array(fc.integer()),
+		arr => {
+			const sortedArr = sort(arr);
+			for (let idx = 1 ; idx &lt; sortedArr.length ; ++idx)
+				if (sortedArr[idx - 1] &lt;= sortedArr[idx])
+					return false;
+			return true;
+		}
+	)
+));</code></pre>
+						<p class="guide-step">In a nutshell:</p>
+						<ul>
+							<li><em>fc.assert</em> runs the property</li>
+							<li><em>fc.property</em> defines the property</li>
+							<li><em>fc.array(fc.integer())</em> defines the input that the framework has to generate (can have more than one)</li>
+							<li><em>arr => { ... }</em> is a function taking the generated value and checking that given this input the output has the right shape</li>
+						</ul>
+						<p class="guide-step">
+							In case of failure, the framework has to provide the user with the minimal failing case.
+							In the case above it would be the smallest array with the values closest to zero.
+							In order to do so, it will re-run the above check function on smallest entries up to a final minimal counterexample.
+						</p>
+						<p class="guide-step">
+							<a href="https://github.com/dubzzz/fast-check/blob/master/documentation/HandsOnPropertyBased.md"><button>Full tutorial</button></a>
+						</p>
 					</div>
 				</div>
 			</section>
