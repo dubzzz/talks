@@ -168,6 +168,84 @@ test('should order elements from the smallest to the highest', () => fc.assert(
 					</div>
 				</div>
 			</section>
+			<section class="wrapper style2">
+				<div class="goto-tag" id="reproducible"></div>
+				<div class="container">
+					<header class="major">
+						<h2>Reproducible</h2>
+						<p>Replay the same test after a fix</p>
+					</header>
+				</div>
+			</section>
+			<section class="wrapper style1">
+				<div class="container">
+					<div>
+						<p class="guide-step">Whenever <em>fast-check</em> detects a problem, it will print an error message containing the settings required to replay the very same test</p>
+						<pre><code class="ts">Error: Property failed after 1 tests (seed: 1527423434693, path: "0:0:0"): ["","",""]
+Shrunk 2 time(s)
+Got error: Property failed by returning false</code></pre>
+						<p class="guide-step">
+							Given this message the test can easily be replayed by using:
+						</p>
+						<pre><code class="ts">test('the failing test', () =&gt; fc.assert(
+	fc.property(
+		// some arbitraries... 
+		// check method
+	), { // seed and path taken from the error message
+		seed: 1527423434693,
+		path: "0:0:0"
+	}
+));</code></pre>
+						<p class="guide-step">
+							Setting both <em>seed</em> and <em>path</em> will replay the test starting with the latest failing case.
+							If you want to replay the whole test suite, you should only set the <em>seed</em>
+						</p>
+						<p class="guide-step">
+							<a href="https://github.com/dubzzz/fast-check/blob/master/documentation/Tips.md"><button>More tips</button></a>
+						</p>
+					</div>
+				</div>
+			</section>
+			<section class="wrapper style2">
+				<div class="goto-tag" id="shrink"></div>
+				<div class="container">
+					<header class="major">
+						<h2>Shrink</h2>
+						<p>Get a better understanding of the errors</p>
+					</header>
+				</div>
+			</section>
+			<section class="wrapper style1">
+				<div class="container">
+					<div>
+						<p class="guide-step">
+							Whenever a test fails, <em>fast-check</em> will try to ease your investigations by providing you with the minimal failing case.
+							Sometimes it is not enough and having all the failures might help.
+							For this precise need, <em>fc.assert</em> accepts an optional configuration: <em>verbose: true</em>. 
+						</p>
+						<pre><code class="ts">test('the failing test', () =&gt; fc.assert(
+	fc.property(
+		// some arbitraries... 
+		// check method
+	), { verbose: true }
+));</code></pre>
+						<p class="guide-step">
+							With this setting enabled the error message will look like:
+						</p>
+						<pre><code class="ts">Error: Property failed after 1 tests (seed: 1527423434693, path: 0:0:0): ["","",""]
+Shrunk 2 time(s)
+Got error: Property failed by returning false
+
+Encountered failures were:
+- ["","JeXPqIQ6",">q"]
+- ["","",">q"]
+- ["","",""]</code></pre>
+						<p class="guide-step">
+							<a href="https://github.com/dubzzz/fast-check/blob/master/documentation/Tips.md"><button>More tips</button></a>
+						</p>
+					</div>
+				</div>
+			</section>
 			<div id="footer">
 				<ul class="icons">
 					<li><a href="https://twitter.com/ndubien/" class="icon fab fa-twitter"><span class="label">Twitter</span></a></li>
