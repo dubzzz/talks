@@ -2809,7 +2809,7 @@ h1 {
 		background-image: linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3)), url("images/bg01.png");
 		height: 44px;
 		line-height: 44px;
-		box-shadow: 0 4px 0 0 #37c0fb;
+		box-shadow: 0 4px 0 0 #282ea9;
 	}
 	#titleBar .title {
 		display: block;
@@ -2825,32 +2825,19 @@ h1 {
 	}
 	#titleBar .toggle {
 		text-decoration: none;
-		border: 0;
-		height: 60px;
-		left: 0;
+		display: inline-block;
 		position: absolute;
-		top: 0;
-		width: 80px;
-		z-index: 2;
-	}
-	#titleBar .toggle:before {
-		-moz-osx-font-smoothing: grayscale;
-		-webkit-font-smoothing: antialiased;
-		font-family: FontAwesome;
-		font-style: normal;
-		font-weight: normal;
-		text-transform: none !important;
-	}
-	#titleBar .toggle:before {
-		content: '\f0c9';
-		display: block;
-		height: 44px;
 		text-align: center;
+		border: 0;
+		left: 0;
+		top: 0;
+		height: 44px;
 		width: 44px;
+		z-index: 2;
 		color: #fff;
 		opacity: 0.5;
 	}
-	#titleBar .toggle:active:before {
+	#titleBar .toggle:active {
 		opacity: 0.75;
 	}
 	#navPanel {
@@ -3057,4 +3044,32 @@ h1 {
 .guide-step {
 	text-align: center;
 	margin: 0.5em 0 0.5em 0;
+}
+
+.wrapper {
+	position: relative;
+}
+
+.goto-tag {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	opacity: 0;
+	top: -1.75em;
+	left: 0;
+}
+
+@media screen and (min-width: 840px) {
+	.style1 + .style1 {
+		margin-top: 0px;
+		padding-top: 0px;
+	}
+	.style1 + .style1 .row {
+		margin-top: 0px;
+		padding-top: 0px;
+	}
+	.style1 + .style1 .row section {
+		margin-top: 0px;
+		padding-top: 0px;
+	}
 }
