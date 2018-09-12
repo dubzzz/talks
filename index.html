@@ -23,6 +23,9 @@
 					<ul>
 						<li><a href="#header">Introduction</a></li>
 						<li><a href="#getting-started">Getting started</a></li>
+						<li><a href="#coverage">Coverage</a></li>
+						<li><a href="#reproducible">Reproducible</a></li>
+						<li><a href="#shrink">Shrink</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -51,7 +54,7 @@
 						<section class="col-4 col-12-narrower">
 							<div class="box highlight">
 								<i class="icon major fas fa-arrows-alt-h"></i>
-								<h3>Coverage <a href="">more &gt;</a></h3>
+								<h3>Coverage <a href="#coverage">more &gt;</a></h3>
 								<p>
 									By nature, property based testing puts less constraints on the inputs.
 									As a consequence, the scope of covered inputs is much higher and can lead to unexplored code paths
@@ -61,7 +64,7 @@
 						<section class="col-4 col-12-narrower">
 							<div class="box highlight">
 								<i class="icon major fas fa-sync"></i>
-								<h3>Reproducible <a href="">more &gt;</a></h3>
+								<h3>Reproducible <a href="#reproducible">more &gt;</a></h3>
 								<p>
 									Runs are seeded and fully reproducible
 								</p>
@@ -70,7 +73,7 @@
 						<section class="col-4 col-12-narrower">
 							<div class="box highlight">
 								<i class="icon major fas fa-map-marker-alt"></i>
-								<h3>Shrink <a href="">more &gt;</a></h3>
+								<h3>Shrink <a href="#shrink">more &gt;</a></h3>
 								<p>
 									In case of failure, the framework is responsible to come with a minimal failing case easy to troubleshoot
 								</p>
@@ -119,6 +122,48 @@ test('should order elements from the smallest to the highest', () => fc.assert(
 						</ul>
 						<p class="guide-step">
 							<a href="https://github.com/dubzzz/fast-check/blob/master/documentation/HandsOnPropertyBased.md"><button>Full tutorial</button></a>
+						</p>
+					</div>
+				</div>
+			</section>
+			<section class="wrapper style2">
+				<div class="goto-tag" id="coverage"></div>
+				<div class="container">
+					<header class="major">
+						<h2>Coverage</h2>
+						<p>Discover uncovered code paths</p>
+					</header>
+				</div>
+			</section>
+			<section class="wrapper style1">
+				<div class="container">
+					<div>
+						<p class="guide-step">Let's consider a simple <em>serialize</em> function, offering its users the ability to set custom settings to tweak the resulting string</p>
+						<pre><code class="ts">function serialize&lt;T&gt;(instance: T, params: Parameters): string { /* code */ }</code></pre>
+						<p class="guide-step">
+							In the scenario above, an exhaustive test would have to run throughout all the possible combinations of <em>params</em> with many possible <em>instance</em>.
+							An alternative to such example-based tests would be to rely on properties.
+							It would offer an exhautive coverage of the possible inputs.
+							Given we also have a <em>deserialize</em> function we would simply write:
+						</p>
+						<pre><code class="ts">test('should be able to read itself', () =&gt; fc.assert(
+	fc.property(
+		fc.jsonObject(),
+		fc.record({
+			crlf: fc.boolean(),
+			indent: fc.boolean(),
+			sortKeys: fc.boolean()
+		}, { withDeletedKeys: true }),
+		(instance, params) => {
+			expect(deserialize(serialize(instance, params))).toEqual(instance);
+		}
+	)
+));</code></pre>
+						<p class="guide-step">
+							Such property was able to detect bugs in both <em>js-yaml</em> and <em>query-string</em>
+						</p>
+						<p class="guide-step">
+							<a href="https://github.com/dubzzz/fast-check/blob/master/documentation/Arbitraries.md"><button>Discover other built-in types</button></a>
 						</p>
 					</div>
 				</div>
