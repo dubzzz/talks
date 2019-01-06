@@ -109,15 +109,15 @@ Reveal.initialize({
     // Optional modules
     dependencies: [
         // https://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/classList.js
-        { src: './classList.js', condition: function() { return !document.body.classList; } },
+        { src: '../shared/classList.js', condition: function() { return !document.body.classList; } },
         // https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/marked.js
-        { src: './marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        { src: '../shared/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
         // https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/markdown.js
-        { src: './markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        { src: '../shared/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
         // https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/highlight/highlight.js
-        { src: './highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+        { src: '../shared/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
         // https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/zoom-js/zoom.js
-        { src: './zoom.js', async: true },
-        { src: 'elapsed-time-bar.js' },
+        { src: '../shared/zoom.js', async: true },
+        { src: '../shared/elapsed-time-bar.js' },
     ]
 });
