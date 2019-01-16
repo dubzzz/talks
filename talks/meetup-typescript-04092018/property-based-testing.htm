@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Property based testing: From theory to practice</title>
+    <meta charset="utf-8">
+    <!-- https://cdn.jsdelivr.net/reveal.js/3.0.0/css/reveal.min.css -->
+    <link rel="stylesheet" href="../shared/reveal.min.css">
+    <!-- https://cdn.jsdelivr.net/reveal.js/3.0.0/css/theme/black.css -->
+    <link rel="stylesheet" href="../shared/black.css">
+    <!-- https://cdn.jsdelivr.net/reveal.js/3.0.0/lib/css/zenburn.css -->
+    <link rel="stylesheet" href="../shared/zenburn.css" id="highlight-css">
+    <style>
+.reveal .slide-number {
+	font-size: 0.5em;
+}
+.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+    font-weight: normal;
+    text-transform: none; 
+}
+
+.reveal h1 + .more, .reveal h2 + .more, .reveal h3 + .more, .reveal h4 + .more, .reveal h5 + .more, .reveal h6 + .more {
+    margin-top: -20px;
+}
+
+.reveal .more {
+    color: #777872;
+}
+
+.reveal a, h3 {
+    color: rgb(249, 38, 114) !important;
+    text-decoration: none;
+}
+.reveal a:hover, h2 {
+    color: rgb(255, 201, 14) !important;
+    text-decoration: none;
+}
+
+.reveal blockquote, .reveal p.quote {
+    margin: 0;
+    text-align: justify;
+    font-style: italic;
+    margin-right: 1em;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-left: 1em;
+    font-size: 0.9em;
+    border-left: 1px navajowhite solid;
+}
+.reveal blockquote::before, .reveal p.quote::before {
+    content: '\201C';
+    font-size: 2em;
+    float: left;
+    color: white;
+    margin-left: -1em;
+}
+
+.reveal p.quote-right {
+    margin: 0;
+    text-align: right;
+    font-style: italic;
+    margin-left: 1em;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-right: 1em;
+    font-size: 0.9em;
+    border-right: 1px navajowhite solid;
+}
+.reveal p.quote-right::after {
+    content: '\201C';
+    font-size: 2em;
+    float: right;
+    color: white;
+    margin-right: -1em;
+}
+
+em {
+    color: rgb(255, 201, 14);
+    font-style: normal;
+    font-weight: normal;
+}
+
+li {
+    color: #d3d3d3;
+}
+
+li.active, .left-menu > li:last-child, .left-menu > li:last-child > ul > li:last-child {
+    color: rgb(255, 201, 14);
+}
+
+.reveal ol {
+    counter-reset: step-counter;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.reveal ol li {
+    counter-increment: step-counter;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.reveal ol li:before {
+    content: counter(step-counter, upper-roman);
+    color: rgb(255, 201, 14);
+    float: left;
+}
+
+.reveal .vsmallnote {
+    font-style: italic;
+    font-size: 0.5em;
+    color: #777872;
+}
+
+.flex {
+    display: flex;
+    flex-flow: row;
+}
+
+.no-margin {
+    margin: none !important;
+}
+
+.left-column, .right-column {
+    flex: 50%;
+    text-align: left;
+}
+
+.left-padded {
+    padding-left: 1em !important;
+}
+
+        </style>
+  </head>
+  <body>
+    <div class="reveal">
+        <div class="slides">
+            <section>
+                <section>
+                    <h1>Property based testing<h1>
+                    <h2>From theory to practice</h2>
+                    <div style="margin-top:48px;"></div>
+                    <div><img src="./images/qr.png" style="border:none;background:none;margin:0px;"></div>
+                </section>
+                <section>
+                    <div>
+                        <img src="./images/me.jpg" style="border-radius:50%;height:128px;" />
+                    </div>
+                    <div>
+                        <h2>Nicolas DUBIEN</h2>
+                        <div style="margin-top:48px;"></div>
+                        <div style="border-bottom-style: dashed;border-bottom-color: #ffffff;border-bottom-width: 1px;">
+                            <div style="float:left;">2014 - 2017</div>
+                            <div style="float:right;">C++ at Murex</div>
+                            &nbsp;
+                        </div>
+                        <div>
+                            <div style="float:left;">2017 -     </div>
+                            <div style="float:right;">TypeScript and C# at Criteo</div>
+                            &nbsp;
+                        </div>
+                        <div style="margin-top:48px;"></div>
+                        <a style="vertical-align:middle;display:block;" href="https://github.com/dubzzz/">
+                            <img src="./images/github-white.png" style="height:32px;border:none;background:none;margin:0px;">
+                            <span style="color:#ffffff">dubzzz</span>
+                        </a>
+                        <a style="vertical-align:middle;display:block;" href="https://twitter.com/ndubien/">
+                            <img src="./images/twitter.png" style="height:32px;border:none;background:none;margin:0px;">
+                            <span style="color:#1da1f2">ndubien</span>
+                        </a>
+                    </div>
+                </section>
+                <section style="display:flex;flex-direction:row;justify-content:space-evenly;">
+                    <div style="display:inline-block;margin:48px;">
+                        <img src="./images/theory.jpg" style="border-radius:50%;height:128px;" />
+                        <h2>Theory</h2>
+                        <p>Face the unpredictable</p>
+                    </div>
+                    <div style="display:inline-block;margin:48px;">
+                        <img src="./images/practice.png" style="border-radius:50%;height:128px;" />
+                        <h2>Practice</h2>
+                        <p>Let's break some stuff</p>
+                    </div>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <img src="./images/theory.jpg" style="border-radius:50%;height:128px;" />
+                    <h2>Theory</h2>
+                    <p>Face the unpredictable</p>
+                </section>
+                <section>
+                    <h3>Coding safely</h3>
+                    <div style="display:flex;flex-direction:row;justify-content:space-between;">
+                        <div class="fragment">
+                            <p>Static code analysis</p>
+                            <p class="vsmallnote">interpreter, compiler, linter…</p>
+                        </div>
+                        <div class="fragment">
+                            <p>Example based testing</p>
+                            <p class="vsmallnote">automated tests, qa tests…</p>
+                        </div>
+                    </div>
+                    <div style="display:flex;flex-direction:row;justify-content:space-between;">
+                        <div class="fragment">
+                            <p>Proved code</p>
+                            <p class="vsmallnote">&nbsp;</p>
+                        </div>
+                        <div class="fragment">
+                            <p>Crash under random</p>
+                            <p class="vsmallnote">fuzzing, monkey test…</p>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <h3>Property based testing in few words</h3>
+                    <div style="margin-top:48px;"></div>
+                    <p>We want to test properties instead of isolated cases.</p>
+                    <p class="quote fragment">
+                        for all <em>(x, y, ...)</em>
+                        <br/><span class="fragment" style="padding-left:48px;color:#777872;">generate random inputs based on specified generators</span>
+                        <br/>such that <em>precondition(x, y, ...)</em> holds
+                        <br/><span class="fragment" style="padding-left:48px;color:#777872;">check pre-conditions - <em>failure?</em> go back to previous</span>
+                        <br/><em>property(x, y, ...)</em> is true
+                        <br/><span class="fragment" style="padding-left:48px;color:#777872;">run the test - <em>failure?</em> shrink</span>
+                    </p>
+                    <div style="margin-top:48px;"></div>
+                    <p><span class="fragment">&#128257; Run it <em>100</em> times &#128257;</span></p>
+                </section>
+                <section>
+                    <h3>Example</h3>
+                    <p>Let’s suppose we want to test <em>isSubstring</em></p>
+                    <p class="quote fragment">
+                        for all <em>(x, y, ...)</em>
+                        <br/>such that <em>precondition(x, y, ...)</em> holds
+                        <br/><em>property(x, y, ...)</em> is true
+                    </p>
+                    <p class="quote-right fragment">
+                        for all <em>a, b, c strings</em>
+                        <br/><em>b</em> is a substring of <em>a + b + c</em>
+                    </p>
+                    <div style="display:flex;flex-direction:row;justify-content:center;" class="fragment">
+                        <div style="padding:24px;">
+                            <p style="font-size:1.5em"><em>aze</em></p>
+                            <p style="font-size:0.7em">a</p>
+                        </div>
+                        <div style="padding:24px;">
+                            <p style="font-size:1.5em">+</p>
+                            <p style="font-size:0.7em">&nbsp;</p>
+                        </div>
+                        <div style="padding:24px;">
+                            <p style="font-size:1.5em"><em>rt</em></p>
+                            <p style="font-size:0.7em">b</p>
+                        </div>
+                        <div style="padding:24px;">
+                            <p style="font-size:1.5em">+</p>
+                            <p style="font-size:0.7em">&nbsp;</p>
+                        </div>
+                        <div style="padding:24px;">
+                            <p style="font-size:1.5em"><em>y</em></p>
+                            <p style="font-size:0.7em">c</p>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <h3>Shrink</h3>
+                    <p>
+                        Randomly generated data can be very complex
+                        <br/>Shrink produce smaller entries derived from complex ones
+                    </p>
+                    <p class="quote fragment">
+                        for all <em>a, b, c strings</em>
+                        <br/><em>b</em> is a substring of <em>a + b + c</em>
+                    </p>
+                    <div style="display:flex;flex-direction:row;justify-content:space-evenly;" class="fragment">
+                        <div>
+                            <p style="font-size:1.5em"><em>e漢}@🐱z&rsquo;</em></p>
+                            <p style="font-size:0.7em">a</p>
+                        </div>
+                        <div>
+                            <p style="font-size:1.5em">+</p>
+                            <p style="font-size:0.7em">&nbsp;</p>
+                        </div>
+                        <div>
+                            <p style="font-size:1.5em"><em>eiiz</em></p>
+                            <p style="font-size:0.7em">b</p>
+                        </div>
+                        <div>
+                            <p style="font-size:1.5em">+</p>
+                            <p style="font-size:0.7em">&nbsp;</p>
+                        </div>
+                        <div>
+                            <p style="font-size:1.5em"><em>漢null&curren;</em></p>
+                            <p style="font-size:0.7em">c</p>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <h3>Shrinking into action</h3>
+                    <p class="fragment">
+                        {a: &quot;<em>e漢}@🐱z&rsquo;</em>&quot;, b: &quot;<em>eiiz</em>&quot;, c: &quot;<em>漢null&curren;</em>&quot;}
+                        <span style="color:red;">&#10007;</span>
+                    </p>
+                    <p class="fragment">
+                        {a: &quot;<em></em>&quot;, b: &quot;<em>eiiz</em>&quot;, c: &quot;<em>漢null&curren;</em>&quot;}
+                        <span style="color:red;">&#10007;</span>
+                    </p>
+                    <p class="fragment">
+                        {a: &quot;<em></em>&quot;, b: &quot;<em></em>&quot;, c: &quot;<em>漢null&curren;</em>&quot;}
+                        <span style="color:green;">&#10003;</span>
+                    </p>
+                    <p class="fragment">
+                        {a: &quot;<em></em>&quot;, b: &quot;<em>ei</em>&quot;, c: &quot;<em>漢null&curren;</em>&quot;}
+                        <span style="color:green;">&#10003;</span>
+                    </p>
+                    <p class="fragment">
+                        {a: &quot;<em></em>&quot;, b: &quot;<em>eii</em>&quot;, c: &quot;<em>漢null&curren;</em>&quot;}
+                        <span style="color:red;">&#10007;</span>
+                    </p>
+                    <p class="fragment">
+                        {a: &quot;<em></em>&quot;, b: &quot;<em>ii</em>&quot;, c: &quot;<em>漢null&curren;</em>&quot;}
+                        <span style="color:red;">&#10007;</span>
+                    </p>
+                    <p class="fragment">
+                        {a: &quot;<em></em>&quot;, b: &quot;<em>i</em>&quot;, c: &quot;<em>漢null&curren;</em>&quot;}
+                        <span style="color:green;">&#10003;</span>
+                    </p>
+                    <p class="fragment">
+                        {a: &quot;<em></em>&quot;, b: &quot;<em>ii</em>&quot;, c: &quot;<em></em>&quot;}
+                        <span style="color:red;">&#10007;</span>
+                    </p>
+                </section>
+                <section>
+                    <h3>Benefits</h3>
+                    <p>Reproductible</p>
+                    <p>Straight to corner cases</p>
+                    <p>Use the scope of all possible inputs</p>
+                    <p>Shrink the input in case of failure</p>
+                </section>
+                <section>
+                    <h3>Don't...</h3>
+                    <p>Expect to test the exact result</p>
+                    <p>Rewrite your implementation in the test</p>
+                    <p>Replace your examples</p>
+                    <p>Use too complex pre-conditions</p>
+                </section>
+                <section>
+                    <h3>References</h3>
+                    <div style="display:flex;flex-direction:row;justify-content:center;">
+                        <div style="color:#000000;background-color:#ffffff;margin:5px;">
+                            js-yaml
+                            <br/><img src="./images/jsYamlStats.png" style="border:none;background:none;margin:0px;">
+                            <br/><img src="./images/jsYamlCounterexample.png" style="border:none;background:none;margin:0px;">
+                        </div>
+                        <div style="color:#000000;background-color:#ffffff;margin:5px;">
+                            query-string
+                            <br/><img src="./images/queryStringStats.png" style="border:none;background:none;margin:0px;">
+                            <br/><img src="./images/queryStringCounterexample.png" style="border:none;background:none;margin:0px;">
+                        </div>
+                    </div>
+                    <div style="display:flex;flex-direction:row;justify-content:center;">
+                        <div style="color:#000000;background-color:#ffffff;margin:5px;">
+                            left-pad
+                            <br/><img src="./images/leftPadStats.png" style="border:none;background:none;margin:0px;">
+                            <br/><img src="./images/leftPadCounterexample.png" style="border:none;background:none;margin:0px;">
+                        </div>
+                    </div>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <img src="./images/practice.png" style="border-radius:50%;height:128px;" />
+                    <h2>Practice</h2>
+                    <p>Let's break some stuff</p>
+                </section>
+                <section>
+                    <div>
+                        <img src="./images/logo-fastCheck.png" style="border:none;background-color:#ffffff;margin:0px;">
+                    </div>
+                    <div style="margin-top:48px;"></div>
+                    <a style="vertical-align:middle;display:block;" href="https://github.com/dubzzz/fast-check/">
+                        <img src="./images/github-white.png" style="height:32px;border:none;background:none;margin:0px;">
+                        <span style="color:#ffffff;">dubzzz/fast-check</span>
+                    </a>
+                    <a style="vertical-align:middle;display:block;" href="https://www.npmjs.com/package/fast-check">
+                        <img src="./images/npm.png" style="height:32px;border:none;background:none;margin:0px;">
+                        <span style="color:#cb3837;">fast-check</span>
+                    </a>
+                </section>
+                <section style="display:flex;flex-direction:row;justify-content:space-evenly;">
+                    <div style="display:inline-block;margin:24px;">
+                        <img src="./images/easy.jpg" style="border-radius:50%;height:128px;" />
+                        <h3>Easy inputs</h3>
+                        <p class="vsmallnote">trekhleb/javascript-algorithms</p>
+                    </div>
+                    <div style="display:inline-block;margin:24px;">
+                        <img src="./images/medium.jpg" style="border-radius:50%;height:128px;" />
+                        <h3>Complex objects</h3>
+                        <p class="vsmallnote">sindresorhus/query-string</p>
+                    </div>
+                    <div style="display:inline-block;margin:24px;">
+                        <img src="./images/hard.jpg" style="border-radius:50%;height:128px;" />
+                        <h3>UI test</h3>
+                        <p class="vsmallnote">2048 game</p>
+                    </div>
+                </section>
+                <section>
+                    <div>
+                        <img src="./images/easy.jpg" style="border-radius:50%;height:128px;" />
+                        <h3>Easy inputs</h3>
+                        <p class="vsmallnote">trekhleb/javascript-algorithms</p>
+                    </div>
+                </section>
+                <section>
+                    <h4><a title="fast-check - hands on property based testing" href="https://github.com/dubzzz/fast-check/blob/master/documentation/HandsOnPropertyBased.md">Initial project setup</a></h4>
+                    <p><img src="./images/see-tutorial.png" style="border:none;background:none;margin:0px;"></p>
+                    <p><img src="./images/hands-on.png" style="border:none;background:none;margin:0px;"></p>
+                </section>
+                <section>
+                    <h4><a title="javascript-algorithms repository" href="https://github.com/trekhleb/javascript-algorithms/">Project under tests</a></h4>
+                    <p><img src="./images/javascript-algorithms.png" style="border:none;background:none;margin:0px;"></p>
+                    <p><img src="./images/algorithms-by-topic.png" style="border:none;background:none;margin:0px;"></p>
+                </section>
+                <section>
+                    <p>Algorithm:</p>
+                    <p>
+                        <em>isSubstring</em> based on
+                        <a title="Knuth-Morris-Pratt implementation" href="https://github.com/trekhleb/javascript-algorithms/blob/76461f29eee8cc93a5fa7b454432844966fbf280/src/algorithms/string/knuth-morris-pratt/knuthMorrisPratt.js">Knuth-Morris-Pratt</a> /
+                        <a title="Rabin-Karp implementation" href="https://github.com/trekhleb/javascript-algorithms/blob/f32172e3db50a73b2c4b09c4363d1fdc40ce2ef6/src/algorithms/string/rabin-karp/rabinKarp.js">Rabin-Karp</a>
+                        (<a href="Rabin-Karp proposed implementation" href="https://github.com/trekhleb/javascript-algorithms/pull/110">2</a>)
+                    </p>
+                    <div style="margin-top:48px;"></div>
+                    <p class="quote-right fragment">
+                        for all <em>a, b, c strings</em>
+                        <br/><em>b</em> is a substring of <em>a + b + c</em>
+                    </p>
+                </section>
+                <section>
+                    <pre><code class="hljs javascript" data-trim>
+test("should detect the substring", () =>
+  fc.assert(
+    fc.property(
+      fc.fullUnicodeString(),
+      fc.fullUnicodeString(),
+      fc.fullUnicodeString(),
+      (a, b, c) => knuth(a + b + c, b) !== -1
+    )
+  ));
+                    </code></pre>
+                </section>
+                <section>
+                    <p>Only covered the truthy state</p>
+                    <p>Both algorithms return the position of the match as an output</p>
+                </section>
+                <section>
+                    <div style="display:flex;flex-direction:row;justify-content:space-evenly;">
+                        <div>
+                            <p style="font-size:1.5em"><em>in<span class="fragment highlight-red visible">vite</span>r</em></p>
+                            <p style="font-size:0.7em">a</p>
+                        </div>
+                        <div>
+                            <p style="font-size:1.5em">+</p>
+                            <p style="font-size:0.7em">&nbsp;</p>
+                        </div>
+                        <div>
+                            <p style="font-size:1.5em"><em>vite</em></p>
+                            <p style="font-size:0.7em">b</p>
+                        </div>
+                    </div>
+                    <div class="fragment">
+                        <em>knuth</em>(a, b) == <em>2</em>
+                    </div>
+                    <div class="fragment">
+                        a.substring(2, 2 + b.length) == b
+                    </div>
+                    <div style="margin-top:48px;"></div>
+                    <p class="quote-right fragment">
+                        for all <em>a, b strings and idx = a.indexOf(b)</em>
+                        <br/>is either <em>-1</em> or <em>position of the match</em>
+                    </p>
+                </section>
+                <section>
+                    <pre><code class="hljs javascript" data-trim>
+test("should send back a valid start", () =>
+  fc.assert(
+    fc.property(fc.fullUnicodeString(), fc.fullUnicodeString(),
+      (a, b) => {
+        const idx = knuth(a, b);
+        return idx === -1 || a.substr(idx, b.length) === b;
+      }
+    )
+  ));
+                    </code></pre>
+                </section>
+                <section>
+                    <div>
+                        <img src="./images/medium.jpg" style="border-radius:50%;height:128px;" />
+                        <h3>Complex objects</h3>
+                        <p class="vsmallnote">sindresorhus/query-string</p>
+                    </div>
+                </section>
+                <section>
+                    <p>Algorithm:</p>
+                    <p><em>Serialization and Deserialization of query parameters</em></p>
+                    <div style="margin-top:48px;"></div>
+                    <p>Source: query-string@6.0.0</p>
+                    <p>More: <a title="query-string" href="https://github.com/sindresorhus/query-string">https://github.com/sindresorhus/query-string</a></p>
+                </section>
+                <section>
+                    <p>.stringify(<em>object</em>, [<em>options</em>])</p>
+                    <p>.parse(<em>string</em>, [<em>options</em>])</p>
+                    <div style="margin-top:48px;"></div>
+                    <p class="quote-right fragment">
+                        for all <em>obj query string object, opts options</em>
+                        <br/><em>parse(stringify(obj, opts), opts)</em> is <em>obj</em>
+                    </p>
+                </section>
+                <section>
+                    <div>
+                        <img src="./images/hard.jpg" style="border-radius:50%;height:128px;" />
+                        <h3>UI test</h3>
+                        <p class="vsmallnote">2048 game</p>
+                    </div>
+                </section>
+                <section>
+                    <p>We are already able to:</p>
+                    <ul>
+                        <li class="fragment">produce random inputs: integers, arrays, ...</li>
+                        <li class="fragment">play our tests randomly</li>
+                        <li class="fragment">shrink to the minimal case</li>
+                    </ul>
+                </section>
+                <section>
+                    <p>We need to define commands:</p>
+                    <ul>
+                        <li class="fragment">check if it can be applied to current state</li>
+                        <li class="fragment">apply it</li>
+                    </ul>
+                    <p class="fragment">The framework can produce arrays of commands and shrink them in case of problem</p>
+                </section>
+                <section>
+                    <a title="2048 online game" href="https://dubzzz.github.io/scala-2048/">https://dubzzz.github.io/scala-2048/</a>
+                    <img style="width:50%;" src="./images/2048.png" />
+                </section>
+                <section>
+                    <p>Example: Redo</p>
+                    <ul>
+                        <li>Can only be executed if a move has just been canceled</li>
+                        <li>Should bring the user back to the state she/he was before canceling the move</li>
+                    </ul>
+                </section>
+                <section>
+                    <p>Example: Undo</p>
+                    <ul>
+                        <li>Can only be executed if there was at least one move played</li>
+                        <li>Should bring the user back to the state she/he was before the move</li>
+                    </ul>
+                </section>
+                <section>
+                	<iframe width="560" height="315" src="https://www.youtube.com/embed/TYzYteiZPxw?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <h2>Questions?</h2>
+                    <div style="margin-top:48px;"></div>
+                    <a style="vertical-align:middle;display:block;" href="https://github.com/dubzzz/fast-check">
+                        <img src="./images/github-white.png" style="height:32px;border:none;background:none;margin:0px;">
+                        <span style="color:#ffffff;">dubzzz/fast-check</span>
+                    </a>
+                    <a style="vertical-align:middle;display:block;" href="https://www.npmjs.com/package/fast-check">
+                        <img src="./images/npm.png" style="height:32px;border:none;background:none;margin:0px;">
+                        <span style="color:#cb3837;">fast-check</span>
+                    </a>
+                    <div style="margin-top:48px;"></div>
+                    <div><img src="./images/qr.png" style="border:none;background:none;margin:0px;"></div>
+                </section>
+            </section>
+        </div>
+    </div>
+    <div style="position:fixed;bottom:0px;right:0px;"><img alt="fast-check" title="fast-check" src="./images/fastcheck.png" /></div>
+    <!-- https://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/head.min.js -->
+    <script src="../shared/head.min.js"></script>
+    <!-- https://cdn.jsdelivr.net/reveal.js/3.0.0/js/reveal.min.js -->
+    <script src="../shared/reveal.min.js"></script>
+    <!-- Custom reveal configuration -->
+    <script src="./reveal-config.js"></script>
+  </body>
+</html>
