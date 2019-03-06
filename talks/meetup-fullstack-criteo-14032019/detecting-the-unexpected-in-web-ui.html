@@ -325,6 +325,104 @@ li.active, .left-menu > li:last-child, .left-menu > li:last-child > ul > li:last
                         <br/>27- Bookmark the url 💥
                     </p>
                 </section>
+                <section>
+                    <h2>Property based to the rescue 🎯</h2>
+                    <h3 class="fragment">Generate random data</h3>
+                    <h3 class="fragment">Shrink in case of failure</h3>
+                    <p class="fragment">
+                        We will use
+                        <img src="./images/github-white.png" style="height:32px;border:none;background:none;margin:0px;">fast-check
+                    </p>
+                </section>
+                <section>
+                    <iframe id="game-iframe" src="https://dubzzz.github.io/connect-four-react/bug/" height="600" width="600"></iframe>
+                    <!--<iframe id="game-iframe" src="http://localhost:3000/" height="600" width="600"></iframe>-->
+                </section>
+                <section>
+                    <h2>User capabilities</h2>
+                </section>
+                <section>
+                    <p>💎 click on grid 💎</p>
+                    <p>💎 click on buttons 💎</p>
+                    <p>💎 re-use bookmarked url 💎</p>
+                </section>
+                <section>
+                    <h2>Commands</h2>
+                </section>
+                <section>
+                    <p>💎 play a valid move 💎</p>
+                    <p>💎 undo a move 💎</p>
+                    <p>💎 redo a move 💎</p>
+                    <p>💎 restart the game 💎</p>
+                    <p>💎 bookmark a url 💎</p>
+                    <p>💎 open a previously bookmarked url 💎</p>
+                </section>
+                <section>
+                    <h3>Play a valid move</h3>
+                    <div class="fragment">
+                        <p>💎 pre-condition 💎</p>
+                        <p class="vsmallnote">no winner yet, column is not full — or the column is clickable</p>
+                    </div>
+                    <div class="fragment">
+                        <p>💎 action 💎</p>
+                        <p class="vsmallnote">click on the column</p>
+                    </div>
+                    <div class="fragment">
+                        <p>💎 post-condition 💎</p>
+                        <p class="vsmallnote">a new token has been added into the column with the color of the current player</p>
+                    </div>
+                </section>
+                <section>
+                    <img src="./images/code-ctor.png" />
+                </section>
+                <section>
+                    <img src="./images/code-check.png" />
+                </section>
+                <section>
+                    <img src="./images/code-run.png" />
+                </section>
+                <section>
+                    <img src="./images/code-fc.png" />
+                </section>
+                <section>
+                    <h2>Ready?</h2>
+                </section>
+                <section>
+                    <img src="./images/property-based.gif" />
+                </section>
+                <section>
+                    <h3>It found:</h3>
+                    <p class="quote">
+                        0- (Not a command) Open the game
+                        <br/>1- Click on “new game”
+                        <br/>2- Bookmark the url
+                        <br/>3- Open bookmarked url: http://localhost:3000/#/
+                        <br/>4- Press F5 to refresh the page
+                        <br/>5- Bookmark the url
+                        <br/>6- Play token in the 2nd column
+                        <br/>7- Click on “new game”
+                        <br/>8- Play token in the 2nd column
+                        <br/>[...]
+                        <br/>24- Bookmark the url
+                        <br/>25- Click on “new game”
+                        <br/>26- Press F5 to refresh the page
+                        <br/>27- Bookmark the url 💥
+                    </p>
+                </section>
+                <section>
+                    <h3>It reported:</h3>
+                    <p class="quote">
+                        0- (Not a command) Open the game
+                        <br/>1- Bookmark the url — empty grid and player 1 has to play
+                        <br/>2- Play token in the 6th column
+                        <br/>3- Click on “new game”
+                        <br/>4- Bookmark the url — empty grid and player 2 has to play 💥
+                    </p>
+                </section>
+                <section>
+                    <h2>Applied at Criteo?</h2>
+                    <h3 class="fragment">Yes and No</h3>
+                </section>
             </section>
             <section>
             	<section>
