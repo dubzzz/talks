@@ -182,6 +182,7 @@ li.active, .left-menu > li:last-child, .left-menu > li:last-child > ul > li:last
                         <p class="vsmallnote">Strange scenario</p>
                     </div>
                 </section>
+                <section data-background="./images/code-ui-test.png" data-background-size="contain"></section>
                 <section>
                     <h2>And then one day, it happened...</h2>
                 </section>
@@ -350,23 +351,30 @@ li.active, .left-menu > li:last-child, .left-menu > li:last-child > ul > li:last
                     <p>💎 open a previously bookmarked url 💎</p>
                 </section>
                 <section>
-                    <h3>Play a valid move</h3>
-                    <div class="fragment">
-                        <p>💎 pre-condition 💎</p>
-                        <p class="vsmallnote">no winner yet, column is not full — or the column is clickable</p>
-                    </div>
-                    <div class="fragment">
-                        <p>💎 action 💎</p>
-                        <p class="vsmallnote">click on the column</p>
-                    </div>
-                    <div class="fragment">
-                        <p>💎 post-condition 💎</p>
-                        <p class="vsmallnote">a new token has been added into the column with the color of the current player</p>
-                    </div>
+                    <h2>Example: Play a valid move</h2>
                 </section>
-                <section data-background="./images/code-ctor.png" data-background-size="contain"></section>
+                <section>
+                    <h3>💎 pre-condition 💎</h3>
+                    <p class="fragment">no winner yet, column is not full — or the column is clickable</p>
+                </section>
                 <section data-background="./images/code-check.png" data-background-size="contain"></section>
+                <section>
+                    <h3>💎 action 💎</h3>
+                    <p class="fragment">click on the column</p>
+                </section>
+                <section>
+                    <h3>💎 post-condition 💎</h3>
+                    <p class="fragment">a new token has been added into the column with the color of the current player</p>
+                </section>
                 <section data-background="./images/code-run.png" data-background-size="contain"></section>
+                <section data-background="./images/code-ctor.png" data-background-size="contain"></section>
+                <section>
+                    <h2>Example: scenario</h2>
+                    <p class="fragment"><code>import fc from 'fast-check'</code></p>
+                    <p class="fragment"><code>fc.property</code> define a property ie. a list of arbitraries and a test function to assess the success</p>
+                    <p class="fragment"><code>fc.commands</code> generate a random array of commands</p>
+                    <p class="fragment"><code>fc.assert</code> run the property and throws in case of failure</p>
+                </section>
                 <section data-background="./images/code-fc.png" data-background-size="contain"></section>
                 <section>
                     <h2>Ready?</h2>
