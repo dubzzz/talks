@@ -161,7 +161,7 @@ li.active, .left-menu > li:last-child, .left-menu > li:last-child > ul > li:last
                 Have you ever heard about <em>Property based testing</em>?
             </section>
             <section>
-                <img src="images/test-pyramid.png" style="background-color: #fff"/>
+                <img src="images/test-pyramid.png" style="border:none;background:none;box-shadow:none;" />
             </section>
             <section>
                 <h3>Unit test</h3>
@@ -195,8 +195,9 @@ li.active, .left-menu > li:last-child, .left-menu > li:last-child > ul > li:last
             </section>
             <section>
                 <h2>Going random...</h2>
-                <h3 class="fragment">But in a deterministic</h3>
-                <h3 class="fragment">and reproducible way</h3>
+                <h3 class="fragment">But reproducible way</h3>
+                <h3 class="fragment">Not deterministic</h3>
+                <!-- we want to cover new cases at each run -->
             </section>
             <section>
                 <h2>Wait a minute... 😓</h2>
@@ -209,10 +210,10 @@ li.active, .left-menu > li:last-child, .left-menu > li:last-child > ul > li:last
                 <h3 class="fragment">[983 characters], [1302 characters]</h3>
             </section>
             <section>
-                <h2>Property based to the rescue 🎯</h2>
-                <p style="font-size: 0.8em; text-align: right">
-                    With
-                    <span style="color:#cb3837;"><img src="./images/npm.png" style="height:24px;border:none;background:none;margin:0px;"> fast-check</span>
+
+                <h2><em>fast-check</em> to the rescue 🎯</h2>
+                <p>
+                    <img class="fragment" style="border:none;background:none;box-shadow:none;" src="images/logo.png"/>
                 </p>
             </section>
             <section>
@@ -266,9 +267,19 @@ li.active, .left-menu > li:last-child, .left-menu > li:last-child > ul > li:last
                 </div>
             </section>
             <section>
+                <p class="quote-right" style="margin-bottom:48px;">
+                    for all <em>a, b, c strings</em>
+                    <br/><em>b</em> is a substring of <em>a + b + c</em>
+                </p>
+                <p>
+                    {a: &quot;<em>e漢}@🐱z&rsquo;a</em>&quot;, b: &quot;<em>eiiz</em>&quot;, c: &quot;<em>漢null&curren;</em>&quot;}
+                    <span style="color:red;">&#10007;</span>
+                </p>
+            </section>
+            <section>
                 <h2>Shrinking into action</h2>
                 <p class="fragment">
-                    {a: &quot;<em>e漢}@🐱z&rsquo;</em>&quot;, b: &quot;<em>eiiz</em>&quot;, c: &quot;<em>漢null&curren;</em>&quot;}
+                    {a: &quot;<em>e漢}@🐱z&rsquo;a</em>&quot;, b: &quot;<em>eiiz</em>&quot;, c: &quot;<em>漢null&curren;</em>&quot;}
                     <span style="color:red;">&#10007;</span>
                 </p>
                 <p class="fragment">
@@ -308,9 +319,12 @@ li.active, .left-menu > li:last-child, .left-menu > li:last-child > ul > li:last
                 </p>
             </section>
             <section>
-                <h3>Let's test: <em>isSubstring</em></h3>
+                <h3>Let's test: <em>knuth</em></h3>
                 <div style="margin-top:48px;"></div>
                 <img class="fragment" src="images/code-issubstring.png"/>
+            </section>
+            <section>
+                <h3>Let's test: <em>isSubstring</em></h3>
                 <div style="margin-top:48px;"></div>
                 <p class="quote-right fragment">
                     for all <em>a, b, c strings</em>
@@ -328,11 +342,11 @@ li.active, .left-menu > li:last-child, .left-menu > li:last-child > ul > li:last
             <section>
                 <div style="display:flex;flex-direction:row;justify-content:space-evenly;">
                     <div>
-                        <p style="font-size:1.5em"><em>in<span class="fragment highlight-red visible">vite</span>r</em></p>
+                        <p style="font-size:1.5em"><em>in<span class="fragment highlight-green visible">vite</span>r</em></p>
                         <p style="font-size:0.7em">a</p>
                     </div>
                     <div>
-                        <p style="font-size:1.5em">+</p>
+                        <p style="font-size:1.5em">,</p>
                         <p style="font-size:0.7em">&nbsp;</p>
                     </div>
                     <div>
@@ -344,7 +358,7 @@ li.active, .left-menu > li:last-child, .left-menu > li:last-child > ul > li:last
                     <em>knuth</em>(a, b) == <em>2</em>
                 </div>
                 <div class="fragment">
-                    a.substring(2, 2 + b.length) == b
+                    a.substr(2, b.length) == b
                 </div>
                 <div style="margin-top:48px;"></div>
                 <p class="quote-right fragment">
