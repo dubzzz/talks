@@ -134,7 +134,27 @@ li.active, .left-menu > li:last-child, .left-menu > li:last-child > ul > li:last
             <section>
                 <h1>Property based testing</h1>
                 <h2>From theory to practice</h2>
+                <h3>Nicolas DUBIEN</h3>
                 <p class="vsmallnote">Best of Web 2019</p>
+            </section>
+            <section>
+                <img src="images/test-pyramid.png" style="border:none;background:none;box-shadow:none;" />
+            </section>
+            <section>
+                <h3>Unit test</h3>
+                <img src="images/code-unit-test.png"/>
+            </section>
+            <section>
+                <h3>E2E test</h3>
+                <img src="images/code-ui-test.png"/>
+            </section>
+            <section>
+                <h2>Are we sure to cover everything?</h2>
+                <h3 class="fragment">Yes, I have 100% coverage</h3>
+                <h3 class="fragment">Yes, all my users are happy</h3>
+            </section>
+            <section>
+                <h2>Not enough...</h2>
             </section>
             <section>
                 <div>
@@ -158,38 +178,6 @@ li.active, .left-menu > li:last-child, .left-menu > li:last-child > ul > li:last
                 </div>
             </section>
             <section>
-                Have you ever heard about <em>Property based testing</em>?
-            </section>
-            <section>
-                <img src="images/test-pyramid.png" style="border:none;background:none;box-shadow:none;" />
-            </section>
-            <section>
-                <h3>Unit test</h3>
-                <img src="images/code-unit-test.png"/>
-            </section>
-            <section>
-                <h3>E2E test</h3>
-                <img src="images/code-ui-test.png"/>
-            </section>
-            <section>
-                <h2>Are we sure to cover everything?</h2>
-                <h3 class="fragment">Yes, I have 100% coverage</h3>
-                <h3 class="fragment">Yes, all my users are happy</h3>
-            </section>
-            <section>
-                <h2>Not enough...</h2>
-            </section>
-            <section>
-                <h3>Yes, I have 100% coverage</h3>
-                <img src="images/pr-100.png" />
-                <img src="images/pr-100-example.png" />
-            </section>
-            <section>
-                <h3>Yes, all my users are happy</h3>
-                <img src="images/pr-jest1.png" />
-                <img src="images/pr-jest1-example.png" />
-            </section>
-            <section>
                 <h2>Our issue?</h2>
                 <h3 class="fragment">Limited scope of inputs covered</h3>
             </section>
@@ -205,12 +193,13 @@ li.active, .left-menu > li:last-child, .left-menu > li:last-child > ul > li:last
             </section>
             <section>
                 <h2>What if the reported error is:</h2>
-                <h3 class="fragment">"<em>OUp-]&gt;iWX</em>", "<em>R~</em>"</h3>
                 <h3 class="fragment">"<em>.D0xjkFI{&lt;:nx#U3lI~</em>", "<em>j&gt;~&]&/'0Fw{?O</em>"</h3>
                 <h3 class="fragment">[983 characters], [1302 characters]</h3>
             </section>
             <section>
-
+                Have you ever heard about <em>Property based testing</em>?
+            </section>
+            <section>
                 <h2><em>fast-check</em> to the rescue 🎯</h2>
                 <p>
                     <img style="border:none;background:none;box-shadow:none;" src="images/logo.png"/>
@@ -245,7 +234,7 @@ li.active, .left-menu > li:last-child, .left-menu > li:last-child > ul > li:last
                 </p>
                 <div style="display:flex;flex-direction:row;justify-content:center;" class="fragment">
                     <div style="padding:24px;">
-                        <p style="font-size:1.5em"><em>aze</em></p>
+                        <p style="font-size:1.5em">"<em>aze</em>"</p>
                         <p style="font-size:0.7em">a</p>
                     </div>
                     <div style="padding:24px;">
@@ -253,7 +242,7 @@ li.active, .left-menu > li:last-child, .left-menu > li:last-child > ul > li:last
                         <p style="font-size:0.7em">&nbsp;</p>
                     </div>
                     <div style="padding:24px;">
-                        <p style="font-size:1.5em"><em>rt</em></p>
+                        <p style="font-size:1.5em">"<em>rt</em>"</p>
                         <p style="font-size:0.7em">b</p>
                     </div>
                     <div style="padding:24px;">
@@ -261,7 +250,7 @@ li.active, .left-menu > li:last-child, .left-menu > li:last-child > ul > li:last
                         <p style="font-size:0.7em">&nbsp;</p>
                     </div>
                     <div style="padding:24px;">
-                        <p style="font-size:1.5em"><em>y</em></p>
+                        <p style="font-size:1.5em">"<em>y</em>"</p>
                         <p style="font-size:0.7em">c</p>
                     </div>
                 </div>
@@ -313,10 +302,6 @@ li.active, .left-menu > li:last-child, .left-menu > li:last-child > ul > li:last
             </section>
             <section>
                 <h2>Let's try</h2>
-                <p>
-                    CodeSandbox: <a href="http://bit.do/eTAZp" target="_blank">http://bit.do/eTAZp</a>
-                    <!-- https://codesandbox.io/s/black-sunset-n7en7?fontsize=14&previewwindow=tests -->
-                </p>
             </section>
             <section>
                 <h3>Let's test: <em>knuth</em></h3>
@@ -333,6 +318,24 @@ li.active, .left-menu > li:last-child, .left-menu > li:last-child > ul > li:last
             </section>
             <section>
                 <img src="images/code-knuth-1.png"/>
+            </section>
+            <section>
+                <p><b>Issue detected:</b> knuth morris pratt implementation considered "" was not a substring of ""<p>
+                <img src="images/pr-knuth.png" />
+                <p><b>Code example:</b><br/>
+<pre><code>knuthMorrisPratt("", "")   //=> -1
+knuthMorrisPratt("a", "a") //=> 0
+</code></pre>
+                </p>
+            </section>
+            <section>
+                <p><b>Issue detected:</b> integer overflows and rounding issues in the implementation of rabin karp<p>
+                <img src="images/pr-rabin.png" />
+                <p><b>Code example:</b><br/>
+<pre><code>rabinKarp("^ !/'#'pp", " !/'#'pp") //=> -1
+// expected to be 2
+</code></pre>
+                </p>
             </section>
             <section>
                 <h3>But...</h3>
@@ -388,6 +391,26 @@ li.active, .left-menu > li:last-child, .left-menu > li:last-child > ul > li:last
                 <img src="images/code-underscore.png"/>
             </section>
             <section>
+                <p><b>Issue detected:</b> asymmetrical equality for 0 and 5e-324<p>
+                <img src="images/pr-jest-sym1.png" />
+                <p><b>Code example:</b><br/>
+<pre><code>expect(0).toStrictEqual(5e-324) // passed
+expect(5e-324).not.toStrictEqual(0) // failed
+</code></pre>
+                </p>
+            </section>
+            <section>
+                <p><b>Issue detected:</b> asymmetrical equality for Set<p>
+                <img src="images/pr-jest-sym2.png" />
+                <p><b>Code example:</b><br/>
+<pre><code>const s1 = new Set([false, true]);
+const s2 = new Set([new Boolean(true), new Boolean(true)]);
+expect(s1).not.toEqual(s2); // success
+expect(s2).not.toEqual(s1); // failure
+</code></pre>
+                </p>
+            </section>
+            <section>
                 <h2>Going further?</h2>
             </section>
             <section>
@@ -409,9 +432,9 @@ li.active, .left-menu > li:last-child, .left-menu > li:last-child > ul > li:last
                     fast-check
                 </div>
                 <div style="margin-top:48px;"></div>
-                <div style="color:#ffffff;vertical-align:middle;">
-                    <img src="./images/fast-check-ui.png" style="border:none;background:none;margin:0px;">
-                </div>
+                <p>CodeSandbox: <a href="http://bit.do/pbt-cs" target="_blank">http://bit.do/pbt-cs</a></p>
+                <p>Detecting the unexpected in Web UI: <a href="http://bit.do/pbt-ui" target="_blank">http://bit.do/pbt-ui</a></p>
+                <p>Slides: <a href="http://bit.do/pbt-bow" target="_blank">http://bit.do/pbt-bow</a></p>
             </section>
         </div>
     </div>
