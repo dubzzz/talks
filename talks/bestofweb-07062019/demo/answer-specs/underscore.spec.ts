@@ -6,23 +6,14 @@ describe("_.toEqual", () => {
     fc.assert(
       fc.property(
         fc.anything({
-          withBoxedValues: true,
-          withMap: true,
-          withSet: true
+          withBoxedValues: true
         }),
         fc.anything({
-          withBoxedValues: true,
-          withMap: true,
-          withSet: true
+          withBoxedValues: true
         }),
         (a, b) => _.isEqual(a, b) === _.isEqual(b, a)
       ),
-      {
-        // eg.: numRuns: 10000
-        seed: -136451885,
-        path: "6780",
-        endOnFailure: true
-      }
+      { seed: -7457024, path: "4848", endOnFailure: true }
     );
   });
 });
