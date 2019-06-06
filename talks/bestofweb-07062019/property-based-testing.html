@@ -420,8 +420,8 @@ knuthMorrisPratt("a", "a") //=> 0
                 <p><b>Issue detected:</b> asymmetrical equality for 0 and 5e-324<p>
                 <img src="images/pr-jest-sym1.png" />
                 <p><b>Code example:</b><br/>
-<pre><code>expect(0).toStrictEqual(5e-324) // passed
-expect(5e-324).not.toStrictEqual(0) // failed
+<pre><code>expect(0).toStrictEqual(5e-324) // success
+expect(5e-324).toStrictEqual(0) // failure
 </code></pre>
                 </p>
             </section>
@@ -431,8 +431,8 @@ expect(5e-324).not.toStrictEqual(0) // failed
                 <p><b>Code example:</b><br/>
 <pre><code>const s1 = new Set([false, true]);
 const s2 = new Set([new Boolean(true), new Boolean(true)]);
-expect(s1).not.toEqual(s2); // success
-expect(s2).not.toEqual(s1); // failure
+expect(s1).toEqual(s2); // failure
+expect(s2).toEqual(s1); // success
 </code></pre>
                 </p>
             </section>
