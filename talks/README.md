@@ -6,4 +6,4 @@
 - Detecting the unexpected in (Web) UI (Criteo Full-Stack Tech Talks):
   https://dubzzz.github.io/fast-check.github.com/talks/meetup-fullstack-criteo-14032019/detecting-the-unexpected-in-web-ui.html
 - Best Of Web 2019: https://dubzzz.github.io/fast-check.github.com/talks/bestofweb-07062019/property-based-testing.html
-- Inside Angular Ivy: https://dubzzz.github.io/fast-check.github.com/talks/inside-angular-ivy/dist/index.html
+- Inside Angular Ivy: https://dubzzz.github.io/fast-check.github.com/talks/inside-angular-ivy/dist/
