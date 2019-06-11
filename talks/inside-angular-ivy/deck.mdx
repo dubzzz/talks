@@ -1,0 +1,371 @@
+export { future as theme } from 'mdx-deck/themes'
+import { CodeSurfer } from 'mdx-deck-code-surfer'
+import vsDark from 'prism-react-renderer/themes/vsDark'
+
+import tsconfigCode from 'raw-loader!./snippets/tsconfig';
+import initShCode from 'raw-loader!./snippets/init.sh';
+import appTsCode from 'raw-loader!./snippets/app.component.ts';
+import appHtmlCode from 'raw-loader!./snippets/app.component.html';
+import genJsCode from 'raw-loader!./snippets/app.component.js';
+import explainedIvyTemplateCode from 'raw-loader!./snippets/ivy-template.ts';
+import app2HtmlCode from 'raw-loader!./snippets/app2.component.html';
+import gen2TemplateJsCode from 'raw-loader!./snippets/app2.component.js';
+import app3HtmlCode from 'raw-loader!./snippets/app3.component.html';
+import gen3TemplateJsCode from 'raw-loader!./snippets/app3.component.js';
+import app4HtmlCode from 'raw-loader!./snippets/app4.component.html';
+import gen4TemplateJsCode from 'raw-loader!./snippets/app4.component.js';
+import nowDetectCode from 'raw-loader!./snippets/now-detect-changes.ts';
+import dummyReact from 'raw-loader!./snippets/react';
+import genDummyReact from 'raw-loader!./snippets/react.generated';
+
+# Angular magic
+## Let's understand internals of Angular
+
+![](./angular.png)
+
+---
+
+**Nicolas Dubien**
+
+---
+
+## Angular
+
+### A framework
+### Not a simple library
+
+##### Dependency injection, Observables, DOM manipulation...
+
+---
+
+## What is Ivy?
+
+- Next renderer for Angular
+- Supposed to be backwards-compatible
+- Available since Angular 6
+- But still in beta
+- Incremental DOM
+
+---
+
+## Why Ivy?
+
+- **Locality**: only allowed to use information defined by a component decorator and its class
+- **Tree shaking**: unused code is not included in a bundle
+
+---
+
+<CodeSurfer
+    title="Enabling Ivy in tsconfig.json"
+    lang="json"
+    code={tsconfigCode}
+    showNumbers={false}
+    dark={false}
+    steps={[
+        { },
+        { range: [17, 19] },
+        { lines: [5] },
+    ]}
+/>
+
+---
+
+<CodeSurfer
+    title="Calling the compiler"
+    lang="bash"
+    code={initShCode}
+    showNumbers={false}
+    dark={false}
+    steps={[
+        { },
+        { range: [7, 8] },
+    ]}
+/>
+
+---
+
+## What's inside the ng project?
+
+---
+
+<CodeSurfer
+    title="src/app/app.component.ts"
+    lang="typescript"
+    code={appTsCode}
+    showNumbers={false}
+    dark={false}
+/>
+
+---
+
+<CodeSurfer
+    title="src/app/app.component.html"
+    lang="html"
+    code={appHtmlCode}
+    showNumbers={false}
+    dark={false}
+    steps={[
+        { },
+        { lines: [3] },
+    ]}
+/>
+
+---
+
+## What has been generated?
+
+---
+
+<CodeSurfer
+    title="dist/out-tsc/src/app/app.component.js"
+    lang="javascript"
+    code={genJsCode}
+    showNumbers={false}
+    dark={false}
+    steps={[
+        { },
+        { range: [1, 3], notes: 'Various imports' },
+        { lines: [10], notes: 'Class declaration' },
+        { lines: [14], notes: 'Variable declaration' },
+        { range: [17, 66], notes: 'Definition of a component' },
+        { range: [18, 19], notes: 'Decorator content' },
+        { range: [20, 22], notes: 'Injected services' },
+        { range: [25, 64], notes: 'Template content #IncrementalDOM' },
+        { lines: [28, 30], notes: 'Incremental DOM in a nutshell' },
+        { lines: [31, 32], notes: 'Incremental DOM in a nutshell' },
+        { lines: [33, 34, 35], notes: 'Incremental DOM in a nutshell' },
+        { range: [27, 37], notes: 'Template content (1/3)' },
+        { range: [37, 47], notes: 'Template content (2/3)' },
+        { range: [47, 58], notes: 'Template content (3/3)' },
+        { range: [4, 8], notes: 'Styles declaration' },
+        { range: [28, 30], notes: 'Updates' },
+        { range: [61, 63], notes: 'Updates' },
+        { lines: [29, 62], notes: 'Updates' },
+    ]}
+/>
+
+---
+
+## Note: Non standard usage of decorators
+
+---
+
+<CodeSurfer
+    title="dist/out-tsc/src/app/app.component.js"
+    lang="javascript"
+    code={genJsCode}
+    showNumbers={false}
+    dark={false}
+    steps={[
+        { },
+        { range: [17, 66], notes: 'Definition of a component' },
+        { range: [17, 25], notes: 'Definition of a component' },
+        { range: [67, 71], notes: 'Standard decorator' },
+    ]}
+/>
+
+---
+
+## Going deeper in the template
+
+---
+
+<CodeSurfer
+    title="Ivy Template"
+    lang="typescript"
+    code={explainedIvyTemplateCode}
+    showNumbers={false}
+    dark={false}
+    steps={[
+        { },
+        { range: [2, 5], notes: 'Create' },
+        { range: [6, 9], notes: 'Update' },
+    ]}
+/>
+
+---
+
+## Let's try double way binding
+
+---
+
+<CodeSurfer
+    title="Updated src/app/app.component.html"
+    lang="html"
+    code={app2HtmlCode}
+    showNumbers={false}
+    dark={false}
+/>
+
+---
+
+<CodeSurfer
+    title="Updated dist/out-tsc/src/app/app.component.js"
+    lang="javascript"
+    code={gen2TemplateJsCode}
+    showNumbers={false}
+    dark={false}
+    steps={[
+        { },
+        { lines: [4, 14] },
+        { lines: [6, 7, 8, 15] },
+    ]}
+/>
+
+---
+
+## Let's try \*ngIf and \*ngFor
+
+---
+
+<CodeSurfer
+    title="Updated src/app/app.component.html"
+    lang="html"
+    code={app3HtmlCode}
+    showNumbers={false}
+    dark={false}
+/>
+
+---
+
+<CodeSurfer
+    title="Updated dist/out-tsc/src/app/app.component.js"
+    lang="javascript"
+    code={gen3TemplateJsCode}
+    showNumbers={false}
+    dark={false}
+    steps={[
+        { },
+        { range: [50, 70], notes: 'Template of AppComponent' },
+        { lines: [53, 55], notes: 'Sub-templates for the contents' },
+        { lines: [66, 67], notes: 'Parsed *ngIf="name !== \'Bob\'" and *ngFor="let value of data"' },
+        { range: [8, 19], notes: 'ngIf template' },
+        { range: [21, 32], notes: 'ngFor template' },
+    ]}
+/>
+
+---
+
+## Let's try with a custom sub component
+
+---
+
+<CodeSurfer
+    title="Updated src/app/app.component.html"
+    lang="html"
+    code={app4HtmlCode}
+    showNumbers={false}
+    dark={false}
+/>
+
+---
+
+<CodeSurfer
+    title="Updated dist/out-tsc/src/app/app.component.js"
+    lang="javascript"
+    code={gen4TemplateJsCode}
+    showNumbers={false}
+    dark={false}
+    steps={[
+        { },
+        { range: [15, 17], notes: 'New public method in AppComponent' },
+        { range: [27, 47], notes: 'Template content' },
+        { range: [30, 34], notes: 'Create sub component in the DOM' },
+        { lines: [30, 31, 32, 33, 34, 44], notes: 'Plug the sub component for updates' },
+    ]}
+/>
+
+---
+
+## Change detection
+
+- [Before](https://github.com/angular/angular/blob/d0ccf5f1697c1c0d4e3c8ea7a25f3c87a239df7e/packages/core/src/view/view.ts#L350:L383)
+- [Now](https://github.com/angular/angular/blob/d0ccf5f1697c1c0d4e3c8ea7a25f3c87a239df7e/packages/core/src/render3/instructions.ts#L1968:L1980)
+
+---
+
+<CodeSurfer
+    title="With IVY"
+    lang="typescript"
+    code={nowDetectCode}
+    showNumbers={false}
+    dark={false}
+/>
+
+---
+
+## Supposed to be backwards-compatible...
+
+> But the order of operations appears to have changed.
+> For example, it seems that now Angular first checks the child components and only then the embedded views
+
+---
+
+## What about zone.js?
+
+---
+
+## NgZone a wrapper around zone.js
+
+- Used to trigger change detection on asynchronous APIs
+- Used by Angular to trigger `tick` *ie. `detectChangesInternal` on the root*
+- Enabled with `bootstrapModule`
+- Overrides browser's APIs
+
+---
+
+## Do I really need NgZone?
+
+- Can be by-passed with `NgZone.runOutsideAngular`
+- Or `bootstrapModule(AppModule, { ngZone: 'noop' })`
+- Can be manually forced in some cases `zone.run(() => { /* stuff */ })`
+
+---
+
+## Useful links (1/2)
+
+- [Compiler Architecture](https://github.com/angular/angular/blob/master/packages/compiler/design/architecture.md)
+- [Do you know how Angular transforms your code?](https://blog.angularindepth.com/do-you-know-how-angular-transforms-your-code-7943b9d32829)
+- [Introducing Incremental DOM](https://medium.com/google-developers/introducing-incremental-dom-e98f79ce2c5f)
+- [Angular Ivy change detection execution: are you prepared?](https://blog.angularindepth.com/angular-ivy-change-detection-execution-are-you-prepared-ab68d4231f2c)
+- [Ivy engine in Angular: first in-depth look at compilation, runtime and change detection](https://blog.angularindepth.com/ivy-engine-in-angular-first-in-depth-look-at-compilation-runtime-and-change-detection-876751edd9fd)
+- [Inside Ivy: Exploring the New Angular Compiler](https://blog.angularindepth.com/inside-ivy-exploring-the-new-angular-compiler-ebf85141cee1)
+- [Understanding Angular Ivy: Incremental DOM and Virtual DOM](https://blog.nrwl.io/understanding-angular-ivy-incremental-dom-and-virtual-dom-243be844bf36)
+
+
+---
+
+## Useful links (2/2)
+
+- [Angular Deep dive — Zone.js — How does it monkey patches various APIs](https://medium.com/reverse-engineering-angular/angular-deep-dive-zone-js-how-does-it-monkey-patches-various-apis-9cc1c7fcc321)
+- [Do you still think that NgZone (zone.js) is required for change detection in Angular?](https://blog.angularindepth.com/do-you-still-think-that-ngzone-zone-js-is-required-for-change-detection-in-angular-16f7a575afef)
+- [I reverse-engineered Zones (zone.js) and here is what I’ve found](https://blog.angularindepth.com/i-reverse-engineered-zones-zone-js-and-here-is-what-ive-found-1f48dc87659b)
+
+---
+
+# What about React?
+
+---
+
+<CodeSurfer
+    title="Simple Hello World"
+    lang="javascript"
+    code={dummyReact}
+    showNumbers={false}
+    dark={false}
+/>
+
+---
+
+<CodeSurfer
+    title="Simple Hello World (No JSX)"
+    lang="javascript"
+    code={genDummyReact}
+    showNumbers={false}
+    dark={false}
+/>
+
+---
+
+# Questions?
+![](./angular.png)
