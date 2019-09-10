@@ -1,0 +1,15 @@
+import React, { useState } from "react";
+
+function App(props) {
+  const [name, setName] = useState("");
+  return (
+    <div>
+      <div>Hello {name}!</div>
+      <input type="text"
+             value={name}
+             onInput={e => setName(e.target.value)} />
+    </div>
+  );
+}
+
+export default App;

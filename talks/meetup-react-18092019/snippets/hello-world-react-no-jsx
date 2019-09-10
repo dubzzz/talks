@@ -1,0 +1,16 @@
+import React, { useState } from "react";
+
+function App(props) {
+  const [name, setName] = useState("");
+  
+  return React.createElement("div", {}, [
+    React.createElement("div", {}, `Hello ${name}!`),
+    React.createElement("input", {
+      type: "text",
+      value: name,
+      onInput: e => setName(e.target.value)
+    })
+  ]);
+}
+
+export default App;

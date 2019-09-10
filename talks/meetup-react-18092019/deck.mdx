@@ -1,0 +1,81 @@
+export { future as theme } from "mdx-deck/themes";
+import { CodeSurfer } from "mdx-deck-code-surfer";
+import vsDark from "prism-react-renderer/themes/vsDark";
+
+import WhoAmI from "./WhoAmI";
+
+import helloWorldReact from "raw-loader!./snippets/hello-world-react-jsx";
+import helloWorldReactNoJsx from "raw-loader!./snippets/hello-world-react-no-jsx";
+
+# React Fiber
+
+## Reconciliation explained
+
+![](./react.png)
+
+---
+
+<CodeSurfer
+  title="Basic React App"
+  lang="jsx"
+  code={helloWorldReact}
+  showNumbers={false}
+  dark={false}
+  steps={[
+    {},
+    { tokens: { 3: [5] }, notes: "External state" },
+    { lines: [4], notes: "Internal state" },
+    {
+      tokens: { 7: [4, 5, 6, 7, 8], 9: [1, 2, 3, 4, 5] },
+      notes: "State usage"
+    },
+    {
+      tokens: { 10: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] },
+      notes: "Update of the state"
+    }
+  ]}
+/>
+
+---
+
+<CodeSurfer
+  title="Basic React App without JSX"
+  lang="jsx"
+  code={helloWorldReactNoJsx}
+  showNumbers={false}
+  dark={false}
+  steps={[{}, { range: [8, 12], notes: "Syntactic sugar" }]}
+/>
+
+---
+
+![](./vdom.png)
+
+---
+
+<WhoAmI />
+
+---
+
+![](./vdom.png)
+
+---
+
+![](./vdom-update.png)
+
+---
+
+Graph: App -> div ->...
+
+Many renderers...
+
+Two consequences:
+
+- React is DOM agnostic: it can be used with many renderers (react-dom, react-native)
+- React rely on a Virtual DOM
+
+---
+
+# Questions?
+
+![](./react.png)

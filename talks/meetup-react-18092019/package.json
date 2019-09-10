@@ -1,0 +1,17 @@
+{
+  "name": "demo-ng-inferno",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "mdx-deck build --no-html deck.mdx",
+    "start": "mdx-deck deck.mdx"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "mdx-deck": "^1.10.2",
+    "mdx-deck-code-surfer": "^0.5.5",
+    "raw-loader": "^2.0.0"
+  }
+}
