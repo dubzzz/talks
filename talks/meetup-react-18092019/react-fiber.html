@@ -82,7 +82,7 @@
       }
 
       em {
-        color: #f37723;
+        color: #00ccff;
         font-style: normal;
         font-weight: normal;
       }
@@ -215,13 +215,62 @@
             </div>
           </div>
         </section>
+        <section>
+          <h2>3 steps rendering</h2>
+        </section>
+        <section>
+          <h3>Step #1: render</h3>
+          <p>
+            Construct an updated version of the Virtual DOM
+          </p>
+        </section>
+        <section>
+          <h3>
+            Step #2: reconciliation
+          </h3>
+          <p>
+            Check for virtual DOM changes
+          </p>
+        </section>
+        <section>
+          <h3>Step #3: commit</h3>
+          <p>Batch updates</p>
+          <p><em>DOM updates for react-dom renderer</em></p>
+        </section>
+        <section>
+          <h2>3 steps rendering</h2>
+          <h3>Render ▶️ Reconciliation ▶️ Commit</h3>
+        </section>
         <section data-transition="slide-in fade-out">
-          <h2>Towards reconciliation</h2>
+          <h2>Virtual DOM in action</h2>
           <img src="images/state-impact-vdom-1.png" />
         </section>
         <section data-transition="fade-in slide-out">
-          <h2>Towards reconciliation</h2>
+          <h2>Virtual DOM in action</h2>
           <img src="images/state-impact-vdom-2.png" />
+        </section>
+        <section>
+          <h2>What happen<em>ed</em> on state update?</h2>
+        </section>
+        <section>
+          <p>Starting from the <em>root</em>, React</p>
+          <ul>
+            <li class="fragment">calls <em>render</em> method</li>
+            <li class="fragment">
+              compares its output with previous virtual DOM
+            </li>
+            <li class="fragment">updates the real <em>DOM</em> if needed</li>
+            <li class="fragment">moves to children</li>
+          </ul>
+          <p class="fragment">All of this in a synchronous fashion</p>
+        </section>
+        <section>
+          <h2>🤔</h2>
+          <h3 class="fragment">Synchronous?</h3>
+          <h3 class="fragment">Block the main thread?</h3>
+        </section>
+        <section>
+          <h2>React Fiber to the rescue 🦸‍♀️</h2>
         </section>
         <section>
           <h2>Questions?</h2>
