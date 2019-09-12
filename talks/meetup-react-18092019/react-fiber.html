@@ -216,6 +216,17 @@
           </div>
         </section>
         <section>
+          <h2>Let's use our virtual DOM</h2>
+        </section>
+        <section data-transition="slide-in fade-out">
+          <h2>Virtual DOM in action</h2>
+          <img src="images/state-impact-vdom-1.png" />
+        </section>
+        <section data-transition="fade-in slide-out">
+          <h2>Virtual DOM in action</h2>
+          <img src="images/state-impact-vdom-2.png" />
+        </section>
+        <section>
           <h2>3 steps rendering</h2>
         </section>
         <section>
@@ -241,14 +252,6 @@
           <h2>3 steps rendering</h2>
           <h3>Render ▶️ Reconciliation ▶️ Commit</h3>
         </section>
-        <section data-transition="slide-in fade-out">
-          <h2>Virtual DOM in action</h2>
-          <img src="images/state-impact-vdom-1.png" />
-        </section>
-        <section data-transition="fade-in slide-out">
-          <h2>Virtual DOM in action</h2>
-          <img src="images/state-impact-vdom-2.png" />
-        </section>
         <section>
           <h2>What happen<em>ed</em> on state update?</h2>
         </section>
@@ -271,6 +274,117 @@
         </section>
         <section>
           <h2>React Fiber to the rescue 🦸‍♀️</h2>
+        </section>
+        <section>
+          <h2>Why?</h2>
+          <h3 class="fragment">Smooth updates</h3>
+          <h3 class="fragment">User inputs and async results are not equal</h3>
+          <h3 class="fragment">More to come...</h3>
+        </section>
+        <section>
+          <h2>How?</h2>
+          <h3 class="fragment">Split rendering process</h3>
+          <h3 class="fragment">Make rendering process interruptible</h3>
+          <h3 class="fragment">
+            Make the browser call us when it has some spare time
+          </h3>
+          <h3 class="fragment">
+            Plug updates in <code>requestIdleCallback</code> for low priority
+            updates
+          </h3>
+        </section>
+        <section>
+          <p class="quote">
+            The <code>window.requestIdleCallback()</code> method queues a
+            function to be called during a browser's idle periods. This enables
+            developers to perform background and low priority work on the main
+            event loop, without impacting latency-critical events such as
+            animation and input response. Functions are generally called in
+            first-in-first-out order; however, callbacks which have a timeout
+            specified may be called out-of-order if necessary in order to run
+            them before the timeout elapses.
+          </p>
+          <p class="quote">
+            The callback function is passed an IdleDeadline object describing
+            the amount of time available
+          </p>
+          <p class="vsmallnote">Source: developer.mozilla.org</p>
+        </section>
+        <section>
+          <h2>3 steps rendering</h2>
+          <h3>Render ▶️ Reconciliation ▶️ Commit</h3>
+        </section>
+        <section>
+          <h2>Problem?</h2>
+          <h3 class="fragment">Iteration is recursive</h3>
+          <h3 class="fragment">Not all tasks can be interrupted</h3>
+        </section>
+        <section>
+          <h2>Solution?</h2>
+          <h3 class="fragment">
+            Render ▶️ Reconciliation -
+            <em>during <code>requestIdleCallback</code></em>
+          </h3>
+          <h3 class="fragment">Commit - <em>block the main thread</em></h3>
+        </section>
+        <section>
+          <h2>Let's do it</h2>
+        </section>
+        <section data-transition="slide-in fade-out">
+          <img src="images/rec-1.png" />
+        </section>
+        <section data-transition="fade-in fade-out">
+          <img src="images/rec-2.png" />
+        </section>
+        <section data-transition="fade-in fade-out">
+          <img src="images/rec-3.png" />
+        </section>
+        <section data-transition="fade-in fade-out">
+          <img src="images/rec-4.png" />
+        </section>
+        <section data-transition="fade-in fade-out">
+          <img src="images/rec-5.png" />
+        </section>
+        <section data-transition="fade-in fade-out">
+          <img src="images/rec-6.png" />
+        </section>
+        <section data-transition="fade-in fade-out">
+          <img src="images/rec-7.png" />
+        </section>
+        <section data-transition="fade-in fade-out">
+          <img src="images/rec-8.png" />
+        </section>
+        <section data-transition="fade-in slide-out">
+          <img src="images/rec-9.png" />
+        </section>
+        <section>
+          <h2>Fiber</h2>
+        </section>
+        <section data-transition="slide-in fade-out">
+          <img src="images/rec-9.png" />
+        </section>
+        <section data-transition="fade-in fade-out">
+          <img src="images/rec-10.png" />
+        </section>
+        <section data-transition="fade-in slide-out">
+          <img src="images/rec-11.png" />
+        </section>
+        <section>
+          <h2>Code</h2>
+        </section>
+        <section>
+          <img src="images/work-loop.png" />
+        </section>
+        <section>
+          <img src="images/perform-unit.png" />
+        </section>
+        <section>
+          <img src="images/complete-unit.png" />
+        </section>
+        <section>
+          <h2>Future steps</h2>
+          <h3 class="fragment">Concurrent Mode</h3>
+          <h3 class="fragment">Parallel (Worker)</h3>
         </section>
         <section>
           <h2>Questions?</h2>
