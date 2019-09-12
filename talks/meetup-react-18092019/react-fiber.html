@@ -279,7 +279,6 @@
           <h2>Why?</h2>
           <h3 class="fragment">Smooth updates</h3>
           <h3 class="fragment">User inputs and async results are not equal</h3>
-          <h3 class="fragment">More to come...</h3>
         </section>
         <section>
           <h2>How?</h2>
@@ -323,9 +322,9 @@
           <h2>Solution?</h2>
           <h3 class="fragment">
             Render ▶️ Reconciliation -
-            <em>during <code>requestIdleCallback</code></em>
+            <em>sync or async</em>
           </h3>
-          <h3 class="fragment">Commit - <em>block the main thread</em></h3>
+          <h3 class="fragment">Commit - <em>sync</em></h3>
         </section>
         <section>
           <h2>Let's do it</h2>
@@ -380,6 +379,19 @@
         </section>
         <section>
           <img src="images/complete-unit.png" />
+        </section>
+        <section>
+          <h2>Impact on my app?</h2>
+        </section>
+        <section>
+          <img src="images/work-loop.png" />
+        </section>
+        <section>
+          <img src="images/sync-or-not.png" />
+        </section>
+        <section>
+          <h3>⚠️ Purely technical refactoring</h3>
+          <h3>🔧 Unlocks lots of potential features</h3>
         </section>
         <section>
           <h2>Future steps</h2>
