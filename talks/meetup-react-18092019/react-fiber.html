@@ -160,10 +160,16 @@
           <p class="vsmallnote">Meetup React.js and React Native</p>
         </section>
         <section>
+          <img src="images/app.png" />
+        </section>
+        <section>
           <img src="images/hello-world-jsx.png" />
         </section>
         <section>
           <img src="images/hello-world-nojsx.png" />
+        </section>
+        <section>
+          <img src="images/create-element-signature.png" />
         </section>
         <section>
           <img src="images/hello-jsx.png" />
@@ -234,6 +240,9 @@
           <p>
             Construct an updated version of the Virtual DOM
           </p>
+          <p>
+            <img src="images/step1.png" />
+          </p>
         </section>
         <section>
           <h3>
@@ -242,11 +251,18 @@
           <p>
             Check for virtual DOM changes
           </p>
+          <p>
+            <img src="images/step2.png" />
+          </p>
         </section>
         <section>
           <h3>Step #3: commit</h3>
           <p>Batch updates</p>
           <p><em>DOM updates for react-dom renderer</em></p>
+          <p>
+            <img src="images/app-empty.png" style="max-width: 30%" />
+            <img src="images/app.png" style="max-width: 30%" />
+          </p>
         </section>
         <section>
           <h2>3 steps rendering</h2>
@@ -254,6 +270,7 @@
         </section>
         <section>
           <h2>What happen<em>ed</em> on state update?</h2>
+          <h3>Before Fiber: Stack Reconciler - <em>React &lt;16</em></h3>
         </section>
         <section>
           <p>Starting from the <em>root</em>, React</p>
@@ -274,6 +291,7 @@
         </section>
         <section>
           <h2>React Fiber to the rescue 🦸‍♀️</h2>
+          <h3><em>React ≥16</em></h3>
         </section>
         <section>
           <h2>Why?</h2>
@@ -369,6 +387,11 @@
           <img src="images/rec-11.png" />
         </section>
         <section>
+          <h2>Fiber in a nutshell</h2>
+          <h3>New way to explore components during re-renders</h3>
+          <h3>Interruptible</h3>
+        </section>
+        <section>
           <h2>Code</h2>
         </section>
         <section>
@@ -391,12 +414,70 @@
         </section>
         <section>
           <h3>⚠️ Purely technical refactoring</h3>
+          <h3>👷 Some lifecycle methods have to disappear</h3>
           <h3>🔧 Unlocks lots of potential features</h3>
+        </section>
+        <section>
+          <h2>Lifecycle methods called during <em>render</em> phase</h2>
+          <ul>
+            <li>[UNSAFE_]componentWillMount (deprecated)</li>
+            <li>[UNSAFE_]componentWillReceiveProps (deprecated)</li>
+            <li>getDerivedStateFromProps</li>
+            <li>shouldComponentUpdate</li>
+            <li>[UNSAFE_]componentWillUpdate (deprecated)</li>
+            <li>render</li>
+          </ul>
+          <p><em>render</em> phase doesn't produce side-effects</p>
+        </section>
+        <section>
+          <h2>Lifecycle methods called during <em>commit</em> phase</h2>
+          <ul>
+            <li>getSnapshotBeforeUpdate</li>
+            <li>componentDidMount</li>
+            <li>componentDidUpdate</li>
+            <li>componentWillUnmount</li>
+          </ul>
         </section>
         <section>
           <h2>Future steps</h2>
           <h3 class="fragment">Concurrent Mode</h3>
           <h3 class="fragment">Parallel (Worker)</h3>
+        </section>
+        <section>
+          <h2>Sources</h2>
+          <p>
+            <a
+              href="https://github.com/acdlite/react-fiber-architecture/blob/master/README.md"
+              >React Fiber Architecture</a
+            >
+            <br /><a
+              href="https://medium.com/@NettaB/hacking-the-mainframe-digging-into-react-fiber-with-nothing-but-the-debugger-c7c50ab0e3e7"
+              >Hacking the mainframe</a
+            >
+            <br /><a
+              href="https://medium.com/react-in-depth/inside-fiber-in-depth-overview-of-the-new-reconciliation-algorithm-in-react-e1c04700ef6e"
+              >Inside Fiber: in-depth overview</a
+            >
+            <br /><a
+              href="https://medium.com/react-in-depth/in-depth-explanation-of-state-and-props-update-in-react-51ab94563311"
+              >In-depth explanation of state and props update in React</a
+            >
+            <br /><a
+              href="https://medium.com/react-in-depth/the-how-and-why-on-reacts-usage-of-linked-list-in-fiber-67f1014d0eb7"
+              >The how and why on React’s usage of linked list in Fiber to walk
+              the component’s tree</a
+            >
+            <br /><a href="https://reactjs.org/docs/reconciliation.html"
+              >Reconciliation - React</a
+            >
+            <br /><a
+              href="https://www.freecodecamp.org/news/react-under-the-hood/"
+              >React under the hood</a
+            >
+            <br /><a href="https://www.youtube.com/watch?v=ZCuYPiUIONs"
+              >A cartoon intro to Fiber</a
+            >
+          </p>
         </section>
         <section>
           <h2>Questions?</h2>
@@ -412,6 +493,10 @@
           <div style="margin-top:48px;"></div>
           <div style="display: flex;">
             <div style="flex: 50%;">
+              <img
+                src="images/frame.png"
+                style="height:172px;border:none;background:none;margin:0px;box-shadow:none;"
+              />
               <div style="color:#ffffff;vertical-align:middle;">
                 <img
                   src="./images/github-white.png"
