@@ -11,13 +11,17 @@ const paramsArb = fc.dictionary(
 );
 
 const optsArb = fc.record({
-  arrayFormat: fc.constantFrom("bracket", "index", "none"),
+  arrayFormat: fc.constantFrom(
+    "bracket" as const,
+    "index" as const,
+    "none" as const
+  ),
   strict: fc.boolean()
 });
 
 test("query-string rox", () =>
   fc.assert(
-    fc.property(paramsArb, optsArb, (obj, opts) =>
-      expect(m.parse(m.stringify(obj, opts), opts)).toEqual(obj)
-    )
+    fc.property(paramsArb, optsArb, (obj, opts) => {
+      expect(m.parse(m.stringify(obj, opts), opts)).toEqual(obj);
+    })
   ));
