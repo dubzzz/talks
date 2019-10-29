@@ -368,9 +368,7 @@ knuthMorrisPratt("a", "a") //=> 0
                 <h3>But...</h3>
                 <p class="fragment">Only covered the truthy state</p>
                 <p class="fragment">In reality our algorithm is more <em>indexOf</em></p>
-            </section>
-            <section>
-                <div style="display:flex;flex-direction:row;justify-content:space-evenly;">
+                <div class="fragment" style="display:flex;flex-direction:row;justify-content:space-evenly;">
                     <div>
                         <p style="font-size:1.5em">"<em>in<span class="fragment highlight-green visible">vite</span>r</em>"</p>
                         <p style="font-size:0.7em">a</p>
@@ -384,20 +382,6 @@ knuthMorrisPratt("a", "a") //=> 0
                         <p style="font-size:0.7em">b</p>
                     </div>
                 </div>
-                <div class="fragment">
-                    <em>knuth</em>(a, b) == <em>2</em>
-                </div>
-                <div class="fragment">
-                    a.substr(2, b.length) == b
-                </div>
-                <div style="margin-top:48px;"></div>
-                <p class="quote-right fragment">
-                    for all <em>a, b strings and idx = a.indexOf(b)</em>
-                    <br/>is either <em>-1</em> or <em>position of the match</em>
-                </p>
-            </section>
-            <section>
-                <img src="images/code-knuth-2.png"/>
             </section>
             <section>
                 <h2>What about more complex libs?</h2>
@@ -592,7 +576,7 @@ expect(s2).toEqual(s1); // success
     display: 'block',
 
     // Add timer coming from project: https://github.com/tkrkt/reveal.js-elapsed-time-bar
-    allottedTime: 30 * 60 * 1000,
+    allottedTime: 20 * 60 * 1000,
     keyboard: { 82 /*r*/: () => { ElapsedTimeBar.reset(); } },
 
     // Optional modules
