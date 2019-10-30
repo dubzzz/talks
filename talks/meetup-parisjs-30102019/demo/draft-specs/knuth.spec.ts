@@ -10,3 +10,5 @@ test("Some units", () => {
   expect(knuth("abcxabcdabxaabcdabcabcdabcdabcy", "abcdabca")).toBe(12);
   expect(knuth("abcxabcdabxaabaabaaaabcdabcdabcy", "aabaabaaa")).toBe(11);
 });
+
+const isSubstring = (a: string, b: string) => knuth(a, b) !== -1;
