@@ -14,8 +14,7 @@ describe("_.toEqual", () => {
           withObjectString: true
         }),
         (a, b) => _.isEqual(a, b) === _.isEqual(b, a)
-      ),
-      { seed: -7457024, path: "4848", endOnFailure: true }
+      )
     );
   });
 });
