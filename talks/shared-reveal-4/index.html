@@ -2,23 +2,201 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
 
     <title>reveal.js</title>
 
     <link rel="stylesheet" href="../shared-reveal-4/dist/reset.css" />
     <link rel="stylesheet" href="../shared-reveal-4/dist/reveal.css" />
-    <link rel="stylesheet" href="../shared-reveal-4/dist/theme/black.css" id="theme" />
+    <link
+      rel="stylesheet"
+      href="../shared-reveal-4/dist/theme/black.css"
+      id="theme"
+    />
 
     <!-- Theme used for syntax highlighted code -->
-    <link rel="stylesheet" href="../shared-reveal-4/plugin/highlight/monokai.css" id="highlight-theme" />
+    <link
+      rel="stylesheet"
+      href="../shared-reveal-4/plugin/highlight/monokai.css"
+      id="highlight-theme"
+    />
+    <link rel="stylesheet" href="../shared-reveal-4/css/shared.css" />
+    <link rel="stylesheet" href="../shared-reveal-4/css/animated-pigment.css" />
   </head>
   <body>
     <div class="reveal">
       <div class="slides">
-        <section>Slide 1</section>
-        <section>Slide 2</section>
+        <section>
+          <aside class="notes"></aside>
+          <div>
+            <img
+              src="./images/conf-logo.png"
+              alt="Conference Logo"
+              class="styleless-image"
+              style="height: 128px;"
+            />
+          </div>
+          <h1>&lt;&nbsp;Name of the talk&nbsp;&gt;</h1>
+          <h3>Nicolas DUBIEN</h3>
+          <p class="vsmallnote">&lt;&nbsp;Name of the event&nbsp;&gt;</p>
+        </section>
+        <section>
+          <aside class="notes"></aside>
+          <div>
+            <img
+              src="./images/me.jpg"
+              style="border-radius: 50%; height: 128px;"
+            />
+          </div>
+          <div>
+            <h2>Nicolas DUBIEN</h2>
+            <div class="vertical-spacer"></div>
+            <div>
+              <!-- Static logo -->
+              <!-- <img src="./images/company.svg" class="styleless-image" style="height: 64px;" />-->
+
+              <!-- Animated Pigment -->
+              <svg
+                class="fragment animated-pigment"
+                style="height: 96px;"
+                viewBox="0 0 120 48"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g class="animated-pigment-part-b" width="48" height="48">
+                  <path
+                    d="M16.2 18C16.2 14.6863 18.8862 12 22.1999 12C22.8627 12 23.3999 12.5373 23.3999 13.2V32.4C23.3999 34.3882 21.7882 36 19.7999 36C17.8117 36 16.2 34.3882 16.2 32.4V18Z"
+                    fill="#00B1FF"
+                  />
+                </g>
+                <g class="animated-pigment-part-c" width="48" height="48">
+                  <ellipse cx="30" cy="33" rx="2.99999" ry="3" fill="#FFB900" />
+                </g>
+                <g class="animated-pigment-part-d" width="48" height="48">
+                  <path
+                    d="M30.7154 24.964C32.1782 23.5083 32.9999 21.4839 32.9999 19.4253C32.9999 17.3668 32.178 15.4917 30.7153 14.036C29.8849 13.2097 28.4042 12.3759 27.6176 12.126C25.6618 11.7629 25.2007 12.1255 25.2 13.9923L25.2001 25.0077C25.2008 26.8745 25.662 27.2371 27.6178 26.874C28.4043 26.6241 29.8851 25.7903 30.7154 24.964Z"
+                    fill="#00D363"
+                  />
+                </g>
+                <g>
+                  <text x="32" y="36">igment</text>
+                </g>
+              </svg>
+            </div>
+            <div class="vertical-spacer"></div>
+            <div style="color: #ffffff; vertical-align: middle;">
+              <img
+                src="./images/github-white.png"
+                class="styleless-image"
+                style="height: 32px;"
+              />
+              dubzzz
+            </div>
+            <div style="color: #1da1f2; vertical-align: middle;">
+              <img
+                src="./images/twitter.png"
+                class="styleless-image"
+                style="height: 32px;"
+              />
+              ndubien
+            </div>
+            <!--<div style="color: #cb3837; vertical-align: middle;">
+              <img src="./images/npm.png" class="styleless-image" style="height: 32px;" />
+              fast-check
+            </div>-->
+          </div>
+        </section>
+        <section>
+          <aside class="notes"></aside>
+          <h2>Questions?</h2>
+          <div class="vertical-spacer"></div>
+          <div style="color: #ffffff; vertical-align: middle;">
+            <img
+              src="./images/github-white.png"
+              class="styleless-image"
+              style="height: 32px;"
+            />
+            dubzzz
+          </div>
+          <div style="color: #1da1f2; vertical-align: middle;">
+            <img
+              src="./images/twitter.png"
+              class="styleless-image"
+              style="height: 32px;"
+            />
+            ndubien
+          </div>
+          <!--<div style="color: #cb3837; vertical-align: middle;">
+			<img src="./images/npm.png" class="styleless-image" style="height: 32px;" />
+			fast-check
+		  </div>-->
+        </section>
       </div>
+    </div>
+
+    <div
+      style="
+        display: grid;
+        align-items: center;
+        column-gap: 0.5rem;
+        row-gap: 0.2rem;
+        position: fixed;
+        z-index: 9999;
+        left: 1em;
+        bottom: 1em;
+        color: #ffffff;
+        font-size: 2rem;
+        font-family: 'Source Sans Pro', Helvetica, sans-serif;
+      "
+    >
+      <img
+        src="./images/github-white.png"
+        class="footer-github styleless-image"
+        style="
+          justify-self: center;
+          grid-row: 1;
+          grid-column: 1;
+          height: 2rem;
+          text-shadow: #0007 1px 1px 1px;
+        "
+      />
+      <div
+        style="
+          grid-row: 1;
+          grid-column: 2;
+          color: #ffffff;
+          vertical-align: middle;
+          text-shadow: #0007 1px 1px 1px;
+        "
+      >
+        dubzzz
+      </div>
+      <img
+        src="./images/twitter.png"
+        class="styleless-image"
+        style="justify-self: center; grid-row: 2; grid-column: 1; height: 2rem;"
+      />
+      <div
+        style="
+          grid-row: 2;
+          grid-column: 2;
+          color: #1da1f2;
+          vertical-align: middle;
+        "
+      >
+        ndubien
+      </div>
+      <!--<img
+        src="./images/npm.png"
+        class="styleless-image"
+        style="justify-self: center; grid-row: 3; grid-column: 1; width: 2rem;"
+      />
+      <div style="grid-row: 3; grid-column: 2; color: #cb3837; vertical-align: middle;">
+        fast-check
+      </div>-->
     </div>
 
     <script src="../shared-reveal-4/dist/reveal.js"></script>
@@ -31,6 +209,9 @@
       // - https://revealjs.com/config/
       Reveal.initialize({
         hash: true,
+        slideNumber: true,
+        fragmentInURL: true,
+        totalTime: 25 * 60,
 
         // Learn about plugins: https://revealjs.com/plugins/
         plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
