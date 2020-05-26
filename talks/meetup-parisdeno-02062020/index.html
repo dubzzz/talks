@@ -38,33 +38,42 @@
         src: url('https://excalidraw.com/FG_Virgil.woff2');
       }
       svg.animated-pigment {
-        animation-duration: 10s;
+        /* Override fragment */
+        /* Once toggled the fragment will be flagged as visible (also current-fragment when selected) */
+        opacity: 1 !important;
+        visibility: visible !important;
+      }
+      svg.animated-pigment:not(.visible) {
+        transform: translateX(60px);
+      }
+      svg.animated-pigment.visible {
+        animation-duration: 5s;
         animation-name: animated-pigment-anim;
       }
       @keyframes animated-pigment-anim {
         0% {
           transform: translateX(60px);
         }
-        80% {
+        60% {
           transform: translateX(60px);
         }
         100% {
           transform: translateX(0px);
         }
       }
-      .animated-pigment g text {
+      .animated-pigment.visible g text {
         stroke: #ffb900;
         fill: #ffb900;
         font-family: 'Virgil';
         font-size: 26px;
-        animation-duration: 10s;
+        animation-duration: 5s;
         animation-name: animated-pigment-text-anim;
       }
       @keyframes animated-pigment-text-anim {
         0% {
           opacity: 0;
         }
-        80% {
+        60% {
           opacity: 0;
           transform: scaleX(0%);
         }
@@ -73,8 +82,7 @@
           transform: scaleX(100%);
         }
       }
-      .animated-pigment .animated-pigment-part-b {
-        animation-delay: 5s;
+      .animated-pigment.visible .animated-pigment-part-b {
         animation-duration: 5s;
         animation-iteration-count: 1;
         animation-name: animated-pigment-part-b-anim;
@@ -89,9 +97,9 @@
           transform: rotate(360deg);
         }
       }
-      .animated-pigment .animated-pigment-part-c {
+      .animated-pigment.visible .animated-pigment-part-c {
         opacity: 0;
-        animation-duration: 10s;
+        animation-duration: 5s;
         animation-iteration-count: 1;
         animation-name: animated-pigment-part-c-anim;
       }
@@ -101,12 +109,7 @@
           transform-origin: 24px 24px;
           transform: rotate(0deg);
         }
-        50% {
-          opacity: 1;
-          transform-origin: 24px 24px;
-          transform: rotate(0deg);
-        }
-        80% {
+        60% {
           opacity: 1;
           transform-origin: 24px 24px;
           transform: rotate(1080deg);
@@ -117,8 +120,7 @@
           transform: rotate(1080deg);
         }
       }
-      .animated-pigment .animated-pigment-part-d {
-        animation-delay: 5s;
+      .animated-pigment.visible .animated-pigment-part-d {
         animation-duration: 5s;
         animation-iteration-count: 1;
         animation-name: animated-pigment-part-d-anim;
@@ -152,7 +154,7 @@
 
               <!-- Animated Pigment -->
               <svg
-                class="animated-pigment"
+                class="fragment animated-pigment"
                 style="height: 96px;"
                 viewBox="0 0 120 48"
                 fill="none"
