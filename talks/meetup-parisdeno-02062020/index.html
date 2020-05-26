@@ -30,6 +30,110 @@
         filter: invert(0.7);
       }
     </style>
+
+    <!-- Animated Pigment -->
+    <style>
+      @font-face {
+        font-family: 'Virgil';
+        src: url('https://excalidraw.com/FG_Virgil.woff2');
+      }
+      svg.animated-pigment {
+        animation-duration: 10s;
+        animation-name: animated-pigment-anim;
+      }
+      @keyframes animated-pigment-anim {
+        0% {
+          transform: translateX(60px);
+        }
+        80% {
+          transform: translateX(60px);
+        }
+        100% {
+          transform: translateX(0px);
+        }
+      }
+      .animated-pigment g text {
+        stroke: #ffb900;
+        fill: #ffb900;
+        font-family: 'Virgil';
+        font-size: 26px;
+        animation-duration: 10s;
+        animation-name: animated-pigment-text-anim;
+      }
+      @keyframes animated-pigment-text-anim {
+        0% {
+          opacity: 0;
+        }
+        80% {
+          opacity: 0;
+          transform: scaleX(0%);
+        }
+        100% {
+          opacity: 1;
+          transform: scaleX(100%);
+        }
+      }
+      .animated-pigment .animated-pigment-part-b {
+        animation-delay: 5s;
+        animation-duration: 5s;
+        animation-iteration-count: 1;
+        animation-name: animated-pigment-part-b-anim;
+      }
+      @keyframes animated-pigment-part-b-anim {
+        0% {
+          transform-origin: 24px 24px;
+          transform: rotate(0deg);
+        }
+        100% {
+          transform-origin: 24px 24px;
+          transform: rotate(360deg);
+        }
+      }
+      .animated-pigment .animated-pigment-part-c {
+        opacity: 0;
+        animation-duration: 10s;
+        animation-iteration-count: 1;
+        animation-name: animated-pigment-part-c-anim;
+      }
+      @keyframes animated-pigment-part-c-anim {
+        0% {
+          opacity: 1;
+          transform-origin: 24px 24px;
+          transform: rotate(0deg);
+        }
+        50% {
+          opacity: 1;
+          transform-origin: 24px 24px;
+          transform: rotate(0deg);
+        }
+        80% {
+          opacity: 1;
+          transform-origin: 24px 24px;
+          transform: rotate(1080deg);
+        }
+        100% {
+          opacity: 0;
+          transform-origin: 24px 24px;
+          transform: rotate(1080deg);
+        }
+      }
+      .animated-pigment .animated-pigment-part-d {
+        animation-delay: 5s;
+        animation-duration: 5s;
+        animation-iteration-count: 1;
+        animation-name: animated-pigment-part-d-anim;
+      }
+      @keyframes animated-pigment-part-d-anim {
+        0% {
+          transform-origin: 24px 24px;
+          transform: rotate(0deg);
+        }
+        100% {
+          transform-origin: 24px 24px;
+          transform: rotate(-360deg);
+        }
+      }
+    </style>
   </head>
   <body>
     <div class="reveal">
@@ -43,7 +147,36 @@
             <h2>Nicolas DUBIEN</h2>
             <div class="vertical-spacer"></div>
             <div>
-              <img src="./images/company.svg" class="styleless-image" style="height: 64px;" />
+              <!-- Static logo -->
+              <!-- <img src="./images/company.svg" class="styleless-image" style="height: 64px;" />-->
+
+              <!-- Animated Pigment -->
+              <svg
+                class="animated-pigment"
+                style="height: 96px;"
+                viewBox="0 0 120 48"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g class="animated-pigment-part-b" width="48" height="48">
+                  <path
+                    d="M16.2 18C16.2 14.6863 18.8862 12 22.1999 12C22.8627 12 23.3999 12.5373 23.3999 13.2V32.4C23.3999 34.3882 21.7882 36 19.7999 36C17.8117 36 16.2 34.3882 16.2 32.4V18Z"
+                    fill="#00B1FF"
+                  />
+                </g>
+                <g class="animated-pigment-part-c" width="48" height="48">
+                  <ellipse cx="30" cy="33" rx="2.99999" ry="3" fill="#FFB900" />
+                </g>
+                <g class="animated-pigment-part-d" width="48" height="48">
+                  <path
+                    d="M30.7154 24.964C32.1782 23.5083 32.9999 21.4839 32.9999 19.4253C32.9999 17.3668 32.178 15.4917 30.7153 14.036C29.8849 13.2097 28.4042 12.3759 27.6176 12.126C25.6618 11.7629 25.2007 12.1255 25.2 13.9923L25.2001 25.0077C25.2008 26.8745 25.662 27.2371 27.6178 26.874C28.4043 26.6241 29.8851 25.7903 30.7154 24.964Z"
+                    fill="#00D363"
+                  />
+                </g>
+                <g>
+                  <text x="32" y="36">igment</text>
+                </g>
+              </svg>
             </div>
             <div class="vertical-spacer"></div>
             <div style="color: #ffffff; vertical-align: middle;">
