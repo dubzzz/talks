@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <title>reveal.js</title>
+    <title>Ready for Deno, CJS and ESM all together?</title>
 
     <link rel="stylesheet" href="../shared-reveal-4/dist/reset.css" />
     <link rel="stylesheet" href="../shared-reveal-4/dist/reveal.css" />
@@ -23,9 +23,83 @@
           <div>
             <img src="./images/conf-logo.png" alt="Conference Logo" class="styleless-image" style="height: 128px;" />
           </div>
-          <h1>&lt;&nbsp;Name of the talk&nbsp;&gt;</h1>
+          <h1>Ready for Deno, CJS and ESM all together?</h1>
           <h3>Nicolas DUBIEN</h3>
-          <p class="vsmallnote">&lt;&nbsp;Name of the event&nbsp;&gt;</p>
+          <p class="vsmallnote">Paris Deno #2: <code>"node".split("").sort().join("");</code></p>
+        </section>
+        <section data-background="rgb(255, 250, 233)">
+          <aside class="notes"></aside>
+          <div>
+            <img src="./images/part-history.png" alt="Pyramid" class="styleless-image" style="height: 256px;" />
+            <div class="vertical-spacer"></div>
+            <h2>History</h2>
+          </div>
+        </section>
+        <section data-background="rgb(255, 250, 233)">
+          <aside class="notes"></aside>
+          <div>
+            <p>The first browser was released in 1991</p>
+            <p>By that time web pages could only be static</p>
+          </div>
+        </section>
+        <section data-background="rgb(255, 250, 233)">
+          <aside class="notes"></aside>
+          <div>
+            <p><code>JavaScript</code> born in 1995</p>
+            <p>Thanks to Brendan Eich</p>
+          </div>
+        </section>
+        <section data-background="rgb(255, 250, 233)">
+          <aside class="notes">
+            Adding JavaScript to a web site was done as follow
+            <br />First <code>a.js</code> loads, below this line, no script will be executed and no html rendered
+            <br />Then <code>b.js</code> can access globals created by <code>a.js</code>
+          </aside>
+          <h3>Web 1.0</h3>
+          <pre><code class="hljs html" data-trim data-noescape style="background-color: #272822;" data-line-numbers="|3|4|7|8">
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;script src="./a.js"&gt;&lt;/script&gt;
+    &lt;script src="./b.js"&gt;&lt;/script&gt;
+  &lt;/head&lt;
+  &lt;body&gt;
+    &lt;div id="content"&gt;&lt;/div&gt;
+    &lt;script src="./c.js"&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+          </code></pre>
+        </section>
+        <section data-background="rgb(255, 250, 233)">
+          <aside class="notes">
+            Scripts are blocking each others but also render
+            <br />Difficult to manage large codebases
+          </aside>
+          <div>
+            <p>Everything is <em>synchronous</em></p>
+            <div class="vertical-spacer"></div>
+            <p>No built-in way to handle <em>dependencies</em></p>
+          </div>
+        </section>
+        <section data-background="rgb(255, 250, 233)">
+          <aside class="notes"></aside>
+          <div>
+            <p><code>Node.js</code> released in 2009</p>
+            <p>Thanks to Ryan Dahl</p>
+          </div>
+        </section>
+        <section data-background="rgb(255, 250, 233)">
+          <aside class="notes"></aside>
+          <div>
+            <p><code>TypeScript</code> released in 2012</p>
+            <p>Thanks to Anders Hejlsberg</p>
+          </div>
+        </section>
+        <section data-background="rgb(255, 250, 233)">
+          <aside class="notes"></aside>
+          <div>
+            <p><code>Deno</code> released in 2018</p>
+            <p>Thanks to Ryan Dahl</p>
+          </div>
         </section>
         <section>
           <aside class="notes"></aside>

@@ -138,3 +138,7 @@ li.active,
   font-size: 0.5em;
   color: #777872;
 }
+
+.reveal .slide-number {
+  background-color: inherit !important;
+}
