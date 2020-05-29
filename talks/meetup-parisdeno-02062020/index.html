@@ -32,7 +32,8 @@
           <div>
             <img src="./images/part-history.png" alt="Pyramid" class="styleless-image" style="height: 256px;" />
             <div class="vertical-spacer"></div>
-            <h2>History</h2>
+            <h2>History of modules</h2>
+            <h3>From ancient ages to ES Modules</h3>
           </div>
         </section>
         <section data-background="rgb(255, 250, 233)">
@@ -63,7 +64,7 @@
             capability to load scripts on demand.
           </aside>
           <h3>Web 1.0</h3>
-          <pre><code class="hljs html" data-trim data-noescape style="background-color: #272822;" data-line-numbers="|3|4|7|8">
+          <pre><code class="hljs html" data-trim data-noescape style="background-color: #272822;" data-line-numbers="|8">
 &lt;html&gt;
   &lt;head&gt;
     &lt;script src="./a.js"&gt;&lt;/script&gt;
@@ -83,7 +84,6 @@
           </aside>
           <div>
             <p>Everything is <em>synchronous</em></p>
-            <div class="vertical-spacer"></div>
             <p>No built-in way to handle <em>dependencies</em></p>
           </div>
         </section>
@@ -112,13 +112,18 @@ exports.b = 'toto';
           <aside class="notes">
             Related technologies:
             <br />- umd in 2011 <br />- system in 2013 <br />See
-            https://www.davidbcalhoun.com/2014/what-is-amd-commonjs-and-umd/
+            https://www.davidbcalhoun.com/2014/what-is-amd-commonjs-and-umd/ <br />See
+            https://github.com/unscriptable/curl
           </aside>
           <div>
-            <p><code>RequireJS</code> has been released in 2010</p>
+            <p class="fragment" data-fragment-index="1"><code>RequireJS</code> has been released in 2010</p>
+            <p class="fragment" data-fragment-index="2"><code>curl.js</code> has been released in 2011</p>
+            <div class="vertical-spacer"></div>
             <p>Handle dependencies on browser side</p>
             <div class="vertical-spacer"></div>
-            <p class="fragment"><em>Asynchronous Module Definition</em> is now a reality</p>
+            <p class="fragment" data-fragment-index="3">
+              <em>Asynchronous Module Definition</em> has been specified in 2011
+            </p>
           </div>
         </section>
         <section data-background="rgb(255, 250, 233)">
@@ -128,7 +133,7 @@ exports.b = 'toto';
             function once all the dependencies have been loaded and executed. <br />Pass the dependent modules as
             arguments to the factory function.
           </aside>
-          <h3>RequireJS</h3>
+          <h3>AMD</h3>
           <pre><code class="hljs javascript" data-trim data-noescape style="background-color: #272822;" data-line-numbers="|2|3-8|4-7">
 define(
     ['dep1', 'dep2'],
@@ -149,7 +154,7 @@ define(
                 <tr>
                   <th></th>
                   <th>CommonJS</th>
-                  <th>RequireJS</th>
+                  <th>AMD</th>
                 </tr>
               </thead>
               <tbody>
@@ -197,7 +202,7 @@ define(
                   </td>
                 </tr>
                 <tr>
-                  <td><b>Order?</b></td>
+                  <td><b>Exec?</b></td>
                   <td>
                     <span class="fragment" data-fragment-index="4">In order*</span>
                   </td>
@@ -250,10 +255,10 @@ export const b = 'toto';
         </section>
         <section data-background="rgb(255, 250, 233)">
           <aside class="notes">
-            Sync? Script might be fetched asynchronously...
-            <br />Order? ...but they will be executed in order. <br />Import? Mostly before but there is a dynamic
-            import syntax that can be used everywhere <br />Ext? Required as it could be useful to load other files like
-            mjs, asm...
+            Sync? Script might be fetched asynchronously and contain asynchronous code thanks to top-level await.
+            <br />Exec? Depends on the modules, if they have already been loaded, if they are synchronous or not
+            (top-level await). <br />Import? Mostly before but there is a dynamic import syntax that can be used
+            everywhere <br />Ext? Required as it could be useful to load other files like mjs, asm...
           </aside>
           <div>
             <table>
@@ -261,7 +266,7 @@ export const b = 'toto';
                 <tr>
                   <th></th>
                   <th>CommonJS</th>
-                  <th>RequireJS</th>
+                  <th>AMD</th>
                   <th>ES Modules</th>
                 </tr>
               </thead>
@@ -275,11 +280,11 @@ export const b = 'toto';
                     <span>Asynchronously</span>
                   </td>
                   <td>
-                    <span class="fragment">Asynchronously*</span>
+                    <span class="fragment">~Asynchronously~</span>
                   </td>
                 </tr>
                 <tr>
-                  <td><b>Order?</b></td>
+                  <td><b>Exec?</b></td>
                   <td>
                     <span>In order*</span>
                   </td>
@@ -287,7 +292,7 @@ export const b = 'toto';
                     <span>It depends</span>
                   </td>
                   <td>
-                    <span class="fragment">In order*</span>
+                    <span class="fragment">~It depends~</span>
                   </td>
                 </tr>
                 <tr>
@@ -299,7 +304,7 @@ export const b = 'toto';
                     <span>Before</span>
                   </td>
                   <td>
-                    <span class="fragment">Before*</span>
+                    <span class="fragment">~Before~</span>
                   </td>
                 </tr>
                 <tr>
@@ -371,6 +376,15 @@ export const b = 'toto';
               <img src="./images/npm.png" class="styleless-image" style="height: 32px;" />
               fast-check
             </div>-->
+          </div>
+        </section>
+        <section>
+          <aside class="notes"></aside>
+          <div>
+            <img src="./images/part-history.png" alt="Pyramid" class="styleless-image" style="height: 256px;" />
+            <div class="vertical-spacer"></div>
+            <h2>Towards ES Modules</h2>
+            <h3>Hybrid mode supporting CommonJS and ES Modules</h3>
           </div>
         </section>
         <section>

@@ -1,4 +1,4 @@
-requirejs(['c'], function (c) {
+define(['./c'], function (c) {
   console.log('a');
   c.inc();
 });

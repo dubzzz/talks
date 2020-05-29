@@ -1,12 +1,12 @@
-requirejs([], function () {
+define([], function () {
   console.log('c');
   let value = 0;
   return {
-    read() {
+    read: function () {
       console.log('read');
       return value;
     },
-    inc() {
+    inc: function () {
       console.log('inc');
       ++value;
     },

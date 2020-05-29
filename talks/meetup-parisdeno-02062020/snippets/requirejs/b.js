@@ -1,3 +1,3 @@
-requirejs([], function () {
+define([], function () {
   console.log('b');
 });
