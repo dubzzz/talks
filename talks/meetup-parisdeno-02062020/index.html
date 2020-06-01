@@ -14,6 +14,22 @@
     <link rel="stylesheet" href="../shared-reveal-4/plugin/highlight/monokai.css" id="highlight-theme" />
     <link rel="stylesheet" href="../shared-reveal-4/css/shared.css" />
     <link rel="stylesheet" href="../shared-reveal-4/css/animated-pigment.css" />
+
+    <style>
+      .two-cols {
+        display: grid;
+        align-items: center;
+        grid-template-columns: 50% 50%;
+      }
+      .two-cols > div:nth-child(2) {
+        background-color: #333;
+        border-radius: 8px;
+        padding: 8px;
+      }
+      .reveal pre code.hljs.mylib-def {
+        height: 150px !important;
+      }
+    </style>
   </head>
   <body>
     <div class="reveal">
@@ -402,24 +418,54 @@ export const b = 'toto';
           <h3>Our library will be called <code>my-lib</code></h3>
         </section>
         <section>
-          <p><code>my-lib</code> → <code>src/main.ts</code></p>
+          <p><code>src/main.ts</code></p>
           <pre><code class="hljs javascript" data-trim data-noescape style="background-color: #272822;">
 export const callMe = () => {
   console.log('Hello Paris Deno');
 };
           </code></pre>
         </section>
-        <section>
-          <h3>Compatible with CommonJS</h3>
-        </section>
-        <section>
-          <p><code>commonjs-user</code> → <code>index.js</code></p>
-          <pre><code class="hljs javascript" data-trim data-noescape style="background-color: #272822;">
-const { callMe } = require('my-lib');
-callMe();
+        <section data-transition="slide-in fade-out">
+          <p><code>tsconfig.json</code></p>
+          <pre><code class="hljs json mylib-def" data-trim data-noescape style="background-color: #272822;">
+{
+}            
           </code></pre>
-          <p><code>commonjs-user</code> → <code>package.json</code></p>
-          <pre><code class="hljs json" data-trim data-noescape style="background-color: #272822;">
+          <p><code>package.json</code></p>
+          <pre><code class="hljs json mylib-def" data-trim data-noescape style="background-color: #272822;">
+{
+  "type": "commonjs",
+  "name": "my-lib"
+}
+          </code></pre>
+        </section>
+        <section data-transition="fade-in fade-out">
+          <div class="two-cols">
+            <div>
+              <p><code>tsconfig.json</code></p>
+              <pre><code class="hljs json mylib-def" data-trim data-noescape style="background-color: #272822;">
+{
+}
+              </code></pre>
+              <p><code>package.json</code></p>
+              <pre><code class="hljs json mylib-def" data-trim data-noescape style="background-color: #272822;">
+{
+  "type": "commonjs",
+  "name": "my-lib"
+}
+              </code></pre>
+            </div>
+            <div>
+              <h3>Compatible with CommonJS</h3>
+              <p class="fragment"><code>index.js</code></p>
+              <pre
+                class="fragment"
+              ><code class="hljs javascript" data-trim data-noescape style="background-color: #272822;">
+const { callMe } = require('my-lib')
+callMe()
+              </code></pre>
+              <p class="fragment"><code>package.json</code></p>
+              <pre class="fragment"><code class="hljs json" data-trim data-noescape style="background-color: #272822;">
 {
   "type": "commonjs",
   "scripts": {
@@ -429,14 +475,13 @@ callMe();
     "my-lib": "file:../my-lib"
   }
 }
-          </code></pre>
+              </code></pre>
+            </div>
+          </div>
         </section>
-        <section>
-          <p style="margin-bottom: 0;"><code>my-lib</code> → <code>tsconfig.json</code></p>
-          <p style="margin-top: 0;" class="vsmallnote">Our source file is <code>src/main.ts</code></p>
-          <pre
-            class="fragment"
-          ><code class="hljs json" data-trim data-noescape style="background-color: #272822;" data-line-numbers="|4|4,6">
+        <section data-transition="fade-out fade-in">
+          <p><code>tsconfig.json</code></p>
+          <pre><code class="hljs json mylib-def" data-trim data-noescape style="background-color: #272822;" data-line-numbers="|4|6">
 {
   "compilerOptions": {
     "alwaysStrict": true,
@@ -446,14 +491,9 @@ callMe();
   },
   "include": ["src/**/*"]
 }            
-          </code></pre>
-        </section>
-        <section>
-          <p style="margin-bottom: 0;"><code>my-lib</code> → <code>package.json</code></p>
-          <p style="margin-top: 0;" class="vsmallnote">Our generated source file is <code>build/main.js</code></p>
-          <pre
-            class="fragment"
-          ><code class="hljs json" data-trim data-noescape style="background-color: #272822;" data-line-numbers="|2|2,4|2,4,6">
+              </code></pre>
+          <p><code>package.json</code></p>
+          <pre><code class="hljs json mylib-def" data-trim data-noescape style="background-color: #272822;" data-line-numbers="|2|4|6">
 {
   "type": "commonjs",
   "name": "my-lib",
@@ -467,15 +507,42 @@ callMe();
 }
           </code></pre>
         </section>
-        <section>
-          <h3>Compatible with TypeScript</h3>
+        <section data-transition="fade-out fade-in">
+          <div class="two-cols">
+            <div>
+              <p><code>tsconfig.json</code></p>
+              <pre><code class="hljs json mylib-def" data-trim data-noescape style="background-color: #272822;">
+{
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "module": "commonjs",
+    "target": "esnext",
+    "outDir": "build/"
+  },
+  "include": ["src/**/*"]
+}            
+              </code></pre>
+              <p><code>package.json</code></p>
+              <pre><code class="hljs json mylib-def" data-trim data-noescape style="background-color: #272822;">
+{
+  "type": "commonjs",
+  "name": "my-lib",
+  "main": "build/main.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^3.9.3"
+  }
+}
+              </code></pre>
+            </div>
+            <div><h3>Compatible with TypeScript</h3></div>
+          </div>
         </section>
-        <section>
-          <p style="margin-bottom: 0;"><code>my-lib</code> → <code>tsconfig.json</code></p>
-          <p style="margin-top: 0;" class="vsmallnote">Our source file is <code>src/main.ts</code></p>
-          <pre
-            class="fragment"
-          ><code class="hljs json" data-trim data-noescape style="background-color: #272822;" data-line-numbers="|7">
+        <section data-transition="fade-out fade-in">
+          <p><code>tsconfig.json</code></p>
+          <pre><code class="hljs json mylib-def" data-trim data-noescape style="background-color: #272822;" data-line-numbers="|7">
 {
   "compilerOptions": {
     "alwaysStrict": true,
@@ -487,13 +554,8 @@ callMe();
   "include": ["src/**/*"]
 }            
           </code></pre>
-        </section>
-        <section>
-          <p style="margin-bottom: 0;"><code>my-lib</code> → <code>package.json</code></p>
-          <p style="margin-top: 0;" class="vsmallnote">Our generated typings file is <code>build/main.d.ts</code></p>
-          <pre
-            class="fragment"
-          ><code class="hljs json" data-trim data-noescape style="background-color: #272822;" data-line-numbers="|5">
+          <p><code>package.json</code></p>
+          <pre><code class="hljs json mylib-def" data-trim data-noescape style="background-color: #272822;" data-line-numbers="|5">
 {
   "type": "commonjs",
   "name": "my-lib",
@@ -508,16 +570,48 @@ callMe();
 }
           </code></pre>
         </section>
-        <section>
-          <h3>Compatible with Browser</h3>
-        </section>
-        <section>
-          <p>Web Page → <code>index.html</code></p>
-          <pre><code class="hljs html" data-trim data-noescape style="background-color: #272822;" data-line-numbers="|3-5|3-5,8-11">
+        <section data-transition="fade-out fade-in">
+          <div class="two-cols">
+            <div>
+              <p><code>tsconfig.json</code></p>
+              <pre><code class="hljs json mylib-def" data-trim data-noescape style="background-color: #272822;">
+{
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "module": "commonjs",
+    "target": "esnext",
+    "outDir": "build/",
+    "declaration": true
+  },
+  "include": ["src/**/*"]
+}            
+            </code></pre>
+              <p><code>package.json</code></p>
+              <pre><code class="hljs json mylib-def" data-trim data-noescape style="background-color: #272822;">
+{
+  "type": "commonjs",
+  "name": "my-lib",
+  "main": "build/main.js",
+  "types": "build/main.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^3.9.3"
+  }
+}
+            </code></pre>
+            </div>
+            <div>
+              <h3>Compatible with Browser</h3>
+              <p class="fragment">Web Page → <code>index.html</code></p>
+              <pre
+                class="fragment"
+              ><code class="hljs html" data-trim data-noescape style="background-color: #272822;" data-line-numbers="|3-5|8-11">
 &lt;html&gt;
 &lt;head&gt;
   &lt;script
-    src="https://cdn.jsdelivr.net/npm/my-lib/build/gen.js"
+    src="://..jsdelivr../gen.js"
   &gt;&lt;/script&gt;
 &lt;/head&gt;
 &lt;body&gt;
@@ -528,20 +622,67 @@ callMe();
 &lt;/body&gt;
 &lt;/html&gt;
           </code></pre>
+            </div>
+          </div>
         </section>
-        <section>
-          <p>Two options:</p>
-          <ul>
-            <li class="fragment">Specific build for Web users</li>
-            <li class="fragment">ES Module</li>
-          </ul>
+        <section data-transition="fade-out fade-in">
+          <div class="two-cols">
+            <div>
+              <p><code>tsconfig.json</code></p>
+              <pre><code class="hljs json mylib-def" data-trim data-noescape style="background-color: #272822;">
+{
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "module": "commonjs",
+    "target": "esnext",
+    "outDir": "build/",
+    "declaration": true
+  },
+  "include": ["src/**/*"]
+}            
+            </code></pre>
+              <p><code>package.json</code></p>
+              <pre><code class="hljs json mylib-def" data-trim data-noescape style="background-color: #272822;">
+{
+  "type": "commonjs",
+  "name": "my-lib",
+  "main": "build/main.js",
+  "types": "build/main.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^3.9.3"
+  }
+}
+            </code></pre>
+            </div>
+            <div>
+              <h3>Compatible with Browser</h3>
+              <p>Two options:</p>
+              <ul>
+                <li class="fragment">Specific build for Web users</li>
+                <li class="fragment">ES Module</li>
+              </ul>
+            </div>
+          </div>
         </section>
-        <section>
-          <p style="margin-bottom: 0;"><code>my-lib</code> → <code>package.json</code></p>
-          <p style="margin-top: 0;" class="vsmallnote">Our generated source file is <code>build/main.js</code></p>
-          <pre
-            class="fragment"
-          ><code class="hljs json" data-trim data-noescape style="background-color: #272822;" data-line-numbers="|12|9,12|5,9,12">
+        <section data-transition="fade-out fade-in">
+          <p><code>tsconfig.json</code></p>
+          <pre><code class="hljs json mylib-def" data-trim data-noescape style="background-color: #272822;">
+{
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "module": "commonjs",
+    "target": "esnext",
+    "outDir": "build/",
+    "declaration": true
+  },
+  "include": ["src/**/*"]
+}            
+        </code></pre>
+          <p><code>package.json</code></p>
+          <pre><code class="hljs json mylib-def" data-trim data-noescape style="background-color: #272822;" data-line-numbers="|12|9|5">
 {
   "type": "commonjs",
   "name": "my-lib",
@@ -559,16 +700,64 @@ callMe();
 }
           </code></pre>
         </section>
-        <section>
-          <h3>Compatible with modern bundlers</h3>
-          <p class="fragment">Compatible with ES Modules for a while</p>
-          <p class="fragment">Require to define <em>module</em> field in <em>package.json</em></p>
+        <section data-transition="fade-out fade-in">
+          <div class="two-cols">
+            <div>
+              <p><code>tsconfig.json</code></p>
+              <pre><code class="hljs json mylib-def" data-trim data-noescape style="background-color: #272822;">
+{
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "module": "commonjs",
+    "target": "esnext",
+    "outDir": "build/",
+    "declaration": true
+  },
+  "include": ["src/**/*"]
+}            
+        </code></pre>
+              <p><code>package.json</code></p>
+              <pre><code class="hljs json mylib-def" data-trim data-noescape style="background-color: #272822;">
+{
+  "type": "commonjs",
+  "name": "my-lib",
+  "main": "build/main.js",
+  "browser": "build/gen.js",
+  "types": "build/main.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "webbuild": "browserify build/main.js --s myLib > build/gen.js"
+  },
+  "devDependencies": {
+    "browserify": "^16.5.1",
+    "typescript": "^3.9.3"
+  }
+}
+          </code></pre>
+            </div>
+            <div>
+              <h3>Compatible with modern bundlers</h3>
+              <p class="fragment">Compatible with ES Modules for a while</p>
+              <p class="fragment">Require to define <em>module</em> field in <em>package.json</em></p>
+            </div>
+          </div>
         </section>
-        <section>
-          <p><code>my-lib</code> → <code>package.json</code></p>
-          <pre
-            class="fragment"
-          ><code class="hljs json" data-trim data-noescape style="background-color: #272822;" data-line-numbers="|6,10">
+        <section data-transition="fade-out fade-in">
+          <p><code>tsconfig.json</code></p>
+          <pre><code class="hljs json mylib-def" data-trim data-noescape style="background-color: #272822;">
+{
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "module": "commonjs",
+    "target": "esnext",
+    "outDir": "build/",
+    "declaration": true
+  },
+  "include": ["src/**/*"]
+}            
+          </code></pre>
+          <p><code>package.json</code></p>
+          <pre><code class="hljs json mylib-def" data-trim data-noescape style="background-color: #272822;" data-line-numbers="|6|10">
 {
   "type": "commonjs",
   "name": "my-lib",
@@ -588,35 +777,195 @@ callMe();
 }
           </code></pre>
         </section>
-        <section>
-          <h3>Compatible with ES Modules</h3>
-          <p class="fragment">Everything should be ready? 🤔</p>
+        <section data-transition="fade-out fade-in">
+          <div class="two-cols">
+            <div>
+              <p><code>tsconfig.json</code></p>
+              <pre><code class="hljs json mylib-def" data-trim data-noescape style="background-color: #272822;">
+{
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "module": "commonjs",
+    "target": "esnext",
+    "outDir": "build/",
+    "declaration": true
+  },
+  "include": ["src/**/*"]
+}            
+          </code></pre>
+              <p><code>package.json</code></p>
+              <pre><code class="hljs json mylib-def" data-trim data-noescape style="background-color: #272822;">
+{
+  "type": "commonjs",
+  "name": "my-lib",
+  "main": "build/main.js",
+  "browser": "build/gen.js",
+  "module": "build/esm/main.js",
+  "types": "build/main.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "build:esm": "tsc --module esnext --outDir build/esm",
+    "webbuild": "browserify build/main.js --s myLib > build/gen.js"
+  },
+  "devDependencies": {
+    "browserify": "^16.5.1",
+    "typescript": "^3.9.3"
+  }
+}
+          </code></pre>
+            </div>
+            <div>
+              <h3>Compatible with ES Modules</h3>
+              <p class="fragment">Everything should be ready? 🤔</p>
+            </div>
+          </div>
         </section>
-        <section>
-          <p>Node is not using <em>module</em></p>
-          <p>Node refuses to mix <em>module</em> and <em>commonjs</em></p>
-          <p>TypeScript does not add extension in import [<em>#16577</em>]</p>
+        <section data-transition="fade-out fade-in">
+          <div class="two-cols">
+            <div>
+              <p><code>tsconfig.json</code></p>
+              <pre><code class="hljs json mylib-def" data-trim data-noescape style="background-color: #272822;">
+{
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "module": "commonjs",
+    "target": "esnext",
+    "outDir": "build/",
+    "declaration": true
+  },
+  "include": ["src/**/*"]
+}            
+          </code></pre>
+              <p><code>package.json</code></p>
+              <pre><code class="hljs json mylib-def" data-trim data-noescape style="background-color: #272822;">
+{
+  "type": "commonjs",
+  "name": "my-lib",
+  "main": "build/main.js",
+  "browser": "build/gen.js",
+  "module": "build/esm/main.js",
+  "types": "build/main.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "build:esm": "tsc --module esnext --outDir build/esm",
+    "webbuild": "browserify build/main.js --s myLib > build/gen.js"
+  },
+  "devDependencies": {
+    "browserify": "^16.5.1",
+    "typescript": "^3.9.3"
+  }
+}
+          </code></pre>
+            </div>
+            <div>
+              <h3>Compatible with ES Modules</h3>
+              <p>Node is not using <em>module</em></p>
+              <p>Node refuses to mix <em>module</em> and <em>commonjs</em></p>
+              <p>TypeScript does not add extension in import [<em>#16577</em>]</p>
+            </div>
+          </div>
         </section>
-        <section>
-          <p><code>my-lib</code> → <code>src/main.ts</code> 💭</p>
-          <pre><code class="hljs javascript" data-trim data-noescape style="background-color: #272822;">
+        <section data-transition="fade-out fade-in">
+          <div class="two-cols">
+            <div>
+              <p><code>tsconfig.json</code></p>
+              <pre><code class="hljs json mylib-def" data-trim data-noescape style="background-color: #272822;">
+{
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "module": "commonjs",
+    "target": "esnext",
+    "outDir": "build/",
+    "declaration": true
+  },
+  "include": ["src/**/*"]
+}            
+          </code></pre>
+              <p><code>package.json</code></p>
+              <pre><code class="hljs json mylib-def" data-trim data-noescape style="background-color: #272822;">
+{
+  "type": "commonjs",
+  "name": "my-lib",
+  "main": "build/main.js",
+  "browser": "build/gen.js",
+  "module": "build/esm/main.js",
+  "types": "build/main.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "build:esm": "tsc --module esnext --outDir build/esm",
+    "webbuild": "browserify build/main.js --s myLib > build/gen.js"
+  },
+  "devDependencies": {
+    "browserify": "^16.5.1",
+    "typescript": "^3.9.3"
+  }
+}
+          </code></pre>
+            </div>
+            <div>
+              <h3>Compatible with ES Modules</h3>
+              <p><code>my-lib</code> → <code>src/main.ts</code> 💭</p>
+              <pre><code class="hljs javascript" data-trim data-noescape style="background-color: #272822;">
 import { callMe } from './a';
 export { callMe };
           </code></pre>
-          <p class="fragment"><code>my-lib</code> → <code>build/esm/main.js</code> 💭</p>
-          <pre
-            class="fragment"
-          ><code class="hljs javascript" data-trim data-noescape style="background-color: #272822;" data-line-numbers="|1">
+              <p class="fragment"><code>my-lib</code> → <code>build/esm/main.js</code> 💭</p>
+              <pre
+                class="fragment"
+              ><code class="hljs javascript" data-trim data-noescape style="background-color: #272822;" data-line-numbers="|1">
 import { callMe } from './a';
 export { callMe };
           </code></pre>
+            </div>
+          </div>
         </section>
-        <section>
-          <p><code>my-lib</code> → <code>src/main.ts</code> 💭</p>
-          <pre><code class="hljs javascript" data-trim data-noescape style="background-color: #272822;">
-import { callMe } from './a.js'; // Import ./a.ts
+        <section data-transition="fade-out fade-in">
+          <div class="two-cols">
+            <div>
+              <p><code>tsconfig.json</code></p>
+              <pre><code class="hljs json mylib-def" data-trim data-noescape style="background-color: #272822;">
+{
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "module": "commonjs",
+    "target": "esnext",
+    "outDir": "build/",
+    "declaration": true
+  },
+  "include": ["src/**/*"]
+}            
+          </code></pre>
+              <p><code>package.json</code></p>
+              <pre><code class="hljs json mylib-def" data-trim data-noescape style="background-color: #272822;">
+{
+  "type": "commonjs",
+  "name": "my-lib",
+  "main": "build/main.js",
+  "browser": "build/gen.js",
+  "module": "build/esm/main.js",
+  "types": "build/main.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "build:esm": "tsc --module esnext --outDir build/esm",
+    "webbuild": "browserify build/main.js --s myLib > build/gen.js"
+  },
+  "devDependencies": {
+    "browserify": "^16.5.1",
+    "typescript": "^3.9.3"
+  }
+}
+          </code></pre>
+            </div>
+            <div>
+              <h3>Compatible with ES Modules</h3>
+              <p><code>my-lib</code> → <code>src/main.ts</code> 💭</p>
+              <pre><code class="hljs javascript" data-trim data-noescape style="background-color: #272822;">
+import { callMe } from './a.js';
+              // Import ./a.ts
 export { callMe };
           </code></pre>
+            </div>
+          </div>
         </section>
         <section>
           <p><code>my-lib</code> → <code>package.json</code></p>
