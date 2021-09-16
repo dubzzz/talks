@@ -80,8 +80,26 @@
               background-position: right bottom;
               background-size: 40%;
             }
+            #unit-test-snippet code[data-line-numbers="2,5,8,11,14,17,19"] tr.highlight-line div.hljs-ln-line {
+              color: #545454;
+            }
+            #unit-test-snippet code[data-line-numbers="2,5,8,11,14,17,19"] tr.highlight-line div.hljs-ln-line .hljs-string {
+              color: rgb(166, 226, 46);
+            }
+            #unit-test-snippet code[data-line-numbers="2,5,8,11,14,17,19"] tr.highlight-line div.hljs-ln-line .hljs-literal {
+              color: #6a1e39;
+            }
+            #unit-test-snippet code[data-line-numbers="2,5,8,11,14,17,20"] tr.highlight-line div.hljs-ln-line {
+              color: #545454;
+            }
+            #unit-test-snippet code[data-line-numbers="2,5,8,11,14,17,20"] tr.highlight-line div.hljs-ln-line .hljs-string {
+              color: #526a22;
+            }
+            #unit-test-snippet code[data-line-numbers="2,5,8,11,14,17,20"] tr.highlight-line div.hljs-ln-line .hljs-literal {
+              color: rgb(249, 38, 114);
+            }
           </style>
-          <pre id="unit-test-snippet"><code class="hljs language-js" data-trim data-line-numbers="1-18|2,5,8,11,14,17">
+          <pre id="unit-test-snippet"><code class="hljs language-js" data-trim data-line-numbers="1-18|2,5,8,11,14,17|2,5,8,11,14,17,19|2,5,8,11,14,17,20">
 it('should consider itself as a substring', () =&gt; {
   expect(isSubstring('a', 'a')).toBe(true);
 });
