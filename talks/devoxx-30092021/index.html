@@ -504,7 +504,7 @@ output:
           <h3>Let's go further</h3>
         </section>
         <section class="fullScreen" data-transition="slide-in fade-out">
-          <pre><code class="hljs language-js" data-trim data-line-numbers="1-25|4-6,9-11,19-22|9-11,19,21,22">
+          <pre><code class="hljs language-js" data-trim data-line-numbers="1-24|18-22">
 test('should compute the right diff', () =&gt; {
   // Arrange
   const text1 = trim`
@@ -531,9 +531,60 @@ test('should compute the right diff', () =&gt; {
 });
           </code></pre>
         </section>
-        <section class="fullScreen" data-transition="slide-in fade-out">
-          <pre><code class="hljs language-js" data-trim data-line-numbers="1-26">
-test('should compute the right diff', () =&gt; {
+        <section class="fullScreen hidebefore2" data-transition="fade-in slide-out">
+          <style>
+            section.hidebefore2 code {
+              overflow-x: hidden;
+            }
+            section.hidebefore2 code[data-line-numbers="1,12-23,26"] tr:nth-child(2) td.hljs-ln-code,
+            section.hidebefore2 code[data-line-numbers="1,12-23,26"] tr:nth-child(3) td.hljs-ln-code,
+            section.hidebefore2 code[data-line-numbers="1,12-23,26"] tr:nth-child(4) td.hljs-ln-code,
+            section.hidebefore2 code[data-line-numbers="1,12-23,26"] tr:nth-child(5) td.hljs-ln-code,
+            section.hidebefore2 code[data-line-numbers="1,12-23,26"] tr:nth-child(6) td.hljs-ln-code,
+            section.hidebefore2 code[data-line-numbers="1,12-23,26"] tr:nth-child(7) td.hljs-ln-code,
+            section.hidebefore2 code[data-line-numbers="1,12-23,26"] tr:nth-child(8) td.hljs-ln-code,
+            section.hidebefore2 code[data-line-numbers="1,12-23,26"] tr:nth-child(9) td.hljs-ln-code,
+            section.hidebefore2 code[data-line-numbers="1,12-23,26"] tr:nth-child(10) td.hljs-ln-code,
+            section.hidebefore2 code[data-line-numbers="1,12-23,26"] tr:nth-child(11) td.hljs-ln-code,
+            section.hidebefore2 code[data-line-numbers="1,12-23,26"] tr:nth-child(24) td.hljs-ln-code,
+            section.hidebefore2 code[data-line-numbers="1,12-23,26"] tr:nth-child(25) td.hljs-ln-code,
+            section.hidebefore2 code[data-line-numbers="2,3,24,25"] tr:nth-child(4) td.hljs-ln-code,
+            section.hidebefore2 code[data-line-numbers="2,3,24,25"] tr:nth-child(5) td.hljs-ln-code,
+            section.hidebefore2 code[data-line-numbers="2,3,24,25"] tr:nth-child(6) td.hljs-ln-code,
+            section.hidebefore2 code[data-line-numbers="2,3,24,25"] tr:nth-child(7) td.hljs-ln-code,
+            section.hidebefore2 code[data-line-numbers="2,3,24,25"] tr:nth-child(8) td.hljs-ln-code,
+            section.hidebefore2 code[data-line-numbers="2,3,24,25"] tr:nth-child(9) td.hljs-ln-code,
+            section.hidebefore2 code[data-line-numbers="2,3,24,25"] tr:nth-child(10) td.hljs-ln-code,
+            section.hidebefore2 code[data-line-numbers="2,3,24,25"] tr:nth-child(11) td.hljs-ln-code {
+              opacity: 0 !important;
+            }
+            section.hidebefore2 code.visible[data-line-numbers="2,3,24,25"] tr:nth-child(2) td.hljs-ln-code,
+            section.hidebefore2 code.visible[data-line-numbers="2,3,24,25"] tr:nth-child(3) td.hljs-ln-code,
+            section.hidebefore2 code.visible[data-line-numbers="2,3,24,25"] tr:nth-child(24) td.hljs-ln-code,
+            section.hidebefore2 code.visible[data-line-numbers="2,3,24,25"] tr:nth-child(25) td.hljs-ln-code,
+            section.hidebefore2 code.visible[data-line-numbers="4-11"] tr:nth-child(4) td.hljs-ln-code,
+            section.hidebefore2 code.visible[data-line-numbers="4-11"] tr:nth-child(5) td.hljs-ln-code,
+            section.hidebefore2 code.visible[data-line-numbers="4-11"] tr:nth-child(6) td.hljs-ln-code,
+            section.hidebefore2 code.visible[data-line-numbers="4-11"] tr:nth-child(7) td.hljs-ln-code,
+            section.hidebefore2 code.visible[data-line-numbers="4-11"] tr:nth-child(8) td.hljs-ln-code,
+            section.hidebefore2 code.visible[data-line-numbers="4-11"] tr:nth-child(9) td.hljs-ln-code,
+            section.hidebefore2 code.visible[data-line-numbers="4-11"] tr:nth-child(10) td.hljs-ln-code,
+            section.hidebefore2 code.visible[data-line-numbers="4-11"] tr:nth-child(11) td.hljs-ln-code {
+              animation-duration: 500ms;
+              animation-name: show-code-line;
+              animation-timing-function: ease-in-out;
+            }
+            @keyframes show-code-line {
+              from {
+                transform: translateX(200%);
+              }
+              to {
+                transform: translateX(0%);
+              }
+            }
+          </style>
+          <pre><code class="hljs language-js" data-trim data-line-numbers="1,12-23,26|2,3,24,25|4-11|1-26">
+test('should compute the shortest diff', () =&gt; {
   fc.assert(
     fc.property(
       fc.array(
@@ -583,6 +634,10 @@ expect(s1).toEqual(s2); // failure
 expect(s2).toEqual(s1); // success
 </code></pre>
           </p>
+        </section>
+        <section>
+          <p><b>Issue detected:</b> race condition in React<p>
+          <img src="images/react-issue.png" />
         </section>
         <section>
           <h2>Going further?</h2>
