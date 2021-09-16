@@ -734,50 +734,158 @@ test('should compute the right diff', () =&gt; {
 });
           </code></pre>
         </section>
-        <section class="fullScreen hidebefore2" data-transition="fade-in slide-out">
+        <section class="fullScreen gitDiffHard" data-transition="fade-in slide-out">
           <style>
-            section.hidebefore2 code {
+            section.gitDiffHard code {
               overflow-x: hidden;
             }
-            section.hidebefore2 code[data-line-numbers="1,12-23,26"] tr:nth-child(2) td.hljs-ln-code,
-            section.hidebefore2 code[data-line-numbers="1,12-23,26"] tr:nth-child(3) td.hljs-ln-code,
-            section.hidebefore2 code[data-line-numbers="1,12-23,26"] tr:nth-child(4) td.hljs-ln-code,
-            section.hidebefore2 code[data-line-numbers="1,12-23,26"] tr:nth-child(5) td.hljs-ln-code,
-            section.hidebefore2 code[data-line-numbers="1,12-23,26"] tr:nth-child(6) td.hljs-ln-code,
-            section.hidebefore2 code[data-line-numbers="1,12-23,26"] tr:nth-child(7) td.hljs-ln-code,
-            section.hidebefore2 code[data-line-numbers="1,12-23,26"] tr:nth-child(8) td.hljs-ln-code,
-            section.hidebefore2 code[data-line-numbers="1,12-23,26"] tr:nth-child(9) td.hljs-ln-code,
-            section.hidebefore2 code[data-line-numbers="1,12-23,26"] tr:nth-child(10) td.hljs-ln-code,
-            section.hidebefore2 code[data-line-numbers="1,12-23,26"] tr:nth-child(11) td.hljs-ln-code,
-            section.hidebefore2 code[data-line-numbers="1,12-23,26"] tr:nth-child(24) td.hljs-ln-code,
-            section.hidebefore2 code[data-line-numbers="1,12-23,26"] tr:nth-child(25) td.hljs-ln-code,
-            section.hidebefore2 code[data-line-numbers="2,3,24,25"] tr:nth-child(4) td.hljs-ln-code,
-            section.hidebefore2 code[data-line-numbers="2,3,24,25"] tr:nth-child(5) td.hljs-ln-code,
-            section.hidebefore2 code[data-line-numbers="2,3,24,25"] tr:nth-child(6) td.hljs-ln-code,
-            section.hidebefore2 code[data-line-numbers="2,3,24,25"] tr:nth-child(7) td.hljs-ln-code,
-            section.hidebefore2 code[data-line-numbers="2,3,24,25"] tr:nth-child(8) td.hljs-ln-code,
-            section.hidebefore2 code[data-line-numbers="2,3,24,25"] tr:nth-child(9) td.hljs-ln-code,
-            section.hidebefore2 code[data-line-numbers="2,3,24,25"] tr:nth-child(10) td.hljs-ln-code,
-            section.hidebefore2 code[data-line-numbers="2,3,24,25"] tr:nth-child(11) td.hljs-ln-code {
-              opacity: 0 !important;
+            section.gitDiffHard code td.hljs-ln-numbers {
+              opacity: 0;
             }
-            section.hidebefore2 code.visible[data-line-numbers="2,3,24,25"] tr:nth-child(2) td.hljs-ln-code,
-            section.hidebefore2 code.visible[data-line-numbers="2,3,24,25"] tr:nth-child(3) td.hljs-ln-code,
-            section.hidebefore2 code.visible[data-line-numbers="2,3,24,25"] tr:nth-child(24) td.hljs-ln-code,
-            section.hidebefore2 code.visible[data-line-numbers="2,3,24,25"] tr:nth-child(25) td.hljs-ln-code,
-            section.hidebefore2 code.visible[data-line-numbers="4-11"] tr:nth-child(4) td.hljs-ln-code,
-            section.hidebefore2 code.visible[data-line-numbers="4-11"] tr:nth-child(5) td.hljs-ln-code,
-            section.hidebefore2 code.visible[data-line-numbers="4-11"] tr:nth-child(6) td.hljs-ln-code,
-            section.hidebefore2 code.visible[data-line-numbers="4-11"] tr:nth-child(7) td.hljs-ln-code,
-            section.hidebefore2 code.visible[data-line-numbers="4-11"] tr:nth-child(8) td.hljs-ln-code,
-            section.hidebefore2 code.visible[data-line-numbers="4-11"] tr:nth-child(9) td.hljs-ln-code,
-            section.hidebefore2 code.visible[data-line-numbers="4-11"] tr:nth-child(10) td.hljs-ln-code,
-            section.hidebefore2 code.visible[data-line-numbers="4-11"] tr:nth-child(11) td.hljs-ln-code {
+            section.gitDiffHard table {
+              border-left: #313741 2px solid;
+            }
+            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr,
+            section.gitDiffHard code[data-line-numbers="14-19"] tr {
+              transform: translateX(-9%);
+            }
+            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(1),
+            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(32),
+            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(1),
+            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(32) {
+              transform: translateX(0%);
+            }
+            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(2),
+            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(3),
+            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(4),
+            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(5),
+            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(6),
+            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(7),
+            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(8),
+            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(9),
+            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(10),
+            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(11),
+            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(12),
+            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(29),
+            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(30),
+            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(31),
+            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(2),
+            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(3),
+            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(4),
+            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(5),
+            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(6),
+            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(7),
+            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(8),
+            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(9),
+            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(10),
+            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(11),
+            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(12),
+            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(29),
+            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(30),
+            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(31),
+            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(2),
+            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(3),
+            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(4),
+            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(5),
+            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(6),
+            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(7),
+            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(8),
+            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(9),
+            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(10),
+            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(11),
+            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(30),
+            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(31),
+            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(14),
+            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(15),
+            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(16),
+            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(17),
+            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(18),
+            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(19),
+            section.gitDiffHard code[data-line-numbers="2-4,30,31"] tr:nth-child(5),
+            section.gitDiffHard code[data-line-numbers="2-4,30,31"] tr:nth-child(6),
+            section.gitDiffHard code[data-line-numbers="2-4,30,31"] tr:nth-child(7),
+            section.gitDiffHard code[data-line-numbers="2-4,30,31"] tr:nth-child(8),
+            section.gitDiffHard code[data-line-numbers="2-4,30,31"] tr:nth-child(9),
+            section.gitDiffHard code[data-line-numbers="2-4,30,31"] tr:nth-child(10),
+            section.gitDiffHard code[data-line-numbers="2-4,30,31"] tr:nth-child(11),
+            section.gitDiffHard code[data-line-numbers="2-4,30,31"] tr:nth-child(14),
+            section.gitDiffHard code[data-line-numbers="2-4,30,31"] tr:nth-child(15),
+            section.gitDiffHard code[data-line-numbers="2-4,30,31"] tr:nth-child(16),
+            section.gitDiffHard code[data-line-numbers="2-4,30,31"] tr:nth-child(17),
+            section.gitDiffHard code[data-line-numbers="2-4,30,31"] tr:nth-child(18),
+            section.gitDiffHard code[data-line-numbers="2-4,30,31"] tr:nth-child(19),
+            section.gitDiffHard code[data-line-numbers="5-11"] tr:nth-child(4),
+            section.gitDiffHard code[data-line-numbers="5-11"] tr:nth-child(14),
+            section.gitDiffHard code[data-line-numbers="5-11"] tr:nth-child(15),
+            section.gitDiffHard code[data-line-numbers="5-11"] tr:nth-child(16),
+            section.gitDiffHard code[data-line-numbers="5-11"] tr:nth-child(17),
+            section.gitDiffHard code[data-line-numbers="5-11"] tr:nth-child(18),
+            section.gitDiffHard code[data-line-numbers="5-11"] tr:nth-child(19),
+            section.gitDiffHard code[data-line-numbers="1-32"] tr:nth-child(4),
+            section.gitDiffHard code[data-line-numbers="1-32"] tr:nth-child(14),
+            section.gitDiffHard code[data-line-numbers="1-32"] tr:nth-child(15),
+            section.gitDiffHard code[data-line-numbers="1-32"] tr:nth-child(16),
+            section.gitDiffHard code[data-line-numbers="1-32"] tr:nth-child(17),
+            section.gitDiffHard code[data-line-numbers="1-32"] tr:nth-child(18),
+            section.gitDiffHard code[data-line-numbers="1-32"] tr:nth-child(19) {
+              display: none;
+            }
+            section.gitDiffHard code.visible[data-line-numbers="12,29"] tr:nth-child(12),
+            section.gitDiffHard code.visible[data-line-numbers="12,29"] tr:nth-child(29) {
+              animation-fill-mode: forwards;
               animation-duration: 500ms;
-              animation-name: show-code-line;
+              animation-name: show-code-line-11;
               animation-timing-function: ease-in-out;
             }
-            @keyframes show-code-line {
+            @keyframes show-code-line-11 {
+              from {
+                transform: translateX(200%);
+              }
+              to {
+                transform: translateX(-6%);
+              }
+            }
+            section.gitDiffHard code.visible[data-line-numbers="12,29"] tr:nth-child(13),
+            section.gitDiffHard code.visible[data-line-numbers="12,29"] tr:nth-child(20),
+            section.gitDiffHard code.visible[data-line-numbers="12,29"] tr:nth-child(21),
+            section.gitDiffHard code.visible[data-line-numbers="12,29"] tr:nth-child(22),
+            section.gitDiffHard code.visible[data-line-numbers="12,29"] tr:nth-child(23),
+            section.gitDiffHard code.visible[data-line-numbers="12,29"] tr:nth-child(24),
+            section.gitDiffHard code.visible[data-line-numbers="12,29"] tr:nth-child(25),
+            section.gitDiffHard code.visible[data-line-numbers="12,29"] tr:nth-child(26),
+            section.gitDiffHard code.visible[data-line-numbers="12,29"] tr:nth-child(27),
+            section.gitDiffHard code.visible[data-line-numbers="12,29"] tr:nth-child(28) {
+              animation-fill-mode: forwards;
+              animation-duration: 500ms;
+              animation-name: show-code-line-12;
+              animation-timing-function: ease-in-out;
+            }
+            @keyframes show-code-line-12 {
+              from {
+                transform: translateX(-9%);
+              }
+              to {
+                transform: translateX(-6%);
+              }
+            }
+            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(2),
+            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(3),
+            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(4),
+            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(30),
+            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(31),
+            section.gitDiffHard code.visible[data-line-numbers="5-11"] tr:nth-child(5),
+            section.gitDiffHard code.visible[data-line-numbers="5-11"] tr:nth-child(6),
+            section.gitDiffHard code.visible[data-line-numbers="5-11"] tr:nth-child(7),
+            section.gitDiffHard code.visible[data-line-numbers="5-11"] tr:nth-child(8),
+            section.gitDiffHard code.visible[data-line-numbers="5-11"] tr:nth-child(9),
+            section.gitDiffHard code.visible[data-line-numbers="5-11"] tr:nth-child(10),
+            section.gitDiffHard code.visible[data-line-numbers="5-11"] tr:nth-child(11) {
+              animation-fill-mode: forwards;
+              animation-duration: 500ms;
+              animation-name: show-code-line-13;
+              animation-timing-function: ease-in-out;
+            }
+            @keyframes show-code-line-13 {
               from {
                 transform: translateX(200%);
               }
@@ -785,21 +893,52 @@ test('should compute the right diff', () =&gt; {
                 transform: translateX(0%);
               }
             }
+            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(12),
+            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(29),
+            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(13),
+            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(20),
+            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(21),
+            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(22),
+            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(23),
+            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(24),
+            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(25),
+            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(26),
+            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(27),
+            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(28) {
+              animation-fill-mode: forwards;
+              animation-duration: 500ms;
+              animation-name: show-code-line-14;
+              animation-timing-function: ease-in-out;
+            }
+            @keyframes show-code-line-14 {
+              from {
+                transform: translateX(-6%);
+              }
+              to {
+                transform: translateX(0%);
+              }
+            }
           </style>
-          <pre><code class="hljs language-js" data-trim data-line-numbers="1,12-23,26|2,3,24,25|4-11|1-26">
+          <pre><code class="hljs language-js" data-trim data-line-numbers="1,13-28,32|14-19|12,29|2-4,30,31|5-11|1-32">
 test('should compute the shortest diff', () =&gt; {
   fc.assert(
     fc.property(
+      /* TODO: diff generator */,
       fc.array(
         fc.record({
           type: fc.constantFrom('===', '+++', '---'),
           line: fc.string(),
         })
-        .map(entry => `${entry.type} ${entry.line}`),
       )
-      .map(entries => entries.join('\n')),
+      .map(es => es.map(e => `${e.type} ${e.line}`).join('\n')),
       (candidateDiff) => {
         // Arrange
+        const candidateDiff = trim`
+          === 2019
+          --- 2021
+          +++ 2020
+          === 2021
+        `;
         const text1 = extractText1FromDiff(candidateDiff);
         const text2 = extractText2FromDiff(candidateDiff);
 
