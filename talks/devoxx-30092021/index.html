@@ -605,7 +605,7 @@ test('should compute the shortest diff', () =&gt; {
 
         // Assert
         expect(diff.split('\n').length)
-          .toBeLessThanOrEqual(candidateDiff.split('\n'))
+          .toBeLessThanOrEqual(candidateDiff.split('\n').length)
       }
     )
   )
