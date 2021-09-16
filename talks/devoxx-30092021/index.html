@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Property based testing : de la théorie à la pratique</title>
+
+    <link rel="stylesheet" href="../shared-reveal-4/dist/reset.css" />
+    <link rel="stylesheet" href="../shared-reveal-4/dist/reveal.css" />
+    <link rel="stylesheet" href="./static/devoxx-theme.css" id="theme" />
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="../shared-reveal-4/plugin/highlight/monokai.css" id="highlight-theme" />
+    <link rel="stylesheet" href="./static/devoxx.css" />
+    <link rel="stylesheet" href="../shared-reveal-4/css/animated-pigment.css" />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <aside class="notes"></aside>
+          <div>
+            <img src="./images/conf-logo.png" alt="Conference Logo" class="styleless-image" style="height: 128px;" />
+          </div>
+          <h1 style="margin-top: 50px;">Property based testing</h1>
+          <h2 style="margin-bottom: 100px;">De la théorie à la pratique</h2>
+          <h3>Nicolas DUBIEN</h3>
+        </section>
+        <section>
+          <h1>One day, it happened...</h1>
+        </section>
+        <section data-state="dog-video-show">
+          <video controls width="100%" style="cursor: default;" id="dog-video" autoplay>
+            <source src="images/sideeffects.webm" type="video/webm" />
+          </video>
+        </section>
+        <section class="unexpected-examples" data-fragment="-1">
+          <aside class="notes">
+            <p>Unexpected issues: You're not alone!</p>
+          </aside>
+          <style>
+            section.present.unexpected-examples:not([data-fragment="-1"]) img:not(.fragment),
+            section.present.unexpected-examples img.fragment:not(.current-fragment) {
+              display: none;
+            }
+          </style>
+          <div style="min-height: 1200px;">
+            <img
+              src="./images/lockscreen-guardian.png"
+              alt="Android issue with lockscreen"
+              style="background: none; border: none; box-shadow: none; margin-top: 100px;"
+            />
+            <img
+              class="fragment"
+              src="./images/mcdo.png"
+              alt="McDo"
+              style="background: none; border: none; box-shadow: none; margin-top: 0px;"
+            />
+          </div>
+        </section>
+        <section>
+          <img src="images/test-pyramid.png" style="border: none; background: none; box-shadow: none;" />
+        </section>
+        <section class="fullScreen">
+          <aside class="notes"></aside>
+          <style>
+            #unit-test-snippet:before {
+              content: ' ';
+              display: block;
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 100%;
+              height: 100%;
+              z-index: 1;
+              opacity: 0.3;
+              background-image: url('./images/test-pyramid-unit.png');
+              background-repeat: no-repeat;
+              background-position: right bottom;
+              background-size: 40%;
+            }
+          </style>
+          <pre id="unit-test-snippet"><code class="hljs language-js" data-trim data-line-numbers="1-18|2,5,8,11,14,17">
+it('should consider itself as a substring', () =&gt; {
+  expect(isSubstring('a', 'a')).toBe(true);
+});
+it('should detect substring at the beginning', () =&gt; {
+  expect(isSubstring('abcd', 'ab')).toBe(true);
+});
+it('should detect substring at the end', () =&gt; {
+  expect(isSubstring('abcd', 'cd')).toBe(true);
+});
+it('should detect substring anywhere', () =&gt; {
+  expect(isSubstring('abcd', 'bc')).toBe(true);
+});
+it('should not detect when no match', () =&gt; {
+  expect(isSubstring('abcd', 'efgh')).toBe(false);
+});
+it('should not detect when not all letters match', () =&gt; {
+  expect(isSubstring('abcd', 'abce')).toBe(false);
+});
+		      </code></pre>
+        </section>
+        <section class="fullScreen">
+          <aside class="notes"></aside>
+          <style>
+            #e2e-test-snippet {
+              min-height: 300px;
+            }
+            #e2e-test-snippet:before {
+              content: ' ';
+              display: block;
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 100%;
+              height: 100%;
+              z-index: 1;
+              opacity: 0.3;
+              background-image: url('./images/test-pyramid-e2e.png');
+              background-repeat: no-repeat;
+              background-position: right bottom;
+              background-size: 40%;
+            }
+          </style>
+          <pre id="e2e-test-snippet"><code class="hljs language-js" data-trim data-line-numbers="1-5|2,4|3,5">
+it('should impact title on search', async () =&gt; {
+  await driver.get('https://www.google.com/ncr');
+  await driver.findElement(By.name('q'))
+    .sendKeys('webdriver', Key.RETURN);
+  await driver.wait(until.titleIs('webdriver - Google Search'), 1000);
+});
+		      </code></pre>
+        </section>
+        <section>
+          <h2>Are we sure to cover everything?</h2>
+          <h3 class="fragment">Yes, all my users are happy</h3>
+          <h3 class="fragment">Yes, I have 100% coverage</h3>
+        </section>
+        <section>
+          <img src="images/coverage.jfif" />
+          <p><em>100% coverage</em></p>
+        </section>
+        <section>
+          <!--<h2>What did we miss? 🤯</h2>-->
+          <h2>Where did we mess up? 🤯</h2>
+        </section>
+        <section>
+          <aside class="notes"></aside>
+          <div>
+            <img src="./images/me.jpg" style="border-radius: 50%; height: 128px;" />
+          </div>
+          <div>
+            <h2>Nicolas DUBIEN</h2>
+            <div class="vertical-spacer"></div>
+            <div>
+              <!-- Static logo -->
+              <!-- <img src="./images/company.svg" class="styleless-image" style="height: 64px;" />-->
+
+              <!-- Animated Pigment -->
+              <svg
+                class="fragment animated-pigment"
+                style="height: 96px;"
+                viewBox="0 0 120 48"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g class="animated-pigment-part-b" width="48" height="48">
+                  <path
+                    d="M16.2 18C16.2 14.6863 18.8862 12 22.1999 12C22.8627 12 23.3999 12.5373 23.3999 13.2V32.4C23.3999 34.3882 21.7882 36 19.7999 36C17.8117 36 16.2 34.3882 16.2 32.4V18Z"
+                    fill="#00B1FF"
+                  />
+                </g>
+                <g class="animated-pigment-part-c" width="48" height="48">
+                  <ellipse cx="30" cy="33" rx="2.99999" ry="3" fill="#FFB900" />
+                </g>
+                <g class="animated-pigment-part-d" width="48" height="48">
+                  <path
+                    d="M30.7154 24.964C32.1782 23.5083 32.9999 21.4839 32.9999 19.4253C32.9999 17.3668 32.178 15.4917 30.7153 14.036C29.8849 13.2097 28.4042 12.3759 27.6176 12.126C25.6618 11.7629 25.2007 12.1255 25.2 13.9923L25.2001 25.0077C25.2008 26.8745 25.662 27.2371 27.6178 26.874C28.4043 26.6241 29.8851 25.7903 30.7154 24.964Z"
+                    fill="#00D363"
+                  />
+                </g>
+                <g>
+                  <text x="32" y="36">igment</text>
+                </g>
+              </svg>
+            </div>
+            <div class="vertical-spacer"></div>
+            <div style="color: #ffffff; vertical-align: middle;">
+              <img src="./images/github-white.png" class="styleless-image" style="height: 32px;" />
+              dubzzz
+            </div>
+            <div style="color: #1da1f2; vertical-align: middle;">
+              <img src="./images/twitter.png" class="styleless-image" style="height: 32px;" />
+              ndubien
+            </div>
+            <div style="color: #cb3837; vertical-align: middle;">
+              <img src="./images/npm.png" class="styleless-image" style="height: 32px;" />
+              fast-check
+            </div>
+          </div>
+        </section>
+        <section>
+          <h2>Test structure</h2>
+          <svg viewBox="0 0 828.25 137.5" width="828.25" height="137.5">
+            <g class="fragment" data-fragment-index="3" stroke-linecap="round">
+              <g transform="translate(241.25 78.25) rotate(0 174.76566901255399 1.4182337988168001)">
+                <path d="M-0.48 -0.72 C57.45 -0.02, 289.7 2.98, 347.8 3.56 M1.47 1.52 C59.76 1.97, 292.42 1.54, 350.01 1.99" stroke="var(--custom-color3)" stroke-width="4" fill="none"></path>
+              </g>
+              <g transform="translate(241.25 78.25) rotate(0 174.76566901255399 1.4182337988168001)">
+                <path d="M320.6 10.59 C332.54 8.03, 340.09 6.21, 349.08 2.54 M321.25 11.38 C331.94 7.39, 340.59 5.55, 349.19 1.14" stroke="var(--custom-color3)" stroke-width="4" fill="none"></path>
+              </g>
+              <g transform="translate(241.25 78.25) rotate(0 174.76566901255399 1.4182337988168001)">
+                <path d="M320.65 -9.93 C332.46 -6, 339.99 -1.33, 349.08 2.54 M321.3 -9.14 C332.17 -5.9, 340.79 -0.51, 349.19 1.14" stroke="var(--custom-color3)" stroke-width="4" fill="none"></path>
+              </g>
+            </g>
+            <g transform="translate(342.5 10) rotate(0 68 23)">
+              <text class="fragment" data-fragment-index="3" x="0" y="33" font-family="Virgil, Segoe UI Emoji" font-size="36px" fill="var(--custom-color3)" text-anchor="start" style="white-space: pre;" direction="ltr">Process</text>
+            </g>
+            <g transform="translate(10 35.5) rotate(0 102 46)">
+              <text class="fragment" data-fragment-index="1" x="102" y="33" font-family="Virgil, Segoe UI Emoji" font-size="36px" fill="var(--custom-color2)" text-anchor="middle" style="white-space: pre;" direction="ltr">Inputs</text>
+              <text class="fragment" data-fragment-index="4" x="102" y="79" font-family="Virgil, Segoe UI Emoji" font-size="36px" fill="var(--custom-color2)" text-anchor="middle" style="white-space: pre;" direction="ltr">(hardcoded)</text>
+            </g>
+            <g transform="translate(614.25 33.5) rotate(0 102 46)">
+              <text class="fragment" data-fragment-index="2" x="102" y="33" font-family="Virgil, Segoe UI Emoji" font-size="36px" fill="var(--custom-color2)" text-anchor="middle" style="white-space: pre;" direction="ltr">Outputs</text>
+              <text class="fragment" data-fragment-index="4" x="102" y="79" font-family="Virgil, Segoe UI Emoji" font-size="36px" fill="var(--custom-color2)" text-anchor="middle" style="white-space: pre;" direction="ltr">(hardcoded)</text>
+            </g>
+          </svg>
+        </section>
+        <section>
+          <h2>Hardcoded? 🤔</h2>
+          <h3 class="fragment">Limited scope of inputs covered</h3>
+        </section>
+        <section>
+          <h2>Going random...</h2>
+          <h3 class="fragment">But reproducible way</h3>
+          <h3 class="fragment">Not deterministic</h3>
+          <!-- we want to cover new cases at each run -->
+        </section>
+        <section>
+          <h2>Wait a minute... 😓</h2>
+          <h3 class="fragment">Random?</h3>
+        </section>
+        <section>
+          <h2>What if the reported error is:</h2>
+          <h3 class="fragment">"<em>.D0xjkFI{&lt;:nx#U3lI~</em>", "<em>j&gt;~&]&/'0Fw{?O</em>"</h3>
+          <h3 class="fragment">[983 characters], [1302 characters]</h3>
+        </section>
+        <section>
+            Have you ever heard about <em>Property based testing</em>?
+        </section>
+        <section>
+          <h2><em>fast-check</em> to the rescue 🎯</h2>
+          <p>
+              <img style="border:none;background:none;box-shadow:none;" src="images/fast-check-stats.png"/>
+          </p>
+        </section>
+        <section>
+          <h2>Properties instead of isolated cases</h2>
+        </section>
+        <section>
+          <p class="quote">
+              for any <em>(x, y, ...)</em>
+              <br/><span class="fragment" style="padding-left:48px;color:#777872;">generate random inputs based on specified generators</span>
+              <br/>such that <em>precondition(x, y, ...)</em> holds
+              <br/><span class="fragment" style="padding-left:48px;color:#777872;">check preconditions - <em>failure?</em> go back to previous</span>
+              <br/><em>property(x, y, ...)</em> is true
+              <br/><span class="fragment" style="padding-left:48px;color:#777872;">run the test - <em>failure?</em> shrink</span>
+          </p>
+          <p class="fragment custom-collapse" style="margin-top: 48px;"><span>&#128257; Run it <em>100</em> times &#128257;</span></p>
+        </section>
+        <section>
+          <style>
+            #git-diff-intro:before {
+              content: ' ';
+              display: block;
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 100%;
+              height: 200%;
+              z-index: 1;
+              opacity: 0.3;
+              background-image: url('./images/test-pyramid-unit-int.png');
+              background-repeat: no-repeat;
+              background-position: right bottom;
+              background-size: 40%;
+            }
+          </style>
+          <h2>Example</h2>
+          <p id="git-diff-intro">Let’s suppose we want to test “<em>git diff</em>”</p>
+        </section>
+        <section class="fullScreen" data-transition="slide-in fade-out">
+          <pre><code class="hljs language-js" data-trim data-line-numbers="1-25|4-6,9-11,19-22|9-11,19,21,22">
+test('should compute the right diff', () =&gt; {
+  // Arrange
+  const text1 = trim`
+    2019
+    2021
+    2021
+  `;
+  const text2 = trim`
+    2019
+    2020
+    2021
+  `;
+
+  // Act
+  const diff = computeDiff(text1, text2);
+
+  // Assert
+  expect(diff).toEqual(trim`
+    === 2019
+    --- 2021
+    +++ 2020
+    === 2021
+  `);
+});
+          </code></pre>
+        </section>
+        <section class="fullScreen" data-transition="fade-in fade-out">
+          <pre><code class="hljs language-js" data-trim data-line-numbers="9-11,18|1-19|3-12">
+test('should build a diff compatible with text2', () =&gt; {
+  // Arrange
+  const text1 = trim`
+    2019
+    2021
+    2021
+  `;
+  const text2 = trim`
+    2019
+    2020
+    2021
+  `;
+
+  // Act
+  const diff = computeDiff(text1, text2);
+
+  // Assert
+  expect(extractText2FromDiff(diff)).toEqual(text2);
+});
+          </code></pre>
+        </section>
+        <section class="fullScreen hidebefore" data-transition="fade-in slide-out">
+          <style>
+            section.hidebefore code {
+              overflow-x: hidden;
+            }
+            section.hidebefore code[data-line-numbers="5,11"] tr:nth-child(2) td.hljs-ln-code,
+            section.hidebefore code[data-line-numbers="5,11"] tr:nth-child(3) td.hljs-ln-code,
+            section.hidebefore code[data-line-numbers="5,11"] tr:nth-child(4) td.hljs-ln-code,
+            section.hidebefore code[data-line-numbers="5,11"] tr:nth-child(12) td.hljs-ln-code,
+            section.hidebefore code[data-line-numbers="5,11"] tr:nth-child(13) td.hljs-ln-code {
+              opacity: 0 !important;
+            }
+            section.hidebefore code.visible[data-line-numbers="2-4,12-13"] tr:nth-child(2) td.hljs-ln-code,
+            section.hidebefore code.visible[data-line-numbers="2-4,12-13"] tr:nth-child(3) td.hljs-ln-code,
+            section.hidebefore code.visible[data-line-numbers="2-4,12-13"] tr:nth-child(4) td.hljs-ln-code,
+            section.hidebefore code.visible[data-line-numbers="2-4,12-13"] tr:nth-child(12) td.hljs-ln-code,
+            section.hidebefore code.visible[data-line-numbers="2-4,12-13"] tr:nth-child(13) td.hljs-ln-code {
+              animation-duration: 500ms;
+              animation-name: show-code-line;
+              animation-timing-function: ease-in-out;
+            }
+            @keyframes show-code-line {
+              from {
+                transform: translateX(200%);
+              }
+              to {
+                transform: translateX(0%);
+              }
+            }
+          </style>
+          <pre><code class="hljs language-js" data-trim data-line-numbers="5,11|2-4,12-13|1-14">
+test('should build a diff compatible with text2', () =&gt; {
+  fc.assert(
+    fc.property(
+      fc.string(), fc.string(),
+      (text1, text2) => {
+        // Arrange / Act
+        const diff = computeDiff(text1, text2);
+
+        // Assert
+        expect(extractText2FromDiff(diff)).toEqual(text2);
+      }
+    )
+  );
+});
+          </code></pre>
+        </section>
+        <section>
+          <p class="quote">
+            for any <em>(x, y, ...)</em>
+            <br/>such that <em>precondition(x, y, ...)</em> holds
+            <br/><em>property(x, y, ...)</em> is true
+          </p>
+          <p class="quote-right fragment">
+            for any <em>text1, text2 strings</em>
+            <br/><em>computeDiff(text1, text2)</em> should be enough to build back <em>text2</em>
+          </p>
+        </section>
+        <section>
+          <p class="quote-right" style="margin-bottom:48px;">
+            for any <em>text1, text2 strings</em>
+            <br/><em>computeDiff(text1, text2)</em> should be enough to build back <em>text2</em>
+          </p>
+          <p>
+            {text1: [&quot;<em>漢🐱</em>&quot;, &quot;<em>null</em>&quot;, &quot;<em>ba</em>&quot;], text2: [&quot;<em>漢🐱</em>&quot;, &quot;<em>ab</em>&quot;]}
+            <span style="color:red;">&#10007;</span>
+          </p>
+        </section>
+        <section>
+          <h2>Shrinking into action</h2>
+          <p class="fragment">
+            {text1: [&quot;<em>漢🐱</em>&quot;, &quot;<em>null</em>&quot;, &quot;<em>ba</em>&quot;], text2: [&quot;<em>漢🐱</em>&quot;, &quot;<em>ab</em>&quot;]}
+            <span style="color:red;">&#10007;</span>
+          </p>
+          <p class="fragment">
+            {text1: [], text2: [&quot;<em>漢🐱</em>&quot;, &quot;<em>ab</em>&quot;]}
+            <span style="color:green;">&#10003;</span>
+          </p>
+          <p class="fragment">
+            {text1: [&quot;<em>漢🐱</em>&quot;, &quot;<em>null</em>&quot;], text2: [&quot;<em>漢🐱</em>&quot;, &quot;<em>ab</em>&quot;]}
+            <span style="color:green;">&#10003;</span>
+          </p>
+          <p class="fragment">
+            {text1: [&quot;<em>ba</em>&quot;], text2: [&quot;<em>漢🐱</em>&quot;, &quot;<em>ab</em>&quot;]}
+            <span style="color:red;">&#10007;</span>
+          </p>
+          <p class="fragment">
+            {text1: [&quot;<em>ba</em>&quot;], text2: []}
+            <span style="color:green;">&#10003;</span>
+          </p>
+          <p class="fragment">
+            {text1: [&quot;<em>ba</em>&quot;], text2: [&quot;<em>漢🐱</em>&quot;]}
+            <span style="color:green;">&#10003;</span>
+          </p>
+          <p class="fragment">
+            {text1: [&quot;<em>ba</em>&quot;], text2: [&quot;<em>ab</em>&quot;]}
+            <span style="color:red;">&#10007;</span>
+          </p>
+          <p class="fragment">...</p>
+        </section>
+        <section>
+          <h3>Is it enough?</h3>
+          <p class="quote-right fragment">
+            for any <em>text1, text2 strings</em>
+            <br/><em>computeDiff(text1, text2)</em> should be enough to build back <em>text2</em>
+          </p>
+        </section>
+        <section class="fullScreen">
+          <div style="display: grid; grid-template-columns: 3fr 1fr; grid-gap: 16px;">
+            <pre><code class="hljs language-js" data-trim>
+function computeDiff(text1, text2) {
+  return [
+    ...text1
+      .split('\n')
+      .map(line => `--- ${line}`),
+    ...text2
+      .split('\n')
+      .map(line => `+++ ${line}`),
+  ]
+}
+            </code></pre>
+            <pre class="fragment"><code class="hljs language-plaintext" data-trim>
+inputs:
+text1:     text2:
+  2019       2019
+  2020       2020
+  2020       2021
+
+output:
+  --- 2019
+  --- 2020
+  --- 2020
+  +++ 2019
+  +++ 2020
+  +++ 2021
+            </code></pre>
+          </div>
+          <p class="fragment">Pass the tests</p>
+          <p class="fragment">Not really useful diff</p>
+        </section>
+        <section>
+          <h3>Let's go further</h3>
+        </section>
+        <section class="fullScreen" data-transition="slide-in fade-out">
+          <pre><code class="hljs language-js" data-trim data-line-numbers="1-25|4-6,9-11,19-22|9-11,19,21,22">
+test('should compute the right diff', () =&gt; {
+  // Arrange
+  const text1 = trim`
+    2019
+    2021
+    2021
+  `;
+  const text2 = trim`
+    2019
+    2020
+    2021
+  `;
+
+  // Act
+  const diff = computeDiff(text1, text2);
+
+  // Assert
+  expect(diff).toEqual(trim`
+    === 2019
+    --- 2021
+    +++ 2020
+    === 2021
+  `);
+});
+          </code></pre>
+        </section>
+        <section class="fullScreen" data-transition="slide-in fade-out">
+          <pre><code class="hljs language-js" data-trim data-line-numbers="1-26">
+test('should compute the right diff', () =&gt; {
+  fc.assert(
+    fc.property(
+      fc.array(
+        fc.record({
+          type: fc.constantFrom('===', '+++', '---'),
+          line: fc.string(),
+        })
+        .map(entry => `${entry.type} ${entry.line}`),
+      )
+      .map(entries => entries.join('\n')),
+      (candidateDiff) => {
+        // Arrange
+        const text1 = extractText1FromDiff(candidateDiff);
+        const text2 = extractText2FromDiff(candidateDiff);
+
+        // Act
+        const diff = computeDiff(text1, text2);
+
+        // Assert
+        expect(diff.split('\n').length)
+          .toBeLessThanOrEqual(candidateDiff.split('\n'))
+      }
+    )
+  )
+});
+          </code></pre>
+        </section>
+        <section>
+          <h3>Is it applicable?</h3>
+        </section>
+        <section>
+          <p><b>Issue detected:</b> asymmetrical equality for 0 and 5e-324<p>
+          <img src="images/pr-jest-sym1.png" />
+          <p><b>Code example:</b><br/>
+<pre><code>expect(0).toStrictEqual(5e-324) // success
+expect(5e-324).toStrictEqual(0) // failure
+</code></pre>
+          </p>
+        </section>
+        <section>
+          <p><b>Issue detected:</b> asymmetrical equality for Set<p>
+          <img src="images/pr-jest-sym2.png" />
+          <p><b>Code example:</b><br/>
+<pre><code>const s1 = new Set([false, true]);
+const s2 = new Set([new Boolean(true), new Boolean(true)]);
+expect(s1).toEqual(s2); // failure
+expect(s2).toEqual(s1); // success
+</code></pre>
+          </p>
+        </section>
+        <section>
+          <h2>Going further?</h2>
+        </section>
+        <section>
+          <img src="./images/property-based.gif" />
+        </section>
+        <section>
+          <img src="./images/autocomplete-bug-screenshot.png" />
+        </section>
+        <section>
+          <aside class="notes"></aside>
+          <h2>Questions?</h2>
+          <div class="vertical-spacer"></div>
+          <div style="color: #ffffff; vertical-align: middle;">
+            <img src="./images/github-white.png" class="styleless-image" style="height: 32px;" />
+            dubzzz
+          </div>
+          <div style="color: #1da1f2; vertical-align: middle;">
+            <img src="./images/twitter.png" class="styleless-image" style="height: 32px;" />
+            ndubien
+          </div>
+          <div style="color: #cb3837; vertical-align: middle;">
+            <img src="./images/npm.png" class="styleless-image" style="height: 32px;" />
+            fast-check
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div
+      style="
+        display: grid;
+        align-items: center;
+        column-gap: 0.5rem;
+        row-gap: 0.2rem;
+        position: fixed;
+        z-index: 9999;
+        left: 1em;
+        bottom: 1em;
+        color: #ffffff;
+        font-size: 2rem;
+        font-family: 'Open Sans', sans-serif;
+      "
+    >
+      <img
+        src="./images/github-white.png"
+        class="footer-github styleless-image"
+        style="justify-self: center; grid-row: 1; grid-column: 1; height: 2rem; text-shadow: #0007 1px 1px 1px;"
+      />
+      <div style="grid-row: 1; grid-column: 2; color: #ffffff; vertical-align: middle; text-shadow: #0007 1px 1px 1px;">
+        dubzzz
+      </div>
+      <img
+        src="./images/twitter.png"
+        class="styleless-image"
+        style="justify-self: center; grid-row: 2; grid-column: 1; height: 2rem;"
+      />
+      <div style="grid-row: 2; grid-column: 2; color: #1da1f2; vertical-align: middle;">
+        ndubien
+      </div>
+      <img
+        src="./images/npm.png"
+        class="styleless-image"
+        style="justify-self: center; grid-row: 3; grid-column: 1; width: 2rem;"
+      />
+      <div style="grid-row: 3; grid-column: 2; color: #cb3837; vertical-align: middle;">
+        fast-check
+      </div>
+    </div>
+
+    <script src="../shared-reveal-4/dist/reveal.js"></script>
+    <script src="../shared-reveal-4/plugin/notes/notes.js"></script>
+    <script src="../shared-reveal-4/plugin/markdown/markdown.js"></script>
+    <script src="../shared-reveal-4/plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        fragmentInURL: true,
+        totalTime: 25 * 60,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+      });
+      Reveal.addEventListener('dog-video-show', () => {
+        const dogVideo = document.getElementById('dog-video');
+        dogVideo.currentTime = 0;
+        dogVideo.play();
+      })
+    </script>
+  </body>
+</html>
