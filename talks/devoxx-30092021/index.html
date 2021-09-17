@@ -688,13 +688,13 @@ function computeDiff(text1, text2) {
 inputs:
 text1:     text2:
   2019       2019
-  2020       2020
-  2020       2021
+  2021       2020
+  2021       2021
 
 output:
   --- 2019
-  --- 2020
-  --- 2020
+  --- 2021
+  --- 2021
   +++ 2019
   +++ 2020
   +++ 2021
@@ -706,35 +706,86 @@ output:
         <section>
           <h3>Let's go further</h3>
         </section>
-        <section class="fullScreen" data-transition="slide-in fade-out">
-          <pre><code class="hljs language-js" data-trim data-line-numbers="1-24|18-22">
-test('should compute the right diff', () =&gt; {
-  // Arrange
-  const text1 = trim`
-    2019
-    2021
-    2021
-  `;
-  const text2 = trim`
-    2019
-    2020
-    2021
-  `;
+        <section class="fullScreen gitDiffHardThinking">
+          <style>
+            section.gitDiffHardThinking code {
+              overflow-x: hidden;
+            }
+            section.gitDiffHardThinking code td.hljs-ln-numbers {
+              opacity: 0;
+            }
+            section.gitDiffHardThinking table {
+              border-left: #313741 2px solid;
+            }
+            section.gitDiffHardThinking code[data-line-numbers="1-4,16"] tr:nth-child(5),
+            section.gitDiffHardThinking code[data-line-numbers="1-4,16"] tr:nth-child(6),
+            section.gitDiffHardThinking code[data-line-numbers="1-4,16"] tr:nth-child(7),
+            section.gitDiffHardThinking code[data-line-numbers="1-4,16"] tr:nth-child(8),
+            section.gitDiffHardThinking code[data-line-numbers="1-4,16"] tr:nth-child(9),
+            section.gitDiffHardThinking code[data-line-numbers="1-4,16"] tr:nth-child(10),
+            section.gitDiffHardThinking code[data-line-numbers="1-4,16"] tr:nth-child(11),
+            section.gitDiffHardThinking code[data-line-numbers="1-4,16"] tr:nth-child(12),
+            section.gitDiffHardThinking code[data-line-numbers="1-4,16"] tr:nth-child(13),
+            section.gitDiffHardThinking code[data-line-numbers="1-4,16"] tr:nth-child(14),
+            section.gitDiffHardThinking code[data-line-numbers="1-4,16"] tr:nth-child(15),
+            section.gitDiffHardThinking code[data-line-numbers="1-4,16"] tr:nth-child(17),
+            section.gitDiffHardThinking code[data-line-numbers="1-4,16"] tr:nth-child(18),
+            section.gitDiffHardThinking code[data-line-numbers="1-4,16"] tr:nth-child(19),
+            section.gitDiffHardThinking code[data-line-numbers="1-4,16"] tr:nth-child(20),
+            section.gitDiffHardThinking code[data-line-numbers="7-11"] tr:nth-child(12),
+            section.gitDiffHardThinking code[data-line-numbers="7-11"] tr:nth-child(13),
+            section.gitDiffHardThinking code[data-line-numbers="7-11"] tr:nth-child(14),
+            section.gitDiffHardThinking code[data-line-numbers="7-11"] tr:nth-child(15),
+            section.gitDiffHardThinking code[data-line-numbers="7-11"] tr:nth-child(16),
+            section.gitDiffHardThinking code[data-line-numbers="7-11"] tr:nth-child(17),
+            section.gitDiffHardThinking code[data-line-numbers="7-11"] tr:nth-child(18),
+            section.gitDiffHardThinking code[data-line-numbers="7-11"] tr:nth-child(19),
+            section.gitDiffHardThinking code[data-line-numbers="7-11"] tr:nth-child(20),
+            section.gitDiffHardThinking code[data-line-numbers="7,12-15"] tr:nth-child(8),
+            section.gitDiffHardThinking code[data-line-numbers="7,12-15"] tr:nth-child(9),
+            section.gitDiffHardThinking code[data-line-numbers="7,12-15"] tr:nth-child(10),
+            section.gitDiffHardThinking code[data-line-numbers="7,12-15"] tr:nth-child(11),
+            section.gitDiffHardThinking code[data-line-numbers="7,12-15"] tr:nth-child(16),
+            section.gitDiffHardThinking code[data-line-numbers="7,12-15"] tr:nth-child(17),
+            section.gitDiffHardThinking code[data-line-numbers="7,12-15"] tr:nth-child(18),
+            section.gitDiffHardThinking code[data-line-numbers="7,12-15"] tr:nth-child(19),
+            section.gitDiffHardThinking code[data-line-numbers="7,12-15"] tr:nth-child(20),
+            section.gitDiffHardThinking code[data-line-numbers="7,17-20"] tr:nth-child(8),
+            section.gitDiffHardThinking code[data-line-numbers="7,17-20"] tr:nth-child(9),
+            section.gitDiffHardThinking code[data-line-numbers="7,17-20"] tr:nth-child(10),
+            section.gitDiffHardThinking code[data-line-numbers="7,17-20"] tr:nth-child(11),
+            section.gitDiffHardThinking code[data-line-numbers="7,17-20"] tr:nth-child(12),
+            section.gitDiffHardThinking code[data-line-numbers="7,17-20"] tr:nth-child(13),
+            section.gitDiffHardThinking code[data-line-numbers="7,17-20"] tr:nth-child(14),
+            section.gitDiffHardThinking code[data-line-numbers="7,17-20"] tr:nth-child(15),
+            section.gitDiffHardThinking code[data-line-numbers="7,17-20"] tr:nth-child(16) {
+              display: none;
+            }
+          </style>
+          <pre><code class="hljs language-plaintext" data-trim data-line-numbers="1-4,16|7-11|7,12-15|7,17-20">
+inputs:
+  text1:     text2:
+    2019       2019
+    2021       2020
+    2021       2021
 
-  // Act
-  const diff = computeDiff(text1, text2);
-
-  // Assert
-  expect(diff).toEqual(trim`
-    === 2019
-    --- 2021
-    +++ 2020
-    === 2021
-  `);
-});
+output:
+  === 2019
+  --- 2021
+  +++ 2020
+  === 2021
+  === 2019     === 2019
+  --- 2021     +++ 2020
+  +++ 2020     --- 2021
+  === 2021     === 2021
+    2021       2021
+  === 2019     === 2019     === 2019
+  --- 2021     +++ 2020     +++ 2020
+  +++ 2020     --- 2021     === 2021
+  === 2021     === 2021     --- 2021
           </code></pre>
         </section>
-        <section class="fullScreen gitDiffHard" data-transition="fade-in slide-out">
+        <section class="fullScreen gitDiffHard">
           <style>
             section.gitDiffHard code {
               overflow-x: hidden;
