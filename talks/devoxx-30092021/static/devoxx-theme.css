@@ -5,6 +5,10 @@
 @import url('./Montserrat-Bold.ttf');
 @import url('./OpenSans-Regular.ttf');
 @import url('./OpenSans-Bold.ttf');
+@font-face {
+  font-family: 'Virgil';
+  src: url('https://excalidraw.com/FG_Virgil.woff2');
+}
 section.has-light-background,
 section.has-light-background h1,
 section.has-light-background h2,
