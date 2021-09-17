@@ -1006,6 +1006,12 @@ test('should compute the shortest diff', () =&gt; {
           </code></pre>
         </section>
         <section>
+          <p>Property based:</p>
+          <p><em>Large</em> subset of all the possible inputs,<br/><em>Limited</em> coverage of the output</p>
+          <p class="fragment" data-fragment-index="1" style="margin-top:48px;">Example based:</p>
+          <p class="fragment" data-fragment-index="1"><em>Limited</em> subset of all the possible inputs,<br/><em>Accurate</em> coverage of the output</p>
+        </section>
+        <section>
           <h3>Is it applicable?</h3>
         </section>
         <section>
@@ -1040,6 +1046,19 @@ expect(s2).toEqual(s1); // success
         </section>
         <section>
           <img src="./images/autocomplete-bug-screenshot.png" />
+        </section>
+        <section data-background="#ffffff">
+          <aside class="notes"></aside>
+          <div style="width: 100%; height: 100%; display: grid">
+            <div style="grid-row: 1; grid-column: 1; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; opacity: 0.2;">
+              <img src="./images/table.png" style="border: none; background: none; margin: 0px; box-shadow: none;" />
+            </div>
+            <div style="grid-row: 1; grid-column: 1; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+              <p class="fragment">Cover the whole scope from unit to e2e</p>
+              <p class="fragment">Document invariants of your algorithms</p>
+              <p class="fragment">Not a replacement for example-based, another tool</p>
+            </div>
+          </div>
         </section>
         <section>
           <aside class="notes"></aside>
