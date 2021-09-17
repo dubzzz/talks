@@ -21,17 +21,30 @@
         <section>
           <aside class="notes"></aside>
           <div>
-            <img src="./images/conf-logo.png" alt="Conference Logo" class="styleless-image" style="height: 128px;" />
+            <img src="./images/conf-logo.png" alt="Conference Logo" class="styleless-image" style="height: 128px" />
           </div>
-          <h1 style="margin-top: 50px;">Property based testing</h1>
-          <h2 style="margin-bottom: 100px;">De la théorie à la pratique</h2>
+          <h1 style="margin-top: 50px">Property based testing</h1>
+          <h2 style="margin-bottom: 100px">De la théorie à la pratique</h2>
           <h3>Nicolas DUBIEN</h3>
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 0.8em;
+              margin-top: -20px;
+              opacity: 0.7;
+            "
+          >
+            Software Engineer at
+            <img src="./images/pigment-logofull-white.png" class="styleless-image" style="height: 50px" />
+          </div>
         </section>
         <section>
           <h1>One day, it happened...</h1>
         </section>
         <section data-state="dog-video-show">
-          <video controls width="100%" style="cursor: default;" id="dog-video" autoplay>
+          <video controls width="100%" style="cursor: default" id="dog-video" autoplay>
             <source src="images/sideeffects.webm" type="video/webm" />
           </video>
         </section>
@@ -40,27 +53,27 @@
             <p>Unexpected issues: You're not alone!</p>
           </aside>
           <style>
-            section.present.unexpected-examples:not([data-fragment="-1"]) img:not(.fragment),
+            section.present.unexpected-examples:not([data-fragment='-1']) img:not(.fragment),
             section.present.unexpected-examples img.fragment:not(.current-fragment) {
               display: none;
             }
           </style>
-          <div style="min-height: 1200px;">
+          <div style="min-height: 1200px">
             <img
-              src="./images/lockscreen-guardian.png"
-              alt="Android issue with lockscreen"
-              style="background: none; border: none; box-shadow: none; margin-top: 100px;"
+              src="./images/mcdo.png"
+              alt="McDo"
+              style="background: none; border: none; box-shadow: none; margin-top: 175px"
             />
             <img
               class="fragment"
-              src="./images/mcdo.png"
-              alt="McDo"
-              style="background: none; border: none; box-shadow: none; margin-top: 175px;"
+              src="./images/lockscreen-guardian.png"
+              alt="Android issue with lockscreen"
+              style="background: none; border: none; box-shadow: none; margin-top: 100px"
             />
           </div>
         </section>
         <section>
-          <img src="images/test-pyramid.png" style="border: none; background: none; box-shadow: none;" />
+          <img src="images/test-pyramid.png" style="border: none; background: none; box-shadow: none" />
         </section>
         <section class="fullScreen">
           <aside class="notes"></aside>
@@ -80,26 +93,44 @@
               background-position: right bottom;
               background-size: 40%;
             }
-            #unit-test-snippet code[data-line-numbers="2,5,8,11,14,17,19"] tr.highlight-line div.hljs-ln-line {
+            #unit-test-snippet code[data-line-numbers='2,5,8,11,14,17,19'] tr.highlight-line div.hljs-ln-line {
               color: #545454;
             }
-            #unit-test-snippet code[data-line-numbers="2,5,8,11,14,17,19"] tr.highlight-line div.hljs-ln-line .hljs-string {
+            #unit-test-snippet
+              code[data-line-numbers='2,5,8,11,14,17,19']
+              tr.highlight-line
+              div.hljs-ln-line
+              .hljs-string {
               color: rgb(166, 226, 46);
             }
-            #unit-test-snippet code[data-line-numbers="2,5,8,11,14,17,19"] tr.highlight-line div.hljs-ln-line .hljs-literal {
+            #unit-test-snippet
+              code[data-line-numbers='2,5,8,11,14,17,19']
+              tr.highlight-line
+              div.hljs-ln-line
+              .hljs-literal {
               color: #6a1e39;
             }
-            #unit-test-snippet code[data-line-numbers="2,5,8,11,14,17,20"] tr.highlight-line div.hljs-ln-line {
+            #unit-test-snippet code[data-line-numbers='2,5,8,11,14,17,20'] tr.highlight-line div.hljs-ln-line {
               color: #545454;
             }
-            #unit-test-snippet code[data-line-numbers="2,5,8,11,14,17,20"] tr.highlight-line div.hljs-ln-line .hljs-string {
+            #unit-test-snippet
+              code[data-line-numbers='2,5,8,11,14,17,20']
+              tr.highlight-line
+              div.hljs-ln-line
+              .hljs-string {
               color: #526a22;
             }
-            #unit-test-snippet code[data-line-numbers="2,5,8,11,14,17,20"] tr.highlight-line div.hljs-ln-line .hljs-literal {
+            #unit-test-snippet
+              code[data-line-numbers='2,5,8,11,14,17,20']
+              tr.highlight-line
+              div.hljs-ln-line
+              .hljs-literal {
               color: rgb(249, 38, 114);
             }
           </style>
-          <pre id="unit-test-snippet"><code class="hljs language-js" data-trim data-line-numbers="1-18|2,5,8,11,14,17|2,5,8,11,14,17,19|2,5,8,11,14,17,20">
+          <pre
+            id="unit-test-snippet"
+          ><code class="hljs language-js" data-trim data-line-numbers="1-18|2,5,8,11,14,17,19|2,5,8,11,14,17,20">
 it('should consider itself as a substring', () =&gt; {
   expect(isSubstring('a', 'a')).toBe(true);
 });
@@ -167,55 +198,27 @@ it('should impact title on search', async () =&gt; {
         <section>
           <aside class="notes"></aside>
           <div>
-            <img src="./images/me.jpg" style="border-radius: 50%; height: 128px;" />
+            <img src="./images/me.jpg" style="border-radius: 50%; height: 128px" />
           </div>
           <div>
             <h2>Nicolas DUBIEN</h2>
-            <div class="vertical-spacer"></div>
-            <div>
+            <div style="margin-top: 36px; margin-bottom: 36px">
               <!-- Static logo -->
-              <!-- <img src="./images/company.svg" class="styleless-image" style="height: 64px;" />-->
-
-              <!-- Animated Pigment -->
-              <svg
-                class="fragment animated-pigment"
-                style="height: 96px;"
-                viewBox="0 0 120 48"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <g class="animated-pigment-part-b" width="48" height="48">
-                  <path
-                    d="M16.2 18C16.2 14.6863 18.8862 12 22.1999 12C22.8627 12 23.3999 12.5373 23.3999 13.2V32.4C23.3999 34.3882 21.7882 36 19.7999 36C17.8117 36 16.2 34.3882 16.2 32.4V18Z"
-                    fill="#00B1FF"
-                  />
-                </g>
-                <g class="animated-pigment-part-c" width="48" height="48">
-                  <ellipse cx="30" cy="33" rx="2.99999" ry="3" fill="#FFB900" />
-                </g>
-                <g class="animated-pigment-part-d" width="48" height="48">
-                  <path
-                    d="M30.7154 24.964C32.1782 23.5083 32.9999 21.4839 32.9999 19.4253C32.9999 17.3668 32.178 15.4917 30.7153 14.036C29.8849 13.2097 28.4042 12.3759 27.6176 12.126C25.6618 11.7629 25.2007 12.1255 25.2 13.9923L25.2001 25.0077C25.2008 26.8745 25.662 27.2371 27.6178 26.874C28.4043 26.6241 29.8851 25.7903 30.7154 24.964Z"
-                    fill="#00D363"
-                  />
-                </g>
-                <g>
-                  <text x="32" y="36">igment</text>
-                </g>
-              </svg>
+              <img src="./images/pigment-logofull-white.png" class="styleless-image" style="height: 100px" />
             </div>
-            <div class="vertical-spacer"></div>
-            <div style="color: #ffffff; vertical-align: middle;">
-              <img src="./images/github-white.png" class="styleless-image" style="height: 32px;" />
-              dubzzz
-            </div>
-            <div style="color: #1da1f2; vertical-align: middle;">
-              <img src="./images/twitter.png" class="styleless-image" style="height: 32px;" />
-              ndubien
-            </div>
-            <div style="color: #cb3837; vertical-align: middle;">
-              <img src="./images/npm.png" class="styleless-image" style="height: 32px;" />
-              fast-check
+            <div style="transform: scale(80%)">
+              <div style="color: #ffffff; vertical-align: middle">
+                <img src="./images/github-white.png" class="styleless-image" style="height: 32px" />
+                dubzzz
+              </div>
+              <div style="color: #1da1f2; vertical-align: middle">
+                <img src="./images/twitter.png" class="styleless-image" style="height: 32px" />
+                ndubien
+              </div>
+              <div style="color: #cb3837; vertical-align: middle">
+                <img src="./images/npm.png" class="styleless-image" style="height: 32px" />
+                fast-check
+              </div>
             </div>
           </div>
         </section>
@@ -224,25 +227,105 @@ it('should impact title on search', async () =&gt; {
           <svg viewBox="0 0 828.25 137.5" width="828.25" height="137.5">
             <g class="fragment" data-fragment-index="3" stroke-linecap="round">
               <g transform="translate(241.25 78.25) rotate(0 174.76566901255399 1.4182337988168001)">
-                <path d="M-0.48 -0.72 C57.45 -0.02, 289.7 2.98, 347.8 3.56 M1.47 1.52 C59.76 1.97, 292.42 1.54, 350.01 1.99" stroke="var(--custom-color3)" stroke-width="4" fill="none"></path>
+                <path
+                  d="M-0.48 -0.72 C57.45 -0.02, 289.7 2.98, 347.8 3.56 M1.47 1.52 C59.76 1.97, 292.42 1.54, 350.01 1.99"
+                  stroke="var(--custom-color3)"
+                  stroke-width="4"
+                  fill="none"
+                ></path>
               </g>
               <g transform="translate(241.25 78.25) rotate(0 174.76566901255399 1.4182337988168001)">
-                <path d="M320.6 10.59 C332.54 8.03, 340.09 6.21, 349.08 2.54 M321.25 11.38 C331.94 7.39, 340.59 5.55, 349.19 1.14" stroke="var(--custom-color3)" stroke-width="4" fill="none"></path>
+                <path
+                  d="M320.6 10.59 C332.54 8.03, 340.09 6.21, 349.08 2.54 M321.25 11.38 C331.94 7.39, 340.59 5.55, 349.19 1.14"
+                  stroke="var(--custom-color3)"
+                  stroke-width="4"
+                  fill="none"
+                ></path>
               </g>
               <g transform="translate(241.25 78.25) rotate(0 174.76566901255399 1.4182337988168001)">
-                <path d="M320.65 -9.93 C332.46 -6, 339.99 -1.33, 349.08 2.54 M321.3 -9.14 C332.17 -5.9, 340.79 -0.51, 349.19 1.14" stroke="var(--custom-color3)" stroke-width="4" fill="none"></path>
+                <path
+                  d="M320.65 -9.93 C332.46 -6, 339.99 -1.33, 349.08 2.54 M321.3 -9.14 C332.17 -5.9, 340.79 -0.51, 349.19 1.14"
+                  stroke="var(--custom-color3)"
+                  stroke-width="4"
+                  fill="none"
+                ></path>
               </g>
             </g>
             <g transform="translate(342.5 10) rotate(0 68 23)">
-              <text class="fragment" data-fragment-index="3" x="0" y="33" font-family="Virgil, Segoe UI Emoji" font-size="36px" fill="var(--custom-color3)" text-anchor="start" style="white-space: pre;" direction="ltr">Process</text>
+              <text
+                class="fragment"
+                data-fragment-index="3"
+                x="0"
+                y="33"
+                font-family="Virgil, Segoe UI Emoji"
+                font-size="36px"
+                fill="var(--custom-color3)"
+                text-anchor="start"
+                style="white-space: pre"
+                direction="ltr"
+              >
+                Process
+              </text>
             </g>
             <g transform="translate(10 35.5) rotate(0 102 46)">
-              <text class="fragment" data-fragment-index="1" x="102" y="33" font-family="Virgil, Segoe UI Emoji" font-size="36px" fill="var(--custom-color2)" text-anchor="middle" style="white-space: pre;" direction="ltr">Inputs</text>
-              <text class="fragment" data-fragment-index="4" x="102" y="79" font-family="Virgil, Segoe UI Emoji" font-size="36px" fill="var(--custom-color2)" text-anchor="middle" style="white-space: pre;" direction="ltr">(hardcoded)</text>
+              <text
+                class="fragment"
+                data-fragment-index="1"
+                x="102"
+                y="33"
+                font-family="Virgil, Segoe UI Emoji"
+                font-size="36px"
+                fill="var(--custom-color2)"
+                text-anchor="middle"
+                style="white-space: pre"
+                direction="ltr"
+              >
+                Inputs
+              </text>
+              <text
+                class="fragment"
+                data-fragment-index="4"
+                x="102"
+                y="79"
+                font-family="Virgil, Segoe UI Emoji"
+                font-size="36px"
+                fill="var(--custom-color2)"
+                text-anchor="middle"
+                style="white-space: pre"
+                direction="ltr"
+              >
+                (hardcoded)
+              </text>
             </g>
             <g transform="translate(614.25 33.5) rotate(0 102 46)">
-              <text class="fragment" data-fragment-index="2" x="102" y="33" font-family="Virgil, Segoe UI Emoji" font-size="36px" fill="var(--custom-color2)" text-anchor="middle" style="white-space: pre;" direction="ltr">Outputs</text>
-              <text class="fragment" data-fragment-index="4" x="102" y="79" font-family="Virgil, Segoe UI Emoji" font-size="36px" fill="var(--custom-color2)" text-anchor="middle" style="white-space: pre;" direction="ltr">(hardcoded)</text>
+              <text
+                class="fragment"
+                data-fragment-index="2"
+                x="102"
+                y="33"
+                font-family="Virgil, Segoe UI Emoji"
+                font-size="36px"
+                fill="var(--custom-color2)"
+                text-anchor="middle"
+                style="white-space: pre"
+                direction="ltr"
+              >
+                Outputs
+              </text>
+              <text
+                class="fragment"
+                data-fragment-index="4"
+                x="102"
+                y="79"
+                font-family="Virgil, Segoe UI Emoji"
+                font-size="36px"
+                fill="var(--custom-color2)"
+                text-anchor="middle"
+                style="white-space: pre"
+                direction="ltr"
+              >
+                (hardcoded)
+              </text>
             </g>
           </svg>
         </section>
@@ -265,13 +348,11 @@ it('should impact title on search', async () =&gt; {
           <h3 class="fragment">"<em>.D0xjkFI{&lt;:nx#U3lI~</em>", "<em>j&gt;~&]&/'0Fw{?O</em>"</h3>
           <h3 class="fragment">[983 characters], [1302 characters]</h3>
         </section>
-        <section>
-            Have you ever heard about <em>Property based testing</em>?
-        </section>
+        <section>Have you ever heard about <em>Property based testing</em>?</section>
         <section>
           <h2><em>fast-check</em> to the rescue 🎯</h2>
           <p>
-              <img style="border:none;background:none;box-shadow:none;" src="images/fast-check-stats.png"/>
+            <img style="border: none; background: none; box-shadow: none" src="images/fast-check-stats.png" />
           </p>
         </section>
         <section>
@@ -279,14 +360,23 @@ it('should impact title on search', async () =&gt; {
         </section>
         <section>
           <p class="quote">
-              for any <em>(x, y, ...)</em>
-              <br/><span class="fragment" style="padding-left:48px;color:#777872;">generate random inputs based on specified generators</span>
-              <br/>such that <em>precondition(x, y, ...)</em> holds
-              <br/><span class="fragment" style="padding-left:48px;color:#777872;">check preconditions - <em>failure?</em> go back to previous</span>
-              <br/><em>property(x, y, ...)</em> is true
-              <br/><span class="fragment" style="padding-left:48px;color:#777872;">run the test - <em>failure?</em> shrink</span>
+            for any <em>(x, y, ...)</em> <br /><span class="fragment" style="padding-left: 48px; color: #777872"
+              >generate random inputs based on specified generators</span
+            >
+            <br />such that <em>precondition(x, y, ...)</em> holds <br /><span
+              class="fragment"
+              style="padding-left: 48px; color: #777872"
+              >check preconditions - <em>failure?</em> go back to previous</span
+            >
+            <br /><em>property(x, y, ...)</em> is true <br /><span
+              class="fragment"
+              style="padding-left: 48px; color: #777872"
+              >run the test - <em>failure?</em> shrink</span
+            >
           </p>
-          <p class="fragment custom-collapse" style="margin-top: 48px;"><span>&#128257; Run it <em>100</em> times &#128257;</span></p>
+          <p class="fragment custom-collapse" style="margin-top: 48px">
+            <span>&#128257; Run it <em>100</em> times &#128257;</span>
+          </p>
         </section>
         <section>
           <style>
@@ -320,187 +410,187 @@ it('should impact title on search', async () =&gt; {
             section.gitDiffSimple table {
               border-left: #313741 2px solid;
             }
-            section.gitDiffSimple code[data-line-numbers="2-24,26"] tr:nth-child(1),
-            section.gitDiffSimple code[data-line-numbers="2-24,26"] tr:nth-child(25),
-            section.gitDiffSimple code[data-line-numbers="5-7,10-12,20-23"] tr:nth-child(1),
-            section.gitDiffSimple code[data-line-numbers="5-7,10-12,20-23"] tr:nth-child(25),
-            section.gitDiffSimple code[data-line-numbers="10-12,20,22,23"] tr:nth-child(1),
-            section.gitDiffSimple code[data-line-numbers="10-12,20,22,23"] tr:nth-child(25),
-            section.gitDiffSimple code[data-line-numbers="1,25"] tr:nth-child(2),
-            section.gitDiffSimple code[data-line-numbers="1,25"] tr:nth-child(19),
-            section.gitDiffSimple code[data-line-numbers="1,25"] tr:nth-child(20),
-            section.gitDiffSimple code[data-line-numbers="1,25"] tr:nth-child(21),
-            section.gitDiffSimple code[data-line-numbers="1,25"] tr:nth-child(22),
-            section.gitDiffSimple code[data-line-numbers="1,25"] tr:nth-child(23),
-            section.gitDiffSimple code[data-line-numbers="1,25"] tr:nth-child(24),
-            section.gitDiffSimple code[data-line-numbers="4-13"] tr:nth-child(2),
-            section.gitDiffSimple code[data-line-numbers="4-13"] tr:nth-child(19),
-            section.gitDiffSimple code[data-line-numbers="4-13"] tr:nth-child(20),
-            section.gitDiffSimple code[data-line-numbers="4-13"] tr:nth-child(21),
-            section.gitDiffSimple code[data-line-numbers="4-13"] tr:nth-child(22),
-            section.gitDiffSimple code[data-line-numbers="4-13"] tr:nth-child(23),
-            section.gitDiffSimple code[data-line-numbers="4-13"] tr:nth-child(24),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(2),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(19),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(20),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(21),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(22),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(23),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(24),
-            section.gitDiffSimple code[data-line-numbers="2-24,26"] tr:nth-child(27),
-            section.gitDiffSimple code[data-line-numbers="2-24,26"] tr:nth-child(28),
-            section.gitDiffSimple code[data-line-numbers="2-24,26"] tr:nth-child(29),
-            section.gitDiffSimple code[data-line-numbers="2-24,26"] tr:nth-child(30),
-            section.gitDiffSimple code[data-line-numbers="2-24,26"] tr:nth-child(31),
-            section.gitDiffSimple code[data-line-numbers="2-24,26"] tr:nth-child(32),
-            section.gitDiffSimple code[data-line-numbers="2-24,26"] tr:nth-child(33),
-            section.gitDiffSimple code[data-line-numbers="2-24,26"] tr:nth-child(34),
-            section.gitDiffSimple code[data-line-numbers="2-24,26"] tr:nth-child(35),
-            section.gitDiffSimple code[data-line-numbers="2-24,26"] tr:nth-child(36),
-            section.gitDiffSimple code[data-line-numbers="2-24,26"] tr:nth-child(37),
-            section.gitDiffSimple code[data-line-numbers="2-24,26"] tr:nth-child(38),
-            section.gitDiffSimple code[data-line-numbers="2-24,26"] tr:nth-child(39),
-            section.gitDiffSimple code[data-line-numbers="5-7,10-12,20-23"] tr:nth-child(27),
-            section.gitDiffSimple code[data-line-numbers="5-7,10-12,20-23"] tr:nth-child(28),
-            section.gitDiffSimple code[data-line-numbers="5-7,10-12,20-23"] tr:nth-child(29),
-            section.gitDiffSimple code[data-line-numbers="5-7,10-12,20-23"] tr:nth-child(30),
-            section.gitDiffSimple code[data-line-numbers="5-7,10-12,20-23"] tr:nth-child(31),
-            section.gitDiffSimple code[data-line-numbers="5-7,10-12,20-23"] tr:nth-child(32),
-            section.gitDiffSimple code[data-line-numbers="5-7,10-12,20-23"] tr:nth-child(33),
-            section.gitDiffSimple code[data-line-numbers="5-7,10-12,20-23"] tr:nth-child(34),
-            section.gitDiffSimple code[data-line-numbers="5-7,10-12,20-23"] tr:nth-child(35),
-            section.gitDiffSimple code[data-line-numbers="5-7,10-12,20-23"] tr:nth-child(36),
-            section.gitDiffSimple code[data-line-numbers="5-7,10-12,20-23"] tr:nth-child(37),
-            section.gitDiffSimple code[data-line-numbers="5-7,10-12,20-23"] tr:nth-child(38),
-            section.gitDiffSimple code[data-line-numbers="5-7,10-12,20-23"] tr:nth-child(39),
-            section.gitDiffSimple code[data-line-numbers="10-12,20,22,23"] tr:nth-child(27),
-            section.gitDiffSimple code[data-line-numbers="10-12,20,22,23"] tr:nth-child(28),
-            section.gitDiffSimple code[data-line-numbers="10-12,20,22,23"] tr:nth-child(29),
-            section.gitDiffSimple code[data-line-numbers="10-12,20,22,23"] tr:nth-child(30),
-            section.gitDiffSimple code[data-line-numbers="10-12,20,22,23"] tr:nth-child(31),
-            section.gitDiffSimple code[data-line-numbers="10-12,20,22,23"] tr:nth-child(32),
-            section.gitDiffSimple code[data-line-numbers="10-12,20,22,23"] tr:nth-child(33),
-            section.gitDiffSimple code[data-line-numbers="10-12,20,22,23"] tr:nth-child(34),
-            section.gitDiffSimple code[data-line-numbers="10-12,20,22,23"] tr:nth-child(35),
-            section.gitDiffSimple code[data-line-numbers="10-12,20,22,23"] tr:nth-child(36),
-            section.gitDiffSimple code[data-line-numbers="10-12,20,22,23"] tr:nth-child(37),
-            section.gitDiffSimple code[data-line-numbers="10-12,20,22,23"] tr:nth-child(38),
-            section.gitDiffSimple code[data-line-numbers="10-12,20,22,23"] tr:nth-child(39),
-            section.gitDiffSimple code[data-line-numbers="1,25"] tr:nth-child(27),
-            section.gitDiffSimple code[data-line-numbers="1,25"] tr:nth-child(28),
-            section.gitDiffSimple code[data-line-numbers="1,25"] tr:nth-child(29),
-            section.gitDiffSimple code[data-line-numbers="1,25"] tr:nth-child(30),
-            section.gitDiffSimple code[data-line-numbers="1,25"] tr:nth-child(31),
-            section.gitDiffSimple code[data-line-numbers="1,25"] tr:nth-child(32),
-            section.gitDiffSimple code[data-line-numbers="1,25"] tr:nth-child(33),
-            section.gitDiffSimple code[data-line-numbers="1,25"] tr:nth-child(34),
-            section.gitDiffSimple code[data-line-numbers="1,25"] tr:nth-child(35),
-            section.gitDiffSimple code[data-line-numbers="1,25"] tr:nth-child(36),
-            section.gitDiffSimple code[data-line-numbers="1,25"] tr:nth-child(37),
-            section.gitDiffSimple code[data-line-numbers="1,25"] tr:nth-child(38),
-            section.gitDiffSimple code[data-line-numbers="1,25"] tr:nth-child(39),
-            section.gitDiffSimple code[data-line-numbers="4-13"] tr:nth-child(27),
-            section.gitDiffSimple code[data-line-numbers="4-13"] tr:nth-child(28),
-            section.gitDiffSimple code[data-line-numbers="4-13"] tr:nth-child(29),
-            section.gitDiffSimple code[data-line-numbers="4-13"] tr:nth-child(30),
-            section.gitDiffSimple code[data-line-numbers="4-13"] tr:nth-child(31),
-            section.gitDiffSimple code[data-line-numbers="4-13"] tr:nth-child(32),
-            section.gitDiffSimple code[data-line-numbers="4-13"] tr:nth-child(33),
-            section.gitDiffSimple code[data-line-numbers="4-13"] tr:nth-child(34),
-            section.gitDiffSimple code[data-line-numbers="4-13"] tr:nth-child(35),
-            section.gitDiffSimple code[data-line-numbers="4-13"] tr:nth-child(36),
-            section.gitDiffSimple code[data-line-numbers="4-13"] tr:nth-child(37),
-            section.gitDiffSimple code[data-line-numbers="4-13"] tr:nth-child(38),
-            section.gitDiffSimple code[data-line-numbers="4-13"] tr:nth-child(39),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(2),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(3),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(4),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(5),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(6),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(7),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(8),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(9),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(10),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(11),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(12),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(13),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(14),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(15),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(16),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(17),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(18),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(19),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(20),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(21),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(22),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(23),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(24),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(25),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(26),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(27),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(28),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(29),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(37),
-            section.gitDiffSimple code[data-line-numbers="30,36"] tr:nth-child(38),
-            section.gitDiffSimple code[data-line-numbers="27-29,37-38"] tr:nth-child(2),
-            section.gitDiffSimple code[data-line-numbers="27-29,37-38"] tr:nth-child(3),
-            section.gitDiffSimple code[data-line-numbers="27-29,37-38"] tr:nth-child(4),
-            section.gitDiffSimple code[data-line-numbers="27-29,37-38"] tr:nth-child(5),
-            section.gitDiffSimple code[data-line-numbers="27-29,37-38"] tr:nth-child(6),
-            section.gitDiffSimple code[data-line-numbers="27-29,37-38"] tr:nth-child(7),
-            section.gitDiffSimple code[data-line-numbers="27-29,37-38"] tr:nth-child(8),
-            section.gitDiffSimple code[data-line-numbers="27-29,37-38"] tr:nth-child(9),
-            section.gitDiffSimple code[data-line-numbers="27-29,37-38"] tr:nth-child(10),
-            section.gitDiffSimple code[data-line-numbers="27-29,37-38"] tr:nth-child(11),
-            section.gitDiffSimple code[data-line-numbers="27-29,37-38"] tr:nth-child(12),
-            section.gitDiffSimple code[data-line-numbers="27-29,37-38"] tr:nth-child(13),
-            section.gitDiffSimple code[data-line-numbers="27-29,37-38"] tr:nth-child(14),
-            section.gitDiffSimple code[data-line-numbers="27-29,37-38"] tr:nth-child(15),
-            section.gitDiffSimple code[data-line-numbers="27-29,37-38"] tr:nth-child(16),
-            section.gitDiffSimple code[data-line-numbers="27-29,37-38"] tr:nth-child(17),
-            section.gitDiffSimple code[data-line-numbers="27-29,37-38"] tr:nth-child(18),
-            section.gitDiffSimple code[data-line-numbers="27-29,37-38"] tr:nth-child(19),
-            section.gitDiffSimple code[data-line-numbers="27-29,37-38"] tr:nth-child(20),
-            section.gitDiffSimple code[data-line-numbers="27-29,37-38"] tr:nth-child(21),
-            section.gitDiffSimple code[data-line-numbers="27-29,37-38"] tr:nth-child(22),
-            section.gitDiffSimple code[data-line-numbers="27-29,37-38"] tr:nth-child(23),
-            section.gitDiffSimple code[data-line-numbers="27-29,37-38"] tr:nth-child(24),
-            section.gitDiffSimple code[data-line-numbers="27-29,37-38"] tr:nth-child(25),
-            section.gitDiffSimple code[data-line-numbers="27-29,37-38"] tr:nth-child(26),
-            section.gitDiffSimple code[data-line-numbers="1-39"] tr:nth-child(2),
-            section.gitDiffSimple code[data-line-numbers="1-39"] tr:nth-child(3),
-            section.gitDiffSimple code[data-line-numbers="1-39"] tr:nth-child(4),
-            section.gitDiffSimple code[data-line-numbers="1-39"] tr:nth-child(5),
-            section.gitDiffSimple code[data-line-numbers="1-39"] tr:nth-child(6),
-            section.gitDiffSimple code[data-line-numbers="1-39"] tr:nth-child(7),
-            section.gitDiffSimple code[data-line-numbers="1-39"] tr:nth-child(8),
-            section.gitDiffSimple code[data-line-numbers="1-39"] tr:nth-child(9),
-            section.gitDiffSimple code[data-line-numbers="1-39"] tr:nth-child(10),
-            section.gitDiffSimple code[data-line-numbers="1-39"] tr:nth-child(11),
-            section.gitDiffSimple code[data-line-numbers="1-39"] tr:nth-child(12),
-            section.gitDiffSimple code[data-line-numbers="1-39"] tr:nth-child(13),
-            section.gitDiffSimple code[data-line-numbers="1-39"] tr:nth-child(14),
-            section.gitDiffSimple code[data-line-numbers="1-39"] tr:nth-child(15),
-            section.gitDiffSimple code[data-line-numbers="1-39"] tr:nth-child(16),
-            section.gitDiffSimple code[data-line-numbers="1-39"] tr:nth-child(17),
-            section.gitDiffSimple code[data-line-numbers="1-39"] tr:nth-child(18),
-            section.gitDiffSimple code[data-line-numbers="1-39"] tr:nth-child(19),
-            section.gitDiffSimple code[data-line-numbers="1-39"] tr:nth-child(20),
-            section.gitDiffSimple code[data-line-numbers="1-39"] tr:nth-child(21),
-            section.gitDiffSimple code[data-line-numbers="1-39"] tr:nth-child(22),
-            section.gitDiffSimple code[data-line-numbers="1-39"] tr:nth-child(23),
-            section.gitDiffSimple code[data-line-numbers="1-39"] tr:nth-child(24),
-            section.gitDiffSimple code[data-line-numbers="1-39"] tr:nth-child(25),
-            section.gitDiffSimple code[data-line-numbers="1-39"] tr:nth-child(26) {
+            section.gitDiffSimple code[data-line-numbers='2-24,26'] tr:nth-child(1),
+            section.gitDiffSimple code[data-line-numbers='2-24,26'] tr:nth-child(25),
+            section.gitDiffSimple code[data-line-numbers='5-7,10-12,20-23'] tr:nth-child(1),
+            section.gitDiffSimple code[data-line-numbers='5-7,10-12,20-23'] tr:nth-child(25),
+            section.gitDiffSimple code[data-line-numbers='10-12,20,22,23'] tr:nth-child(1),
+            section.gitDiffSimple code[data-line-numbers='10-12,20,22,23'] tr:nth-child(25),
+            section.gitDiffSimple code[data-line-numbers='1,25'] tr:nth-child(2),
+            section.gitDiffSimple code[data-line-numbers='1,25'] tr:nth-child(19),
+            section.gitDiffSimple code[data-line-numbers='1,25'] tr:nth-child(20),
+            section.gitDiffSimple code[data-line-numbers='1,25'] tr:nth-child(21),
+            section.gitDiffSimple code[data-line-numbers='1,25'] tr:nth-child(22),
+            section.gitDiffSimple code[data-line-numbers='1,25'] tr:nth-child(23),
+            section.gitDiffSimple code[data-line-numbers='1,25'] tr:nth-child(24),
+            section.gitDiffSimple code[data-line-numbers='4-13'] tr:nth-child(2),
+            section.gitDiffSimple code[data-line-numbers='4-13'] tr:nth-child(19),
+            section.gitDiffSimple code[data-line-numbers='4-13'] tr:nth-child(20),
+            section.gitDiffSimple code[data-line-numbers='4-13'] tr:nth-child(21),
+            section.gitDiffSimple code[data-line-numbers='4-13'] tr:nth-child(22),
+            section.gitDiffSimple code[data-line-numbers='4-13'] tr:nth-child(23),
+            section.gitDiffSimple code[data-line-numbers='4-13'] tr:nth-child(24),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(2),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(19),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(20),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(21),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(22),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(23),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(24),
+            section.gitDiffSimple code[data-line-numbers='2-24,26'] tr:nth-child(27),
+            section.gitDiffSimple code[data-line-numbers='2-24,26'] tr:nth-child(28),
+            section.gitDiffSimple code[data-line-numbers='2-24,26'] tr:nth-child(29),
+            section.gitDiffSimple code[data-line-numbers='2-24,26'] tr:nth-child(30),
+            section.gitDiffSimple code[data-line-numbers='2-24,26'] tr:nth-child(31),
+            section.gitDiffSimple code[data-line-numbers='2-24,26'] tr:nth-child(32),
+            section.gitDiffSimple code[data-line-numbers='2-24,26'] tr:nth-child(33),
+            section.gitDiffSimple code[data-line-numbers='2-24,26'] tr:nth-child(34),
+            section.gitDiffSimple code[data-line-numbers='2-24,26'] tr:nth-child(35),
+            section.gitDiffSimple code[data-line-numbers='2-24,26'] tr:nth-child(36),
+            section.gitDiffSimple code[data-line-numbers='2-24,26'] tr:nth-child(37),
+            section.gitDiffSimple code[data-line-numbers='2-24,26'] tr:nth-child(38),
+            section.gitDiffSimple code[data-line-numbers='2-24,26'] tr:nth-child(39),
+            section.gitDiffSimple code[data-line-numbers='5-7,10-12,20-23'] tr:nth-child(27),
+            section.gitDiffSimple code[data-line-numbers='5-7,10-12,20-23'] tr:nth-child(28),
+            section.gitDiffSimple code[data-line-numbers='5-7,10-12,20-23'] tr:nth-child(29),
+            section.gitDiffSimple code[data-line-numbers='5-7,10-12,20-23'] tr:nth-child(30),
+            section.gitDiffSimple code[data-line-numbers='5-7,10-12,20-23'] tr:nth-child(31),
+            section.gitDiffSimple code[data-line-numbers='5-7,10-12,20-23'] tr:nth-child(32),
+            section.gitDiffSimple code[data-line-numbers='5-7,10-12,20-23'] tr:nth-child(33),
+            section.gitDiffSimple code[data-line-numbers='5-7,10-12,20-23'] tr:nth-child(34),
+            section.gitDiffSimple code[data-line-numbers='5-7,10-12,20-23'] tr:nth-child(35),
+            section.gitDiffSimple code[data-line-numbers='5-7,10-12,20-23'] tr:nth-child(36),
+            section.gitDiffSimple code[data-line-numbers='5-7,10-12,20-23'] tr:nth-child(37),
+            section.gitDiffSimple code[data-line-numbers='5-7,10-12,20-23'] tr:nth-child(38),
+            section.gitDiffSimple code[data-line-numbers='5-7,10-12,20-23'] tr:nth-child(39),
+            section.gitDiffSimple code[data-line-numbers='10-12,20,22,23'] tr:nth-child(27),
+            section.gitDiffSimple code[data-line-numbers='10-12,20,22,23'] tr:nth-child(28),
+            section.gitDiffSimple code[data-line-numbers='10-12,20,22,23'] tr:nth-child(29),
+            section.gitDiffSimple code[data-line-numbers='10-12,20,22,23'] tr:nth-child(30),
+            section.gitDiffSimple code[data-line-numbers='10-12,20,22,23'] tr:nth-child(31),
+            section.gitDiffSimple code[data-line-numbers='10-12,20,22,23'] tr:nth-child(32),
+            section.gitDiffSimple code[data-line-numbers='10-12,20,22,23'] tr:nth-child(33),
+            section.gitDiffSimple code[data-line-numbers='10-12,20,22,23'] tr:nth-child(34),
+            section.gitDiffSimple code[data-line-numbers='10-12,20,22,23'] tr:nth-child(35),
+            section.gitDiffSimple code[data-line-numbers='10-12,20,22,23'] tr:nth-child(36),
+            section.gitDiffSimple code[data-line-numbers='10-12,20,22,23'] tr:nth-child(37),
+            section.gitDiffSimple code[data-line-numbers='10-12,20,22,23'] tr:nth-child(38),
+            section.gitDiffSimple code[data-line-numbers='10-12,20,22,23'] tr:nth-child(39),
+            section.gitDiffSimple code[data-line-numbers='1,25'] tr:nth-child(27),
+            section.gitDiffSimple code[data-line-numbers='1,25'] tr:nth-child(28),
+            section.gitDiffSimple code[data-line-numbers='1,25'] tr:nth-child(29),
+            section.gitDiffSimple code[data-line-numbers='1,25'] tr:nth-child(30),
+            section.gitDiffSimple code[data-line-numbers='1,25'] tr:nth-child(31),
+            section.gitDiffSimple code[data-line-numbers='1,25'] tr:nth-child(32),
+            section.gitDiffSimple code[data-line-numbers='1,25'] tr:nth-child(33),
+            section.gitDiffSimple code[data-line-numbers='1,25'] tr:nth-child(34),
+            section.gitDiffSimple code[data-line-numbers='1,25'] tr:nth-child(35),
+            section.gitDiffSimple code[data-line-numbers='1,25'] tr:nth-child(36),
+            section.gitDiffSimple code[data-line-numbers='1,25'] tr:nth-child(37),
+            section.gitDiffSimple code[data-line-numbers='1,25'] tr:nth-child(38),
+            section.gitDiffSimple code[data-line-numbers='1,25'] tr:nth-child(39),
+            section.gitDiffSimple code[data-line-numbers='4-13'] tr:nth-child(27),
+            section.gitDiffSimple code[data-line-numbers='4-13'] tr:nth-child(28),
+            section.gitDiffSimple code[data-line-numbers='4-13'] tr:nth-child(29),
+            section.gitDiffSimple code[data-line-numbers='4-13'] tr:nth-child(30),
+            section.gitDiffSimple code[data-line-numbers='4-13'] tr:nth-child(31),
+            section.gitDiffSimple code[data-line-numbers='4-13'] tr:nth-child(32),
+            section.gitDiffSimple code[data-line-numbers='4-13'] tr:nth-child(33),
+            section.gitDiffSimple code[data-line-numbers='4-13'] tr:nth-child(34),
+            section.gitDiffSimple code[data-line-numbers='4-13'] tr:nth-child(35),
+            section.gitDiffSimple code[data-line-numbers='4-13'] tr:nth-child(36),
+            section.gitDiffSimple code[data-line-numbers='4-13'] tr:nth-child(37),
+            section.gitDiffSimple code[data-line-numbers='4-13'] tr:nth-child(38),
+            section.gitDiffSimple code[data-line-numbers='4-13'] tr:nth-child(39),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(2),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(3),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(4),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(5),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(6),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(7),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(8),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(9),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(10),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(11),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(12),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(13),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(14),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(15),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(16),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(17),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(18),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(19),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(20),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(21),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(22),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(23),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(24),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(25),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(26),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(27),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(28),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(29),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(37),
+            section.gitDiffSimple code[data-line-numbers='30,36'] tr:nth-child(38),
+            section.gitDiffSimple code[data-line-numbers='27-29,37-38'] tr:nth-child(2),
+            section.gitDiffSimple code[data-line-numbers='27-29,37-38'] tr:nth-child(3),
+            section.gitDiffSimple code[data-line-numbers='27-29,37-38'] tr:nth-child(4),
+            section.gitDiffSimple code[data-line-numbers='27-29,37-38'] tr:nth-child(5),
+            section.gitDiffSimple code[data-line-numbers='27-29,37-38'] tr:nth-child(6),
+            section.gitDiffSimple code[data-line-numbers='27-29,37-38'] tr:nth-child(7),
+            section.gitDiffSimple code[data-line-numbers='27-29,37-38'] tr:nth-child(8),
+            section.gitDiffSimple code[data-line-numbers='27-29,37-38'] tr:nth-child(9),
+            section.gitDiffSimple code[data-line-numbers='27-29,37-38'] tr:nth-child(10),
+            section.gitDiffSimple code[data-line-numbers='27-29,37-38'] tr:nth-child(11),
+            section.gitDiffSimple code[data-line-numbers='27-29,37-38'] tr:nth-child(12),
+            section.gitDiffSimple code[data-line-numbers='27-29,37-38'] tr:nth-child(13),
+            section.gitDiffSimple code[data-line-numbers='27-29,37-38'] tr:nth-child(14),
+            section.gitDiffSimple code[data-line-numbers='27-29,37-38'] tr:nth-child(15),
+            section.gitDiffSimple code[data-line-numbers='27-29,37-38'] tr:nth-child(16),
+            section.gitDiffSimple code[data-line-numbers='27-29,37-38'] tr:nth-child(17),
+            section.gitDiffSimple code[data-line-numbers='27-29,37-38'] tr:nth-child(18),
+            section.gitDiffSimple code[data-line-numbers='27-29,37-38'] tr:nth-child(19),
+            section.gitDiffSimple code[data-line-numbers='27-29,37-38'] tr:nth-child(20),
+            section.gitDiffSimple code[data-line-numbers='27-29,37-38'] tr:nth-child(21),
+            section.gitDiffSimple code[data-line-numbers='27-29,37-38'] tr:nth-child(22),
+            section.gitDiffSimple code[data-line-numbers='27-29,37-38'] tr:nth-child(23),
+            section.gitDiffSimple code[data-line-numbers='27-29,37-38'] tr:nth-child(24),
+            section.gitDiffSimple code[data-line-numbers='27-29,37-38'] tr:nth-child(25),
+            section.gitDiffSimple code[data-line-numbers='27-29,37-38'] tr:nth-child(26),
+            section.gitDiffSimple code[data-line-numbers='1-39'] tr:nth-child(2),
+            section.gitDiffSimple code[data-line-numbers='1-39'] tr:nth-child(3),
+            section.gitDiffSimple code[data-line-numbers='1-39'] tr:nth-child(4),
+            section.gitDiffSimple code[data-line-numbers='1-39'] tr:nth-child(5),
+            section.gitDiffSimple code[data-line-numbers='1-39'] tr:nth-child(6),
+            section.gitDiffSimple code[data-line-numbers='1-39'] tr:nth-child(7),
+            section.gitDiffSimple code[data-line-numbers='1-39'] tr:nth-child(8),
+            section.gitDiffSimple code[data-line-numbers='1-39'] tr:nth-child(9),
+            section.gitDiffSimple code[data-line-numbers='1-39'] tr:nth-child(10),
+            section.gitDiffSimple code[data-line-numbers='1-39'] tr:nth-child(11),
+            section.gitDiffSimple code[data-line-numbers='1-39'] tr:nth-child(12),
+            section.gitDiffSimple code[data-line-numbers='1-39'] tr:nth-child(13),
+            section.gitDiffSimple code[data-line-numbers='1-39'] tr:nth-child(14),
+            section.gitDiffSimple code[data-line-numbers='1-39'] tr:nth-child(15),
+            section.gitDiffSimple code[data-line-numbers='1-39'] tr:nth-child(16),
+            section.gitDiffSimple code[data-line-numbers='1-39'] tr:nth-child(17),
+            section.gitDiffSimple code[data-line-numbers='1-39'] tr:nth-child(18),
+            section.gitDiffSimple code[data-line-numbers='1-39'] tr:nth-child(19),
+            section.gitDiffSimple code[data-line-numbers='1-39'] tr:nth-child(20),
+            section.gitDiffSimple code[data-line-numbers='1-39'] tr:nth-child(21),
+            section.gitDiffSimple code[data-line-numbers='1-39'] tr:nth-child(22),
+            section.gitDiffSimple code[data-line-numbers='1-39'] tr:nth-child(23),
+            section.gitDiffSimple code[data-line-numbers='1-39'] tr:nth-child(24),
+            section.gitDiffSimple code[data-line-numbers='1-39'] tr:nth-child(25),
+            section.gitDiffSimple code[data-line-numbers='1-39'] tr:nth-child(26) {
               display: none;
             }
-            section.gitDiffSimple code.visible[data-line-numbers="1,25"] tr:nth-child(1),
-            section.gitDiffSimple code.visible[data-line-numbers="1,25"] tr:nth-child(25),
-            section.gitDiffSimple code.visible[data-line-numbers="27-29,37-38"] tr:nth-child(27),
-            section.gitDiffSimple code.visible[data-line-numbers="27-29,37-38"] tr:nth-child(28),
-            section.gitDiffSimple code.visible[data-line-numbers="27-29,37-38"] tr:nth-child(29),
-            section.gitDiffSimple code.visible[data-line-numbers="27-29,37-38"] tr:nth-child(37),
-            section.gitDiffSimple code.visible[data-line-numbers="27-29,37-38"] tr:nth-child(38) {
+            section.gitDiffSimple code.visible[data-line-numbers='1,25'] tr:nth-child(1),
+            section.gitDiffSimple code.visible[data-line-numbers='1,25'] tr:nth-child(25),
+            section.gitDiffSimple code.visible[data-line-numbers='27-29,37-38'] tr:nth-child(27),
+            section.gitDiffSimple code.visible[data-line-numbers='27-29,37-38'] tr:nth-child(28),
+            section.gitDiffSimple code.visible[data-line-numbers='27-29,37-38'] tr:nth-child(29),
+            section.gitDiffSimple code.visible[data-line-numbers='27-29,37-38'] tr:nth-child(37),
+            section.gitDiffSimple code.visible[data-line-numbers='27-29,37-38'] tr:nth-child(38) {
               animation-fill-mode: forwards;
               animation-duration: 500ms;
               animation-name: show-code-line-1;
@@ -514,8 +604,8 @@ it('should impact title on search', async () =&gt; {
                 transform: translateX(0%);
               }
             }
-            section.gitDiffSimple code.visible[data-line-numbers="30,36"] tr:nth-child(30),
-            section.gitDiffSimple code.visible[data-line-numbers="30,36"] tr:nth-child(36) {
+            section.gitDiffSimple code.visible[data-line-numbers='30,36'] tr:nth-child(30),
+            section.gitDiffSimple code.visible[data-line-numbers='30,36'] tr:nth-child(36) {
               animation-fill-mode: forwards;
               animation-duration: 500ms;
               animation-name: show-code-line-2;
@@ -529,11 +619,11 @@ it('should impact title on search', async () =&gt; {
                 transform: translateX(-7%);
               }
             }
-            section.gitDiffSimple code.visible[data-line-numbers="30,36"] tr:nth-child(31),
-            section.gitDiffSimple code.visible[data-line-numbers="30,36"] tr:nth-child(32),
-            section.gitDiffSimple code.visible[data-line-numbers="30,36"] tr:nth-child(33),
-            section.gitDiffSimple code.visible[data-line-numbers="30,36"] tr:nth-child(34),
-            section.gitDiffSimple code.visible[data-line-numbers="30,36"] tr:nth-child(35) {
+            section.gitDiffSimple code.visible[data-line-numbers='30,36'] tr:nth-child(31),
+            section.gitDiffSimple code.visible[data-line-numbers='30,36'] tr:nth-child(32),
+            section.gitDiffSimple code.visible[data-line-numbers='30,36'] tr:nth-child(33),
+            section.gitDiffSimple code.visible[data-line-numbers='30,36'] tr:nth-child(34),
+            section.gitDiffSimple code.visible[data-line-numbers='30,36'] tr:nth-child(35) {
               animation-fill-mode: forwards;
               animation-duration: 500ms;
               animation-name: show-code-line-3;
@@ -547,13 +637,13 @@ it('should impact title on search', async () =&gt; {
                 transform: translateX(-7%);
               }
             }
-            section.gitDiffSimple code.visible[data-line-numbers="27-29,37-38"] tr:nth-child(30),
-            section.gitDiffSimple code.visible[data-line-numbers="27-29,37-38"] tr:nth-child(31),
-            section.gitDiffSimple code.visible[data-line-numbers="27-29,37-38"] tr:nth-child(32),
-            section.gitDiffSimple code.visible[data-line-numbers="27-29,37-38"] tr:nth-child(33),
-            section.gitDiffSimple code.visible[data-line-numbers="27-29,37-38"] tr:nth-child(34),
-            section.gitDiffSimple code.visible[data-line-numbers="27-29,37-38"] tr:nth-child(35),
-            section.gitDiffSimple code.visible[data-line-numbers="27-29,37-38"] tr:nth-child(36) {
+            section.gitDiffSimple code.visible[data-line-numbers='27-29,37-38'] tr:nth-child(30),
+            section.gitDiffSimple code.visible[data-line-numbers='27-29,37-38'] tr:nth-child(31),
+            section.gitDiffSimple code.visible[data-line-numbers='27-29,37-38'] tr:nth-child(32),
+            section.gitDiffSimple code.visible[data-line-numbers='27-29,37-38'] tr:nth-child(33),
+            section.gitDiffSimple code.visible[data-line-numbers='27-29,37-38'] tr:nth-child(34),
+            section.gitDiffSimple code.visible[data-line-numbers='27-29,37-38'] tr:nth-child(35),
+            section.gitDiffSimple code.visible[data-line-numbers='27-29,37-38'] tr:nth-child(36) {
               animation-fill-mode: forwards;
               animation-duration: 500ms;
               animation-name: show-code-line-4;
@@ -612,66 +702,70 @@ test('should compute the right diff', () =&gt; {
         </section>
         <section>
           <p class="quote">
-            for any <em>(x, y, ...)</em>
-            <br/>such that <em>precondition(x, y, ...)</em> holds
-            <br/><em>property(x, y, ...)</em> is true
+            for any <em>(x, y, ...)</em> <br />such that <em>precondition(x, y, ...)</em> holds <br /><em
+              >property(x, y, ...)</em
+            >
+            is true
           </p>
           <p class="quote-right fragment">
-            for any <em>text1, text2 strings</em>
-            <br/><em>computeDiff(text1, text2)</em> should be enough to build back <em>text2</em>
+            for any <em>text1, text2 strings</em> <br /><em>computeDiff(text1, text2)</em> should be enough to build
+            back <em>text2</em>
           </p>
         </section>
         <section>
-          <p class="quote-right" style="margin-bottom:48px;">
-            for any <em>text1, text2 strings</em>
-            <br/><em>computeDiff(text1, text2)</em> should be enough to build back <em>text2</em>
+          <p class="quote-right" style="margin-bottom: 48px">
+            for any <em>text1, text2 strings</em> <br /><em>computeDiff(text1, text2)</em> should be enough to build
+            back <em>text2</em>
           </p>
           <p>
-            {text1: [&quot;<em>漢🐱</em>&quot;, &quot;<em>null</em>&quot;, &quot;<em>ba</em>&quot;], text2: [&quot;<em>漢🐱</em>&quot;, &quot;<em>ab</em>&quot;]}
-            <span style="color:red;">&#10007;</span>
+            {text1: [&quot;<em>漢🐱</em>&quot;, &quot;<em>null</em>&quot;, &quot;<em>ba</em>&quot;], text2:
+            [&quot;<em>漢🐱</em>&quot;, &quot;<em>ab</em>&quot;]}
+            <span style="color: red">&#10007;</span>
           </p>
         </section>
         <section>
           <h2>Shrinking into action</h2>
           <p class="fragment">
-            {text1: [&quot;<em>漢🐱</em>&quot;, &quot;<em>null</em>&quot;, &quot;<em>ba</em>&quot;], text2: [&quot;<em>漢🐱</em>&quot;, &quot;<em>ab</em>&quot;]}
-            <span style="color:red;">&#10007;</span>
+            {text1: [&quot;<em>漢🐱</em>&quot;, &quot;<em>null</em>&quot;, &quot;<em>ba</em>&quot;], text2:
+            [&quot;<em>漢🐱</em>&quot;, &quot;<em>ab</em>&quot;]}
+            <span style="color: red">&#10007;</span>
           </p>
           <p class="fragment">
             {text1: [], text2: [&quot;<em>漢🐱</em>&quot;, &quot;<em>ab</em>&quot;]}
-            <span style="color:green;">&#10003;</span>
+            <span style="color: green">&#10003;</span>
           </p>
           <p class="fragment">
-            {text1: [&quot;<em>漢🐱</em>&quot;, &quot;<em>null</em>&quot;], text2: [&quot;<em>漢🐱</em>&quot;, &quot;<em>ab</em>&quot;]}
-            <span style="color:green;">&#10003;</span>
+            {text1: [&quot;<em>漢🐱</em>&quot;, &quot;<em>null</em>&quot;], text2: [&quot;<em>漢🐱</em>&quot;,
+            &quot;<em>ab</em>&quot;]}
+            <span style="color: green">&#10003;</span>
           </p>
           <p class="fragment">
             {text1: [&quot;<em>ba</em>&quot;], text2: [&quot;<em>漢🐱</em>&quot;, &quot;<em>ab</em>&quot;]}
-            <span style="color:red;">&#10007;</span>
+            <span style="color: red">&#10007;</span>
           </p>
           <p class="fragment">
             {text1: [&quot;<em>ba</em>&quot;], text2: []}
-            <span style="color:green;">&#10003;</span>
+            <span style="color: green">&#10003;</span>
           </p>
           <p class="fragment">
             {text1: [&quot;<em>ba</em>&quot;], text2: [&quot;<em>漢🐱</em>&quot;]}
-            <span style="color:green;">&#10003;</span>
+            <span style="color: green">&#10003;</span>
           </p>
           <p class="fragment">
             {text1: [&quot;<em>ba</em>&quot;], text2: [&quot;<em>ab</em>&quot;]}
-            <span style="color:red;">&#10007;</span>
+            <span style="color: red">&#10007;</span>
           </p>
           <p class="fragment">...</p>
         </section>
         <section>
           <h3>Is it enough?</h3>
           <p class="quote-right fragment">
-            for any <em>text1, text2 strings</em>
-            <br/><em>computeDiff(text1, text2)</em> should be enough to build back <em>text2</em>
+            for any <em>text1, text2 strings</em> <br /><em>computeDiff(text1, text2)</em> should be enough to build
+            back <em>text2</em>
           </p>
         </section>
         <section class="fullScreen">
-          <div style="display: grid; grid-template-columns: 3fr 1fr; grid-gap: 16px;">
+          <div style="display: grid; grid-template-columns: 3fr 1fr; grid-gap: 16px">
             <pre><code class="hljs language-js" data-trim>
 function computeDiff(text1, text2) {
   return [
@@ -717,48 +811,48 @@ output:
             section.gitDiffHardThinking table {
               border-left: #313741 2px solid;
             }
-            section.gitDiffHardThinking code[data-line-numbers="1-4,16"] tr:nth-child(5),
-            section.gitDiffHardThinking code[data-line-numbers="1-4,16"] tr:nth-child(6),
-            section.gitDiffHardThinking code[data-line-numbers="1-4,16"] tr:nth-child(7),
-            section.gitDiffHardThinking code[data-line-numbers="1-4,16"] tr:nth-child(8),
-            section.gitDiffHardThinking code[data-line-numbers="1-4,16"] tr:nth-child(9),
-            section.gitDiffHardThinking code[data-line-numbers="1-4,16"] tr:nth-child(10),
-            section.gitDiffHardThinking code[data-line-numbers="1-4,16"] tr:nth-child(11),
-            section.gitDiffHardThinking code[data-line-numbers="1-4,16"] tr:nth-child(12),
-            section.gitDiffHardThinking code[data-line-numbers="1-4,16"] tr:nth-child(13),
-            section.gitDiffHardThinking code[data-line-numbers="1-4,16"] tr:nth-child(14),
-            section.gitDiffHardThinking code[data-line-numbers="1-4,16"] tr:nth-child(15),
-            section.gitDiffHardThinking code[data-line-numbers="1-4,16"] tr:nth-child(17),
-            section.gitDiffHardThinking code[data-line-numbers="1-4,16"] tr:nth-child(18),
-            section.gitDiffHardThinking code[data-line-numbers="1-4,16"] tr:nth-child(19),
-            section.gitDiffHardThinking code[data-line-numbers="1-4,16"] tr:nth-child(20),
-            section.gitDiffHardThinking code[data-line-numbers="7-11"] tr:nth-child(12),
-            section.gitDiffHardThinking code[data-line-numbers="7-11"] tr:nth-child(13),
-            section.gitDiffHardThinking code[data-line-numbers="7-11"] tr:nth-child(14),
-            section.gitDiffHardThinking code[data-line-numbers="7-11"] tr:nth-child(15),
-            section.gitDiffHardThinking code[data-line-numbers="7-11"] tr:nth-child(16),
-            section.gitDiffHardThinking code[data-line-numbers="7-11"] tr:nth-child(17),
-            section.gitDiffHardThinking code[data-line-numbers="7-11"] tr:nth-child(18),
-            section.gitDiffHardThinking code[data-line-numbers="7-11"] tr:nth-child(19),
-            section.gitDiffHardThinking code[data-line-numbers="7-11"] tr:nth-child(20),
-            section.gitDiffHardThinking code[data-line-numbers="7,12-15"] tr:nth-child(8),
-            section.gitDiffHardThinking code[data-line-numbers="7,12-15"] tr:nth-child(9),
-            section.gitDiffHardThinking code[data-line-numbers="7,12-15"] tr:nth-child(10),
-            section.gitDiffHardThinking code[data-line-numbers="7,12-15"] tr:nth-child(11),
-            section.gitDiffHardThinking code[data-line-numbers="7,12-15"] tr:nth-child(16),
-            section.gitDiffHardThinking code[data-line-numbers="7,12-15"] tr:nth-child(17),
-            section.gitDiffHardThinking code[data-line-numbers="7,12-15"] tr:nth-child(18),
-            section.gitDiffHardThinking code[data-line-numbers="7,12-15"] tr:nth-child(19),
-            section.gitDiffHardThinking code[data-line-numbers="7,12-15"] tr:nth-child(20),
-            section.gitDiffHardThinking code[data-line-numbers="7,17-20"] tr:nth-child(8),
-            section.gitDiffHardThinking code[data-line-numbers="7,17-20"] tr:nth-child(9),
-            section.gitDiffHardThinking code[data-line-numbers="7,17-20"] tr:nth-child(10),
-            section.gitDiffHardThinking code[data-line-numbers="7,17-20"] tr:nth-child(11),
-            section.gitDiffHardThinking code[data-line-numbers="7,17-20"] tr:nth-child(12),
-            section.gitDiffHardThinking code[data-line-numbers="7,17-20"] tr:nth-child(13),
-            section.gitDiffHardThinking code[data-line-numbers="7,17-20"] tr:nth-child(14),
-            section.gitDiffHardThinking code[data-line-numbers="7,17-20"] tr:nth-child(15),
-            section.gitDiffHardThinking code[data-line-numbers="7,17-20"] tr:nth-child(16) {
+            section.gitDiffHardThinking code[data-line-numbers='1-4,16'] tr:nth-child(5),
+            section.gitDiffHardThinking code[data-line-numbers='1-4,16'] tr:nth-child(6),
+            section.gitDiffHardThinking code[data-line-numbers='1-4,16'] tr:nth-child(7),
+            section.gitDiffHardThinking code[data-line-numbers='1-4,16'] tr:nth-child(8),
+            section.gitDiffHardThinking code[data-line-numbers='1-4,16'] tr:nth-child(9),
+            section.gitDiffHardThinking code[data-line-numbers='1-4,16'] tr:nth-child(10),
+            section.gitDiffHardThinking code[data-line-numbers='1-4,16'] tr:nth-child(11),
+            section.gitDiffHardThinking code[data-line-numbers='1-4,16'] tr:nth-child(12),
+            section.gitDiffHardThinking code[data-line-numbers='1-4,16'] tr:nth-child(13),
+            section.gitDiffHardThinking code[data-line-numbers='1-4,16'] tr:nth-child(14),
+            section.gitDiffHardThinking code[data-line-numbers='1-4,16'] tr:nth-child(15),
+            section.gitDiffHardThinking code[data-line-numbers='1-4,16'] tr:nth-child(17),
+            section.gitDiffHardThinking code[data-line-numbers='1-4,16'] tr:nth-child(18),
+            section.gitDiffHardThinking code[data-line-numbers='1-4,16'] tr:nth-child(19),
+            section.gitDiffHardThinking code[data-line-numbers='1-4,16'] tr:nth-child(20),
+            section.gitDiffHardThinking code[data-line-numbers='7-11'] tr:nth-child(12),
+            section.gitDiffHardThinking code[data-line-numbers='7-11'] tr:nth-child(13),
+            section.gitDiffHardThinking code[data-line-numbers='7-11'] tr:nth-child(14),
+            section.gitDiffHardThinking code[data-line-numbers='7-11'] tr:nth-child(15),
+            section.gitDiffHardThinking code[data-line-numbers='7-11'] tr:nth-child(16),
+            section.gitDiffHardThinking code[data-line-numbers='7-11'] tr:nth-child(17),
+            section.gitDiffHardThinking code[data-line-numbers='7-11'] tr:nth-child(18),
+            section.gitDiffHardThinking code[data-line-numbers='7-11'] tr:nth-child(19),
+            section.gitDiffHardThinking code[data-line-numbers='7-11'] tr:nth-child(20),
+            section.gitDiffHardThinking code[data-line-numbers='7,12-15'] tr:nth-child(8),
+            section.gitDiffHardThinking code[data-line-numbers='7,12-15'] tr:nth-child(9),
+            section.gitDiffHardThinking code[data-line-numbers='7,12-15'] tr:nth-child(10),
+            section.gitDiffHardThinking code[data-line-numbers='7,12-15'] tr:nth-child(11),
+            section.gitDiffHardThinking code[data-line-numbers='7,12-15'] tr:nth-child(16),
+            section.gitDiffHardThinking code[data-line-numbers='7,12-15'] tr:nth-child(17),
+            section.gitDiffHardThinking code[data-line-numbers='7,12-15'] tr:nth-child(18),
+            section.gitDiffHardThinking code[data-line-numbers='7,12-15'] tr:nth-child(19),
+            section.gitDiffHardThinking code[data-line-numbers='7,12-15'] tr:nth-child(20),
+            section.gitDiffHardThinking code[data-line-numbers='7,17-20'] tr:nth-child(8),
+            section.gitDiffHardThinking code[data-line-numbers='7,17-20'] tr:nth-child(9),
+            section.gitDiffHardThinking code[data-line-numbers='7,17-20'] tr:nth-child(10),
+            section.gitDiffHardThinking code[data-line-numbers='7,17-20'] tr:nth-child(11),
+            section.gitDiffHardThinking code[data-line-numbers='7,17-20'] tr:nth-child(12),
+            section.gitDiffHardThinking code[data-line-numbers='7,17-20'] tr:nth-child(13),
+            section.gitDiffHardThinking code[data-line-numbers='7,17-20'] tr:nth-child(14),
+            section.gitDiffHardThinking code[data-line-numbers='7,17-20'] tr:nth-child(15),
+            section.gitDiffHardThinking code[data-line-numbers='7,17-20'] tr:nth-child(16) {
               display: none;
             }
           </style>
@@ -796,93 +890,93 @@ output:
             section.gitDiffHard table {
               border-left: #313741 2px solid;
             }
-            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr,
-            section.gitDiffHard code[data-line-numbers="14-19"] tr {
+            section.gitDiffHard code[data-line-numbers='1,13-28,32'] tr,
+            section.gitDiffHard code[data-line-numbers='14-19'] tr {
               transform: translateX(-9%);
             }
-            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(1),
-            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(32),
-            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(1),
-            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(32) {
+            section.gitDiffHard code[data-line-numbers='1,13-28,32'] tr:nth-child(1),
+            section.gitDiffHard code[data-line-numbers='1,13-28,32'] tr:nth-child(32),
+            section.gitDiffHard code[data-line-numbers='14-19'] tr:nth-child(1),
+            section.gitDiffHard code[data-line-numbers='14-19'] tr:nth-child(32) {
               transform: translateX(0%);
             }
-            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(2),
-            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(3),
-            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(4),
-            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(5),
-            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(6),
-            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(7),
-            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(8),
-            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(9),
-            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(10),
-            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(11),
-            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(12),
-            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(29),
-            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(30),
-            section.gitDiffHard code[data-line-numbers="1,13-28,32"] tr:nth-child(31),
-            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(2),
-            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(3),
-            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(4),
-            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(5),
-            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(6),
-            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(7),
-            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(8),
-            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(9),
-            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(10),
-            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(11),
-            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(12),
-            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(29),
-            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(30),
-            section.gitDiffHard code[data-line-numbers="14-19"] tr:nth-child(31),
-            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(2),
-            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(3),
-            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(4),
-            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(5),
-            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(6),
-            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(7),
-            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(8),
-            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(9),
-            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(10),
-            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(11),
-            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(30),
-            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(31),
-            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(14),
-            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(15),
-            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(16),
-            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(17),
-            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(18),
-            section.gitDiffHard code[data-line-numbers="12,29"] tr:nth-child(19),
-            section.gitDiffHard code[data-line-numbers="2-4,30,31"] tr:nth-child(5),
-            section.gitDiffHard code[data-line-numbers="2-4,30,31"] tr:nth-child(6),
-            section.gitDiffHard code[data-line-numbers="2-4,30,31"] tr:nth-child(7),
-            section.gitDiffHard code[data-line-numbers="2-4,30,31"] tr:nth-child(8),
-            section.gitDiffHard code[data-line-numbers="2-4,30,31"] tr:nth-child(9),
-            section.gitDiffHard code[data-line-numbers="2-4,30,31"] tr:nth-child(10),
-            section.gitDiffHard code[data-line-numbers="2-4,30,31"] tr:nth-child(11),
-            section.gitDiffHard code[data-line-numbers="2-4,30,31"] tr:nth-child(14),
-            section.gitDiffHard code[data-line-numbers="2-4,30,31"] tr:nth-child(15),
-            section.gitDiffHard code[data-line-numbers="2-4,30,31"] tr:nth-child(16),
-            section.gitDiffHard code[data-line-numbers="2-4,30,31"] tr:nth-child(17),
-            section.gitDiffHard code[data-line-numbers="2-4,30,31"] tr:nth-child(18),
-            section.gitDiffHard code[data-line-numbers="2-4,30,31"] tr:nth-child(19),
-            section.gitDiffHard code[data-line-numbers="5-11"] tr:nth-child(4),
-            section.gitDiffHard code[data-line-numbers="5-11"] tr:nth-child(14),
-            section.gitDiffHard code[data-line-numbers="5-11"] tr:nth-child(15),
-            section.gitDiffHard code[data-line-numbers="5-11"] tr:nth-child(16),
-            section.gitDiffHard code[data-line-numbers="5-11"] tr:nth-child(17),
-            section.gitDiffHard code[data-line-numbers="5-11"] tr:nth-child(18),
-            section.gitDiffHard code[data-line-numbers="5-11"] tr:nth-child(19),
-            section.gitDiffHard code[data-line-numbers="1-32"] tr:nth-child(4),
-            section.gitDiffHard code[data-line-numbers="1-32"] tr:nth-child(14),
-            section.gitDiffHard code[data-line-numbers="1-32"] tr:nth-child(15),
-            section.gitDiffHard code[data-line-numbers="1-32"] tr:nth-child(16),
-            section.gitDiffHard code[data-line-numbers="1-32"] tr:nth-child(17),
-            section.gitDiffHard code[data-line-numbers="1-32"] tr:nth-child(18),
-            section.gitDiffHard code[data-line-numbers="1-32"] tr:nth-child(19) {
+            section.gitDiffHard code[data-line-numbers='1,13-28,32'] tr:nth-child(2),
+            section.gitDiffHard code[data-line-numbers='1,13-28,32'] tr:nth-child(3),
+            section.gitDiffHard code[data-line-numbers='1,13-28,32'] tr:nth-child(4),
+            section.gitDiffHard code[data-line-numbers='1,13-28,32'] tr:nth-child(5),
+            section.gitDiffHard code[data-line-numbers='1,13-28,32'] tr:nth-child(6),
+            section.gitDiffHard code[data-line-numbers='1,13-28,32'] tr:nth-child(7),
+            section.gitDiffHard code[data-line-numbers='1,13-28,32'] tr:nth-child(8),
+            section.gitDiffHard code[data-line-numbers='1,13-28,32'] tr:nth-child(9),
+            section.gitDiffHard code[data-line-numbers='1,13-28,32'] tr:nth-child(10),
+            section.gitDiffHard code[data-line-numbers='1,13-28,32'] tr:nth-child(11),
+            section.gitDiffHard code[data-line-numbers='1,13-28,32'] tr:nth-child(12),
+            section.gitDiffHard code[data-line-numbers='1,13-28,32'] tr:nth-child(29),
+            section.gitDiffHard code[data-line-numbers='1,13-28,32'] tr:nth-child(30),
+            section.gitDiffHard code[data-line-numbers='1,13-28,32'] tr:nth-child(31),
+            section.gitDiffHard code[data-line-numbers='14-19'] tr:nth-child(2),
+            section.gitDiffHard code[data-line-numbers='14-19'] tr:nth-child(3),
+            section.gitDiffHard code[data-line-numbers='14-19'] tr:nth-child(4),
+            section.gitDiffHard code[data-line-numbers='14-19'] tr:nth-child(5),
+            section.gitDiffHard code[data-line-numbers='14-19'] tr:nth-child(6),
+            section.gitDiffHard code[data-line-numbers='14-19'] tr:nth-child(7),
+            section.gitDiffHard code[data-line-numbers='14-19'] tr:nth-child(8),
+            section.gitDiffHard code[data-line-numbers='14-19'] tr:nth-child(9),
+            section.gitDiffHard code[data-line-numbers='14-19'] tr:nth-child(10),
+            section.gitDiffHard code[data-line-numbers='14-19'] tr:nth-child(11),
+            section.gitDiffHard code[data-line-numbers='14-19'] tr:nth-child(12),
+            section.gitDiffHard code[data-line-numbers='14-19'] tr:nth-child(29),
+            section.gitDiffHard code[data-line-numbers='14-19'] tr:nth-child(30),
+            section.gitDiffHard code[data-line-numbers='14-19'] tr:nth-child(31),
+            section.gitDiffHard code[data-line-numbers='12,29'] tr:nth-child(2),
+            section.gitDiffHard code[data-line-numbers='12,29'] tr:nth-child(3),
+            section.gitDiffHard code[data-line-numbers='12,29'] tr:nth-child(4),
+            section.gitDiffHard code[data-line-numbers='12,29'] tr:nth-child(5),
+            section.gitDiffHard code[data-line-numbers='12,29'] tr:nth-child(6),
+            section.gitDiffHard code[data-line-numbers='12,29'] tr:nth-child(7),
+            section.gitDiffHard code[data-line-numbers='12,29'] tr:nth-child(8),
+            section.gitDiffHard code[data-line-numbers='12,29'] tr:nth-child(9),
+            section.gitDiffHard code[data-line-numbers='12,29'] tr:nth-child(10),
+            section.gitDiffHard code[data-line-numbers='12,29'] tr:nth-child(11),
+            section.gitDiffHard code[data-line-numbers='12,29'] tr:nth-child(30),
+            section.gitDiffHard code[data-line-numbers='12,29'] tr:nth-child(31),
+            section.gitDiffHard code[data-line-numbers='12,29'] tr:nth-child(14),
+            section.gitDiffHard code[data-line-numbers='12,29'] tr:nth-child(15),
+            section.gitDiffHard code[data-line-numbers='12,29'] tr:nth-child(16),
+            section.gitDiffHard code[data-line-numbers='12,29'] tr:nth-child(17),
+            section.gitDiffHard code[data-line-numbers='12,29'] tr:nth-child(18),
+            section.gitDiffHard code[data-line-numbers='12,29'] tr:nth-child(19),
+            section.gitDiffHard code[data-line-numbers='2-4,30,31'] tr:nth-child(5),
+            section.gitDiffHard code[data-line-numbers='2-4,30,31'] tr:nth-child(6),
+            section.gitDiffHard code[data-line-numbers='2-4,30,31'] tr:nth-child(7),
+            section.gitDiffHard code[data-line-numbers='2-4,30,31'] tr:nth-child(8),
+            section.gitDiffHard code[data-line-numbers='2-4,30,31'] tr:nth-child(9),
+            section.gitDiffHard code[data-line-numbers='2-4,30,31'] tr:nth-child(10),
+            section.gitDiffHard code[data-line-numbers='2-4,30,31'] tr:nth-child(11),
+            section.gitDiffHard code[data-line-numbers='2-4,30,31'] tr:nth-child(14),
+            section.gitDiffHard code[data-line-numbers='2-4,30,31'] tr:nth-child(15),
+            section.gitDiffHard code[data-line-numbers='2-4,30,31'] tr:nth-child(16),
+            section.gitDiffHard code[data-line-numbers='2-4,30,31'] tr:nth-child(17),
+            section.gitDiffHard code[data-line-numbers='2-4,30,31'] tr:nth-child(18),
+            section.gitDiffHard code[data-line-numbers='2-4,30,31'] tr:nth-child(19),
+            section.gitDiffHard code[data-line-numbers='5-11'] tr:nth-child(4),
+            section.gitDiffHard code[data-line-numbers='5-11'] tr:nth-child(14),
+            section.gitDiffHard code[data-line-numbers='5-11'] tr:nth-child(15),
+            section.gitDiffHard code[data-line-numbers='5-11'] tr:nth-child(16),
+            section.gitDiffHard code[data-line-numbers='5-11'] tr:nth-child(17),
+            section.gitDiffHard code[data-line-numbers='5-11'] tr:nth-child(18),
+            section.gitDiffHard code[data-line-numbers='5-11'] tr:nth-child(19),
+            section.gitDiffHard code[data-line-numbers='1-32'] tr:nth-child(4),
+            section.gitDiffHard code[data-line-numbers='1-32'] tr:nth-child(14),
+            section.gitDiffHard code[data-line-numbers='1-32'] tr:nth-child(15),
+            section.gitDiffHard code[data-line-numbers='1-32'] tr:nth-child(16),
+            section.gitDiffHard code[data-line-numbers='1-32'] tr:nth-child(17),
+            section.gitDiffHard code[data-line-numbers='1-32'] tr:nth-child(18),
+            section.gitDiffHard code[data-line-numbers='1-32'] tr:nth-child(19) {
               display: none;
             }
-            section.gitDiffHard code.visible[data-line-numbers="12,29"] tr:nth-child(12),
-            section.gitDiffHard code.visible[data-line-numbers="12,29"] tr:nth-child(29) {
+            section.gitDiffHard code.visible[data-line-numbers='12,29'] tr:nth-child(12),
+            section.gitDiffHard code.visible[data-line-numbers='12,29'] tr:nth-child(29) {
               animation-fill-mode: forwards;
               animation-duration: 500ms;
               animation-name: show-code-line-11;
@@ -896,16 +990,16 @@ output:
                 transform: translateX(-6%);
               }
             }
-            section.gitDiffHard code.visible[data-line-numbers="12,29"] tr:nth-child(13),
-            section.gitDiffHard code.visible[data-line-numbers="12,29"] tr:nth-child(20),
-            section.gitDiffHard code.visible[data-line-numbers="12,29"] tr:nth-child(21),
-            section.gitDiffHard code.visible[data-line-numbers="12,29"] tr:nth-child(22),
-            section.gitDiffHard code.visible[data-line-numbers="12,29"] tr:nth-child(23),
-            section.gitDiffHard code.visible[data-line-numbers="12,29"] tr:nth-child(24),
-            section.gitDiffHard code.visible[data-line-numbers="12,29"] tr:nth-child(25),
-            section.gitDiffHard code.visible[data-line-numbers="12,29"] tr:nth-child(26),
-            section.gitDiffHard code.visible[data-line-numbers="12,29"] tr:nth-child(27),
-            section.gitDiffHard code.visible[data-line-numbers="12,29"] tr:nth-child(28) {
+            section.gitDiffHard code.visible[data-line-numbers='12,29'] tr:nth-child(13),
+            section.gitDiffHard code.visible[data-line-numbers='12,29'] tr:nth-child(20),
+            section.gitDiffHard code.visible[data-line-numbers='12,29'] tr:nth-child(21),
+            section.gitDiffHard code.visible[data-line-numbers='12,29'] tr:nth-child(22),
+            section.gitDiffHard code.visible[data-line-numbers='12,29'] tr:nth-child(23),
+            section.gitDiffHard code.visible[data-line-numbers='12,29'] tr:nth-child(24),
+            section.gitDiffHard code.visible[data-line-numbers='12,29'] tr:nth-child(25),
+            section.gitDiffHard code.visible[data-line-numbers='12,29'] tr:nth-child(26),
+            section.gitDiffHard code.visible[data-line-numbers='12,29'] tr:nth-child(27),
+            section.gitDiffHard code.visible[data-line-numbers='12,29'] tr:nth-child(28) {
               animation-fill-mode: forwards;
               animation-duration: 500ms;
               animation-name: show-code-line-12;
@@ -919,18 +1013,18 @@ output:
                 transform: translateX(-6%);
               }
             }
-            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(2),
-            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(3),
-            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(4),
-            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(30),
-            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(31),
-            section.gitDiffHard code.visible[data-line-numbers="5-11"] tr:nth-child(5),
-            section.gitDiffHard code.visible[data-line-numbers="5-11"] tr:nth-child(6),
-            section.gitDiffHard code.visible[data-line-numbers="5-11"] tr:nth-child(7),
-            section.gitDiffHard code.visible[data-line-numbers="5-11"] tr:nth-child(8),
-            section.gitDiffHard code.visible[data-line-numbers="5-11"] tr:nth-child(9),
-            section.gitDiffHard code.visible[data-line-numbers="5-11"] tr:nth-child(10),
-            section.gitDiffHard code.visible[data-line-numbers="5-11"] tr:nth-child(11) {
+            section.gitDiffHard code.visible[data-line-numbers='2-4,30,31'] tr:nth-child(2),
+            section.gitDiffHard code.visible[data-line-numbers='2-4,30,31'] tr:nth-child(3),
+            section.gitDiffHard code.visible[data-line-numbers='2-4,30,31'] tr:nth-child(4),
+            section.gitDiffHard code.visible[data-line-numbers='2-4,30,31'] tr:nth-child(30),
+            section.gitDiffHard code.visible[data-line-numbers='2-4,30,31'] tr:nth-child(31),
+            section.gitDiffHard code.visible[data-line-numbers='5-11'] tr:nth-child(5),
+            section.gitDiffHard code.visible[data-line-numbers='5-11'] tr:nth-child(6),
+            section.gitDiffHard code.visible[data-line-numbers='5-11'] tr:nth-child(7),
+            section.gitDiffHard code.visible[data-line-numbers='5-11'] tr:nth-child(8),
+            section.gitDiffHard code.visible[data-line-numbers='5-11'] tr:nth-child(9),
+            section.gitDiffHard code.visible[data-line-numbers='5-11'] tr:nth-child(10),
+            section.gitDiffHard code.visible[data-line-numbers='5-11'] tr:nth-child(11) {
               animation-fill-mode: forwards;
               animation-duration: 500ms;
               animation-name: show-code-line-13;
@@ -944,18 +1038,18 @@ output:
                 transform: translateX(0%);
               }
             }
-            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(12),
-            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(29),
-            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(13),
-            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(20),
-            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(21),
-            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(22),
-            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(23),
-            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(24),
-            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(25),
-            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(26),
-            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(27),
-            section.gitDiffHard code.visible[data-line-numbers="2-4,30,31"] tr:nth-child(28) {
+            section.gitDiffHard code.visible[data-line-numbers='2-4,30,31'] tr:nth-child(12),
+            section.gitDiffHard code.visible[data-line-numbers='2-4,30,31'] tr:nth-child(29),
+            section.gitDiffHard code.visible[data-line-numbers='2-4,30,31'] tr:nth-child(13),
+            section.gitDiffHard code.visible[data-line-numbers='2-4,30,31'] tr:nth-child(20),
+            section.gitDiffHard code.visible[data-line-numbers='2-4,30,31'] tr:nth-child(21),
+            section.gitDiffHard code.visible[data-line-numbers='2-4,30,31'] tr:nth-child(22),
+            section.gitDiffHard code.visible[data-line-numbers='2-4,30,31'] tr:nth-child(23),
+            section.gitDiffHard code.visible[data-line-numbers='2-4,30,31'] tr:nth-child(24),
+            section.gitDiffHard code.visible[data-line-numbers='2-4,30,31'] tr:nth-child(25),
+            section.gitDiffHard code.visible[data-line-numbers='2-4,30,31'] tr:nth-child(26),
+            section.gitDiffHard code.visible[data-line-numbers='2-4,30,31'] tr:nth-child(27),
+            section.gitDiffHard code.visible[data-line-numbers='2-4,30,31'] tr:nth-child(28) {
               animation-fill-mode: forwards;
               animation-duration: 500ms;
               animation-name: show-code-line-14;
@@ -1007,53 +1101,55 @@ test('should compute the shortest diff', () =&gt; {
         </section>
         <section>
           <p>Property based:</p>
-          <p><em>Large</em> subset of all the possible inputs,<br/><em>Limited</em> coverage of the output</p>
-          <p class="fragment" data-fragment-index="1" style="margin-top:48px;">Example based:</p>
-          <p class="fragment" data-fragment-index="1"><em>Limited</em> subset of all the possible inputs,<br/><em>Accurate</em> coverage of the output</p>
+          <p><em>Large</em> subset of all the possible inputs,<br /><em>Limited</em> coverage of the output</p>
+          <p class="fragment" data-fragment-index="1" style="margin-top: 48px">Example based:</p>
+          <p class="fragment" data-fragment-index="1">
+            <em>Limited</em> subset of all the possible inputs,<br /><em>Accurate</em> coverage of the output
+          </p>
         </section>
         <section>
           <h3>Is it applicable?</h3>
-        </section>
-        <section>
-          <p><b>Issue detected:</b> asymmetrical equality for 0 and 5e-324<p>
-          <img src="images/pr-jest-sym1.png" />
-          <p><b>Code example:</b><br/>
-<pre><code>expect(0).toStrictEqual(5e-324) // success
-expect(5e-324).toStrictEqual(0) // failure
-</code></pre>
+          <p class="fragment">
+            Found bugs in: <em>Jest</em>, <em>Jasmine</em>, <em>React</em>, <em>js-yaml</em>,<br /><em>query-string</em
+            >…
           </p>
-        </section>
-        <section>
-          <p><b>Issue detected:</b> asymmetrical equality for Set<p>
-          <img src="images/pr-jest-sym2.png" />
-          <p><b>Code example:</b><br/>
-<pre><code>const s1 = new Set([false, true]);
-const s2 = new Set([new Boolean(true), new Boolean(true)]);
-expect(s1).toEqual(s2); // failure
-expect(s2).toEqual(s1); // success
-</code></pre>
-          </p>
-        </section>
-        <section>
-          <p><b>Issue detected:</b> race condition in React<p>
-          <img src="images/react-issue.png" />
         </section>
         <section>
           <h2>Going further?</h2>
-        </section>
-        <section>
-          <img src="./images/property-based.gif" />
-        </section>
-        <section>
-          <img src="./images/autocomplete-bug-screenshot.png" />
+          <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 48px" class="fragment">
+            <img src="./images/property-based.gif" />
+            <img src="./images/autocomplete-bug-screenshot.png" />
+          </div>
         </section>
         <section data-background="#ffffff">
           <aside class="notes"></aside>
           <div style="width: 100%; height: 100%; display: grid">
-            <div style="grid-row: 1; grid-column: 1; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; opacity: 0.2;">
-              <img src="./images/table.png" style="border: none; background: none; margin: 0px; box-shadow: none;" />
+            <div
+              style="
+                grid-row: 1;
+                grid-column: 1;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                opacity: 0.2;
+              "
+            >
+              <img src="./images/table.png" style="border: none; background: none; margin: 0px; box-shadow: none" />
             </div>
-            <div style="grid-row: 1; grid-column: 1; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <div
+              style="
+                grid-row: 1;
+                grid-column: 1;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+              "
+            >
               <p class="fragment">Cover the whole scope from unit to e2e</p>
               <p class="fragment">Document invariants of your algorithms</p>
               <p class="fragment">Not a replacement for example-based, another tool</p>
@@ -1063,18 +1159,23 @@ expect(s2).toEqual(s1); // success
         <section>
           <aside class="notes"></aside>
           <h2>Questions?</h2>
-          <div class="vertical-spacer"></div>
-          <div style="color: #ffffff; vertical-align: middle;">
-            <img src="./images/github-white.png" class="styleless-image" style="height: 32px;" />
-            dubzzz
+          <div style="margin-top: 36px; margin-bottom: 36px">
+            <!-- Static logo -->
+            <img src="./images/pigment-logofull-white.png" class="styleless-image" style="height: 100px" />
           </div>
-          <div style="color: #1da1f2; vertical-align: middle;">
-            <img src="./images/twitter.png" class="styleless-image" style="height: 32px;" />
-            ndubien
-          </div>
-          <div style="color: #cb3837; vertical-align: middle;">
-            <img src="./images/npm.png" class="styleless-image" style="height: 32px;" />
-            fast-check
+          <div style="transform: scale(80%)">
+            <div style="color: #ffffff; vertical-align: middle">
+              <img src="./images/github-white.png" class="styleless-image" style="height: 32px" />
+              dubzzz
+            </div>
+            <div style="color: #1da1f2; vertical-align: middle">
+              <img src="./images/twitter.png" class="styleless-image" style="height: 32px" />
+              ndubien
+            </div>
+            <div style="color: #cb3837; vertical-align: middle">
+              <img src="./images/npm.png" class="styleless-image" style="height: 32px" />
+              fast-check
+            </div>
           </div>
         </section>
       </div>
@@ -1098,27 +1199,23 @@ expect(s2).toEqual(s1); // success
       <img
         src="./images/github-white.png"
         class="footer-github styleless-image"
-        style="justify-self: center; grid-row: 1; grid-column: 1; height: 2rem; text-shadow: #0007 1px 1px 1px;"
+        style="justify-self: center; grid-row: 1; grid-column: 1; height: 2rem; text-shadow: #0007 1px 1px 1px"
       />
-      <div style="grid-row: 1; grid-column: 2; color: #ffffff; vertical-align: middle; text-shadow: #0007 1px 1px 1px;">
+      <div style="grid-row: 1; grid-column: 2; color: #ffffff; vertical-align: middle; text-shadow: #0007 1px 1px 1px">
         dubzzz
       </div>
       <img
         src="./images/twitter.png"
         class="styleless-image"
-        style="justify-self: center; grid-row: 2; grid-column: 1; height: 2rem;"
+        style="justify-self: center; grid-row: 2; grid-column: 1; height: 2rem"
       />
-      <div style="grid-row: 2; grid-column: 2; color: #1da1f2; vertical-align: middle;">
-        ndubien
-      </div>
+      <div style="grid-row: 2; grid-column: 2; color: #1da1f2; vertical-align: middle">ndubien</div>
       <img
         src="./images/npm.png"
         class="styleless-image"
-        style="justify-self: center; grid-row: 3; grid-column: 1; width: 2rem;"
+        style="justify-self: center; grid-row: 3; grid-column: 1; width: 2rem"
       />
-      <div style="grid-row: 3; grid-column: 2; color: #cb3837; vertical-align: middle;">
-        fast-check
-      </div>
+      <div style="grid-row: 3; grid-column: 2; color: #cb3837; vertical-align: middle">fast-check</div>
     </div>
 
     <script src="../shared-reveal-4/dist/reveal.js"></script>
@@ -1142,7 +1239,7 @@ expect(s2).toEqual(s1); // success
         const dogVideo = document.getElementById('dog-video');
         dogVideo.currentTime = 0;
         dogVideo.play();
-      })
+      });
     </script>
   </body>
 </html>
