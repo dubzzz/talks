@@ -1160,6 +1160,14 @@ test('should compute the shortest diff', () =&gt; {
         dogVideo.currentTime = 0;
         dogVideo.play();
       });
+      Reveal.on('slidechanged', (event) => {
+        if (event.currentSlide.getAttribute('data-state') !== 'dog-video-show') {
+          return;
+        }
+        const dogVideo = document.getElementById('dog-video');
+        dogVideo.currentTime = 0;
+        dogVideo.play();
+      });
     </script>
   </body>
 </html>
