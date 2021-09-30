@@ -18,7 +18,10 @@
     <div class="reveal">
       <div class="slides">
         <section>
-          <aside class="notes"></aside>
+          <aside class="notes">
+            Bonjour à tous ! Avant tout, je tenais à dire que je ne m'attendais pas à avoir autant de spectateurs. Je me
+            présente, je m'appelle Nicolas Dubien et aujourd'hui je vais vous parler testing.
+          </aside>
           <div>
             <img src="./images/conf-logo.png" alt="Conference Logo" class="styleless-image" style="height: 128px" />
           </div>
@@ -40,16 +43,30 @@
           </div>
         </section>
         <section>
+          <aside class="notes">
+            Pourquoi testing ? Tout simplement car je pense que, comme moi, vous avez connu ces moments où vous venez
+            livrer une nouvelle fonctionnalité: testée via tests automatisés, potentiellement QA mais aussi validée par
+            les product owners ou n'importe quelle autre solution. Et pourtant arrivée en prod (ou plus tard), "tout"
+            casse...
+          </aside>
           <h1>One day, it happened...</h1>
         </section>
         <section data-state="dog-video-show">
+          <aside class="notes">
+            Et là, on peut se sentir un peu comme ce petit chien... Bien qu'on ait tout fait pour que ça marche: arrivé
+            à la fin du projet, "tout" semble à refaire.
+          </aside>
           <video controls width="100%" style="cursor: default" id="dog-video" autoplay loop>
             <source src="images/sideeffects.webm" type="video/webm" />
           </video>
         </section>
         <section class="unexpected-examples" data-fragment="-1">
           <aside class="notes">
-            <p>Unexpected issues: You're not alone!</p>
+            Mais vous n'êtes pas seul, en voici d'autres qui ont eu des soucis plus ou moins embêtants. Cette société de
+            restauration en a par example fait les frais... Les clients pouvaient passer des commandes gratuitement (en
+            tout cas d'après certains). Mais c'est aussi arrivé à des géants de la tech' comme Google. Android, que je
+            ne pense pas devoir présenter à quiquonque, a aussi des gros bugs comme celui-ci qui permettait de
+            contourner l'écran de vérouillage d'un appareil vérouillé.
           </aside>
           <style>
             section.present.unexpected-examples:not([data-fragment='-1']) img:not(.fragment),
@@ -72,10 +89,19 @@
           </div>
         </section>
         <section>
+          <aside class="notes">
+            Et pourtant comme vous et moi, ils recourrent (probablement) à des approches leur permettant de se mettre à
+            l'abri (en tout cas en théorie) de ces problèmes. Via par exemples des tests à plusieurs niveaux de
+            précisions: des tests très bas niveau et très rapide à des tests intégrants toute la stack et souvent plus
+            long.
+          </aside>
           <img src="images/test-pyramid.png" style="border: none; background: none; box-shadow: none" />
         </section>
         <section class="fullScreen">
-          <aside class="notes"></aside>
+          <aside class="notes">
+            Je ne vais pas vous dire ce qu'est ou doit être un test unitaire mais voici ce que l'on pourrait appeler un
+            test unitaire en tout cas pour certains.
+          </aside>
           <style>
             #unit-test-snippet:before {
               content: ' ';
