@@ -611,14 +611,14 @@ test('should build a diff compatible with text2', () =&gt; {
 test('should compute the right diff', () =&gt; {
   // Arrange
   const text1 = trim`
-    2019
-    2021
-    2021
+    Angular
+    Vue
+    Vue
   `;
   const text2 = trim`
-    2019
-    2020
-    2021
+    Angular
+    React
+    Vue
   `;
 
   // Act
@@ -626,10 +626,10 @@ test('should compute the right diff', () =&gt; {
 
   // Assert
   expect(diff).toEqual(trim`
-    === 2019
-    --- 2021
-    +++ 2020
-    === 2021
+    === Angular
+    --- Vue
+    +++ React
+    === Vue
   `);
   expect(extractText2FromDiff(diff)).toEqual(text2);
 });
@@ -714,7 +714,7 @@ test('should compute the right diff', () =&gt; {
           <p class="fragment">Are we missing something? 🤨</p>
         </section>
         <section class="fullScreen">
-          <div style="display: grid; grid-template-columns: 3fr 1fr; grid-gap: 16px">
+          <div style="display: grid; grid-template-columns: 3fr 2fr; grid-gap: 16px">
             <pre><code class="hljs language-js" data-trim>
 function computeDiff(text1, text2) {
   return [
@@ -729,18 +729,18 @@ function computeDiff(text1, text2) {
             </code></pre>
             <pre class="fragment"><code class="hljs language-plaintext" data-trim>
 inputs:
-text1:     text2:
-  2019       2019
-  2021       2020
-  2021       2021
+text1:      text2:
+  Angular     Angular
+  Vue         React
+  Vue         Vue
 
 output:
-  --- 2019
-  --- 2021
-  --- 2021
-  +++ 2019
-  +++ 2020
-  +++ 2021
+  --- Angular
+  --- Vue
+  --- Vue
+  +++ Angular
+  +++ React
+  +++ Vue
             </code></pre>
           </div>
           <p class="fragment">Pass the tests</p>
@@ -808,24 +808,24 @@ output:
           <pre><code class="hljs language-plaintext" data-trim data-line-numbers="1-4,16|7-11|7,12-15|7,17-20">
 inputs:
   text1:     text2:
-    2019       2019
-    2021       2020
-    2021       2021
+    Angular    Angular
+    Vue        React
+    Vue        Vue
 
 output:
-  === 2019
-  --- 2021
-  +++ 2020
-  === 2021
-  === 2019     === 2019
-  --- 2021     +++ 2020
-  +++ 2020     --- 2021
-  === 2021     === 2021
-    2021       2021
-  === 2019     === 2019     === 2019
-  --- 2021     +++ 2020     +++ 2020
-  +++ 2020     --- 2021     === 2021
-  === 2021     === 2021     --- 2021
+  === Angular
+  --- Vue
+  +++ React
+  === Vue
+  === Angular   === Angular
+  --- Vue       +++ React
+  +++ React     --- Vue
+  === Vue       === Vue
+    Vue        Vue
+  === Angular   === Angular   === Angular
+  --- Vue       +++ React     +++ React
+  +++ React     --- Vue       === Vue
+  === Vue       === Vue       --- Vue
           </code></pre>
         </section>
         <section class="fullScreen gitDiffHard">
@@ -1028,10 +1028,10 @@ test('should compute the shortest diff', () =&gt; {
       (candidateDiff) => {
         // Arrange
         const candidateDiff = trim`
-          === 2019
-          --- 2021
-          +++ 2020
-          === 2021
+          === Angular
+          --- Vue
+          +++ React
+          === Vue
         `;
         const text1 = extractText1FromDiff(candidateDiff);
         const text2 = extractText2FromDiff(candidateDiff);
