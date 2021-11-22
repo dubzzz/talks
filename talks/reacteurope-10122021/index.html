@@ -90,21 +90,21 @@
             Just to be sure we are aligned on what I meant by hard, here are some examples of "hard". By hard I meant:
             you need to forecast all the edge cases before they even happen. But also forecast future code changes of
             your snippet as even if you though about those cases that were possibly impossible they might become
-            possible soon. (you will learn it the hard way thanks to senior colleagues)
+            possible soon. (you will learn it the hard way thanks to senior colleagues) But why is it so hard? Why do
+            you and I need to forecast all the possible edge cases of the world when we write our test suites? Can't we
+            have something better instead of relying on experience and expertise? Before we see how we can do let's
+            first see what we do today!
           </aside>
-          <p style="text-align: left">&#8220;<em>You forgot about the case of the empty string</em>&#8221;</p>
-          <p>&#8220;<em>Is your algorithm working when input is like xxxx?</em>&#8221;</p>
-          <p style="text-align: right">
-            &#8220;<em>Why did you need this <b>if</b> in your code?</em>&#8221;
-          </p>
-        </section>
-        <section>
-          <aside class="notes">
-            But why is it so hard? Why do you and I need to forecast all the possible edge cases of the world when we
-            write our test suites? Can't we have something better instead of relying on experience and expertise? Before
-            we see how we can do let's first see what we do today!
-          </aside>
-          <p style="font-size: 4em">😭</p>
+          <div style="display: grid">
+            <div style="grid-row: 1; grid-column: 1">
+              <p style="text-align: left">&#8220;<em>You forgot about the case of the empty string</em>&#8221;</p>
+              <p>&#8220;<em>Is your algorithm working when input is like xxxx?</em>&#8221;</p>
+              <p style="text-align: right">
+                &#8220;<em>Why did you need this <b>if</b> in your code?</em>&#8221;
+              </p>
+            </div>
+            <p style="font-size: 4em; grid-row: 1; grid-column: 1; background-color: #00000077" class="fragment">😭</p>
+          </div>
         </section>
         <section class="fullScreen">
           <aside class="notes">So let's see what we call a test today with a simple unit test.</aside>
