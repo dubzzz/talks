@@ -18,6 +18,10 @@
   font-size: 36px;
 }
 
+.reveal pre {
+  box-shadow: none;
+}
+
 .reveal pre code {
   background: none;
 }
@@ -141,4 +145,25 @@ li.active,
 
 .reveal .slide-number {
   background-color: inherit !important;
+}
+
+.reveal .slides section.fullScreen {
+  top: unset;
+  padding: unset;
+}
+.reveal .slides section.fullScreen code {
+  max-height: unset;
+  max-width: unset;
+}
+
+/* It seems that there is a syntax highlighting bug when using data-line-numbers */
+section code[data-line-numbers]:not([data-fragment-index]),
+section code[data-line-numbers][data-fragment-index]:not(.current-fragment) {
+  opacity: 0 !important;
+  transition: all 0.2s ease-in;
+}
+section[data-fragment="-1"] code[data-line-numbers]:not([data-fragment-index]),
+section code[data-line-numbers][data-fragment-index].current-fragment {
+  opacity: 1 !important;
+  transition: all 0.2s ease-out;
 }

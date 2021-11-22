@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <title>Tests 2.0</title>
+    <title>Another way to test</title>
 
     <link rel="stylesheet" href="../shared-reveal-4/dist/reset.css" />
     <link rel="stylesheet" href="../shared-reveal-4/dist/reveal.css" />
@@ -13,14 +13,22 @@
     <!-- Theme used for syntax highlighted code -->
     <link rel="stylesheet" href="../shared-reveal-4/plugin/highlight/monokai.css" id="highlight-theme" />
     <link rel="stylesheet" href="../shared-reveal-4/css/shared.css" />
+
+    <style>
+      @font-face {
+        font-family: 'Virgil';
+        src: url('https://excalidraw.com/FG_Virgil.woff2');
+      }
+    </style>
   </head>
   <body>
     <div class="reveal">
       <div class="slides">
         <section>
           <aside class="notes">
-            Bonjour à tous ! Avant tout, je tenais à dire que je ne m'attendais pas à avoir autant de spectateurs. Je me
-            présente, je m'appelle Nicolas Dubien et aujourd'hui je vais vous parler testing.
+            Good morning/afternoon everyone. My name is Nicolas and today I'll talk about testing. All you'll see in
+            this talk is framework agnostic and can be applied to React but also Vue, Angular and others including
+            backend code running in node. But why a talk about tests?
           </aside>
           <div>
             <img
@@ -30,8 +38,8 @@
               style="height: 128px; filter: invert(1)"
             />
           </div>
-          <h1 style="margin-top: 50px; margin-bottom: 0px">Tests 2.0</h1>
-          <h2 style="margin-bottom: 100px">Another way to test</h2>
+          <h1 style="margin-top: 50px; margin-bottom: 0px">Another way to test</h1>
+          <h2 style="margin-bottom: 100px">Simply test</h2>
           <h3>Nicolas DUBIEN</h3>
           <div
             style="
@@ -71,17 +79,17 @@
         </section>
         <section>
           <aside class="notes">Why?</aside>
-          <p>Writing <em>good</em> tests is hard</p>
+          <h2>Writing <em>good</em> tests is hard</h2>
         </section>
         <section>
           <aside class="notes">
-            Just to be sure we are aligned on what I meant for hard, here are some examples of "hard". By hard I meant:
-            you need to forecast all the edge cases before they happen. But also forecast future code changes of your
-            snippet as even if you though about those cases that were possibly impossible they might become possible
-            soon. (you will learn it the hard way thanks to senior colleagues)
+            Just to be sure we are aligned on what I meant by hard, here are some examples of "hard". By hard I meant:
+            you need to forecast all the edge cases before they even happen. But also forecast future code changes of
+            your snippet as even if you though about those cases that were possibly impossible they might become
+            possible soon. (you will learn it the hard way thanks to senior colleagues)
           </aside>
           <p style="text-align: left">&#8220;<em>You forgot about the case of the empty string</em>&#8221;</p>
-          <p>&#8220;<em>Are you sure your algorithm work when input is like xxxx?</em>&#8221;</p>
+          <p>&#8220;<em>Is your algorithm working when input is like xxxx?</em>&#8221;</p>
           <p style="text-align: right">&#8220;<em>Why did you need this if in your code?</em>&#8221;</p>
         </section>
         <section>
@@ -90,13 +98,10 @@
             write our test suites? Can't we have something better instead of relying on experience and expertise? Before
             we see how we can do let's first see what we do today!
           </aside>
-          <p>😭</p>
+          <p style="font-size: 4em">😭</p>
         </section>
         <section class="fullScreen">
-          <aside class="notes">
-            Je ne vais pas vous dire ce qu'est ou doit être un test unitaire mais voici ce que l'on pourrait appeler un
-            test unitaire en tout cas pour certains.
-          </aside>
+          <aside class="notes">So let's see what we call a test today with a simple unit test.</aside>
           <style>
             #unit-test-snippet:before {
               content: ' ';
@@ -172,7 +177,7 @@ it('should not detect when not all letters match', () =&gt; {
 		      </code></pre>
         </section>
         <section class="fullScreen">
-          <aside class="notes"></aside>
+          <aside class="notes">Now with a simple e2e test</aside>
           <style>
             #e2e-test-snippet {
               min-height: 300px;
@@ -204,6 +209,15 @@ it('should impact title on search', async () =&gt; {
         </section>
         <section>
           <aside class="notes"></aside>
+          <h2>Are we sure to cover everything?</h2>
+          <p class="fragment">Are we covering all the potential plausible edge cases? 🤯</p>
+        </section>
+        <section>
+          <aside class="notes"></aside>
+          <p>What if we could stop about listing edge cases in our tests 😌</p>
+        </section>
+        <section>
+          <aside class="notes"></aside>
           <div>
             <img src="./images/me.jpg" style="border-radius: 50%; height: 128px" />
           </div>
@@ -231,108 +245,29 @@ it('should impact title on search', async () =&gt; {
         </section>
         <section>
           <h2>Test structure</h2>
+          <!-- prettier-ignore -->
           <svg viewBox="0 0 828.25 137.5" width="828.25" height="137.5">
             <g class="fragment" data-fragment-index="3" stroke-linecap="round">
               <g transform="translate(241.25 78.25) rotate(0 174.76566901255399 1.4182337988168001)">
-                <path
-                  d="M-0.48 -0.72 C57.45 -0.02, 289.7 2.98, 347.8 3.56 M1.47 1.52 C59.76 1.97, 292.42 1.54, 350.01 1.99"
-                  stroke="var(--custom-color3)"
-                  stroke-width="4"
-                  fill="none"
-                ></path>
+                <path d="M-0.48 -0.72 C57.45 -0.02, 289.7 2.98, 347.8 3.56 M1.47 1.52 C59.76 1.97, 292.42 1.54, 350.01 1.99" stroke="rgb(0, 139, 255)" stroke-width="4" fill="none"></path>
               </g>
               <g transform="translate(241.25 78.25) rotate(0 174.76566901255399 1.4182337988168001)">
-                <path
-                  d="M320.6 10.59 C332.54 8.03, 340.09 6.21, 349.08 2.54 M321.25 11.38 C331.94 7.39, 340.59 5.55, 349.19 1.14"
-                  stroke="var(--custom-color3)"
-                  stroke-width="4"
-                  fill="none"
-                ></path>
+                <path d="M320.6 10.59 C332.54 8.03, 340.09 6.21, 349.08 2.54 M321.25 11.38 C331.94 7.39, 340.59 5.55, 349.19 1.14" stroke="rgb(0, 139, 255)" stroke-width="4" fill="none"></path>
               </g>
               <g transform="translate(241.25 78.25) rotate(0 174.76566901255399 1.4182337988168001)">
-                <path
-                  d="M320.65 -9.93 C332.46 -6, 339.99 -1.33, 349.08 2.54 M321.3 -9.14 C332.17 -5.9, 340.79 -0.51, 349.19 1.14"
-                  stroke="var(--custom-color3)"
-                  stroke-width="4"
-                  fill="none"
-                ></path>
+                <path d="M320.65 -9.93 C332.46 -6, 339.99 -1.33, 349.08 2.54 M321.3 -9.14 C332.17 -5.9, 340.79 -0.51, 349.19 1.14" stroke="rgb(0, 139, 255)" stroke-width="4" fill="none"></path>
               </g>
             </g>
             <g transform="translate(342.5 10) rotate(0 68 23)">
-              <text
-                class="fragment"
-                data-fragment-index="3"
-                x="0"
-                y="33"
-                font-family="Virgil, Segoe UI Emoji"
-                font-size="36px"
-                fill="var(--custom-color3)"
-                text-anchor="start"
-                style="white-space: pre"
-                direction="ltr"
-              >
-                Process
-              </text>
+              <text class="fragment" data-fragment-index="3" x="0" y="33" font-family="Virgil, Segoe UI Emoji" font-size="36px" fill="rgb(0, 139, 255)" text-anchor="start" style="white-space: pre;" direction="ltr">Process</text>
             </g>
             <g transform="translate(10 35.5) rotate(0 102 46)">
-              <text
-                class="fragment"
-                data-fragment-index="1"
-                x="102"
-                y="33"
-                font-family="Virgil, Segoe UI Emoji"
-                font-size="36px"
-                fill="var(--custom-color2)"
-                text-anchor="middle"
-                style="white-space: pre"
-                direction="ltr"
-              >
-                Inputs
-              </text>
-              <text
-                class="fragment"
-                data-fragment-index="4"
-                x="102"
-                y="79"
-                font-family="Virgil, Segoe UI Emoji"
-                font-size="36px"
-                fill="var(--custom-color2)"
-                text-anchor="middle"
-                style="white-space: pre"
-                direction="ltr"
-              >
-                (hardcoded)
-              </text>
+              <text class="fragment" data-fragment-index="1" x="102" y="33" font-family="Virgil, Segoe UI Emoji" font-size="36px" fill="rgb(0, 204, 255)" text-anchor="middle" style="white-space: pre;" direction="ltr">Inputs</text>
+              <text class="fragment" data-fragment-index="4" x="102" y="79" font-family="Virgil, Segoe UI Emoji" font-size="36px" fill="rgb(0, 204, 255)" text-anchor="middle" style="white-space: pre;" direction="ltr">(hardcoded)</text>
             </g>
             <g transform="translate(614.25 33.5) rotate(0 102 46)">
-              <text
-                class="fragment"
-                data-fragment-index="2"
-                x="102"
-                y="33"
-                font-family="Virgil, Segoe UI Emoji"
-                font-size="36px"
-                fill="var(--custom-color2)"
-                text-anchor="middle"
-                style="white-space: pre"
-                direction="ltr"
-              >
-                Outputs
-              </text>
-              <text
-                class="fragment"
-                data-fragment-index="4"
-                x="102"
-                y="79"
-                font-family="Virgil, Segoe UI Emoji"
-                font-size="36px"
-                fill="var(--custom-color2)"
-                text-anchor="middle"
-                style="white-space: pre"
-                direction="ltr"
-              >
-                (hardcoded)
-              </text>
+              <text class="fragment" data-fragment-index="2" x="102" y="33" font-family="Virgil, Segoe UI Emoji" font-size="36px" fill="rgb(0, 204, 255)" text-anchor="middle" style="white-space: pre;" direction="ltr">Outputs</text>
+              <text class="fragment" data-fragment-index="4" x="102" y="79" font-family="Virgil, Segoe UI Emoji" font-size="36px" fill="rgb(0, 204, 255)" text-anchor="middle" style="white-space: pre;" direction="ltr">(hardcoded)</text>
             </g>
           </svg>
         </section>
