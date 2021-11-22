@@ -30,7 +30,7 @@
               style="height: 128px; filter: invert(1)"
             />
           </div>
-          <h1 style="margin-top: 50px">Tests 2.0</h1>
+          <h1 style="margin-top: 50px; margin-bottom: 0px">Tests 2.0</h1>
           <h2 style="margin-bottom: 100px">Another way to test</h2>
           <h3>Nicolas DUBIEN</h3>
           <div
@@ -49,58 +49,48 @@
         </section>
         <section>
           <aside class="notes">
-            Pourquoi testing ? Tout simplement car je pense que, comme moi, vous avez connu ces moments où vous venez
-            livrer une nouvelle fonctionnalité: testée via tests automatisés, potentiellement QA mais aussi validée par
-            les product owners ou n'importe quelle autre solution. Et pourtant arrivée en prod (ou plus tard), "tout"
-            casse...
+            So... This is me after having written my very first test. I was really happy and I think you did too when
+            you wrote your first one.
           </aside>
-          <h1>One day, it happened...</h1>
-        </section>
-        <section data-state="dog-video-show">
-          <aside class="notes">
-            Et là, on peut se sentir un peu comme ce petit chien... Bien qu'on ait tout fait pour que ça marche: arrivé
-            à la fin du projet, "tout" semble à refaire.
-          </aside>
-          <video controls width="100%" style="cursor: default" id="dog-video" autoplay loop>
-            <source src="images/sideeffects.webm" type="video/webm" />
-          </video>
-        </section>
-        <section class="unexpected-examples" data-fragment="-1">
-          <aside class="notes">
-            Mais vous n'êtes pas seul, en voici d'autres qui ont eu des soucis plus ou moins embêtants. Cette société de
-            restauration en a par example fait les frais... Les clients pouvaient passer des commandes gratuitement (en
-            tout cas d'après certains). Mais c'est aussi arrivé à des géants de la tech' comme Google. Android, que je
-            ne pense pas devoir présenter à quiquonque, a aussi des gros bugs comme celui-ci qui permettait de
-            contourner l'écran de vérouillage d'un appareil vérouillé.
-          </aside>
-          <style>
-            section.present.unexpected-examples:not([data-fragment='-1']) img:not(.fragment),
-            section.present.unexpected-examples img.fragment:not(.current-fragment) {
-              display: none;
-            }
-          </style>
-          <div style="min-height: 1200px">
-            <img
-              src="./images/mcdo.png"
-              alt="McDo"
-              style="background: none; border: none; box-shadow: none; margin-top: 175px"
-            />
-            <img
-              class="fragment"
-              src="./images/lockscreen-guardian.png"
-              alt="Android issue with lockscreen"
-              style="background: none; border: none; box-shadow: none; margin-top: 100px"
-            />
-          </div>
+          <img
+            src="./images/my-first-test.png"
+            alt="Me After my first test"
+            style="background: none; border: none; box-shadow: none"
+          />
         </section>
         <section>
           <aside class="notes">
-            Et pourtant comme vous et moi, ils recourrent (probablement) à des approches leur permettant de se mettre à
-            l'abri (en tout cas en théorie) de ces problèmes. Via par exemples des tests à plusieurs niveaux de
-            précisions: des tests très bas niveau et très rapide à des tests intégrants toute la stack et souvent plus
-            long.
+            And... Me a few minutes later when I got my first review for those tests. (I'm a little bit exagerating the
+            history, but it makes it funnier)
           </aside>
-          <img src="images/test-pyramid.png" style="border: none; background: none; box-shadow: none" />
+          <img
+            src="./images/cute-sad.gif"
+            alt="Me a few minutes later"
+            style="background: none; border: none; box-shadow: none"
+          />
+        </section>
+        <section>
+          <aside class="notes">Why?</aside>
+          <h1>Writing <em>good</em> tests is hard</h1>
+        </section>
+        <section>
+          <aside class="notes">
+            Just to be sure we are aligned on what I meant for hard, here are some examples of "hard". By hard I meant:
+            you need to forecast all the edge cases before they happen. But also forecast future code changes of your
+            snippet as even if you though about those cases that were possibly impossible they might become possible
+            soon. (you will learn it the hard way thanks to senior colleagues)
+          </aside>
+          <p style="text-align: left">&#8220;<em>You forgot about the case of the empty string</em>&#8221;</p>
+          <p>&#8220;<em>Are you sure your algorithm work when input is like xxxx?</em>&#8221;</p>
+          <p style="text-align: right">&#8220;<em>Why did you need this if in your code?</em>&#8221;</p>
+        </section>
+        <section>
+          <aside class="notes">
+            But why is it so hard? Why do you and I need to forecast all the possible edge cases of the world when we
+            write our test suites? Can't we have something better instead of relying on experience and expertise? Before
+            we see how we can do let's first see what we do today!
+          </aside>
+          <h2>😭</h2>
         </section>
         <section class="fullScreen">
           <aside class="notes">
@@ -211,19 +201,6 @@ it('should impact title on search', async () =&gt; {
   await driver.wait(until.titleIs('webdriver - Google Search'), 1000);
 });
 		      </code></pre>
-        </section>
-        <section>
-          <h2>Are we sure to cover everything?</h2>
-          <h3 class="fragment">Yes, all my users are happy</h3>
-          <h3 class="fragment">Yes, I have 100% coverage</h3>
-        </section>
-        <section>
-          <img src="images/coverage.jfif" />
-          <p><em>100% coverage</em></p>
-        </section>
-        <section>
-          <!--<h2>What did we miss? 🤯</h2>-->
-          <h2>Where did we mess up? 🤯</h2>
         </section>
         <section>
           <aside class="notes"></aside>
