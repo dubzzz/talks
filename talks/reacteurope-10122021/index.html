@@ -82,10 +82,6 @@
           />
         </section>
         <section>
-          <aside class="notes">Why?</aside>
-          <h2>Writing <em>good</em> tests is hard</h2>
-        </section>
-        <section>
           <aside class="notes">
             Just to be sure we are aligned on what I meant by hard, here are some examples of "hard". By hard I meant:
             you need to forecast all the edge cases before they even happen. But also forecast future code changes of
@@ -105,6 +101,10 @@
             </div>
             <p style="font-size: 4em; grid-row: 1; grid-column: 1; background-color: #00000077" class="fragment">😭</p>
           </div>
+        </section>
+        <section>
+          <aside class="notes">Why?</aside>
+          <h2>Writing <em>good</em> tests is hard</h2>
         </section>
         <section class="fullScreen">
           <aside class="notes">So let's see what we call a test today with a simple unit test.</aside>
@@ -204,7 +204,7 @@ it('should not detect when not all letters match', () =&gt; {
               background-size: 40%;
             }
           </style>
-          <pre id="e2e-test-snippet"><code class="hljs language-js" data-trim data-line-numbers="1-5|2,4|3,5">
+          <pre id="e2e-test-snippet"><code class="hljs language-js" data-trim data-line-numbers="1-6|2,4|3,5">
 it('should impact title on search', async () =&gt; {
   await driver.get('https://www.google.com/ncr');
   await driver.findElement(By.name('q'))
@@ -241,10 +241,6 @@ it('should impact title on search', async () =&gt; {
               <div style="color: #1da1f2; vertical-align: middle">
                 <img src="./images/twitter.png" class="styleless-image" style="height: 32px" />
                 ndubien
-              </div>
-              <div style="color: #cb3837; vertical-align: middle">
-                <img src="./images/npm.png" class="styleless-image" style="height: 32px" />
-                fast-check
               </div>
             </div>
           </div>
