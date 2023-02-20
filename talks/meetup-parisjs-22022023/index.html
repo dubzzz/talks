@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Detecting the unexpected in Web UI</title>
+
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/reveal.css" />
+    <link rel="stylesheet" href="css/theme/black.css" />
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/monokai.css" />
+
+    <style>
+      .reveal .controls {
+  color: #e14680; }
+
+      .reveal {
+        font-size: 36px;
+      }
+
+      .reveal pre code {
+        background: none;
+      }
+
+      .reveal h1,
+      .reveal h2,
+      .reveal h3,
+      .reveal h4,
+      .reveal h5,
+      .reveal h6 {
+        font-weight: normal;
+        text-transform: none;
+      }
+
+      .reveal h1 + .more,
+      .reveal h2 + .more,
+      .reveal h3 + .more,
+      .reveal h4 + .more,
+      .reveal h5 + .more,
+      .reveal h6 + .more {
+        margin-top: -20px;
+      }
+
+      .reveal .more {
+        color: #777872;
+      }
+
+      .reveal a,
+      h3 {
+        color: #eca0bf !important;
+        text-decoration: none;
+      }
+      .reveal a:hover,
+      h2 {
+        color: #e14680 !important;
+        text-decoration: none;
+      }
+
+      .reveal blockquote,
+      .reveal p.quote {
+        margin: 0;
+        text-align: justify;
+        font-style: italic;
+        margin-right: 1em;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        padding-left: 1em;
+        font-size: 0.9em;
+        border-left: 1px navajowhite solid;
+      }
+      .reveal blockquote::before,
+      .reveal p.quote::before {
+        content: '\201C';
+        font-size: 2em;
+        float: left;
+        color: white;
+        margin-left: -1em;
+      }
+
+      .reveal p.quote-right {
+        margin: 0;
+        text-align: right;
+        font-style: italic;
+        margin-left: 1em;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        padding-right: 1em;
+        font-size: 0.9em;
+        border-right: 1px navajowhite solid;
+      }
+      .reveal p.quote-right::after {
+        content: '\201C';
+        font-size: 2em;
+        float: right;
+        color: white;
+        margin-right: -1em;
+      }
+
+      em {
+        color: #eca0bf;
+        font-style: normal;
+        font-weight: normal;
+      }
+
+      li {
+        color: #d3d3d3;
+      }
+
+      li.active,
+      .left-menu > li:last-child,
+      .left-menu > li:last-child > ul > li:last-child {
+        color: #f37723;
+      }
+
+      .reveal ol {
+        counter-reset: step-counter;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        text-align: center;
+      }
+
+      .reveal ol li {
+        counter-increment: step-counter;
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+
+      .reveal ol li:before {
+        content: counter(step-counter, upper-roman);
+        color: #f37723;
+        float: left;
+      }
+
+      .reveal .vsmallnote {
+        font-style: italic;
+        font-size: 0.5em;
+        color: #777872;
+      }
+
+      .flex {
+        display: flex;
+        flex-flow: row;
+      }
+
+      .no-margin {
+        margin: none !important;
+      }
+
+      .left-column,
+      .right-column {
+        flex: 50%;
+        text-align: left;
+      }
+
+      .left-padded {
+        padding-left: 1em !important;
+      }
+
+      body {
+        background: #000000;
+        background-color: #000000;
+      }
+
+      .custom-collapse.fragment {
+        max-height: 0;
+        transform: scaleY(0%);
+      }
+      .custom-collapse.fragment.visible {
+        max-height: 100px;
+        transform: scaleY(100%);
+        transition: max-height 2s ease-in, transform 2s ease-in;
+      }
+
+      .reveal .slides section .fragment.highlight-transparent {
+        opacity: 1;
+        visibility: visible;
+      }
+      .reveal .slides section .fragment.highlight-transparent.visible {
+        opacity: 0.2;
+        transition: opacity 0.3s ease-in;
+      }
+
+      .reveal .slides section.fullScreen {
+        top: unset;
+        padding: unset;
+      }
+      .reveal .slides section.fullScreen code {
+        max-height: unset;
+        max-width: unset;
+      }
+
+      /* It seems that there is a syntax highlighting bug when using data-line-numbers */
+      section code[data-line-numbers]:not([data-fragment-index]),
+      section code[data-line-numbers][data-fragment-index]:not(.current-fragment) {
+        opacity: 0 !important;
+        transition: all 0.2s ease-in;
+      }
+      section[data-fragment='-1'] code[data-line-numbers]:not([data-fragment-index]),
+      section code[data-line-numbers][data-fragment-index].current-fragment {
+        opacity: 1 !important;
+        transition: all 0.2s ease-out;
+      }
+
+      @font-face {
+        font-family: 'Virgil';
+        src: url('./lib/font/FG_Virgil.woff2');
+        /* src: url('https://excalidraw.com/FG_Virgil.woff2'); */
+      }
+      g.diag-white path,
+      g.diag-user path,
+      g.diag-call path,
+      g.diag-answer path {
+        stroke-width: 4px;
+        fill: none;
+      }
+      g.diag-white text,
+      g.diag-user text,
+      g.diag-call text,
+      g.diag-answer text {
+        font-family: 'Virgil';
+        font-size: 26px;
+      }
+      g.diag-white path {
+        stroke: #ffffff;
+      }
+      g.diag-white text {
+        fill: #ffffff;
+      }
+      g.diag-user path {
+        stroke: #42affa;
+      }
+      g.diag-user text {
+        fill: #42affa;
+      }
+      g.diag-call path {
+        stroke: #364fc7;
+      }
+      g.diag-call text {
+        fill: #364fc7;
+      }
+      g.diag-answer path {
+        stroke: rgb(17, 183, 33);
+      }
+      g.diag-answer text {
+        fill: rgb(17, 183, 33);
+      }
+
+      .slide-number {
+        background-color: inherit !important;
+      }
+      .footer-github {
+        filter: invert(0);
+        transition: all 0.2s ease;
+      }
+      .has-light-background + div .footer-github {
+        filter: invert(0.70);
+      }
+      .current-fragment.animate-arrow {
+        animation-duration: 1000ms;
+        animation-iteration-count: 1;
+        animation-name: animation-arrow;
+      }
+      @keyframes animation-arrow {
+        0% {
+          transform-origin: top;
+          transform: scaleY(0);
+          opacity: 0;
+        }
+        100% {
+          transform-origin: top;
+          transform: scaleY(100%);
+          opacity: 1;
+        }
+      }
+      .current-fragment.animate-arrow-bottom {
+        animation-duration: 1000ms;
+        animation-iteration-count: 1;
+        animation-name: animation-arrow-bottom;
+      }
+      @keyframes animation-arrow-bottom {
+        0% {
+          transform-origin: bottom;
+          transform: scaleY(0);
+          opacity: 0;
+        }
+        100% {
+          transform-origin: bottom;
+          transform: scaleY(100%);
+          opacity: 1;
+        }
+      }
+    </style>
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <aside class="notes"></aside>
+          <div>
+            <img src="./images/conf-logo.jpg" alt="Conference Logo" class="styleless-image" style="height: 128px; border: none;" />
+          </div>
+          <h1>Detecting the unexpected in JavaScript</h1>
+          <h3>Nicolas DUBIEN</h3>
+          <p class="vsmallnote">Paris.JS #105</p>
+        </section>
+        <section>
+          <aside class="notes">
+            <p>Everyone knows it</p>
+            <p>Hard work with tests, QA, users...</p>
+            <p>But uncovered bug in production</p>
+          </aside>
+          <h1>One day, it happened…</h1>
+        </section>
+        <section data-state="dog-video-show">
+          <aside class="notes">
+            <p>Feeling: Like this little dog</p>
+            <p>Barely done BUT boom</p>
+          </aside>
+          <video controls width="100%" style="cursor: default;" id="dog-video" autoplay>
+            <source src="./images/boom.webm" type="video/webm" />
+          </video>
+        </section>
+        <section class="unexpected-examples" data-fragment="-1">
+          <aside class="notes">
+            <p>Unexpected issues: You're not alone!</p>
+          </aside>
+          <style>
+            section.present.unexpected-examples:not([data-fragment="-1"]) img:not(.fragment),
+            section.present.unexpected-examples img.fragment:not(.current-fragment) {
+              display: none;
+            }
+          </style>
+          <div style="min-height: 1200px;">
+            <img
+              src="./images/lockscreen-guardian.png"
+              alt="Android issue with lockscreen"
+              style="background: none; border: none; box-shadow: none; margin-top: 100px;"
+            />
+            <img
+              class="fragment"
+              src="./images/facetime-nyt.png"
+              alt="FaceTime issue"
+              style="background: none; border: none; box-shadow: none; margin-top: 200px;"
+            />
+          </div>
+        </section>
+        <section>
+          <aside class="notes">
+            <p>Story:
+              <br/>Look at Paris, But leave there,
+              <br/>Looked for stays in London, Pretty good ones, see!,
+              <br/>Arf..
+            </p>
+            <p>
+              UI Bug not critical?
+              <br/>Imagine Favorite Shopping website (when you pay, you have another price)
+              <br/>Imagine Bank Account
+              <br/>Imagine Issue Tracking solution
+            </p>
+            <p>
+              What could go wrong in the front?
+            </p>
+          </aside>
+          <img
+            id="navigation-hell"
+            alt="Navigation hell"
+            src="./images/navigation-hell.gif"
+            onclick="resetGif()"
+          />
+          <script>
+            function resetGif() {
+              document.getElementById('navigation-hell').setAttribute('src', '');
+              document.getElementById('navigation-hell').setAttribute('src', './images/navigation-hell.gif');
+            }
+          </script>
+        </section>
+        <section>
+          <aside class="notes">
+            <p>Rare subject</p>
+            <p>Race conditions in the front</p>
+            <p>Not restricted to back at all</p>
+          </aside>
+          <h2 class="fragment">Let's talk about race conditions</h2>
+        </section>
+        <section>
+          <aside class="notes"></aside>
+          <div>
+            <img src="./images/me.jpg" style="border-radius: 50%; height: 128px;" />
+          </div>
+          <div>
+            <h2>Nicolas DUBIEN</h2>
+            <div style="margin-top: 48px;"></div>
+            <div>
+              <img
+                src="./images/610a7160234b40992597fe70_logo.svg"
+                style="height: 64px; border: none; background: none; margin: 0px; box-shadow: none;"
+              />
+            </div>
+            <div style="margin-top: 48px;"></div>
+            <div style="color: #ffffff; vertical-align: middle;">
+              <img src="./images/github-white.png" style="height: 32px; border: none; background: none; margin: 0px;" />
+              dubzzz
+            </div>
+            <div style="color: #4293db; vertical-align: middle;">
+              <img src="./images/Mastodon_Logotype_(Simple).svg.png" style="height: 32px; border: none; background: none; margin: 0px;" />
+              ndubien
+            </div>
+			<div style="color: #cb3837; vertical-align: middle;">
+			  <img src="./images/npm.png" style="height: 32px; border: none; background: none; margin: 0px;" />
+			  fast-check
+			</div>
+          </div>
+        </section>
+        <section>
+          <aside class="notes">
+            But what is a race condition? <br />As I first said, race conditions are often said to be reserved to the
+            back. <br />But if you take a closer look to the definition on Wikipedia they are also clearly a real
+            problem for us in the front.
+          </aside>
+          <h2>Race condition?</h2>
+          <p class="quote">
+            <span class="fragment highlight-transparent visible" data-fragment-index="1"
+              >A race condition […] is the condition […] where the system's substantive behavior is dependent on the </span
+            ><span class="fragment highlight-green visible" data-fragment-index="1">sequence</span
+            ><span class="fragment highlight-transparent visible" data-fragment-index="1"> or timing </span
+            ><span class="fragment highlight-green visible" data-fragment-index="1">of</span
+            ><span class="fragment highlight-transparent visible" data-fragment-index="1"> other </span
+            ><span class="fragment highlight-green visible" data-fragment-index="1">uncontrollable events</span
+            ><span class="fragment highlight-transparent visible" data-fragment-index="1">.</span>
+          </p>
+          <p class="fragment custom-collapse">
+            🤔 What about user inputs, API calls…?
+          </p>
+          <p class="vsmallnote">
+            Source:
+            <a href="https://en.wikipedia.org/wiki/Race_condition" target="_blank"
+              >https://en.wikipedia.org/wiki/Race_condition</a
+            >
+          </p>
+        </section>
+        <section>
+          <aside class="notes">
+            Let's illustrate that with a simple diagram with arrows.
+            <br />Let's suppose that each of those arrows corresponds to the response we get back from our back for
+            instance. <br />Here we have two answers. They arrive in-order - ie the result for the first query we
+            launched arrives before the one of the second query (which is hopefully most of the time the case).
+            <br />Let's relabel them - thanks to our example on Paris and London: Results for Paris, Results for London.
+          </aside>
+          <style>
+            .current-fragment.animate-paris-stays-user text {
+              animation-duration: 1500ms;
+              animation-iteration-count: 1;
+              animation-name: animation-paris-stays-user;
+            }
+            @keyframes animation-paris-stays-user {
+              0% {
+                transform: rotate(90deg) scale(2) translateY(-200px) translateX(35px);
+              }
+              80% {
+                transform: rotate(90deg) scale(2) translateY(-200px) translateX(35px);
+              }
+              100% {
+                transform: rotate(0deg) scale(1) translateY(0px) translateX(0px);
+              }
+            }
+            .current-fragment.animate-paris-stays-query text {
+              animation-duration: 1500ms;
+              animation-iteration-count: 1;
+              animation-name: animation-paris-stays-query;
+            }
+            @keyframes animation-paris-stays-query {
+              0% {
+                transform: rotate(90deg) scale(2) translateY(-215px) translateX(40px);
+              }
+              80% {
+                transform: rotate(90deg) scale(2) translateY(-215px) translateX(40px);
+              }
+              100% {
+                transform: rotate(0deg) scale(1) translateY(0px) translateX(0px);
+              }
+            }
+            .current-fragment.animate-paris-stays-answer text {
+              animation-duration: 1500ms;
+              animation-iteration-count: 1;
+              animation-name: animation-paris-stays-answer;
+            }
+            @keyframes animation-paris-stays-answer {
+              0% {
+                transform: rotate(90deg) scale(2) translateY(-200px) translateX(-30px);
+              }
+              80% {
+                transform: rotate(90deg) scale(2) translateY(-200px) translateX(-30px);
+              }
+              100% {
+                transform: rotate(0deg) scale(1) translateY(0px) translateX(0px);
+              }
+            }
+            .current-fragment.animate-london-stays-user text {
+              animation-duration: 1500ms;
+              animation-iteration-count: 1;
+              animation-name: animation-london-stays-user;
+            }
+            @keyframes animation-london-stays-user {
+              0% {
+                transform: rotate(90deg) scale(2) translateY(-200px) translateX(-150px);
+              }
+              80% {
+                transform: rotate(90deg) scale(2) translateY(-200px) translateX(-150px);
+              }
+              100% {
+                transform: rotate(0deg) scale(1) translateY(0px) translateX(0px);
+              }
+            }
+            .current-fragment.animate-london-stays-query text {
+              animation-duration: 1500ms;
+              animation-iteration-count: 1;
+              animation-name: animation-london-stays-query;
+            }
+            @keyframes animation-london-stays-query {
+              0% {
+                transform: rotate(90deg) scale(2) translateY(-210px) translateX(-150px);
+              }
+              80% {
+                transform: rotate(90deg) scale(2) translateY(-210px) translateX(-150px);
+              }
+              100% {
+                transform: rotate(0deg) scale(1) translateY(0px) translateX(0px);
+              }
+            }
+            .current-fragment.animate-london-stays-answer text {
+              animation-duration: 1500ms;
+              animation-iteration-count: 1;
+              animation-name: animation-london-stays-answer;
+            }
+            @keyframes animation-london-stays-answer {
+              0% {
+                transform: rotate(90deg) scale(2) translateY(-200px) translateX(-215px);
+              }
+              80% {
+                transform: rotate(90deg) scale(2) translateY(-200px) translateX(-215px);
+              }
+              100% {
+                transform: rotate(0deg) scale(1) translateY(0px) translateX(0px);
+              }
+            }
+          </style>
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 926 520">
+            <g class="diag-white">
+              <g transform="translate(10 436) rotate(0 453 0)">
+                <path d="M1 -2 C152 -2, 754 -1, 905 -0 M1 2 C152 3, 752 1, 904 1" />
+                <path d="M872 9 C881 11, 895 1, 901 2 M876 12 C885 7, 894 5, 902 1" />
+                <path d="M872 -11 C880 -2, 895 -5, 901 2 M876 -7 C885 -5, 894 -0, 902 1" />
+              </g>
+            </g>
+            <g class="diag-white" transform="translate(844 466) rotate(0 34 22)">
+              <text x="0" y="32">Time</text>
+            </g>
+            <g class="diag-user fragment animate-arrow" data-fragment-index="1">
+              <g transform="translate(60 265) rotate(0 0 80)">
+                <path d="M-1 -1 C-0 25, -0 134, -0 162 M0 -0 C-0 26, 2 133, 1 160" />
+                <path d="M-10 133 C-9 138, -1 147, -1 160 M-9 130 C-3 139, -1 147, -0 159" />
+                <path d="M10 133 C6 138, 10 147, -1 160 M11 130 C10 138, 6 146, -0 159" />
+              </g>
+            </g>
+            <g class="diag-user fragment animate-paris-stays-user" data-fragment-index="1" transform="translate(-118 217) rotate(270 150 22)">
+              <text x="0" y="32">User looks for stays in Paris</text>
+            </g>
+            <g class="diag-call fragment animate-arrow-bottom" data-fragment-index="2">
+              <g transform="translate(83 426.148936170213) rotate(0 -1 -39)">
+                <path d="M-1 -0 C-2 -13, -0 -62, -0 -74 M-2 -2 C-3 -15, 0 -64, 0 -77" />
+                <path d="M7 -50 C6 -60, 2 -70, 2 -80 M8 -50 C6 -56, 6 -60, 1 -76" />
+                <path d="M-12 -51 C-5 -61, -1 -70.551366474985, 2 -80 M-11 -51 C-8 -56, -3 -61, 1 -76" />
+              </g>
+            </g>
+            <g class="diag-call fragment animate-paris-stays-query" data-fragment-index="2" transform="translate(-28 261) rotate(270 136.5 22)">
+              <text x="0" y="32">API call for Paris</text>
+            </g>
+            <g class="diag-call fragment animate-paris-stays-query" data-fragment-index="2" transform="translate(-28 261) rotate(270 136.5 22)">
+              <text x="248" y="32" style="filter: grayscale(0.9)">🗼</text>
+            </g>
+            <g class="diag-answer fragment animate-arrow" data-fragment-index="3">
+              <g transform="translate(302 265) rotate(0 0 79)">
+                <path d="M-0 0 C-1 27, -2 136, -2 163 M3 -4 C3 22, 3 135, 3 162" />
+                <path d="M-6 131 C-4 146, -1 157, 5 165 M-6 133 C-3 141, -3 144, 1 160" />
+                <path d="M14 132 C8 146, 4 157, 5 165 M14 133 C13 141, 8 144, 1 160" />
+              </g>
+            </g>
+            <g class="diag-answer fragment animate-paris-stays-answer" data-fragment-index="3" transform="translate(78 179) rotate(270 191 22)">
+              <text x="0" y="32">Results for Paris</text>
+            </g>
+            <g class="diag-call fragment animate-paris-stays-answer" data-fragment-index="3" transform="translate(78 179) rotate(270 191 22)">
+              <text x="239" y="32" style="filter: grayscale(0.9)">🗼</text>
+            </g>
+            <g class="diag-user fragment animate-london-stays-user" data-fragment-index="4" transform="translate(261 232) rotate(270 140 22)">
+              <text x="0" y="32">User looks for stays in London</text>
+            </g>
+            <g class="diag-user fragment animate-arrow" data-fragment-index="4">
+              <g transform="translate(431 264) rotate(0 -0 80)">
+                <path d="M2 2 C2 30, -1 135, -1 162 M2 -2 C1 24, -2 135, -2 163" />
+                <path d="M-8 135 C-13 145, -8 151, -3 166 M-11 136 C-10 144, -8 151, -1 162" />
+                <path d="M11 135 C2 146, 2 152, -3 166 M9 136 C4 144, 2 151, -1 162" />
+              </g>
+            </g>
+            <g class="diag-call fragment animate-arrow-bottom" data-fragment-index="5">
+              <g transform="translate(451 425) rotate(0 -0 -36)">
+                <path d="M0 1 C0 -10, 0 -62, 0 -75 M1 -4 C0 -17, -3 -61, -3 -72" />
+                <path d="M10 -45 C5 -56, 3 -59, 0 -71 M9 -44 C5 -51, 3 -57, -4 -71" />
+                <path d="M-10 -45 C-8 -55, -3 -59, 0 -71 M-10 -43 C-11 -51, -8 -57, -4 -71" />
+              </g>
+            </g>
+            <g class="diag-call fragment animate-london-stays-query" data-fragment-index="5" transform="translate(348 269) rotate(270 126 22)">
+              <text x="0" y="32">API call for London 💂‍♂️</text>
+            </g>
+            <g class="diag-answer fragment animate-arrow" data-fragment-index="6">
+              <g transform="translate(652 258) rotate(0 -1 83)">
+                <path d="M0 2 C-0 29, -1 138, -2 165 M1 0 C0 27, -4 140, -4 167" />
+                <path d="M-11 137 C-7 148, -7 162, -2 168 M-15 138 C-12 147, -10 154, -6 166" />
+                <path d="M9 138 C4 149, -2 162, -2 168 M5 139 C1 148, -2 155, -6 166" />
+              </g>
+            </g>
+            <g class="diag-answer fragment animate-london-stays-answer" data-fragment-index="6" transform="translate(439 186) rotate(270 181 22)">
+              <text x="0" y="32">Results for London 💂‍♂️</text>
+            </g>
+            <g class="diag-answer fragment" data-fragment-index="7" transform="translate(78 179) rotate(270 191 22)">
+              <text x="0" y="32" style="text-decoration: line-through; fill: darkred;">
+                Results for Paris
+              </text>
+            </g>
+            <g class="diag-answer fragment" data-fragment-index="7">
+              <g transform="translate(302 265) rotate(0 0 79)">
+                <path d="M-0 0 C-1 27, -2 136, -2 163 M3 -4 C3 22, 3 135, 3 162" style="stroke: darkred;" />
+                <path d="M-6 131 C-4 146, -1 157, 5 165 M-6 133 C-3 141, -3 144, 1 160" style="stroke: darkred;" />
+                <path d="M14 132 C8 146, 4 157, 5 165 M14 133 C13 141, 8 144, 1 160" style="stroke: darkred;" />
+              </g>
+            </g>
+            <g class="diag-answer fragment" data-fragment-index="8" transform="translate(578 179) rotate(270 191 22)">
+              <text x="0" y="32">
+                Results for Paris
+              </text>
+            </g>
+            <g class="diag-call fragment" data-fragment-index="8" transform="translate(578 179) rotate(270 191 22)">
+              <text x="239" y="32" style="filter: grayscale(0.9)">🗼</text>
+            </g>
+            <g class="diag-answer fragment animate-arrow" data-fragment-index="8">
+              <g transform="translate(802 265) rotate(0 0 79)">
+                <path d="M-0 0 C-1 27, -2 136, -2 163 M3 -4 C3 22, 3 135, 3 162" />
+                <path d="M-6 131 C-4 146, -1 157, 5 165 M-6 133 C-3 141, -3 144, 1 160" />
+                <path d="M14 132 C8 146, 4 157, 5 165 M14 133 C13 141, 8 144, 1 160" />
+              </g>
+            </g>
+          </svg>
+        </section>
+        <section>
+          <aside class="notes">
+            But fed from an API - like searches and suggestions in your favorite search engine (eg.: Google)
+          </aside>
+          <h2>Let's consider a simple example</h2>
+          <h3 class="fragment custom-collapse">
+            An autocomplete field in React
+          </h3>
+        </section>
+        <section>
+          <aside class="notes">
+            Just to be aligned with all of you, here is what an autocomplete can look like
+          </aside>
+          <img src="./images/autocomplete-ok.gif" style="border: none; background: none; margin: 0px;" />
+        </section>
+        <section class="fullScreen">
+          <aside class="notes"></aside>
+          <pre><code class="hljs" data-trim data-line-numbers="1-28|5,21-24|8,16|9-12|2,13-15|6,10,14,25">
+			import React, { useEffect, useState } from 'react';
+			import { suggestionsFor } from './Api';
+			
+			export default function Autocomplete() {
+			  const [query, setQuery] = useState('');
+			  const [suggestions, setSuggestions] = useState([]);
+			
+			  useEffect(() =&gt; {
+			    if (query === '') {
+			      setSuggestions([]);
+			      return;
+			    }
+			    suggestionsFor(query).then((suggestions) =&gt; {
+			      setSuggestions(suggestions);
+			    });
+			  }, [query]);
+			
+			  return (
+			    &lt;div&gt;
+			      &lt;label htmlFor="autocomplete-field"&gt;Select a package: &lt;/label&gt;
+			      &lt;input
+			        id="autocomplete-field"
+			        value={query}
+			        onChange={(e) =&gt; setQuery(e.target.value)} /&gt;
+			      &lt;ul&gt;{suggestions.map((s) =&gt; &lt;li key={s}=&gt;{s}&lt;/li&gt;)}&lt;/ul&gt;
+			    &lt;/div&gt;
+			  );
+			}			
+		  </code></pre>
+        </section>
+        <section>
+		  <aside class="notes"></aside>
+		  <h3>How to test it?</h3>
+		  </section>
+        <section class="fullScreen">
+          <aside class="notes">
+            <p>Mock the api</p>
+            <p>Simulate user typing a search query</p>
+            <p>Check suggestions</p>
+          </aside>
+          <pre><code class="hljs javascript" data-trim data-line-numbers="1,24|2-8|10-17|19-23">
+test('should autocomplete queries', async () =&gt; {
+  // Arrange
+  const allResults = ['apple', 'banana', 'orange', 'pineapple'];
+  suggestionsFor.mockImplementation(async (query) =&gt; {
+    return allResults.filter((r) =&gt; r.includes(query));
+  });
+  const userQuery = 'nan';
+  const expectedResults = ['banana'];
+  
+  // Act
+  render(&lt;Autocomplete /&gt;);
+  await act(async () =&gt; {
+    await userEvent.type(
+	  screen.getByRole('textbox'),
+	  userQuery,
+	  { allAtOnce: false, delay: 1 });
+  });
+  
+  // Assert
+  const displayedSuggestions = screen.queryAllByRole('listitem')
+      .map((el) =&gt; el.textContent);
+  expect(displayedSuggestions).toEqual(expectedResults);
+  expect(suggestionsFor).toHaveBeenCalledTimes(userQuery.length);
+});
+		  </code></pre>
+        </section>
+        <section>
+		  <aside class="notes"></aside>
+		  <h3>Test status: <b><span class="fragment" style="color:green">√</span></h3></b>
+		  <p class="fragment">🤔 What?</p>
+        </section>
+        <section>
+          <style>
+            .current-fragment.animate-search-n-user text {
+              animation-duration: 1500ms;
+              animation-iteration-count: 1;
+              animation-name: animation-search-n-user;
+            }
+            @keyframes animation-search-n-user {
+              0% {
+                transform: rotate(90deg) scale(2) translateY(-200px) translateX(90px);
+              }
+              80% {
+                transform: rotate(90deg) scale(2) translateY(-200px) translateX(90px);
+              }
+              100% {
+                transform: rotate(0deg) scale(1) translateY(0px) translateX(0px);
+              }
+            }
+            .current-fragment.animate-search-n-query text {
+              animation-duration: 1500ms;
+              animation-iteration-count: 1;
+              animation-name: animation-search-n-query;
+            }
+            @keyframes animation-search-n-query {
+              0% {
+                transform: rotate(90deg) scale(2) translateY(-215px) translateX(90px);
+              }
+              80% {
+                transform: rotate(90deg) scale(2) translateY(-215px) translateX(90px);
+              }
+              100% {
+                transform: rotate(0deg) scale(1) translateY(0px) translateX(0px);
+              }
+            }
+            .current-fragment.animate-search-n-answer text {
+              animation-duration: 1500ms;
+              animation-iteration-count: 1;
+              animation-name: animation-search-n-answer;
+            }
+            @keyframes animation-search-n-answer {
+              0% {
+                transform: rotate(90deg) scale(2) translateY(-200px) translateX(-320px);
+              }
+              80% {
+                transform: rotate(90deg) scale(2) translateY(-200px) translateX(-320px);
+              }
+              100% {
+                transform: rotate(0deg) scale(1) translateY(0px) translateX(0px);
+              }
+            }
+            .current-fragment.animate-search-na-user text {
+              animation-duration: 1500ms;
+              animation-iteration-count: 1;
+              animation-name: animation-search-na-user;
+            }
+            @keyframes animation-search-na-user {
+              0% {
+                transform: rotate(90deg) scale(2) translateY(-200px) translateX(20px);
+              }
+              80% {
+                transform: rotate(90deg) scale(2) translateY(-200px) translateX(20px);
+              }
+              100% {
+                transform: rotate(0deg) scale(1) translateY(0px) translateX(0px);
+              }
+            }
+            .current-fragment.animate-search-na-query text {
+              animation-duration: 1500ms;
+              animation-iteration-count: 1;
+              animation-name: animation-search-na-query;
+            }
+            @keyframes animation-search-na-query {
+              0% {
+                transform: rotate(90deg) scale(2) translateY(-215px) translateX(20px);
+              }
+              80% {
+                transform: rotate(90deg) scale(2) translateY(-215px) translateX(20px);
+              }
+              100% {
+                transform: rotate(0deg) scale(1) translateY(0px) translateX(0px);
+              }
+            }
+            .current-fragment.animate-search-na-answer text {
+              animation-duration: 1500ms;
+              animation-iteration-count: 1;
+              animation-name: animation-search-na-answer;
+            }
+            @keyframes animation-search-na-answer {
+              0% {
+                transform: rotate(90deg) scale(2) translateY(-200px) translateX(-130px);
+              }
+              80% {
+                transform: rotate(90deg) scale(2) translateY(-200px) translateX(-130px);
+              }
+              100% {
+                transform: rotate(0deg) scale(1) translateY(0px) translateX(0px);
+              }
+            }
+            .current-fragment.animate-search-nan-user text {
+              animation-duration: 1500ms;
+              animation-iteration-count: 1;
+              animation-name: animation-search-nan-user;
+            }
+            @keyframes animation-search-nan-user {
+              0% {
+                transform: rotate(90deg) scale(2) translateY(-200px) translateX(-40px);
+              }
+              80% {
+                transform: rotate(90deg) scale(2) translateY(-200px) translateX(-40px);
+              }
+              100% {
+                transform: rotate(0deg) scale(1) translateY(0px) translateX(0px);
+              }
+            }
+            .current-fragment.animate-search-nan-query text {
+              animation-duration: 1500ms;
+              animation-iteration-count: 1;
+              animation-name: animation-search-nan-query;
+            }
+            @keyframes animation-search-nan-query {
+              0% {
+                transform: rotate(90deg) scale(2) translateY(-215px) translateX(-50px);
+              }
+              80% {
+                transform: rotate(90deg) scale(2) translateY(-215px) translateX(-50px);
+              }
+              100% {
+                transform: rotate(0deg) scale(1) translateY(0px) translateX(0px);
+              }
+            }
+            .current-fragment.animate-search-nan-answer text {
+              animation-duration: 1500ms;
+              animation-iteration-count: 1;
+              animation-name: animation-search-nan-answer;
+            }
+            @keyframes animation-search-nan-answer {
+              0% {
+                transform: rotate(90deg) scale(2) translateY(-200px) translateX(-210px);
+              }
+              80% {
+                transform: rotate(90deg) scale(2) translateY(-200px) translateX(-210px);
+              }
+              100% {
+                transform: rotate(0deg) scale(1) translateY(0px) translateX(0px);
+              }
+            }
+          </style>
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 926 520">
+            <g class="diag-white">
+              <g transform="translate(10 436) rotate(0 453 0)">
+                <path d="M1 -2 C152 -2, 754 -1, 905 -0 M1 2 C152 3, 752 1, 904 1" />
+                <path d="M872 9 C881 11, 895 1, 901 2 M876 12 C885 7, 894 5, 902 1" />
+                <path d="M872 -11 C880 -2, 895 -5, 901 2 M876 -7 C885 -5, 894 -0, 902 1" />
+              </g>
+            </g>
+            <g class="diag-white" transform="translate(844 466) rotate(0 34 22)">
+              <text x="0" y="32">Time</text>
+            </g>
+            <g class="diag-user fragment animate-arrow" data-fragment-index="1">
+              <g transform="translate(60 265) rotate(0 0 80)">
+                <path d="M-1 -1 C-0 25, -0 134, -0 162 M0 -0 C-0 26, 2 133, 1 160" />
+                <path d="M-10 133 C-9 138, -1 147, -1 160 M-9 130 C-3 139, -1 147, -0 159" />
+                <path d="M10 133 C6 138, 10 147, -1 160 M11 130 C10 138, 6 146, -0 159" />
+              </g>
+            </g>
+            <g class="diag-user fragment animate-search-n-user" data-fragment-index="1" transform="translate(-118 217) rotate(270 150 22)">
+              <text x="0" y="32">Updating query to "n"</text>
+            </g>
+            <g class="diag-call fragment animate-arrow-bottom" data-fragment-index="2">
+              <g transform="translate(83 426.148936170213) rotate(0 -1 -39)">
+                <path d="M-1 -0 C-2 -13, -0 -62, -0 -74 M-2 -2 C-3 -15, 0 -64, 0 -77" />
+                <path d="M7 -50 C6 -60, 2 -70, 2 -80 M8 -50 C6 -56, 6 -60, 1 -76" />
+                <path d="M-12 -51 C-5 -61, -1 -70.551366474985, 2 -80 M-11 -51 C-8 -56, -3 -61, 1 -76" />
+              </g>
+            </g>
+            <g class="diag-call fragment animate-search-n-query" data-fragment-index="2" transform="translate(-28 261) rotate(270 136.5 22)">
+              <text x="0" y="32">API call for "n"</text>
+            </g>
+            <g class="diag-user fragment animate-search-na-user" data-fragment-index="3" transform="translate(12 232) rotate(270 140 22)">
+              <text x="0" y="32">Updating query to "na"</text>
+            </g>
+            <g class="diag-user fragment animate-arrow" data-fragment-index="3">
+              <g transform="translate(190 264) rotate(0 -0 80)">
+                <path d="M2 2 C2 30, -1 135, -1 162 M2 -2 C1 24, -2 135, -2 163" />
+                <path d="M-8 135 C-13 145, -8 151, -3 166 M-11 136 C-10 144, -8 151, -1 162" />
+                <path d="M11 135 C2 146, 2 152, -3 166 M9 136 C4 144, 2 151, -1 162" />
+              </g>
+            </g>
+            <g class="diag-call fragment animate-arrow-bottom" data-fragment-index="4">
+              <g transform="translate(213 426.148936170213) rotate(0 -1 -39)">
+                <path d="M-1 -0 C-2 -13, -0 -62, -0 -74 M-2 -2 C-3 -15, 0 -64, 0 -77" />
+                <path d="M7 -50 C6 -60, 2 -70, 2 -80 M8 -50 C6 -56, 6 -60, 1 -76" />
+                <path d="M-12 -51 C-5 -61, -1 -70.551366474985, 2 -80 M-11 -51 C-8 -56, -3 -61, 1 -76" />
+              </g>
+            </g>
+            <g class="diag-call fragment animate-search-na-query" data-fragment-index="4" transform="translate(102 261) rotate(270 136.5 22)">
+              <text x="0" y="32">API call for "na"</text>
+            </g>
+            <g class="diag-user fragment animate-search-nan-user" data-fragment-index="5" transform="translate(141 232) rotate(270 140 22)">
+              <text x="0" y="32">Updating query to "nan"</text>
+            </g>
+            <g class="diag-user fragment animate-arrow" data-fragment-index="5">
+              <g transform="translate(311 264) rotate(0 -0 80)">
+                <path d="M2 2 C2 30, -1 135, -1 162 M2 -2 C1 24, -2 135, -2 163" />
+                <path d="M-8 135 C-13 145, -8 151, -3 166 M-11 136 C-10 144, -8 151, -1 162" />
+                <path d="M11 135 C2 146, 2 152, -3 166 M9 136 C4 144, 2 151, -1 162" />
+              </g>
+            </g>
+            <g class="diag-call fragment animate-arrow-bottom" data-fragment-index="6">
+              <g transform="translate(331 425) rotate(0 -0 -36)">
+                <path d="M0 1 C0 -10, 0 -62, 0 -75 M1 -4 C0 -17, -3 -61, -3 -72" />
+                <path d="M10 -45 C5 -56, 3 -59, 0 -71 M9 -44 C5 -51, 3 -57, -4 -71" />
+                <path d="M-10 -45 C-8 -55, -3 -59, 0 -71 M-10 -43 C-11 -51, -8 -57, -4 -71" />
+              </g>
+            </g>
+            <g class="diag-call fragment animate-search-nan-query" data-fragment-index="6" transform="translate(228 269) rotate(270 126 22)">
+              <text x="0" y="32">API call for "nan"</text>
+            </g>
+            <g class="diag-answer fragment animate-arrow" data-fragment-index="7">
+              <g transform="translate(502 265) rotate(0 0 79)">
+                <path d="M-0 0 C-1 27, -2 136, -2 163 M3 -4 C3 22, 3 135, 3 162" />
+                <path d="M-6 131 C-4 146, -1 157, 5 165 M-6 133 C-3 141, -3 144, 1 160" />
+                <path d="M14 132 C8 146, 4 157, 5 165 M14 133 C13 141, 8 144, 1 160" />
+              </g>
+            </g>
+            <g class="diag-answer fragment animate-search-na-answer" data-fragment-index="7" transform="translate(278 179) rotate(270 191 22)">
+              <text x="0" y="32">Results for "na" [🍌]</text>
+            </g>
+            <g class="diag-answer fragment animate-arrow" data-fragment-index="8">
+              <g transform="translate(652 258) rotate(0 -1 83)">
+                <path d="M0 2 C-0 29, -1 138, -2 165 M1 0 C0 27, -4 140, -4 167" />
+                <path d="M-11 137 C-7 148, -7 162, -2 168 M-15 138 C-12 147, -10 154, -6 166" />
+                <path d="M9 138 C4 149, -2 162, -2 168 M5 139 C1 148, -2 155, -6 166" />
+              </g>
+            </g>
+            <g class="diag-answer fragment animate-search-nan-answer" data-fragment-index="8" transform="translate(439 186) rotate(270 181 22)">
+              <text x="0" y="32">Results for "nan" [🍌]</text>
+            </g>
+            <g class="diag-answer fragment animate-arrow" data-fragment-index="9">
+              <g transform="translate(802 258) rotate(0 -1 83)">
+                <path d="M0 2 C-0 29, -1 138, -2 165 M1 0 C0 27, -4 140, -4 167" />
+                <path d="M-11 137 C-7 148, -7 162, -2 168 M-15 138 C-12 147, -10 154, -6 166" />
+                <path d="M9 138 C4 149, -2 162, -2 168 M5 139 C1 148, -2 155, -6 166" />
+              </g>
+            </g>
+            <g class="diag-answer fragment animate-search-n-answer" data-fragment-index="9" transform="translate(589 186) rotate(270 181 22)">
+              <text x="0" y="32">Results for "n" [🍌/🍊/🍍]</text>
+            </g>
+          </svg>
+        </section>
+        <section>
+		  <aside class="notes"></aside>
+          <img src="./images/autocomplete-bug-screenshot.png" style="border: none; background: none; margin: 0px;" />
+        </section>
+        <section>
+		  <aside class="notes"></aside>
+          <img src="./images/autocomplete-bug.gif" style="border: none; background: none; margin: 0px;" />
+		</section>
+		<section>
+			<aside class="notes"></aside>
+			<h3>What is missing in our test?</h3>
+		</section>
+    <section>
+      <style>
+        section.present .results-n {
+          stroke: red;
+          fill: red;
+          animation-delay: 5s;
+          animation-duration: 8s;
+          animation-iteration-count: infinite;
+          animation-name: results-n-anim;
+        }
+        section.present .results-n path {
+          stroke-width: 4px;
+          fill: none;
+        }
+        section.present .results-n text {
+          font-family: 'Virgil';
+          font-size: 26px;
+          stroke-width: 0px;
+        }
+        section.present .results-na {
+          animation-delay: 5s;
+          animation-duration: 8s;
+          animation-iteration-count: infinite;
+          animation-name: results-na-anim;
+        }
+        section.present .results-nan {
+          animation-delay: 5s;
+          animation-duration: 8s;
+          animation-iteration-count: infinite;
+          animation-name: results-nan-anim;
+        }
+        /* tx 150px */
+        @keyframes results-n-anim {
+          0% {
+            fill: red;
+            stroke: red;
+            transform: translateX(0px);
+          }
+          25% {
+            fill: rgb(17, 183, 33);
+            stroke: rgb(17, 183, 33);
+            transform: translateX(-300px);
+          }
+          50% {
+            fill: rgb(17, 183, 33);
+            stroke: rgb(17, 183, 33);
+            transform: translateX(-150px);
+          }
+          75% {
+            fill: rgb(17, 183, 33);
+            stroke: rgb(17, 183, 33);
+            transform: translateX(-300px);
+          }
+          100% {
+            fill: red;
+            stroke: red;
+            transform: translateX(0px);
+          }
+        }
+        @keyframes results-na-anim {
+          0% {
+            transform: translateX(0px);
+          }
+          25% {
+            transform: translateX(150px);
+          }
+          50% {
+            transform: translateX(300px);
+          }
+          75% {
+            transform: translateX(300px);
+          }
+          100% {
+            transform: translateX(0px);
+          }
+        }
+        @keyframes results-nan-anim {
+          0% {
+            transform: translateX(0px);
+          }
+          25% {
+            transform: translateX(150px);
+          }
+          50% {
+            transform: translateX(-150px);
+          }
+          75% {
+            transform: translateX(0px);
+          }
+          100% {
+            transform: translateX(0px);
+          }
+        }
+      </style>
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 926 520">
+        <g class="diag-white">
+          <g transform="translate(10 436) rotate(0 453 0)">
+            <path d="M1 -2 C152 -2, 754 -1, 905 -0 M1 2 C152 3, 752 1, 904 1" />
+            <path d="M872 9 C881 11, 895 1, 901 2 M876 12 C885 7, 894 5, 902 1" />
+            <path d="M872 -11 C880 -2, 895 -5, 901 2 M876 -7 C885 -5, 894 -0, 902 1" />
+          </g>
+        </g>
+        <g class="diag-white" transform="translate(844 466) rotate(0 34 22)">
+          <text x="0" y="32">Time</text>
+        </g>
+        <g class="diag-user">
+          <g transform="translate(60 265) rotate(0 0 80)">
+            <path d="M-1 -1 C-0 25, -0 134, -0 162 M0 -0 C-0 26, 2 133, 1 160" />
+            <path d="M-10 133 C-9 138, -1 147, -1 160 M-9 130 C-3 139, -1 147, -0 159" />
+            <path d="M10 133 C6 138, 10 147, -1 160 M11 130 C10 138, 6 146, -0 159" />
+          </g>
+        </g>
+        <g class="diag-user" transform="translate(-118 217) rotate(270 150 22)">
+          <text x="0" y="32">Updating query to "n"</text>
+        </g>
+        <g class="diag-call">
+          <g transform="translate(83 426.148936170213) rotate(0 -1 -39)">
+            <path d="M-1 -0 C-2 -13, -0 -62, -0 -74 M-2 -2 C-3 -15, 0 -64, 0 -77" />
+            <path d="M7 -50 C6 -60, 2 -70, 2 -80 M8 -50 C6 -56, 6 -60, 1 -76" />
+            <path d="M-12 -51 C-5 -61, -1 -70.551366474985, 2 -80 M-11 -51 C-8 -56, -3 -61, 1 -76" />
+          </g>
+        </g>
+        <g class="diag-call" transform="translate(-28 261) rotate(270 136.5 22)">
+          <text x="0" y="32">API call for "n"</text>
+        </g>
+        <g class="diag-user" transform="translate(12 232) rotate(270 140 22)">
+          <text x="0" y="32">Updating query to "na"</text>
+        </g>
+        <g class="diag-user">
+          <g transform="translate(190 264) rotate(0 -0 80)">
+            <path d="M2 2 C2 30, -1 135, -1 162 M2 -2 C1 24, -2 135, -2 163" />
+            <path d="M-8 135 C-13 145, -8 151, -3 166 M-11 136 C-10 144, -8 151, -1 162" />
+            <path d="M11 135 C2 146, 2 152, -3 166 M9 136 C4 144, 2 151, -1 162" />
+          </g>
+        </g>
+        <g class="diag-call">
+          <g transform="translate(213 426.148936170213) rotate(0 -1 -39)">
+            <path d="M-1 -0 C-2 -13, -0 -62, -0 -74 M-2 -2 C-3 -15, 0 -64, 0 -77" />
+            <path d="M7 -50 C6 -60, 2 -70, 2 -80 M8 -50 C6 -56, 6 -60, 1 -76" />
+            <path d="M-12 -51 C-5 -61, -1 -70.551366474985, 2 -80 M-11 -51 C-8 -56, -3 -61, 1 -76" />
+          </g>
+        </g>
+        <g class="diag-call" transform="translate(102 261) rotate(270 136.5 22)">
+          <text x="0" y="32">API call for "na"</text>
+        </g>
+        <g class="diag-user" transform="translate(141 232) rotate(270 140 22)">
+          <text x="0" y="32">Updating query to "nan"</text>
+        </g>
+        <g class="diag-user">
+          <g transform="translate(311 264) rotate(0 -0 80)">
+            <path d="M2 2 C2 30, -1 135, -1 162 M2 -2 C1 24, -2 135, -2 163" />
+            <path d="M-8 135 C-13 145, -8 151, -3 166 M-11 136 C-10 144, -8 151, -1 162" />
+            <path d="M11 135 C2 146, 2 152, -3 166 M9 136 C4 144, 2 151, -1 162" />
+          </g>
+        </g>
+        <g class="diag-call">
+          <g transform="translate(331 425) rotate(0 -0 -36)">
+            <path d="M0 1 C0 -10, 0 -62, 0 -75 M1 -4 C0 -17, -3 -61, -3 -72" />
+            <path d="M10 -45 C5 -56, 3 -59, 0 -71 M9 -44 C5 -51, 3 -57, -4 -71" />
+            <path d="M-10 -45 C-8 -55, -3 -59, 0 -71 M-10 -43 C-11 -51, -8 -57, -4 -71" />
+          </g>
+        </g>
+        <g class="diag-call" transform="translate(228 269) rotate(270 126 22)">
+          <text x="0" y="32">API call for "nan"</text>
+        </g>
+        <g class="diag-answer results-na">
+          <g transform="translate(502 265) rotate(0 0 79)">
+            <path d="M-0 0 C-1 27, -2 136, -2 163 M3 -4 C3 22, 3 135, 3 162" />
+            <path d="M-6 131 C-4 146, -1 157, 5 165 M-6 133 C-3 141, -3 144, 1 160" />
+            <path d="M14 132 C8 146, 4 157, 5 165 M14 133 C13 141, 8 144, 1 160" />
+          </g>
+        </g>
+        <g class="diag-answer results-na">
+          <text x="0" y="32" transform="translate(278 179) rotate(270 191 22)">Results for "na" [🍌]</text>
+        </g>
+        <g class="diag-answer results-nan">
+          <g transform="translate(652 258) rotate(0 -1 83)">
+            <path d="M0 2 C-0 29, -1 138, -2 165 M1 0 C0 27, -4 140, -4 167" />
+            <path d="M-11 137 C-7 148, -7 162, -2 168 M-15 138 C-12 147, -10 154, -6 166" />
+            <path d="M9 138 C4 149, -2 162, -2 168 M5 139 C1 148, -2 155, -6 166" />
+          </g>
+        </g>
+        <g class="diag-answer results-nan">
+          <text x="0" y="32" transform="translate(439 186) rotate(270 181 22)">Results for "nan" [🍌]</text>
+        </g>
+        <g class="results-n">
+          <g transform="translate(802 258) rotate(0 -1 83)">
+            <path d="M0 2 C-0 29, -1 138, -2 165 M1 0 C0 27, -4 140, -4 167" />
+            <path d="M-11 137 C-7 148, -7 162, -2 168 M-15 138 C-12 147, -10 154, -6 166" />
+            <path d="M9 138 C4 149, -2 162, -2 168 M5 139 C1 148, -2 155, -6 166" />
+          </g>
+        </g>
+        <g class="results-n">
+          <text x="0" y="32" transform="translate(589 186) rotate(270 181 22)">Results for "n" [🍌/🍊/🍍]</text>
+        </g>
+      </svg>
+    </section>
+		<section>
+			<aside class="notes"></aside>
+			<h3>Let's test it using <code>fast-check</code></h3>
+			<img src="./images/github-capture.png" style="border: none; background: none; margin: 0px;" />
+		</section>
+		<section class="fullScreen hidebefore">
+      <aside class="notes"></aside>
+      <style>
+        section.hidebefore code {
+          overflow-x: hidden;
+        }
+        section.hidebefore code[data-line-numbers="1-29"] tr:nth-child(2) td.hljs-ln-code,
+        section.hidebefore code[data-line-numbers="1-29"] tr:nth-child(3) td.hljs-ln-code,
+        section.hidebefore code[data-line-numbers="1-29"] tr:nth-child(7) td.hljs-ln-code,
+        section.hidebefore code[data-line-numbers="1-29"] tr:nth-child(9) td.hljs-ln-code,
+        section.hidebefore code[data-line-numbers="1-29"] tr:nth-child(20) td.hljs-ln-code,
+        section.hidebefore code[data-line-numbers="1-29"] tr:nth-child(27) td.hljs-ln-code,
+        section.hidebefore code[data-line-numbers="1-29"] tr:nth-child(28) td.hljs-ln-code,
+        section.hidebefore code[data-line-numbers="2,3,27,28"] tr:nth-child(7) td.hljs-ln-code,
+        section.hidebefore code[data-line-numbers="2,3,27,28"] tr:nth-child(9) td.hljs-ln-code,
+        section.hidebefore code[data-line-numbers="2,3,27,28"] tr:nth-child(20) td.hljs-ln-code,
+        section.hidebefore code[data-line-numbers="7-9"] tr:nth-child(20) td.hljs-ln-code{
+          opacity: 0 !important;
+        }
+        section.hidebefore code.visible[data-line-numbers="2,3,27,28"] tr:nth-child(2) td.hljs-ln-code,
+        section.hidebefore code.visible[data-line-numbers="2,3,27,28"] tr:nth-child(3) td.hljs-ln-code,
+        section.hidebefore code.visible[data-line-numbers="2,3,27,28"] tr:nth-child(27) td.hljs-ln-code,
+        section.hidebefore code.visible[data-line-numbers="2,3,27,28"] tr:nth-child(28) td.hljs-ln-code,
+        section.hidebefore code.visible[data-line-numbers="7-9"] tr:nth-child(7) td.hljs-ln-code,
+        section.hidebefore code.visible[data-line-numbers="7-9"] tr:nth-child(9) td.hljs-ln-code,
+        section.hidebefore code.visible[data-line-numbers="20"] tr:nth-child(20) td.hljs-ln-code {
+          animation-duration: 500ms;
+          animation-name: show-code-line;
+          animation-timing-function: ease-in-out;
+        }
+        @keyframes show-code-line {
+          from {
+            transform: translateX(200%);
+          }
+          to {
+            transform: translateX(0%);
+          }
+        }
+      </style>
+			<pre><code class="hljs javascript" data-trim data-line-numbers="1-29|2,3,27,28|7-9|20|2,3,27,28,7-9,20">
+test('should autocomplete queries', async () =&gt; {
+  await fc.assert(
+    fc.asyncProperty(fc.scheduler({ act }), async (s) =&gt; {
+      // Arrange
+      const allResults = ['apple', 'banana', 'orange', 'pineapple'];
+      suggestionsFor.mockImplementation(
+        s.scheduleFunction(
+          async query =&gt; allResults.filter((r) =&gt; r.includes(query))
+        )
+      );
+      const userQuery = 'nan';
+      const expectedResults = ['banana'];
+      
+      // Act
+      render(&lt;Autocomplete /&gt;);
+      await act(async () =&gt; {
+        await userEvent.type(screen.getByRole('textbox'),
+          userQuery, { allAtOnce: false, delay: 1 });
+      });
+      await s.waitAll();
+      
+      // Assert
+      const displayedSuggestions = screen.queryAllByRole('listitem')
+          .map((el) =&gt; el.textContent);
+      expect(displayedSuggestions).toEqual(expectedResults);
+      expect(suggestionsFor).toHaveBeenCalledTimes(userQuery.length);
+    }).beforeEach(() =&gt; {/* same as beforeEach */})
+  );
+});
+			</code></pre>
+		</section>
+        <section>
+		  <aside class="notes"></aside>
+		  <h3>Test status: <b><span class="fragment" style="color:red">×</span></h3></b>
+        </section>
+		<section class="fullScreen">
+			<aside class="notes">
+        <p>
+          Tasks received in order 1, 2, 3
+          <br/>Executed in another order
+        </p>
+        <p>
+          33 % bug detection
+          <br/>"n" must came at the end
+        </p>
+      </aside>
+			<pre><code class="hljs text" data-trim data-line-numbers="1-25|3-14|11,12|8,9|5,6|5-12|18-25">
+Property failed after 3 tests
+{ seed: 1134225087, path: "2", endOnFailure: true }
+Counterexample: [Scheduler`
+
+-> [task#3] function::("nan")
+	resolved with value ["banana"]
+
+-> [task#2] function::("na")
+	resolved with value ["banana"]
+
+-> [task#1] function::("n")
+	resolved with value ["banana","orange","pineapple"]
+
+`]
+Shrunk 0 time(s)
+Got error: Error: expect(received).toEqual(expected) // deep equality
+
+- Expected
++ Received
+
+  Array [
+      "banana",
++     "orange",
++     "pineapple",
+  ]
+			</code></pre>
+		</section>
+		<section class="fullScreen" data-transition="slide-in fade-out">
+			<aside class="notes"></aside>
+			<pre><code class="hljs javascript" data-trim data-line-numbers="1-29|12">
+test('should autocomplete queries', async () =&gt; {
+  await fc.assert(
+    fc.asyncProperty(fc.scheduler({ act }), async (s) =&gt; {
+      // Arrange
+      const allResults = ['apple', 'banana', 'orange', 'pineapple'];
+      suggestionsFor.mockImplementation(
+        s.scheduleFunction(async (query) =&gt; {
+          return allResults.filter((r) =&gt; r.includes(query));
+        })
+      );
+      const userQuery = 'nan';
+      const expectedResults = ['banana'];
+      
+      // Act
+      render(&lt;Autocomplete /&gt;);
+      await act(async () =&gt; {
+        await userEvent.type(screen.getByRole('textbox'),
+          userQuery, { allAtOnce: false, delay: 1 });
+      });
+      await s.waitAll();
+      
+      // Assert
+      const displayedSuggestions = screen.queryAllByRole('listitem')
+          .map((el) =&gt; el.textContent);
+      expect(displayedSuggestions).toEqual(expectedResults);
+      expect(suggestionsFor).toHaveBeenCalledTimes(userQuery.length);
+    }).beforeEach(() =&gt; {/* same as beforeEach */})
+  );
+});
+			</code></pre>
+		</section>
+		<section class="fullScreen" data-transition="fade-in fade-out">
+			<aside class="notes"></aside>
+			<pre><code class="hljs javascript" data-trim data-line-numbers="12,13|11">
+test('should autocomplete queries', async () =&gt; {
+  await fc.assert(
+    fc.asyncProperty(fc.scheduler({ act }), async (s) =&gt; {
+      // Arrange
+      const allResults = ['apple', 'banana', 'orange', 'pineapple'];
+      suggestionsFor.mockImplementation(
+        s.scheduleFunction(async (query) =&gt; {
+          return allResults.filter((r) =&gt; r.includes(query));
+        })
+      );
+      const userQuery = 'nan';
+      const expectedResults = allResults
+          .filter((r) =&gt; r.includes(userQuery));
+      
+      // Act
+      render(&lt;Autocomplete /&gt;);
+      await act(async () =&gt; {
+        await userEvent.type(screen.getByRole('textbox'),
+          userQuery, { allAtOnce: false, delay: 1 });
+      });
+      await s.waitAll();
+      
+      // Assert
+      const displayedSuggestions = screen.queryAllByRole('listitem')
+          .map((el) =&gt; el.textContent);
+      expect(displayedSuggestions).toEqual(expectedResults);
+      expect(suggestionsFor).toHaveBeenCalledTimes(userQuery.length);
+    }).beforeEach(() =&gt; {/* same as beforeEach */})
+  );
+});
+			</code></pre>
+		</section>
+		<section class="fullScreen" data-transition="fade-in fade-out">
+			<aside class="notes"></aside>
+			<pre><code class="hljs javascript" data-trim data-line-numbers="4,5|7">
+test('should autocomplete queries', async () =&gt; {
+  await fc.assert(
+    fc.asyncProperty(fc.scheduler({ act })
+                   , fc.string(1, 10)
+                   , async (s, userQuery) =&gt; {
+      // Arrange
+      const allResults = ['apple', 'banana', 'orange', 'pineapple'];
+      suggestionsFor.mockImplementation(
+        s.scheduleFunction(async (query) =&gt; {
+          return allResults.filter((r) =&gt; r.includes(query));
+        })
+      );
+      const expectedResults = allResults
+          .filter((r) =&gt; r.includes(userQuery));
+      
+      // Act
+      render(&lt;Autocomplete /&gt;);
+      await act(async () =&gt; {
+        await userEvent.type(screen.getByRole('textbox'),
+          userQuery, { allAtOnce: false, delay: 1 });
+      });
+      await s.waitAll();
+      
+      // Assert
+      const displayedSuggestions = screen.queryAllByRole('listitem')
+          .map((el) =&gt; el.textContent);
+      expect(displayedSuggestions).toEqual(expectedResults);
+      expect(suggestionsFor).toHaveBeenCalledTimes(userQuery.length);
+    }).beforeEach(() =&gt; {/* same as beforeEach */})
+  );
+});
+			</code></pre>
+		</section>
+		<section class="fullScreen" data-transition="fade-in fade-out">
+			<aside class="notes"></aside>
+			<pre><code class="hljs javascript" data-trim data-line-numbers="4,6|18-21">
+test('should autocomplete queries', async () =&gt; {
+  await fc.assert(
+	fc.asyncProperty(fc.scheduler({ act })
+                   , fc.set(fc.string())
+                   , fc.string(1, 10)
+                   , async (s, allResults, userQuery) =&gt; {
+      // Arrange
+      suggestionsFor.mockImplementation(
+        s.scheduleFunction(async (query) =&gt; {
+          return allResults.filter((r) =&gt; r.includes(query));
+        })
+      );
+      const expectedResults = allResults
+          .filter((r) =&gt; r.includes(userQuery));
+      
+      // Act
+      render(&lt;Autocomplete /&gt;);
+      await act(async () =&gt; {
+        await userEvent.type(screen.getByRole('textbox'),
+          userQuery, { allAtOnce: false, delay: 1 });
+      });
+      await s.waitAll();
+      
+      // Assert
+      const displayedSuggestions = screen.queryAllByRole('listitem')
+          .map((el) =&gt; el.textContent);
+      expect(displayedSuggestions).toEqual(expectedResults);
+      expect(suggestionsFor).toHaveBeenCalledTimes(userQuery.length);
+    }).beforeEach(() =&gt; {/* same as beforeEach */})
+  );
+});
+			</code></pre>
+		</section>
+		<section class="fullScreen" data-transition="fade-in slide-out">
+			<aside class="notes"></aside>
+			<pre><code class="hljs javascript" data-trim data-line-numbers="18-25|1-200">
+test('should autocomplete queries', async () =&gt; {
+  await fc.assert(
+	fc.asyncProperty(fc.scheduler({ act })
+                   , fc.set(fc.string())
+                   , fc.string(1, 10)
+                   , async (s, allResults, userQuery) =&gt; {
+      // Arrange
+      suggestionsFor.mockImplementation(
+        s.scheduleFunction(async (query) =&gt; {
+          return allResults.filter((r) =&gt; r.includes(query));
+        })
+      );
+      const expectedResults = allResults
+          .filter((r) =&gt; r.includes(userQuery));
+      
+      // Act
+      render(&lt;Autocomplete /&gt;);
+      s.scheduleSequence(
+        [...userQuery].map(character =&gt; ({
+          label: `Typing "${character}"`,
+          builder: () =&gt; appendCharacterToInput(
+                                screen.getByRole('textbox'),
+                                character),
+        }))
+      );
+      await s.waitAll();
+      
+      // Assert
+      const displayedSuggestions = queryAllByRole('listitem')
+          .map((el) =&gt; el.textContent);
+      expect(displayedSuggestions).toEqual(expectedResults);
+      expect(suggestionsFor).toHaveBeenCalledTimes(userQuery.length);
+    }).beforeEach(() =&gt; {/* same as beforeEach */})
+  );
+});
+			</code></pre>
+		</section>
+		<section class="fullScreen">
+			<aside class="notes">
+        SO today...
+      </aside>
+			<pre><code class="hljs text" data-trim>
+Property failed after 2 tests
+{ seed: -1614603237, path: "1:[...]:2", endOnFailure: true }
+
+Counterexample: [
+  Scheduler`
+    -> [task#1] sequence::Typing "A" resolved
+    -> [task#3] sequence::Typing "B" resolved
+    -> [task#4] function::("AB") resolved with value []
+    -> [task#2] function::("A") resolved with value ["A"]
+  `,["A"],"AB"]
+
+Shrunk 15 time(s)
+Got error: Error: expect(received).toEqual(expected) // deep equality
+
+- Expected
++ Received
+
+- Array []
++ Array [
++   "A",
++ ]
+			</code></pre>
+    </section>
+    <section data-background="#ffffff">
+      <aside class="notes">
+        <p>Real, inherent / by-design, hard to detect, hard to reproduce (as many unexpected bugs)</p>
+
+        <p>Change ordering of events (user / network)</p>
+        
+        <p>Google fuzz on Chrome.
+        <br/>Facebook fuzz on React.</p>
+      </aside>
+      <div style="width: 100%; height: 100%; display: grid">
+        <div style="grid-row: 1; grid-column: 1; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; opacity: 0.2;">
+          <img src="./images/table.png" style="border: none; background: none; margin: 0px; box-shadow: none;" />
+        </div>
+        <div style="grid-row: 1; grid-column: 1; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+          <p class="fragment" >Race conditions are real</p>
+          <p class="fragment" >Reordering is the key</p>
+          <p class="fragment" >Randomized way can go further</p>
+        </div>
+      </div>
+    </section>
+        <section>
+          <h2>Questions?</h2>
+          <div style="margin-top: 48px;"></div>
+          <div>
+            <img
+              src="./images/logo.png"
+              style="border: none; background: none; margin: 0px; box-shadow: none;"
+            />
+            <p class="fragment custom-collapse" style="display: flex; justify-content: center; align-items: center; font-size: 0.8em; opacity: 0.9; margin-top: 0;">
+              <span style="margin-right: 8px;">Used by </span>
+              <img src="./images/jest.svg" style="height: 20px; border: none; background: none; margin: 0px;" />
+              <span style="margin: 0 8px;"> and </span>
+              <img src="./images/jasmine.svg" style="height: 20px; border: none; background: none; margin: 0px;" />
+            </p>
+            <p class="fragment custom-collapse" style="display: flex; justify-content: center; align-items: center; font-size: 0.8em; opacity: 0.9; margin-top: 0;">
+              <span style="margin-right: 8px;">Found bugs in </span>
+              <img src="./images/jest.svg" style="height: 20px; border: none; background: none; margin: 0px;" />
+              <span style="margin: 0 8px;">, </span>
+              <img src="./images/jasmine.svg" style="height: 20px; border: none; background: none; margin: 0px;" />
+              <span style="margin: 0 8px;">, </span>
+              <img src="./images/react.svg" style="height: 20px; border: none; background: none; margin: 0px;" />
+              <span style="margin: 0 8px;">…</span>
+            </p>
+          </div>
+          <div style="margin-top: 48px;"></div>
+          <div style="color: #ffffff; vertical-align: middle;">
+            <img src="./images/github-white.png" style="height: 32px; border: none; background: none; margin: 0px;" />
+            dubzzz
+          </div>
+          <div style="color: #4293db; vertical-align: middle;">
+            <img src="./images/Mastodon_Logotype_(Simple).svg.png" style="height: 32px; border: none; background: none; margin: 0px;" />
+            ndubien
+          </div>
+        </section>
+      </div>
+    </div>
+    <div
+      style="
+        display: grid;
+        align-items: center;
+        column-gap: 0.5rem;
+        row-gap: 0.2rem;
+        position: fixed;
+        z-index: 9999;
+        left: 1em;
+        bottom: 1em;
+        color: #ffffff;
+        font-size: 2rem;
+        font-family: 'Source Sans Pro', Helvetica, sans-serif;
+      "
+    >
+      <img src="./images/github-white.png" class="footer-github" style="justify-self: center; grid-row: 1; grid-column: 1; height: 2rem; border: none; background: none; margin: 0px; text-shadow: #0007 1px 1px 1px" />
+      <div style="grid-row: 1; grid-column: 2; color: #ffffff; vertical-align: middle; text-shadow: #0007 1px 1px 1px">
+        dubzzz
+      </div>
+      <img src="./images/Mastodon_Logotype_(Simple).svg.png" style="justify-self: center; grid-row: 2; grid-column: 1; height: 2rem; border: none; background: none; margin: 0px;" />
+      <div style="grid-row: 2; grid-column: 2; color: #4293db; vertical-align: middle;">
+        ndubien
+      </div>
+      <img src="./images/npm.png" style="justify-self: center; grid-row: 3; grid-column: 1; width: 2rem; border: none; background: none; margin: 0px;" />
+      <div style="grid-row: 3; grid-column: 2; color: #cb3837; vertical-align: middle;">
+        fast-check
+      </div>
+    </div>
+
+    <script src="js/reveal.js"></script>
+
+    <script>
+      // More info about config & dependencies:
+      // - https://github.com/hakimel/reveal.js#configuration
+      // - https://github.com/hakimel/reveal.js#dependencies
+      Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        fragmentInURL: true,
+        totalTime: 25 * 60,
+        dependencies: [
+          { src: 'plugin/markdown/marked.js' },
+          { src: 'plugin/markdown/markdown.js' },
+          { src: 'plugin/highlight/highlight.js' },
+          { src: 'plugin/notes/notes.js', async: true },
+        ],
+      });
+      Reveal.addEventListener('dog-video-show', () => {
+        const dogVideo = document.getElementById('dog-video');
+        dogVideo.currentTime = 0;
+        dogVideo.play();
+      })
+    </script>
+  </body>
+</html>
