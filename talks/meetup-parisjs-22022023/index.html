@@ -1407,7 +1407,7 @@ test('should autocomplete queries', async () =&gt; {
 test('should autocomplete queries', async () =&gt; {
   await fc.assert(
     fc.asyncProperty(fc.scheduler({ act })
-                   , fc.string(1, 10)
+                   , fc.string({ minLength: 1 })
                    , async (s, userQuery) =&gt; {
       // Arrange
       const allResults = ['apple', 'banana', 'orange', 'pineapple'];
@@ -1443,8 +1443,8 @@ test('should autocomplete queries', async () =&gt; {
 test('should autocomplete queries', async () =&gt; {
   await fc.assert(
 	fc.asyncProperty(fc.scheduler({ act })
-                   , fc.set(fc.string())
-                   , fc.string(1, 10)
+                   , fc.uniqueArray(fc.string())
+                   , fc.string({ minLength: 1 })
                    , async (s, allResults, userQuery) =&gt; {
       // Arrange
       suggestionsFor.mockImplementation(
@@ -1479,8 +1479,8 @@ test('should autocomplete queries', async () =&gt; {
 test('should autocomplete queries', async () =&gt; {
   await fc.assert(
 	fc.asyncProperty(fc.scheduler({ act })
-                   , fc.set(fc.string())
-                   , fc.string(1, 10)
+                   , fc.uniqueArray(fc.string())
+                   , fc.string({ minLength: 1 })
                    , async (s, allResults, userQuery) =&gt; {
       // Arrange
       suggestionsFor.mockImplementation(
