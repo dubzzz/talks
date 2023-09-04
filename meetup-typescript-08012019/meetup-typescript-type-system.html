@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Type System</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../shared/reveal.min.css">
+    <link rel="stylesheet" href="../shared/black.css">
+    <link rel="stylesheet" href="../shared/zenburn.css" id="highlight-css">
+    <style>
+.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+    font-weight: normal;
+    text-transform: none; 
+}
+
+.reveal h1 + .more, .reveal h2 + .more, .reveal h3 + .more, .reveal h4 + .more, .reveal h5 + .more, .reveal h6 + .more {
+    margin-top: -20px;
+}
+
+.reveal .more {
+    color: #777872;
+}
+
+.reveal a, h3 {
+    color: rgb(249, 38, 114) !important;
+    text-decoration: none;
+}
+.reveal a:hover, h2 {
+    color: rgb(255, 201, 14) !important;
+    text-decoration: none;
+}
+
+.reveal blockquote, .reveal p.quote {
+    margin: 0;
+    text-align: justify;
+    font-style: italic;
+    margin-right: 1em;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-left: 1em;
+    font-size: 0.9em;
+    border-left: 1px navajowhite solid;
+}
+.reveal blockquote::before, .reveal p.quote::before {
+    content: '\201C';
+    font-size: 2em;
+    float: left;
+    color: white;
+    margin-left: -1em;
+}
+
+.reveal p.quote-right {
+    margin: 0;
+    text-align: right;
+    font-style: italic;
+    margin-left: 1em;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-right: 1em;
+    font-size: 0.9em;
+    border-right: 1px navajowhite solid;
+}
+.reveal p.quote-right::after {
+    content: '\201C';
+    font-size: 2em;
+    float: right;
+    color: white;
+    margin-right: -1em;
+}
+
+em {
+    color: rgb(255, 201, 14);
+    font-style: normal;
+    font-weight: normal;
+}
+
+li {
+    color: #d3d3d3;
+}
+
+li.active, .left-menu > li:last-child, .left-menu > li:last-child > ul > li:last-child {
+    color: rgb(255, 201, 14);
+}
+
+.reveal ol {
+    counter-reset: step-counter;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.reveal ol li {
+    counter-increment: step-counter;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.reveal ol li:before {
+    content: counter(step-counter, upper-roman);
+    color: rgb(255, 201, 14);
+    float: left;
+}
+
+.reveal .vsmallnote {
+    font-style: italic;
+    font-size: 0.5em;
+    color: #777872;
+}
+
+.flex {
+    display: flex;
+    flex-flow: row;
+}
+
+.no-margin {
+    margin: none !important;
+}
+
+.left-column, .right-column {
+    flex: 50%;
+    text-align: left;
+}
+
+.left-padded {
+    padding-left: 1em !important;
+}
+
+        </style>
+  </head>
+  <body>
+    <div class="reveal">
+        <div class="slides">
+            <section>
+                <section>
+                    <h1>Type System<h1>
+                    <h2>Let's have fun with &#x201C;Type System&#x201D;</h2>
+                </section>
+                <section>
+                	<div>
+                		<img src="./images/me.jpg" style="border-radius:50%;height:128px;" />
+                	</div>
+                	<div>
+	                	<h2>Nicolas DUBIEN</h2>
+	                	<div style="margin-top:48px;"></div>
+	                	<div style="border-bottom-style: dashed;border-bottom-color: #ffffff;border-bottom-width: 1px;">
+	                		<div style="float:left;">2014 - 2017</div>
+	                		<div style="float:right;">C++ at Murex</div>
+	                		&nbsp;
+	                	</div>
+	                	<div>
+	                		<div style="float:left;">2017 -     </div>
+	                		<div style="float:right;">TypeScript and C# at Criteo</div>
+	                		&nbsp;
+	                	</div>
+	                	<div style="margin-top:48px;"></div>
+	                	<div style="color:#ffffff;vertical-align:middle;">
+	                		<img src="./images/github-white.png" style="height:32px;border:none;background:none;margin:0px;">
+	                		dubzzz
+	                	</div>
+	                	<div style="color:#1da1f2;vertical-align:middle;">
+	                		<img src="./images/twitter.png" style="height:32px;border:none;background:none;margin:0px;">
+	                		ndubien
+	                	</div>
+                	</div>
+                </section>
+                <section style="display:flex;flex-direction:row;justify-content:space-evenly;">
+                	<div style="display:inline-block;margin:10px;">
+                		<img src="./images/map.png" style="border-radius:50%;height:128px;" />
+                		<h3>Mapped</h3>
+                		<p class="vsmallnote">Since 2.1</p>
+                	</div>
+                	<div style="display:inline-block;margin:10px;">
+                		<img src="./images/conditional.png" style="border-radius:50%;height:128px;" />
+                		<h3>Conditional</h3>
+                		<p class="vsmallnote">Since 2.8</p>
+                	</div>
+                	<div style="display:inline-block;margin:10px;">
+                		<img src="./images/inferred.jpg" style="border-radius:50%;height:128px;" />
+                		<h3>Inferred</h3>
+                		<p class="vsmallnote">Since 2.8</p>
+                	</div>
+                </section>
+            </section>
+            <section>
+            	<section>
+            		<div style="color:#ffffff;vertical-align:middle;">
+                		<img src="./images/github-white.png" style="height:32px;border:none;background:none;margin:0px;">
+                		dubzzz/fast-check
+                	</div>
+                	<img src="./images/01-1.png" />
+            	</section>
+            	<section>
+            		<div style="color:#ffffff;vertical-align:middle;">
+                		<img src="./images/github-white.png" style="height:32px;border:none;background:none;margin:0px;">
+                		dubzzz/fast-check
+                	</div>
+                	<img src="./images/01-2.png" />
+            	</section>
+            	<section>
+            		<p>Implementing <code class="hljs typescript" data-trim>record</code> for our User structure only</p>
+                	<img src="./images/02.png" />
+            	</section>
+            	<section>
+            		<p>A bit more <code class="hljs typescript" data-trim>generic</code></p>
+                	<img src="./images/03.png" />
+            	</section>
+            </section>
+            <section>
+                <section>
+                	<div>
+                		<img src="./images/map.png" style="border-radius:50%;height:128px;" />
+                		<h3>Mapped Types</h3>
+                		<p class="vsmallnote">Since TypeScript 2.1</p>
+                	</div>
+                </section>
+                <section>
+                    <p>Like <code class="hljs typescript" data-trim>map</code> but for types</p>
+                </section>
+                <section>
+                    <p>Implementing <code class="hljs typescript" data-trim>promisify</code></p>
+                    <img src="./images/04.png" />
+                </section>
+                <section>
+                	<p><code class="hljs typescript" data-trim>promisify</code></p>
+                	<img src="./images/05.png" />
+                	<pre class="fragment" data-fragment-index="1" style="text-align:center;">{ <span class="fragment" data-fragment-index="2">[</span><span class="fragment" data-fragment-index="3">K</span><span class="fragment" data-fragment-index="4"> in keyof T</span><span class="fragment" data-fragment-index="2">]:</span> <span class="fragment" data-fragment-index="3">T[K]</span> }</pre>
+                </section>
+                <section>
+                    <p>Moving a step forward with <code class="hljs typescript" data-trim>record</code></p>
+                    <img src="./images/06.png" />
+                </section>
+            </section>
+            <section>
+                <section>
+                	<div>
+                		<img src="./images/conditional.png" style="border-radius:50%;height:128px;" />
+                		<h3>Conditional Types</h3>
+                		<p class="vsmallnote">Since TypeScript 2.8</p>
+                	</div>
+                </section>
+                <section>
+                    <p>Define <code class="hljs typescript" data-trim>types</code> depending on characteristics of others</p>
+                </section>
+                <section>
+                	<p>Implementing <code class="hljs typescript" data-trim>StringOrNever</code></p>
+					<img src="./images/07-1.png" />
+                </section>
+                <section>
+                	<p><code class="hljs typescript" data-trim>StringOrNever</code></p>
+					<img src="./images/07-2.png" />
+                </section>
+                <section>
+                    <p>Moving a step forward with <code class="hljs typescript" data-trim>record</code></p>
+                    <img src="./images/08.png" />
+                </section>
+            </section>
+            <section>
+                <section>
+                	<div>
+                		<img src="./images/inferred.jpg" style="border-radius:50%;height:128px;" />
+                		<h3>Inferred Types</h3>
+                		<p class="vsmallnote">Since TypeScript 2.8</p>
+                	</div>
+                </section>
+                <section>
+                    <p>Ask the type system to infer a <code class="hljs typescript" data-trim>type</code> for us</p>
+                </section>
+                <section>
+                    <p>Implementing <code class="hljs typescript" data-trim>ReturnType</code></p>
+                    <img src="./images/09-1.png" />
+                </section>
+                <section>
+                	<p><code class="hljs typescript" data-trim>ReturnType</code></p>
+                	<img src="./images/09-2.png" />
+                </section>
+                <section>
+                    <p>Moving a step forward with <code class="hljs typescript" data-trim>record</code></p>
+                    <img src="./images/10.png" />
+                </section>
+            </section>
+            <section>
+            	<section>
+            		<img src="./images/11.png" />
+            	</section>
+            </section>
+            <section>
+                <section>
+                	<div>
+                		<img src="./images/mapped-tuple.png" style="border-radius:50%;height:128px;" />
+                		<h3>Mapped tuples</h3>
+                		<p class="vsmallnote">Since TypeScript 3.1</p>
+                	</div>
+                </section>
+                <section>
+                    <p>Mapped types for <code class="hljs typescript" data-trim>tuples</code></p>
+                </section>
+                <section>
+                    <p>Implementing <code class="hljs typescript" data-trim>tuple</code></p>
+                    <img src="./images/12.png" />
+                </section>
+                <section>
+                    <p>Dummy implementation of <code class="hljs typescript" data-trim>tuple</code></p>
+                    <img src="./images/13.png" />
+                </section>
+                <section>
+                	<p><code class="hljs typescript" data-trim>tuple</code></p>
+                	<img src="./images/14.png" />
+                </section>
+            </section>
+            <section>
+            	<section>
+            		<h2>Questions?</h2>
+                	<div style="margin-top:48px;"></div>
+                	<div style="color:#ffffff;vertical-align:middle;">
+                		<img src="./images/github-white.png" style="height:32px;border:none;background:none;margin:0px;">
+                		dubzzz
+                	</div>
+                	<div style="color:#1da1f2;vertical-align:middle;">
+                		<img src="./images/twitter.png" style="height:32px;border:none;background:none;margin:0px;">
+                		ndubien
+                	</div>
+                	<div style="margin-top:48px;"></div>
+                	<div style="color:#ffffff;vertical-align:middle;">
+                		<img src="./images/qr.png" style="border:none;background:none;margin:0px;">
+                	</div>
+            	</section>
+            </section>
+        </div>
+    </div>
+    <div style="position:fixed;z-index:9999;left:1em;bottom:1em;color:#ffffff;font-size:1.5em;">
+    	<div style="color:#ffffff;vertical-align:middle;">
+    		<img src="./images/github-white.png" style="height:16px;border:none;background:none;margin:0px;">
+    		dubzzz
+    	</div>
+    	<div style="color:#1da1f2;vertical-align:middle;">
+    		<img src="./images/twitter.png" style="height:16px;border:none;background:none;margin:0px;">
+    		ndubien
+    	</div>
+    </div>
+    <script src="../shared/head.min.js"></script>
+    <script src="../shared/reveal.min.js"></script>
+    <script>
+    Reveal.initialize({
+    // Display controls in the bottom right corner
+    controls: true,
+
+    // Display a presentation progress bar
+    progress: true,
+
+    // Set default timing of 2 minutes per slide
+    defaultTiming: 120,
+
+    // Display the page number of the current slide
+    slideNumber: false,
+
+    // Push each slide change to the browser history
+    history: false,
+
+    // Enable keyboard shortcuts for navigation
+    keyboard: true,
+
+    // Enable the slide overview mode
+    overview: true,
+
+    // Vertical centering of slides
+    center: true,
+
+    // Enables touch navigation on devices with touch input
+    touch: true,
+
+    // Loop the presentation
+    loop: false,
+
+    // Change the presentation direction to be RTL
+    rtl: false,
+
+    // Randomizes the order of slides each time the presentation loads
+    shuffle: false,
+
+    // Turns fragments on and off globally
+    fragments: true,
+
+    // Flags if the presentation is running in an embedded mode,
+    // i.e. contained within a limited portion of the screen
+    embedded: false,
+
+    // Flags if we should show a help overlay when the questionmark
+    // key is pressed
+    help: true,
+
+    // Flags if speaker notes should be visible to all viewers
+    showNotes: false,
+
+    // Global override for autolaying embedded media (video/audio/iframe)
+    // - null: Media will only autoplay if data-autoplay is present
+    // - true: All media will autoplay, regardless of individual setting
+    // - false: No media will autoplay, regardless of individual setting
+    autoPlayMedia: null,
+
+    // Number of milliseconds between automatically proceeding to the
+    // next slide, disabled when set to 0, this value can be overwritten
+    // by using a data-autoslide attribute on your slides
+    autoSlide: 0,
+
+    // Stop auto-sliding after user input
+    autoSlideStoppable: true,
+
+    // Use this method for navigation when auto-sliding
+    autoSlideMethod: Reveal.navigateNext,
+
+    // Enable slide navigation via mouse wheel
+    mouseWheel: false,
+
+    // Hides the address bar on mobile devices
+    hideAddressBar: true,
+
+    // Opens links in an iframe preview overlay
+    previewLinks: false,
+
+    // Transition style
+    transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+    // Transition speed
+    transitionSpeed: 'default', // default/fast/slow
+
+    // Transition style for full page slide backgrounds
+    backgroundTransition: 'fade', // none/fade/slide/convex/concave/zoom
+
+    // Number of slides away from the current that are visible
+    viewDistance: 3,
+
+    // Parallax background image
+    parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+    // Parallax background size
+    parallaxBackgroundSize: '', // CSS syntax, e.g. "2100px 900px"
+
+    // Number of pixels to move the parallax background per slide
+    // - Calculated automatically unless specified
+    // - Set to 0 to disable movement along an axis
+    parallaxBackgroundHorizontal: null,
+    parallaxBackgroundVertical: null,
+
+    // The display mode that will be used to show slides
+    display: 'block',
+
+    // Add timer coming from project: https://github.com/tkrkt/reveal.js-elapsed-time-bar
+    allottedTime: 15 * 60 * 1000,
+    keyboard: { 82 /*r*/: () => { ElapsedTimeBar.reset(); } },
+
+    // Optional modules
+    dependencies: [
+        { src: '../shared/elapsed-time-bar.js' },
+        { src: '../shared/classList.js', condition: function() { return !document.body.classList; } },
+        { src: '../shared/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        { src: '../shared/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        { src: '../shared/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+        { src: '../shared/zoom.js', async: true },
+    ]
+});
+// Taken from https://developer.mozilla.org/en-US/docs/Web/Events/wheel
+// creates a global "addWheelListener" method
+// example: addWheelListener( elem, function( e ) { console.log( e.deltaY ); e.preventDefault(); } );
+(function(window,document) {
+    
+    var prefix = "", _addEventListener, support;
+
+    // detect event model
+    if ( window.addEventListener ) {
+        _addEventListener = "addEventListener";
+    } else {
+        _addEventListener = "attachEvent";
+        prefix = "on";
+    }
+
+    // detect available wheel event
+    support = "onwheel" in document.createElement("div") ? "wheel" : // Modern browsers support "wheel"
+                document.onmousewheel !== undefined ? "mousewheel" : // Webkit and IE support at least "mousewheel"
+                "DOMMouseScroll"; // let's assume that remaining browsers are older Firefox
+
+    window.addWheelListener = function( elem, callback, useCapture ) {
+        _addWheelListener( elem, support, callback, useCapture );
+
+        // handle MozMousePixelScroll in older Firefox
+        if( support == "DOMMouseScroll" ) {
+            _addWheelListener( elem, "MozMousePixelScroll", callback, useCapture );
+        }
+    };
+
+    function _addWheelListener( elem, eventName, callback, useCapture ) {
+        elem[ _addEventListener ]( prefix + eventName, support == "wheel" ? callback : function( originalEvent ) {
+            !originalEvent && ( originalEvent = window.event );
+
+            // create a normalized event object
+            var event = {
+                // keep a ref to the original event object
+                originalEvent: originalEvent,
+                target: originalEvent.target || originalEvent.srcElement,
+                type: "wheel",
+                deltaMode: originalEvent.type == "MozMousePixelScroll" ? 0 : 1,
+                deltaX: 0,
+                deltaY: 0,
+                deltaZ: 0,
+                preventDefault: function() {
+                    originalEvent.preventDefault ?
+                        originalEvent.preventDefault() :
+                        originalEvent.returnValue = false;
+                }
+            };
+            
+            // calculate deltaY (and deltaX) according to the event
+            if ( support == "mousewheel" ) {
+                event.deltaY = - 1/40 * originalEvent.wheelDelta;
+                // Webkit also support wheelDeltaX
+                originalEvent.wheelDeltaX && ( event.deltaX = - 1/40 * originalEvent.wheelDeltaX );
+            } else {
+                event.deltaY = originalEvent.deltaY || originalEvent.detail;
+            }
+
+            // it's time to fire the callback
+            return callback( event );
+
+        }, useCapture || false );
+    }
+
+})(window,document);
+
+window.addWheelListener(document, function(event) {
+    console.log(JSON.stringify(event.deltaY));
+    if (event.deltaY > 0) {
+        document.dispatchEvent(new KeyboardEvent('keydown', {'keyCode': 32,'which': 32}));
+    }
+    else if (event.deltaY < 0) {
+        document.dispatchEvent(new KeyboardEvent('keydown', {'keyCode': 33,'which': 33}));
+    }
+});
+    </script>
+  </body>
+</html>

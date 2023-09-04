@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>React Fiber</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../shared/reveal.min.css" />
+    <link rel="stylesheet" href="../shared/black.css" />
+    <link rel="stylesheet" href="../shared/zenburn.css" id="highlight-css" />
+    <style>
+      .reveal h1,
+      .reveal h2,
+      .reveal h3,
+      .reveal h4,
+      .reveal h5,
+      .reveal h6 {
+        font-weight: normal;
+        text-transform: none;
+      }
+
+      .reveal h1 + .more,
+      .reveal h2 + .more,
+      .reveal h3 + .more,
+      .reveal h4 + .more,
+      .reveal h5 + .more,
+      .reveal h6 + .more {
+        margin-top: -20px;
+      }
+
+      .reveal .more {
+        color: #777872;
+      }
+
+      .reveal a,
+      h3 {
+        color: #00ccff !important;
+        text-decoration: none;
+      }
+      .reveal a:hover,
+      h2 {
+        color: #008bff !important;
+        text-decoration: none;
+      }
+
+      .reveal blockquote,
+      .reveal p.quote {
+        margin: 0;
+        text-align: justify;
+        font-style: italic;
+        margin-right: 1em;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        padding-left: 1em;
+        font-size: 0.9em;
+        border-left: 1px navajowhite solid;
+      }
+      .reveal blockquote::before,
+      .reveal p.quote::before {
+        content: "\201C";
+        font-size: 2em;
+        float: left;
+        color: white;
+        margin-left: -1em;
+      }
+
+      .reveal p.quote-right {
+        margin: 0;
+        text-align: right;
+        font-style: italic;
+        margin-left: 1em;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        padding-right: 1em;
+        font-size: 0.9em;
+        border-right: 1px navajowhite solid;
+      }
+      .reveal p.quote-right::after {
+        content: "\201C";
+        font-size: 2em;
+        float: right;
+        color: white;
+        margin-right: -1em;
+      }
+
+      em {
+        color: #00ccff;
+        font-style: normal;
+        font-weight: normal;
+      }
+
+      li {
+        color: #d3d3d3;
+      }
+
+      li.active,
+      .left-menu > li:last-child,
+      .left-menu > li:last-child > ul > li:last-child {
+        color: #f37723;
+      }
+
+      .reveal ol {
+        counter-reset: step-counter;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        text-align: center;
+      }
+
+      .reveal ol li {
+        counter-increment: step-counter;
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+
+      .reveal ol li:before {
+        content: counter(step-counter, upper-roman);
+        color: #f37723;
+        float: left;
+      }
+
+      .reveal .vsmallnote {
+        font-style: italic;
+        font-size: 0.5em;
+        color: #777872;
+      }
+
+      .flex {
+        display: flex;
+        flex-flow: row;
+      }
+
+      .no-margin {
+        margin: none !important;
+      }
+
+      .left-column,
+      .right-column {
+        flex: 50%;
+        text-align: left;
+      }
+
+      .left-padded {
+        padding-left: 1em !important;
+      }
+
+      body {
+        background: #000000;
+        background-color: #000000;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- style="cursor:none;" -->
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <h1>React Fiber</h1>
+          <h2>Reconciliation explained</h2>
+          <h3>Nicolas DUBIEN</h3>
+          <p class="vsmallnote">Meetup React.js and React Native</p>
+        </section>
+        <section>
+          <img src="images/app.png" />
+        </section>
+        <section>
+          <img src="images/hello-world-jsx.png" />
+        </section>
+        <section>
+          <img src="images/hello-world-nojsx.png" />
+        </section>
+        <section>
+          <img src="images/create-element-signature.png" />
+        </section>
+        <section>
+          <img src="images/hello-jsx.png" />
+          <br />
+          ⏬
+          <br />
+          <img src="images/hello-nojsx.png" />
+        </section>
+        <section>
+          <img src="images/input-jsx.png" />
+          <br />
+          ⏬
+          <br />
+          <img src="images/input-nojsx.png" />
+        </section>
+        <section>
+          <img src="images/hello-world-vdom.png" />
+        </section>
+        <section>
+          <div>
+            <img
+              src="./images/me.jpg"
+              style="border-radius:50%;height:128px;"
+            />
+          </div>
+          <div>
+            <h2>Nicolas DUBIEN</h2>
+            <div style="margin-top:48px;"></div>
+            <div>
+              <img
+                src="./images/criteo-logo.png"
+                style="height:64px;border:none;background:none;margin:0px;box-shadow:none;"
+              />
+            </div>
+            <div style="margin-top:48px;"></div>
+            <div style="color:#ffffff;vertical-align:middle;">
+              <img
+                src="./images/github-white.png"
+                style="height:32px;border:none;background:none;margin:0px;"
+              />
+              dubzzz
+            </div>
+            <div style="color:#1da1f2;vertical-align:middle;">
+              <img
+                src="./images/twitter.png"
+                style="height:32px;border:none;background:none;margin:0px;"
+              />
+              ndubien
+            </div>
+          </div>
+        </section>
+        <section>
+          <h2>Let's use our virtual DOM</h2>
+        </section>
+        <section data-transition="slide-in fade-out">
+          <h2>Virtual DOM in action</h2>
+          <img src="images/state-impact-vdom-1.png" />
+        </section>
+        <section data-transition="fade-in slide-out">
+          <h2>Virtual DOM in action</h2>
+          <img src="images/state-impact-vdom-2.png" />
+        </section>
+        <section>
+          <h2>3 steps rendering</h2>
+        </section>
+        <section>
+          <h3>Step #1: render</h3>
+          <p>
+            Construct an updated version of the Virtual DOM
+          </p>
+          <p>
+            <img src="images/step1.png" />
+          </p>
+        </section>
+        <section>
+          <h3>
+            Step #2: reconciliation
+          </h3>
+          <p>
+            Check for virtual DOM changes
+          </p>
+          <p>
+            <img src="images/step2.png" />
+          </p>
+        </section>
+        <section>
+          <h3>Step #3: commit</h3>
+          <p>Batch updates</p>
+          <p><em>DOM updates for react-dom renderer</em></p>
+          <p>
+            <img src="images/app-empty.png" style="max-width: 30%" />
+            <img src="images/app.png" style="max-width: 30%" />
+          </p>
+        </section>
+        <section>
+          <h2>3 steps rendering</h2>
+          <h3>Render ▶️ Reconciliation ▶️ Commit</h3>
+        </section>
+        <section>
+          <h2>What happen<em>ed</em> on state update?</h2>
+          <h3>Before Fiber: Stack Reconciler - <em>React &lt;16</em></h3>
+        </section>
+        <section>
+          <p>Starting from the <em>root</em>, React</p>
+          <ul>
+            <li class="fragment">calls <em>render</em> method</li>
+            <li class="fragment">
+              compares its output with previous virtual DOM
+            </li>
+            <li class="fragment">updates the real <em>DOM</em> if needed</li>
+            <li class="fragment">moves to children</li>
+          </ul>
+          <p class="fragment">All of this in a synchronous fashion</p>
+        </section>
+        <section>
+          <h2>🤔</h2>
+          <h3 class="fragment">Synchronous?</h3>
+          <h3 class="fragment">Block the main thread?</h3>
+        </section>
+        <section>
+          <h2>React Fiber to the rescue 🦸‍♀️</h2>
+          <h3><em>React ≥16</em></h3>
+        </section>
+        <section>
+          <h2>Why?</h2>
+          <h3 class="fragment">Smooth updates</h3>
+          <h3 class="fragment">User inputs and async results are not equal</h3>
+        </section>
+        <section>
+          <h2>How?</h2>
+          <h3 class="fragment">Split rendering process</h3>
+          <h3 class="fragment">Make rendering process interruptible</h3>
+          <h3 class="fragment">
+            Make the browser call us when it has some spare time
+          </h3>
+          <h3 class="fragment">
+            Plug updates in <code>requestIdleCallback</code> for low priority
+            updates
+          </h3>
+        </section>
+        <section>
+          <p class="quote">
+            The <code>window.requestIdleCallback()</code> method queues a
+            function to be called during a browser's idle periods. This enables
+            developers to perform background and low priority work on the main
+            event loop, without impacting latency-critical events such as
+            animation and input response. Functions are generally called in
+            first-in-first-out order; however, callbacks which have a timeout
+            specified may be called out-of-order if necessary in order to run
+            them before the timeout elapses.
+          </p>
+          <p class="quote">
+            The callback function is passed an IdleDeadline object describing
+            the amount of time available
+          </p>
+          <p class="vsmallnote">Source: developer.mozilla.org</p>
+        </section>
+        <section>
+          <h2>3 steps rendering</h2>
+          <h3>Render ▶️ Reconciliation ▶️ Commit</h3>
+        </section>
+        <section>
+          <h2>Problem?</h2>
+          <h3 class="fragment">Iteration is recursive</h3>
+          <h3 class="fragment">Not all tasks can be interrupted</h3>
+        </section>
+        <section>
+          <h2>Solution?</h2>
+          <h3 class="fragment">
+            Render ▶️ Reconciliation -
+            <em>sync or async</em>
+          </h3>
+          <h3 class="fragment">Commit - <em>sync</em></h3>
+        </section>
+        <section>
+          <h2>Let's do it</h2>
+        </section>
+        <section data-transition="slide-in fade-out">
+          <img src="images/rec-1.png" />
+        </section>
+        <section data-transition="fade-in fade-out">
+          <img src="images/rec-2.png" />
+        </section>
+        <section data-transition="fade-in fade-out">
+          <img src="images/rec-3.png" />
+        </section>
+        <section data-transition="fade-in fade-out">
+          <img src="images/rec-4.png" />
+        </section>
+        <section data-transition="fade-in fade-out">
+          <img src="images/rec-5.png" />
+        </section>
+        <section data-transition="fade-in fade-out">
+          <img src="images/rec-6.png" />
+        </section>
+        <section data-transition="fade-in fade-out">
+          <img src="images/rec-7.png" />
+        </section>
+        <section data-transition="fade-in fade-out">
+          <img src="images/rec-8.png" />
+        </section>
+        <section data-transition="fade-in slide-out">
+          <img src="images/rec-9.png" />
+        </section>
+        <section>
+          <h2>Fiber</h2>
+        </section>
+        <section data-transition="slide-in fade-out">
+          <img src="images/rec-9.png" />
+        </section>
+        <section data-transition="fade-in fade-out">
+          <img src="images/rec-10.png" />
+        </section>
+        <section data-transition="fade-in slide-out">
+          <img src="images/rec-11.png" />
+        </section>
+        <section>
+          <h2>Fiber in a nutshell</h2>
+          <h3>New way to explore components during re-renders</h3>
+          <h3>Interruptible</h3>
+        </section>
+        <section>
+          <h2>Code</h2>
+        </section>
+        <section>
+          <img src="images/work-loop.png" />
+        </section>
+        <section>
+          <img src="images/perform-unit.png" />
+        </section>
+        <section>
+          <img src="images/complete-unit.png" />
+        </section>
+        <section>
+          <h2>Impact on my app?</h2>
+        </section>
+        <section>
+          <img src="images/work-loop.png" />
+        </section>
+        <section>
+          <img src="images/sync-or-not.png" />
+        </section>
+        <section>
+          <h3>⚠️ Purely technical refactoring</h3>
+          <h3>👷 Some lifecycle methods have to disappear</h3>
+          <h3>🔧 Unlocks lots of potential features</h3>
+        </section>
+        <section>
+          <h2>Lifecycle methods called during <em>render</em> phase</h2>
+          <ul>
+            <li>[UNSAFE_]componentWillMount (deprecated)</li>
+            <li>[UNSAFE_]componentWillReceiveProps (deprecated)</li>
+            <li>getDerivedStateFromProps</li>
+            <li>shouldComponentUpdate</li>
+            <li>[UNSAFE_]componentWillUpdate (deprecated)</li>
+            <li>render</li>
+          </ul>
+          <p><em>render</em> phase doesn't produce side-effects</p>
+        </section>
+        <section>
+          <h2>Lifecycle methods called during <em>commit</em> phase</h2>
+          <ul>
+            <li>getSnapshotBeforeUpdate</li>
+            <li>componentDidMount</li>
+            <li>componentDidUpdate</li>
+            <li>componentWillUnmount</li>
+          </ul>
+        </section>
+        <section>
+          <h2>Future steps</h2>
+          <h3 class="fragment">Concurrent Mode</h3>
+          <h3 class="fragment">Parallel (Worker)</h3>
+        </section>
+        <section>
+          <h2>Sources</h2>
+          <p>
+            <a
+              href="https://github.com/acdlite/react-fiber-architecture/blob/master/README.md"
+              >React Fiber Architecture</a
+            >
+            <br /><a
+              href="https://medium.com/@NettaB/hacking-the-mainframe-digging-into-react-fiber-with-nothing-but-the-debugger-c7c50ab0e3e7"
+              >Hacking the mainframe</a
+            >
+            <br /><a
+              href="https://medium.com/react-in-depth/inside-fiber-in-depth-overview-of-the-new-reconciliation-algorithm-in-react-e1c04700ef6e"
+              >Inside Fiber: in-depth overview</a
+            >
+            <br /><a
+              href="https://medium.com/react-in-depth/in-depth-explanation-of-state-and-props-update-in-react-51ab94563311"
+              >In-depth explanation of state and props update in React</a
+            >
+            <br /><a
+              href="https://medium.com/react-in-depth/the-how-and-why-on-reacts-usage-of-linked-list-in-fiber-67f1014d0eb7"
+              >The how and why on React’s usage of linked list in Fiber to walk
+              the component’s tree</a
+            >
+            <br /><a href="https://reactjs.org/docs/reconciliation.html"
+              >Reconciliation - React</a
+            >
+            <br /><a
+              href="https://www.freecodecamp.org/news/react-under-the-hood/"
+              >React under the hood</a
+            >
+            <br /><a href="https://www.youtube.com/watch?v=ZCuYPiUIONs"
+              >A cartoon intro to Fiber</a
+            >
+          </p>
+        </section>
+        <section>
+          <h2>Questions?</h2>
+          <div style="margin-top:48px;"></div>
+          <div>
+            <div style="color:#ffffff;vertical-align:middle;text-align:center">
+              <img
+                src="./images/react.png"
+                style="height:172px;border:none;background:none;margin:0px;box-shadow:none;"
+              />
+            </div>
+          </div>
+          <div style="margin-top:48px;"></div>
+          <div style="display: flex;">
+            <div style="flex: 50%;">
+              <img
+                src="images/frame.png"
+                style="height:172px;border:none;background:none;margin:0px;box-shadow:none;"
+              />
+              <div style="color:#ffffff;vertical-align:middle;">
+                <img
+                  src="./images/github-white.png"
+                  style="height:32px;border:none;background:none;margin:0px;"
+                />
+                dubzzz
+              </div>
+              <div style="color:#1da1f2;vertical-align:middle;">
+                <img
+                  src="./images/twitter.png"
+                  style="height:32px;border:none;background:none;margin:0px;"
+                />
+                ndubien
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <div
+      style="position:fixed;z-index:9999;left:1em;bottom:1em;color:#ffffff;font-size:1.5em;font-family:'Source Sans Pro',Helvetica,sans-serif;"
+    >
+      <div style="color:#ffffff;vertical-align:middle;">
+        <img
+          src="./images/github-white.png"
+          style="height:16px;border:none;background:none;margin:0px;"
+        />
+        dubzzz
+      </div>
+      <div style="color:#1da1f2;vertical-align:middle;">
+        <img
+          src="./images/twitter.png"
+          style="height:16px;border:none;background:none;margin:0px;"
+        />
+        ndubien
+      </div>
+    </div>
+    <script src="../shared/head.min.js"></script>
+    <script src="../shared/reveal.min.js"></script>
+    <script>
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Set default timing of 2 minutes per slide
+        defaultTiming: 120,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autolaying embedded media (video/audio/iframe)
+        // - null: Media will only autoplay if data-autoplay is present
+        // - true: All media will autoplay, regardless of individual setting
+        // - false: No media will autoplay, regardless of individual setting
+        autoPlayMedia: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: Reveal.navigateNext,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // Hides the address bar on mobile devices
+        hideAddressBar: true,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style
+        transition: "slide", // none/fade/slide/convex/concave/zoom
+
+        // Transition speed
+        transitionSpeed: "default", // default/fast/slow
+
+        // Transition style for full page slide backgrounds
+        backgroundTransition: "fade", // none/fade/slide/convex/concave/zoom
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Parallax background image
+        parallaxBackgroundImage: "", // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+        // Parallax background size
+        parallaxBackgroundSize: "", // CSS syntax, e.g. "2100px 900px"
+
+        // Number of pixels to move the parallax background per slide
+        // - Calculated automatically unless specified
+        // - Set to 0 to disable movement along an axis
+        parallaxBackgroundHorizontal: null,
+        parallaxBackgroundVertical: null,
+
+        // The display mode that will be used to show slides
+        display: "block",
+
+        // Add timer coming from project: https://github.com/tkrkt/reveal.js-elapsed-time-bar
+        allottedTime: 30 * 60 * 1000,
+        keyboard: {
+          82 /*r*/: () => {
+            ElapsedTimeBar.reset();
+          }
+        },
+
+        // Optional modules
+        dependencies: [
+          { src: "../shared/elapsed-time-bar.js" },
+          {
+            src: "../shared/classList.js",
+            condition: function() {
+              return !document.body.classList;
+            }
+          },
+          {
+            src: "../shared/marked.js",
+            condition: function() {
+              return !!document.querySelector("[data-markdown]");
+            }
+          },
+          {
+            src: "../shared/markdown.js",
+            condition: function() {
+              return !!document.querySelector("[data-markdown]");
+            }
+          },
+          {
+            src: "../shared/highlight.js",
+            async: true,
+            callback: function() {
+              hljs.initHighlightingOnLoad();
+            }
+          },
+          { src: "../shared/zoom.js", async: true }
+        ]
+      });
+      // Taken from https://developer.mozilla.org/en-US/docs/Web/Events/wheel
+      // creates a global "addWheelListener" method
+      // example: addWheelListener( elem, function( e ) { console.log( e.deltaY ); e.preventDefault(); } );
+      (function(window, document) {
+        var prefix = "",
+          _addEventListener,
+          support;
+
+        // detect event model
+        if (window.addEventListener) {
+          _addEventListener = "addEventListener";
+        } else {
+          _addEventListener = "attachEvent";
+          prefix = "on";
+        }
+
+        // detect available wheel event
+        support =
+          "onwheel" in document.createElement("div")
+            ? "wheel" // Modern browsers support "wheel"
+            : document.onmousewheel !== undefined
+            ? "mousewheel" // Webkit and IE support at least "mousewheel"
+            : "DOMMouseScroll"; // let's assume that remaining browsers are older Firefox
+
+        window.addWheelListener = function(elem, callback, useCapture) {
+          _addWheelListener(elem, support, callback, useCapture);
+
+          // handle MozMousePixelScroll in older Firefox
+          if (support == "DOMMouseScroll") {
+            _addWheelListener(
+              elem,
+              "MozMousePixelScroll",
+              callback,
+              useCapture
+            );
+          }
+        };
+
+        function _addWheelListener(elem, eventName, callback, useCapture) {
+          elem[_addEventListener](
+            prefix + eventName,
+            support == "wheel"
+              ? callback
+              : function(originalEvent) {
+                  !originalEvent && (originalEvent = window.event);
+
+                  // create a normalized event object
+                  var event = {
+                    // keep a ref to the original event object
+                    originalEvent: originalEvent,
+                    target: originalEvent.target || originalEvent.srcElement,
+                    type: "wheel",
+                    deltaMode:
+                      originalEvent.type == "MozMousePixelScroll" ? 0 : 1,
+                    deltaX: 0,
+                    deltaY: 0,
+                    deltaZ: 0,
+                    preventDefault: function() {
+                      originalEvent.preventDefault
+                        ? originalEvent.preventDefault()
+                        : (originalEvent.returnValue = false);
+                    }
+                  };
+
+                  // calculate deltaY (and deltaX) according to the event
+                  if (support == "mousewheel") {
+                    event.deltaY = (-1 / 40) * originalEvent.wheelDelta;
+                    // Webkit also support wheelDeltaX
+                    originalEvent.wheelDeltaX &&
+                      (event.deltaX = (-1 / 40) * originalEvent.wheelDeltaX);
+                  } else {
+                    event.deltaY = originalEvent.deltaY || originalEvent.detail;
+                  }
+
+                  // it's time to fire the callback
+                  return callback(event);
+                },
+            useCapture || false
+          );
+        }
+      })(window, document);
+
+      window.addWheelListener(document, function(event) {
+        console.log(JSON.stringify(event.deltaY));
+        if (event.deltaY > 0) {
+          document.dispatchEvent(
+            new KeyboardEvent("keydown", { keyCode: 32, which: 32 })
+          );
+        } else if (event.deltaY < 0) {
+          document.dispatchEvent(
+            new KeyboardEvent("keydown", { keyCode: 33, which: 33 })
+          );
+        }
+      });
+
+      let laserEnabled = false;
+      function laserPtr() {
+        if (laserEnabled) return;
+        laserEnabled = true;
+        Reveal.removeEventListeners();
+        window.addEventListener("keydown", event => {
+          if (event.keyCode === 37 || event.keyCode === 38)
+            Reveal.navigatePrev();
+          if (event.keyCode === 39 || event.keyCode === 40)
+            Reveal.navigateNext();
+          if (event.keyCode === 82) ElapsedTimeBar.reset();
+        });
+      }
+      let code = "";
+      const laserCode = "!!!!!";
+      window.addEventListener("keydown", event => {
+        code += event.key;
+        if (code.length > laserCode.length)
+          code = code.substr(code.length - laserCode.length);
+        if (code === laserCode) laserPtr();
+      });
+    </script>
+  </body>
+</html>

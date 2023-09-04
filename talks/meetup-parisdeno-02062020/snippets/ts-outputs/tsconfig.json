@@ -1,9 +1,0 @@
-{
-  "compilerOptions": {
-    "alwaysStrict": true,
-    "module": "none",
-    "target": "esnext",
-    "outDir": "build/"
-  },
-  "include": ["src/**/*"]
-}

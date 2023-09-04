@@ -1,0 +1,28 @@
+{
+  "name": "my-lib",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/main.js",
+  "exports": {
+    ".": {
+      "require": "./build/main.js",
+      "default": "./build/esm/main.js"
+    }
+  },
+  "browser": "build/gen.js",
+  "module": "build/esm/main.js",
+  "types": "build/main.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "build:esm": "tsc --module esnext --outDir build/esm && node postbuild/main.cjs",
+    "webbuild": "browserify build/main.js --s myLib > build/gen.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "browserify": "^16.5.1",
+    "replace-in-file": "^6.0.0",
+    "typescript": "^3.9.3"
+  }
+}
