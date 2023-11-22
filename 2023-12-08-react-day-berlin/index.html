@@ -347,6 +347,8 @@
           data-background-image="images/conf-splash-logo.png"
           data-background-position="bottom center"
           data-background-size="80%"
+          data-transition="none"
+          data-background-transition="none"
         >
           <aside class="notes"></aside>
           <h1 style="margin-bottom: -16px; margin-top: -140px">Break the Race</h1>
@@ -1806,12 +1808,13 @@ Got error: Error: expect(received).toEqual(expected) // deep equality
           { src: 'plugin/notes/notes.js', async: true },
         ],
       });
+      const bsodSound = new Audio('images/bsod.mp3');
       Reveal.addEventListener('bsod-slide', () => {
         document.getElementById('social-footer').style.opacity = '0';
         document.getElementsByClassName('progress')[0].style.opacity = '0';
         document.getElementsByClassName('controls')[0].style.opacity = '0';
         document.getElementsByClassName('slide-number')[0].style.opacity = '0';
-        new Audio('images/bsod.mp3').play();
+        bsodSound.play();
       });
       Reveal.addEventListener('bsod-slide-before', () => {
         document.getElementById('social-footer').style.opacity = '1';
