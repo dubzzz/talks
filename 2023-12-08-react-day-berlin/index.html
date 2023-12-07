@@ -350,7 +350,6 @@
           data-transition="none"
           data-background-transition="none"
         >
-          <aside class="notes"></aside>
           <h1 style="margin-bottom: -16px; margin-top: -140px">Break the Race</h1>
           <h2
             style="
@@ -374,18 +373,6 @@
           data-background-transition="none"
         ></section>
         <section>
-          <aside class="notes">
-            <p>
-              Story: <br />Look at Paris, But leave there, <br />Looked for stays in London, Pretty good ones, see!,
-              <br />Arf..
-            </p>
-            <p>
-              UI Bug not critical?
-              <br />Imagine Favorite Shopping website (when you pay, you have another price) <br />Imagine Bank Account
-              <br />Imagine Issue Tracking solution
-            </p>
-            <p>What could go wrong in the front?</p>
-          </aside>
           <img id="navigation-hell" alt="Navigation hell" src="./images/navigation-hell.gif" onclick="resetGif()" />
           <script>
             function resetGif() {
@@ -395,15 +382,9 @@
           </script>
         </section>
         <section>
-          <aside class="notes">
-            <p>Rare subject</p>
-            <p>Race conditions in the front</p>
-            <p>Not restricted to back at all</p>
-          </aside>
           <h1>Let's talk about race conditions</h1>
         </section>
         <section>
-          <aside class="notes"></aside>
           <div>
             <img src="./images/me.jpg" style="border-radius: 50%; height: 128px" />
           </div>
@@ -438,11 +419,6 @@
           </div>
         </section>
         <section>
-          <aside class="notes">
-            But what is a race condition? <br />As I first said, race conditions are often said to be reserved to the
-            back. <br />But if you take a closer look to the definition on Wikipedia they are also clearly a real
-            problem for us in the front.
-          </aside>
           <h2>Race condition?</h2>
           <p class="quote">
             <span class="fragment highlight-transparent visible" data-fragment-index="1"
@@ -463,13 +439,6 @@
           </p>
         </section>
         <section>
-          <aside class="notes">
-            Let's illustrate that with a simple diagram with arrows.
-            <br />Let's suppose that each of those arrows corresponds to the response we get back from our back for
-            instance. <br />Here we have two answers. They arrive in-order - ie the result for the first query we
-            launched arrives before the one of the second query (which is hopefully most of the time the case).
-            <br />Let's relabel them - thanks to our example on Paris and London: Results for Paris, Results for London.
-          </aside>
           <style>
             .current-fragment.animate-paris-stays-user text {
               animation-duration: 1500ms;
@@ -703,18 +672,13 @@
           </svg>
         </section>
         <section>
-          <aside class="notes">
-            But fed from an API - like searches and suggestions in your favorite search engine (eg.: Google)
-          </aside>
           <h2>Let's consider a simple example</h2>
           <h3 class="fragment custom-collapse">An autocomplete field in React</h3>
         </section>
         <section>
-          <aside class="notes">Just to be aligned with all of you, here is what an autocomplete can look like</aside>
           <img src="./images/autocomplete-ok.gif" style="border: none; background: none; margin: 0px" />
         </section>
         <section class="fullScreen">
-          <aside class="notes"></aside>
           <pre><code class="hljs" data-trim data-line-numbers="1-27|4,20-23|7,15|8|9-12|13-14|24">
 			import React, { useState } from 'react';
 			
@@ -746,15 +710,9 @@
 		  </code></pre>
         </section>
         <section>
-          <aside class="notes"></aside>
           <h3>How to test it?</h3>
         </section>
         <section class="fullScreen">
-          <aside class="notes">
-            <p>Mock the api</p>
-            <p>Simulate user typing a search query</p>
-            <p>Check suggestions</p>
-          </aside>
           <pre><code class="hljs javascript" data-trim data-line-numbers="1,24|2-8|10-17|19-23">
 test('should autocomplete queries', async () =&gt; {
   // Arrange
@@ -783,7 +741,6 @@ test('should autocomplete queries', async () =&gt; {
 		  </code></pre>
         </section>
         <section>
-          <aside class="notes"></aside>
           <h3>
             Test status: <b><span class="fragment" style="color: green">√</span></b>
           </h3>
@@ -1076,15 +1033,12 @@ test('should autocomplete queries', async () =&gt; {
           </svg>
         </section>
         <section>
-          <aside class="notes"></aside>
           <img src="./images/autocomplete-bug-screenshot.png" style="border: none; background: none; margin: 0px" />
         </section>
         <section>
-          <aside class="notes"></aside>
           <img src="./images/autocomplete-bug.gif" style="border: none; background: none; margin: 0px" />
         </section>
         <section>
-          <aside class="notes"></aside>
           <h3>What is missing in our test?</h3>
         </section>
         <section>
@@ -1285,7 +1239,6 @@ test('should autocomplete queries', async () =&gt; {
           </svg>
         </section>
         <section data-background="#282ea9">
-          <aside class="notes"></aside>
           <h3>Let's test it using <code>fast-check</code></h3>
           <img
             src="./images/Screenshot 2023-02-22 000716.png"
@@ -1297,7 +1250,6 @@ test('should autocomplete queries', async () =&gt; {
           </p>
         </section>
         <section class="fullScreen hidebefore">
-          <aside class="notes"></aside>
           <style>
             section.hidebefore code {
               overflow-x: hidden;
@@ -1368,22 +1320,11 @@ test('should autocomplete queries', async () =&gt; {
 			</code></pre>
         </section>
         <section>
-          <aside class="notes"></aside>
           <h3>
             Test status: <b><span class="fragment" style="color: red">×</span></b>
           </h3>
         </section>
         <section class="fullScreen">
-          <aside class="notes">
-            <p>
-              Tasks received in order 1, 2, 3
-              <br />Executed in another order
-            </p>
-            <p>
-              33 % bug detection
-              <br />"n" must came at the end
-            </p>
-          </aside>
           <pre><code class="hljs text" data-trim data-line-numbers="1-25|3-14|11,12|8,9|5,6|5-12|18-25">
 Property failed after 3 tests
 { seed: 1134225087, path: "2", endOnFailure: true }
@@ -1413,7 +1354,6 @@ Got error: Error: expect(received).toEqual(expected) // deep equality
 			</code></pre>
         </section>
         <section class="fullScreen" data-transition="slide-in fade-out">
-          <aside class="notes"></aside>
           <pre><code class="hljs javascript" data-trim data-line-numbers="1-29|12">
 test('should autocomplete queries', async () =&gt; {
   await fc.assert(
@@ -1447,7 +1387,6 @@ test('should autocomplete queries', async () =&gt; {
 			</code></pre>
         </section>
         <section class="fullScreen" data-transition="fade-in fade-out">
-          <aside class="notes"></aside>
           <pre><code class="hljs javascript" data-trim data-line-numbers="12,13|11">
 test('should autocomplete queries', async () =&gt; {
   await fc.assert(
@@ -1482,7 +1421,6 @@ test('should autocomplete queries', async () =&gt; {
 			</code></pre>
         </section>
         <section class="fullScreen" data-transition="fade-in fade-out">
-          <aside class="notes"></aside>
           <pre><code class="hljs javascript" data-trim data-line-numbers="4,5|7">
 test('should autocomplete queries', async () =&gt; {
   await fc.assert(
@@ -1518,7 +1456,6 @@ test('should autocomplete queries', async () =&gt; {
 			</code></pre>
         </section>
         <section class="fullScreen" data-transition="fade-in fade-out">
-          <aside class="notes"></aside>
           <pre><code class="hljs javascript" data-trim data-line-numbers="4,6|18-21">
 test('should autocomplete queries', async () =&gt; {
   await fc.assert(
@@ -1554,7 +1491,6 @@ test('should autocomplete queries', async () =&gt; {
 			</code></pre>
         </section>
         <section class="fullScreen" data-transition="fade-in slide-out">
-          <aside class="notes"></aside>
           <pre><code class="hljs javascript" data-trim data-line-numbers="18-25|1-200">
 test('should autocomplete queries', async () =&gt; {
   await fc.assert(
@@ -1594,7 +1530,6 @@ test('should autocomplete queries', async () =&gt; {
 			</code></pre>
         </section>
         <section class="fullScreen">
-          <aside class="notes">SO today...</aside>
           <pre><code class="hljs text" data-trim>
 Property failed after 2 tests
 { seed: -1614603237, path: "1:[...]:2", endOnFailure: true }
@@ -1620,13 +1555,6 @@ Got error: Error: expect(received).toEqual(expected) // deep equality
 			</code></pre>
         </section>
         <section data-background="#ffffff">
-          <aside class="notes">
-            <p>Real, inherent / by-design, hard to detect, hard to reproduce (as many unexpected bugs)</p>
-
-            <p>Change ordering of events (user / network)</p>
-
-            <p>Google fuzz on Chrome. <br />Facebook fuzz on React.</p>
-          </aside>
           <div style="width: 100%; height: 100%; display: grid">
             <div
               style="
