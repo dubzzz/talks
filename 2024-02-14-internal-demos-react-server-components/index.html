@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>React Server Components</title>
+
+    <link rel="stylesheet" href="../shared-reveal-4/dist/reset.css" />
+    <link rel="stylesheet" href="../shared-reveal-4/dist/reveal.css" />
+    <link rel="stylesheet" href="../shared-reveal-4/dist/theme/black.css" id="theme" />
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="../shared-reveal-4/plugin/highlight/monokai.css" id="highlight-theme" />
+    <link rel="stylesheet" href="../shared-reveal-4/css/shared.css" />
+    <link rel="stylesheet" href="../shared-reveal-4/css/animated-pigment.css" />
+
+    <style>
+      em {
+        color: #6ba3cc;
+        font-style: normal;
+        font-weight: normal;
+      }
+      .has-light-background em {
+        color: #0078cf;
+        font-style: normal;
+        font-weight: normal;
+      }
+      .reveal a,
+      h3 {
+        color: #6ba3cc !important;
+        text-decoration: none;
+      }
+      .reveal a:hover,
+      h2 {
+        color: #0078cf !important;
+        text-decoration: none;
+      }
+      :root {
+        --link-color: #6ba3cc;
+        --link-color-hover: #0078cf;
+      }
+      .reveal .controls button {
+        color: #6ba3cc;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <div>
+            <img src="./images/react.png" alt="React Logo" class="styleless-image" style="height: 128px" />
+          </div>
+          <h1>React Server Components</h1>
+          <h3>A short introduction: concepts and main ideas</h3>
+          <p class="vsmallnote">R&amp;D Tech Demos</p>
+        </section>
+        <section>
+          <p>To understand React Server Components…</p>
+          <p class="fragment" style="font-size: 0.9em">…we first need to understand <em>what is React</em>…</p>
+          <p class="fragment" style="font-size: 0.8em">…but also <em>what is not React</em>…</p>
+          <p class="fragment" style="font-size: 0.7em">…and <em>where it came from</em>…</p>
+          <p class="fragment" style="font-size: 0.6em">…its various <em>usages</em>…</p>
+        </section>
+        <section>
+          <h2>React is…</h2>
+          <p class="fragment">
+            A UI library
+            <span class="fragment">dealing with <em>diffing trees of components</em> in an efficient way</span>
+          </p>
+          <p class="fragment">Target-agnostic</p>
+        </section>
+        <section>
+          <h2>React is not…</h2>
+          <p class="fragment">
+            A front library,
+            <span class="fragment"
+              >it can be used for prompts, native apps for Desktop or Mobile, server-side rendering… and obviously
+              web</span
+            >
+          </p>
+          <p class="fragment">
+            A framework,
+            <span class="fragment"
+              >it lets you decide what you can use for UI components, routing, state management, i18n…</span
+            >
+          </p>
+          <p class="fragment">
+            Another language,
+            <span class="fragment"
+              >JSX is just a syntaxic sugar <code>&lt;div/&gt;</code> is nothing else than
+              <code>React.createElement('div')</code>…</span
+            >
+          </p>
+          <p class="vsmallnote fragment">
+            You want to build your own react-dom? You may want to refer to this
+            <a href="https://www.youtube.com/watch?v=CGpMlWVcHok">video</a>
+          </p>
+        </section>
+        <section>
+          <h2>Where it came from…</h2>
+          <p class="fragment">PHP?</p>
+          <p class="vsmallnote fragment">
+            You may have more details on the link between these two in this
+            <a href="https://www.youtube.com/watch?v=NcAYsC_TKCA">video</a>
+          </p>
+        </section>
+        <section>
+          <h2>Its various usages <em>(we focus on web)</em>…</h2>
+          <p class="fragment">SPA — Single page app</p>
+        </section>
+        <section><img src="./images/spa-issue.png" /></section>
+        <section>
+          <h2>Its various usages <em>(we focus on web)</em>…</h2>
+          <p>SPA — Single page app</p>
+          <p>SSR — Static website</p>
+        </section>
+        <section>
+          <p>React code → <em>(compiler)</em> → Static HTML</p>
+          <p class="fragment"><em>Guess what! We do it for our Blog!</em></p>
+        </section>
+        <section>
+          <h2>Its various usages <em>(we focus on web)</em>…</h2>
+          <p>SPA — Single page app</p>
+          <p>SSR — Static website</p>
+          <p>SSR with hydratation — Hybrid website or Multi pages app</p>
+        </section>
+        <section>
+          <p>React code → <em>(compiler)</em> → Static HTML*</p>
+          <p class="fragment">Pre-computed DOM → <em>(browser)</em> → Initial display (no-JS)</p>
+          <p class="fragment">Pre-computed DOM + full JavaScript code → <em>(react-dom)</em> → Hydrate the display</p>
+        </section>
+        <section>
+          <h1>But it's not enough…</h1>
+          <p class="fragment">We take and compute the same thing twice</p>
+          <p class="fragment">We need to wait for the page to be interactive</p>
+          <p class="fragment">We need to expose APIs</p>
+          <p class="fragment">We need to deal with loading states</p>
+        </section>
+        <section>
+          <p>What if we could split the job between the front and the back?</p>
+          <p class="fragment"><em>This is where React Server Components come up!</em></p>
+          <p class="vsmallnote fragment">
+            You want to know more about them, please check this
+            <a href="https://www.youtube.com/watch?v=zMf_xeGPn6s">video</a>
+          </p>
+        </section>
+        <section>
+          <h1>React Server Components: the basics</h1>
+        </section>
+        <section>
+          <h2>Let's go back to the server</h2>
+        </section>
+        <section>
+          <pre><code>
+function Root() {
+  return (
+    &lt;html&gt;
+      &lt;body&gt;
+        &lt;Greeting /&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+  );
+}
+
+function Greeting() {
+  return &lt;p&gt;Hello World!&lt;/p&gt;;
+}</code></pre>
+          <p class="fragment">We just created back SSR</p>
+        </section>
+        <section>
+          <h2>Let's add some data fetching to it</h2>
+        </section>
+        <section>
+          <pre><code>
+function Root() {
+  return (
+    &lt;html&gt;
+      &lt;body&gt;
+        &lt;Greeting userId={...} /&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+  );
+}
+
+async function Greeting({userId}) {
+  const user = await db.users.findUnique(userId);
+  return &lt;p&gt;Hello {user?.name ?? 'Unknown user'}!&lt;/p&gt;;
+}</code></pre>
+          <p class="fragment">What if the DB takes ages to deliver the anwser?</p>
+        </section>
+        <section><img src="images/long-loading-back.gif" /></section>
+        <section>
+          <h2>Let's add loading states and streaming</h2>
+        </section>
+        <section>
+          <pre><code>
+function Root() {
+  return (
+    &lt;html&gt;
+      &lt;body&gt;
+        &lt;Suspense fallback=&quot;Loading...&quot;&gt;
+          &lt;Greeting userId={...} /&gt;
+        &lt;/Suspense&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+  );
+}
+
+async function Greeting({userId}) {
+  const user = await db.users.findUnique(userId);
+  return &lt;p&gt;Hello {user?.name ?? 'Unknown user'}!&lt;/p&gt;;
+}</code></pre>
+        </section>
+        <section><img src="images/long-loading-better.gif" /></section>
+        <section>
+          <h2>Let's add client side interactions</h2>
+        </section>
+        <section>
+          <pre><code>
+function Root() {
+  return (
+    &lt;html&gt;
+      &lt;body&gt;
+        &lt;Suspense fallback=&quot;Loading...&quot;&gt;
+          &lt;Greeting userId={...} /&gt;
+        &lt;/Suspense&gt;
+        &lt;PlayWithMe /&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+  );
+}</code></pre>
+        </section>
+        <section>
+          <pre><code>
+"use client";
+
+function PlayWithMe() {
+  const [counter, setCounter] = useState(0);
+  return (
+    &lt;button onClick={() =&gt; setCounter((c) =&gt; c + 1)}&gt;
+      Click to increment, currently: {counter}
+    &lt;/button&gt;
+  );
+}</code></pre>
+        </section>
+        <section>
+          <h2>Let's make the client able to send data to the back</h2>
+          <p>Without explictely creating APIs</p>
+        </section>
+        <section>
+          <pre><code>
+"use client";
+
+function PlayWithMe({userId}) {
+  const [counter, setCounter] = useState(0);
+  return (
+    &lt;&gt;
+      &lt;button onClick={() =&gt; setCounter((c) =&gt; c + 1)}&gt;
+        Click to increment, currently: {counter}
+      &lt;/button&gt;
+      &lt;button onClick={async () =&gt; {
+        "use server";
+        await db.counters.update(userId, counter);
+      }}&gt;
+        Save
+      &lt;/button&gt;
+    &lt;/&gt;
+  );
+}</code></pre>
+        </section>
+        <section>
+          <h2>How does it work?</h2>
+          <p>The <em>browser</em> loads <em>index.html</em></p>
+          <p>Then it loads an initial bundled JavaScript (mostly React DOM)</p>
+          <p>Then it calls the back to get the streamed content</p>
+          <p>And React DOM adds it to the DOM over time</p>
+        </section>
+        <section>
+          <pre><code>
+1:"$Sreact.suspense"
+3:I{"id":"./src/PlayWithMe.js","chunks":["client1"],"name":""}
+0:["$","html",null,{"children":["$","body",null,{"children":[["$","$1",null,{"fallback":"Loading...","children":"$L2"}],["$","$L3",null,{}]]}]}]
+2:["$","p",null,{"children":"Hello Nicolas!"}]
+          </code></pre>
+        </section>
+        <section>
+          <aside class="notes"></aside>
+          <h2>Questions?</h2>
+        </section>
+      </div>
+    </div>
+
+    <script src="../shared-reveal-4/dist/reveal.js"></script>
+    <script src="../shared-reveal-4/plugin/notes/notes.js"></script>
+    <script src="../shared-reveal-4/plugin/markdown/markdown.js"></script>
+    <script src="../shared-reveal-4/plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        fragmentInURL: true,
+        totalTime: 25 * 60,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+      });
+    </script>
+  </body>
+</html>
