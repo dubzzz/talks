@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <title>Break the Race: Easy Race Condition Detection for React</title>
+    <title>Keep Users' Trust: Be Race-Conditions Free</title>
 
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/reveal.css" />
@@ -42,7 +42,7 @@
       }
 
       .reveal .controls {
-        color: #0d0175;
+        color: rgb(206, 16, 38);
       }
 
       .reveal {
@@ -88,7 +88,7 @@
       }
       .reveal a:hover,
       h2 {
-        color: #17ff2e !important;
+        color: rgb(253, 54, 77) !important;
         text-decoration: none;
       }
 
@@ -196,8 +196,8 @@
       }
 
       body {
-        background: #230cea;
-        background-color: #230cea;
+        background: #012555;
+        background-color: #012555;
       }
 
       .custom-collapse.fragment {
@@ -344,24 +344,24 @@
       <div class="slides">
         <section
           data-state="bsod-slide-before"
-          data-background-image="images/conf-splash-logo.png"
+          data-background-image="images/logo-white-react-paris.webp"
           data-background-position="bottom center"
-          data-background-size="80%"
+          data-background-size="40%"
           data-transition="none"
           data-background-transition="none"
         >
-          <h1 style="margin-bottom: -16px; margin-top: -140px">Break the Race</h1>
+          <h1 style="margin-bottom: -16px; margin-top: -140px">Keep Users' Trust</h1>
           <h2
             style="
-              color: #040024 !important;
+              color: rgb(206, 16, 38) !important;
               margin-bottom: 200px;
               font-size: 1em;
               font-family: MonospaceRadon !important;
             "
           >
-            Easy Race Condition Detection for React
+            Be Race-Conditions Free
           </h2>
-          <h3 style="color: #230cea !important; text-shadow: -1px 0 #fffa, 0 1px #fffa, 1px 0 #fffa, 0 -1px #fffa">
+          <h3 style="color: #012555 !important; text-shadow: -1px 0 #fffa, 0 1px #fffa, 1px 0 #fffa, 0 -1px #fffa">
             Nicolas DUBIEN
           </h3>
         </section>
@@ -405,15 +405,15 @@
               <img src="./images/github-white.png" style="height: 32px; border: none; background: none; margin: 0px" />
               dubzzz
             </div>
-            <div style="color: #4293db; vertical-align: middle; font-family: MonospaceKrypton">
-              <img
-                src="./images/Mastodon_Logotype_(Simple).svg.png"
-                style="height: 32px; border: none; background: none; margin: 0px"
-              />
+            <div style="color: #ffffff; vertical-align: middle; font-family: MonospaceKrypton">
+              <img src="./images/x.png" style="height: 32px; border: none; background: none; margin: 0px" />
               ndubien
             </div>
-            <div style="color: #cb3837; vertical-align: middle; font-family: MonospaceKrypton">
-              <img src="./images/npm.png" style="height: 32px; border: none; background: none; margin: 0px" />
+            <div style="color: #ffffff; vertical-align: middle; font-family: MonospaceKrypton">
+              <img
+                src="./images/npm.png"
+                style="height: 32px; border: none; background: none; margin: 0px; filter: grayscale(1)"
+              />
               fast-check
             </div>
           </div>
@@ -423,11 +423,11 @@
           <p class="quote">
             <span class="fragment highlight-transparent visible" data-fragment-index="1"
               >A race condition […] is the condition […] where the system's substantive behavior is dependent on the </span
-            ><span class="fragment highlight-green visible" data-fragment-index="1">sequence</span
+            ><span class="fragment highlight-red visible" data-fragment-index="1">sequence</span
             ><span class="fragment highlight-transparent visible" data-fragment-index="1"> or timing </span
-            ><span class="fragment highlight-green visible" data-fragment-index="1">of</span
+            ><span class="fragment highlight-red visible" data-fragment-index="1">of</span
             ><span class="fragment highlight-transparent visible" data-fragment-index="1"> other </span
-            ><span class="fragment highlight-green visible" data-fragment-index="1">uncontrollable events</span
+            ><span class="fragment highlight-red visible" data-fragment-index="1">uncontrollable events</span
             ><span class="fragment highlight-transparent visible" data-fragment-index="1">.</span>
           </p>
           <p class="fragment custom-collapse">🤔 What about user inputs, API calls…?</p>
@@ -1554,6 +1554,48 @@ Got error: Error: expect(received).toEqual(expected) // deep equality
 + ]
 			</code></pre>
         </section>
+        <section>
+          <h2>How to fix my autocomplete?</h2>
+          <ul>
+            <li class="fragment">Rely on a dedicated library to do the job: <em>react-query</em>...</li>
+            <li class="fragment">Do it yourself</li>
+          </ul>
+        </section>
+        <section class="fullScreen">
+          <pre><code class="hljs" data-trim data-line-numbers="1-31|4,9,15-18">
+			import React, { useState } from 'react';
+			
+			export default function Autocomplete({ suggestionsFor }) {
+			  const lastQueryIdRef = useRef(0);
+			  const [query, setQuery] = useState('');
+			  const [suggestions, setSuggestions] = useState([]);
+			  
+			  async function updateQuery(newQuery) {
+			    const currentQueryId = ++lastQueryIdRef.current;
+			    setQuery(newQuery);
+			    if (newQuery === '') {
+			      setSuggestions([]);
+			      return;
+			    }
+			    const suggestions = await suggestionsFor(newQuery);
+			    if (currentQueryId === lastQueryIdRef.current){
+			      setSuggestions(suggestions);
+			    }
+			  }
+			
+			  return (
+			    &lt;div&gt;
+			      &lt;label htmlFor="autocomplete-field"&gt;Select a package: &lt;/label&gt;
+			      &lt;input
+			        id="autocomplete-field"
+			        value={query}
+			        onChange={(e) =&gt; updateQuery(e.target.value)} /&gt;
+			      &lt;ul&gt;{suggestions.map((s) =&gt; &lt;li key={s}&gt;{s}&lt;/li&gt;)}&lt;/ul&gt;
+			    &lt;/div&gt;
+			  );
+			}			
+		  </code></pre>
+        </section>
         <section data-background="#ffffff">
           <div style="width: 100%; height: 100%; display: grid">
             <div
@@ -1634,11 +1676,8 @@ Got error: Error: expect(received).toEqual(expected) // deep equality
             <img src="./images/github-white.png" style="height: 32px; border: none; background: none; margin: 0px" />
             dubzzz
           </div>
-          <div style="color: #4293db; vertical-align: middle">
-            <img
-              src="./images/Mastodon_Logotype_(Simple).svg.png"
-              style="height: 32px; border: none; background: none; margin: 0px"
-            />
+          <div style="color: #ffffff; vertical-align: middle">
+            <img src="./images/x.png" style="height: 32px; border: none; background: none; margin: 0px" />
             ndubien
           </div>
         </section>
@@ -1687,7 +1726,7 @@ Got error: Error: expect(received).toEqual(expected) // deep equality
         dubzzz
       </div>
       <img
-        src="./images/Mastodon_Logotype_(Simple).svg.png"
+        src="./images/x.png"
         style="
           justify-self: center;
           grid-row: 2;
@@ -1698,7 +1737,7 @@ Got error: Error: expect(received).toEqual(expected) // deep equality
           margin: 0px;
         "
       />
-      <div style="grid-row: 2; grid-column: 2; color: #4293db; vertical-align: middle; font-family: MonospaceKrypton">
+      <div style="grid-row: 2; grid-column: 2; color: #ffffff; vertical-align: middle; font-family: MonospaceKrypton">
         ndubien
       </div>
       <img
@@ -1711,9 +1750,10 @@ Got error: Error: expect(received).toEqual(expected) // deep equality
           border: none;
           background: none;
           margin: 0px;
+          filter: grayscale(1);
         "
       />
-      <div style="grid-row: 3; grid-column: 2; color: #cb3837; vertical-align: middle; font-family: MonospaceKrypton">
+      <div style="grid-row: 3; grid-column: 2; color: #ffffff; vertical-align: middle; font-family: MonospaceKrypton">
         fast-check
       </div>
     </div>
