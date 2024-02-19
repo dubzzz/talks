@@ -1899,6 +1899,12 @@ Got error: Error: expect(received).toEqual(expected) // deep equality
         if (code.length > laserCode.length) code = code.substr(code.length - laserCode.length);
         if (code === laserCode) laserPtr();
       });
+
+      try {
+        navigator.wakeLock.request('screen'); // dropping the lock screen for the time of the talk
+      } catch (err) {
+        // not supported on all browser yet
+      }
     </script>
   </body>
 </html>
