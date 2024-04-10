@@ -346,5 +346,60 @@ Source: https://www.builder.io/blog/monomorphic-javascript
 - Shapes are impactful
 - Micro-benchmarking can hide shape related issues
 - Polymorphic functions are harmful (for performance but super for reusability)
+- Not seen: Changing defaults break the performance
+- Not seen: Inlining breaks performance due to short function optimization in V8
+- Not seen: TC39 specs can imply latency and performance cost by default
 
 </v-clicks>
+
+---
+
+## Example #1
+
+```js
+function add(a, b) {
+  return a.x + b.x;
+}
+add({ x: 1, y: 2 }, { x: 3, y: 4 }); // 1 shape
+add({ x: 1, y: 2 }, { y: 4, x: 3 }); // 2 shapes
+```
+
+---
+
+## Example #2
+
+```js
+function add(a, b) {
+  return a + b;
+}
+add(1, 2); // small integer
+add(1_000_000, 2_000_000); // integer
+add(-0, 0); // floating point
+add("-0", "0"); // string
+```
+
+---
+
+## Example #3
+
+```js
+Array.prototype.myFlat = () => {}; // polyfill 😈
+```
+
+---
+
+## Useful tooling
+
+- Benchmarking for critical hot code
+- Deopt Explorer on VSCode
+- Flag `--trace-deopt` on V8
+
+---
+
+## Useful reading
+
+- https://web.dev/articles/speed-v8
+- https://mathiasbynens.be/notes/shapes-ics
+- https://www.builder.io/blog/monomorphic-javascript
+- https://romgrk.com/posts/optimizing-javascript
+- https://v8.dev/blog/react-cliff
