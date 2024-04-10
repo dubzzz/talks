@@ -372,8 +372,7 @@ add({ x: 1, y: 2 }, { y: 4, x: 3 }); // 2 shapes
 function add(a, b) {
   return a + b;
 }
-add(1, 2); // small integer
-add(1_000_000, 2_000_000); // integer
+add(1, 2); // integer
 add(-0, 0); // floating point
 add("-0", "0"); // string
 ```
