@@ -380,7 +380,7 @@
           data-transition="none"
           data-background-transition="none"
         ></section>
-        <section>
+        <section data-state="bsod-slide-after">
           <img id="navigation-hell" alt="Navigation hell" src="./images/navigation-hell.gif" onclick="resetGif()" />
           <script>
             function resetGif() {
@@ -389,8 +389,11 @@
             }
           </script>
         </section>
-        <section data-state="bsod-slide-after">
+        <section>
           <h1>Let's talk about race conditions</h1>
+        </section>
+        <section>
+          <img alt="Worst race condition" src="./images/worst-race.png" />
         </section>
         <section>
           <div>
@@ -407,6 +410,11 @@
                 class="styleless-image"
                 style="height: 50px; box-shadow: none"
               />
+            </div>
+            <div
+              style="display: flex; align-items: center; justify-content: center; font-size: 0.6em; margin-top: -10px"
+            >
+              <a href="https://engineering.pigment.com/" target="_blank">engineering.pigment.com</a>
             </div>
             <div style="margin-top: 48px"></div>
             <div style="color: #ffffff; vertical-align: middle; font-family: MonospaceKrypton">
@@ -1643,41 +1651,6 @@ Got error: Error: expect(received).toEqual(expected) // deep equality
           <div style="margin-top: 48px"></div>
           <div>
             <img src="./images/logo.png" style="border: none; background: none; margin: 0px; box-shadow: none" />
-            <p
-              class="fragment custom-collapse"
-              style="
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                font-size: 0.8em;
-                opacity: 0.9;
-                margin-top: -16px;
-              "
-            >
-              <span style="margin-right: 8px">Used by </span>
-              <img src="./images/jest.svg" style="height: 20px; border: none; background: none; margin: 0px" />
-              <span style="margin: 0 8px"> and </span>
-              <img src="./images/jasmine.svg" style="height: 20px; border: none; background: none; margin: 0px" />
-            </p>
-            <p
-              class="fragment custom-collapse"
-              style="
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                font-size: 0.8em;
-                opacity: 0.9;
-                margin-top: -24px;
-              "
-            >
-              <span style="margin-right: 8px">Found bugs in </span>
-              <img src="./images/jest.svg" style="height: 20px; border: none; background: none; margin: 0px" />
-              <span style="margin: 0 8px">, </span>
-              <img src="./images/jasmine.svg" style="height: 20px; border: none; background: none; margin: 0px" />
-              <span style="margin: 0 8px">, </span>
-              <img src="./images/react.svg" style="height: 20px; border: none; background: none; margin: 0px" />
-              <span style="margin: 0 8px">…</span>
-            </p>
           </div>
           <div style="margin-top: 48px"></div>
           <div style="color: #ffffff; vertical-align: middle">
@@ -1687,6 +1660,18 @@ Got error: Error: expect(received).toEqual(expected) // deep equality
           <div style="color: #ffffff; vertical-align: middle">
             <img src="./images/x.png" style="height: 32px; border: none; background: none; margin: 0px" />
             ndubien
+          </div>
+          <div style="margin-top: 48px"></div>
+          <div style="display: flex; align-items: center; justify-content: center; font-size: 0.8em; margin-top: -20px">
+            Working at
+            <img
+              src="./images/pigment-logofull-white.png"
+              class="styleless-image"
+              style="height: 50px; box-shadow: none"
+            />
+          </div>
+          <div style="display: flex; align-items: center; justify-content: center; font-size: 0.6em; margin-top: -10px">
+            <a href="https://engineering.pigment.com/" target="_blank">engineering.pigment.com</a>
           </div>
         </section>
       </div>
