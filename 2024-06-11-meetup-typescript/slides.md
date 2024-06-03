@@ -170,8 +170,237 @@ layout: cover
 </div>
 
 ---
-layout: cover
+layout: center
 ---
+
+# Rendering in React
+
+---
+
+## Whenever a state changes
+
+<ul>
+<li v-click>A render cycle starts...</li>
+<li v-click>Starting from the component holding the updated state...</li>
+<li v-click>An traversing the component tree until it reaches <i>leaves</i></li>
+</ul>
+
+<div style="display: grid;">
+<v-switch>
+<template #1>
+<div style="grid-row: 1; grid-column: 1;">
+
+```mermaid
+graph TD;
+    App-->Counter1;
+    App-->Counter2;
+    App-->Counter3;
+    App-->Total;
+    style App fill:yellow
+    style Counter1 stroke:#777,stroke-width:2px,color:#777,stroke-dasharray: 5 5
+    style Counter2 stroke:#777,stroke-width:2px,color:#777,stroke-dasharray: 5 5
+    style Counter3 stroke:#777,stroke-width:2px,color:#777,stroke-dasharray: 5 5
+    style Total stroke:#777,stroke-width:2px,color:#777,stroke-dasharray: 5 5
+```
+
+</div>
+</template>
+<template #2>
+<div style="grid-row: 1; grid-column: 1;">
+
+```mermaid
+graph TD;
+    App-->Counter1;
+    App-->Counter2;
+    App-->Counter3;
+    App-->Total;
+    style App fill:#81B1DB
+```
+
+</div>
+</template>
+<template #3>
+<div style="grid-row: 1; grid-column: 1;">
+
+```mermaid
+graph TD;
+    App-->Counter1;
+    Counter1-->id(???);
+    App-->Counter2;
+    App-->Counter3;
+    App-->Total;
+    style App fill:#81B1DB
+    style Counter1 fill:yellow
+    style id stroke:#777,stroke-width:2px,color:#777,stroke-dasharray: 5 5
+```
+
+</div>
+</template>
+<template #4>
+<div style="grid-row: 1; grid-column: 1;">
+
+```mermaid
+graph TD;
+    App-->Counter1;
+    App-->Counter2;
+    Counter2-->id(???);
+    App-->Counter3;
+    App-->Total;
+    style App fill:#81B1DB
+    style Counter1 fill:#81B1DB
+    style Counter2 fill:yellow
+    style id stroke:#777,stroke-width:2px,color:#777,stroke-dasharray: 5 5
+```
+
+</div>
+</template>
+<template #5>
+<div style="grid-row: 1; grid-column: 1;">
+
+```mermaid
+graph TD;
+    App-->Counter1;
+    App-->Counter2;
+    App-->Counter3;
+    Counter3-->id(???);
+    App-->Total;
+    style App fill:#81B1DB
+    style Counter1 fill:#81B1DB
+    style Counter2 fill:#81B1DB
+    style Counter3 fill:yellow
+    style id stroke:#777,stroke-width:2px,color:#777,stroke-dasharray: 5 5
+```
+
+</div>
+</template>
+<template #6>
+<div style="grid-row: 1; grid-column: 1;">
+
+```mermaid
+graph TD;
+    App-->Counter1;
+    App-->Counter2;
+    App-->Counter3;
+    App-->Total;
+    Total-->id(???);
+    style App fill:#81B1DB
+    style Counter1 fill:#81B1DB
+    style Counter2 fill:#81B1DB
+    style Counter3 fill:#81B1DB
+    style Total fill:yellow
+    style id stroke:#777,stroke-width:2px,color:#777,stroke-dasharray: 5 5
+```
+
+</div>
+</template>
+<template #7>
+<div style="grid-row: 1; grid-column: 1;">
+
+```mermaid
+graph TD;
+    App-->Counter1;
+    App-->Counter2;
+    App-->Counter3;
+    App-->Total;
+    style App fill:#81B1DB
+    style Counter1 fill:#81B1DB
+    style Counter2 fill:#81B1DB
+    style Counter3 fill:#81B1DB
+    style Total fill:#81B1DB
+```
+
+</div>
+</template>
+</v-switch>
+</div>
+
+---
+
+## Why did it re-render?
+
+<ul>
+
+<li v-click>The state of the component changed?</li>
+<li v-click>The component instantiating this component re-rendered?</li>
+<li v-click>The component relies on a provider whose value changed?</li>
+
+</ul>
+
+---
+
+## How to avoid re-render?
+
+<ul>
+
+<li v-click="1">
+  Wrap the component within <kbd>React.memo</kbd>
+  <ul>
+    <li v-click="2">But props passed to the component have to be stabilized, possibly with <kbd>useMemo</kbd> and <kbd>useCallback</kbd></li>
+    <li v-click="3">It cannot protect from a provider</li>
+  </ul>
+</li>
+<li v-click="4">Move the state closer to the leaves</li>
+
+</ul>
+
+---
+layout: center
+---
+
+# But is rendering a problem on itself?
+
+---
+
+## The execution is divided into two phases
+
+<ul>
+  <li v-click="1">The <b>render</b> phase:<br/><i v-click="2">React calls recursively the components in order to create an updated version of the Virtual DOM</i></li>
+  <li v-click="3">The <b>commit</b> phase:<br/><i v-click="4">React applies the smallest set of changes required to replicate the Virtual DOM on the final target</i></li>
+</ul>
+
+---
+
+## Render phase is interruptible
+
+<ul>
+
+<li v-click>Not anymore recursive</li>
+<li v-click>Can be paused</li>
+<li v-click>Or even restarted</li>
+
+</ul>
+
+<!-- Since React 16, the algorithm backing the render phase is **not anymore** implemented in a **recursive** way. It relies on the traversal of linked list of fibers. The traversal of this list **can be stopped** at the middle of its execution by React depending on the needs of the browser. As such React can stop and resume execution later but also stop it and rerun it from start. -->
+
+---
+
+# Rendering grids at Pigment
+
+---
+
+## Some challenges
+
+<ul>
+  <li>Up to several millions of cells</li>
+  <li>Updated in real-time</li>
+  <li>Joining multiple distinct data-sources</li>
+  <li>Half in backend for security and half in frontend for fluidity</li>
+  <li>Handling advanced navigation patterns: multiple focuses</li>
+</ul>
+
+---
+
+## Let's think back about our previous reactivity case against a Pigment's grid
+
+image of a grid containing indirections
+
+---
+
+## Let's go simpler
+
+image of a simplified version of the pivot
+
+presentation of the code
 
 ---
 transition: fade-out
