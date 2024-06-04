@@ -1,26 +1,32 @@
 ---
-# try also 'default' to start simple
 theme: seriph
-# random image from a curated Unsplash collection by Anthony
-# like them? see https://unsplash.com/collections/94734566/slidev
-background: https://cover.sli.dev
-# some information about your slides, markdown enabled
+background: /assets/wallpaper-1.jpg
 title: Fine-Grained reactivity without any compiler
 info: Fine-Grained reactivity without any compiler
-# apply any unocss classes to the current slide
-class: text-center
-# https://sli.dev/custom/highlighters.html
-highlighter: shiki
-# https://sli.dev/guide/drawing
+class: text-center # apply any unocss classes to the current slide
+highlighter: shiki # https://sli.dev/custom/highlighters.html
 drawings:
   persist: false
-# slide transition: https://sli.dev/guide/animations#slide-transitions
 transition: slide-left
-# enable MDC Syntax: https://sli.dev/guide/syntax#mdc-syntax
-mdc: true
+mdc: true # enable MDC Syntax: https://sli.dev/guide/syntax#mdc-syntax
 ---
 
-# Fine-Grained reactivity without any compiler
+<!---
+https://x.com/posva/status/1198918347599106049
+
+https://x.com/bernhardsson/status/1523763748200382464?t=-pZG5v8Fv8STgEnOK6pkGQ
+
+https://x.com/rorypreddy/status/1142967056150728708
+
+Maybe for conclusion?
+https://www.linkedin.com/posts/alexis-hamann-845a74102_quand-tu-fais-un-hotfix-en-prod-ugcPost-6580374814211604480-A9xM/
+-->
+
+<div style="display:flex; justify-content: center; margin-bottom: 16px;">
+  <img src="/assets/conf-logo.webp" style="max-width: 20%" />
+</div>
+
+<h1 style="color: #fff !important">Fine-Grained reactivity without any compiler</h1>
 
 _How did we achieved fine-grained reactivity at Pigment?_
 
@@ -42,10 +48,10 @@ layout: center
 
 ```mermaid
 graph TD;
-    App-->Counter1;
-    App-->Counter2;
-    App-->Counter3;
-    App-->Total;
+    App--v1,incrementV1-->Counter1;
+    App--v2,incrementV2-->Counter2;
+    App--v3,incrementV3-->Counter3;
+    App--v1,v2,v3-->Total;
 ```
 
 </div>
@@ -57,6 +63,18 @@ graph TD;
 />
 
 </div>
+
+---
+layout: center
+---
+
+![](/assets/not-the-right-thing.gif)
+
+---
+layout: center
+---
+
+<img src="/assets/sad-thing-no.jpg" style="max-width: 80%" />
 
 ---
 
@@ -75,13 +93,13 @@ More details about the compiler at https://react.dev/learn/react-compiler
 
 ---
 
-## Key differences
+## What's the difference?
 
 When updating the value linked to <kbd>Counter1</kbd>...
 
 <div grid="~ cols-2 gap-16">
 
-<div v-click style="padding-top: 48px">
+<div v-click>
 
 Without the compiler:
 
@@ -100,7 +118,7 @@ graph TD;
 
 </div>
 
-<div v-click style="padding-top: 48px">
+<div v-click>
 
 With the compiler:
 
@@ -123,6 +141,21 @@ graph TD;
 layout: center
 ---
 
+<img src="/assets/compiler-effect-5.gif" style="max-width: 80%" />
+
+<!--
+While the compiler looks promising,
+
+1. It does not solve all the reactivity issues, but mostly simple ones. It cannot be as tailored as a very custom piece of optimization.
+2. It has extra runtime costs. I recommend you to play with the REPL and playground to see the generated code. While not huge, that's still an overhead that might be useless in many cases for very optimized apps.
+
+That said it should cover most of the cases for free. As such it's definitely a great option to use (once ready)!
+-->
+
+---
+layout: center
+---
+
 # Is the compiler enough?
 
 # Do I need a compiler?
@@ -131,14 +164,15 @@ layout: center
 
 ---
 layout: cover
+background: /assets/wallpaper-1.jpg
 ---
 
 <div>
-  <img src="/assets/me.jpg" style="border-radius: 50%; height: 128px" />
+  <img src="/assets/me.jpg" style="border-radius: 50%; height: 128px; border: white 2px solid;" />
 </div>
 
 <div style="margin-top: 48px"></div>
-<h1>Nicolas DUBIEN</h1>
+<h1 style="color: #fff !important">Nicolas DUBIEN</h1>
 <div style="display: flex; justify-content: center; font-size: 1.2em; margin-top: -20px">
   <span style="margin-top: 0.7em">
     Principal Software Engineer at
@@ -373,8 +407,14 @@ layout: center
 <!-- Since React 16, the algorithm backing the render phase is **not anymore** implemented in a **recursive** way. It relies on the traversal of linked list of fibers. The traversal of this list **can be stopped** at the middle of its execution by React depending on the needs of the browser. As such React can stop and resume execution later but also stop it and rerun it from start. -->
 
 ---
+layout: center
+---
 
 # Rendering grids at Pigment
+
+---
+
+![Grid at Pigment](/assets/pigment-grid-reactivity.gif)
 
 ---
 
@@ -604,48 +644,6 @@ const author = {
 </script>
 ```
 ````
-
----
-
-# Components
-
-<div grid="~ cols-2 gap-4">
-<div>
-
-You can use Vue components directly inside your slides.
-
-We have provided a few built-in components like `<Tweet/>` and `<Youtube/>` that you can use directly. And adding your custom components is also super easy.
-
-```html
-<Counter :count="10" />
-```
-
-<!-- ./components/Counter.vue -->
-<Counter :count="10" m="t-4" />
-
-Check out [the guides](https://sli.dev/builtin/components.html) for more.
-
-</div>
-<div>
-
-```html
-<Tweet id="1390115482657726468" />
-```
-
-<Tweet id="1390115482657726468" scale="0.65" />
-
-</div>
-</div>
-
-<!--
-Presenter note with **bold**, *italic*, and ~~striked~~ text.
-
-Also, HTML elements are valid:
-<div class="flex w-full">
-  <span style="flex-grow: 1;">Left content</span>
-  <span>Right content</span>
-</div>
--->
 
 ---
 class: px-20
@@ -945,11 +943,6 @@ Double-click on the draggable elements to edit their positions.
 ```
 
 <v-drag-arrow pos="67,452,253,46" two-way op70 />
-
----
-src: ./pages/multiple-entries.md
-hide: false
----
 
 ---
 
