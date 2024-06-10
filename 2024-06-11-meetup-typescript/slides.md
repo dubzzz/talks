@@ -92,52 +92,6 @@ More details about the compiler at https://react.dev/learn/react-compiler
 </div>
 
 ---
-
-## What's the difference?
-
-When updating the value linked to <kbd>Counter1</kbd>...
-
-<div grid="~ cols-2 gap-16">
-
-<div v-click>
-
-Without the compiler:
-
-```mermaid
-graph TD;
-    App-->Counter1;
-    App-->Counter2;
-    App-->Counter3;
-    App-->Total;
-    style App fill:#81B1DB
-    style Counter1 fill:#81B1DB
-    style Counter2 fill:#81B1DB
-    style Counter3 fill:#81B1DB
-    style Total fill:#81B1DB
-```
-
-</div>
-
-<div v-click>
-
-With the compiler:
-
-```mermaid
-graph TD;
-    App-->Counter1;
-    App-->Counter2;
-    App-->Counter3;
-    App-->Total;
-    style App fill:#81B1DB
-    style Counter1 fill:#81B1DB
-    style Total fill:#81B1DB
-```
-
-</div>
-
-</div>
-
----
 layout: center
 ---
 
@@ -153,6 +107,121 @@ That said it should cover most of the cases for free. As such it's definitely a 
 -->
 
 ---
+
+
+
+````md magic-move {lines: true}
+```tsx
+function App() {
+  const [value1, setValue1] = useState(0);
+  const [value2, setValue2] = useState(0);
+  const [value3, setValue3] = useState(0);
+
+  return (
+    <div>
+      <Counter value={value1} increment={() => setValue1((v) => v + 1)} />
+      <Counter value={value2} increment={() => setValue2((v) => v + 1)} />
+      <Counter value={value3} increment={() => setValue3((v) => v + 1)} />
+      <Total value1={value1} value2={value2} value3={value3} />
+    </div>
+  );
+}
+```
+
+```js
+function App() {
+  const $ = _c(18);
+  const [value1, setValue1] = useState(0);
+  const [value2, setValue2] = useState(0);
+  const [value3, setValue3] = useState(0);
+  let t0;
+  if ($[0] === Symbol.for("react.memo_cache_sentinel")) {
+    t0 = () => setValue1((v) => v + 1);
+    $[0] = t0;
+  } else {
+    t0 = $[0];
+  }
+
+  let t1;
+  if ($[1] !== value1) {
+    t1 = <Counter value={value1} increment={t0} />;
+    $[1] = value1;
+    $[2] = t1;
+  } else {
+    t1 = $[2];
+  }
+
+  let t2;
+  if ($[3] === Symbol.for("react.memo_cache_sentinel")) {
+    t2 = () => setValue2((v_0) => v_0 + 1);
+
+    $[3] = t2;
+  } else {
+    t2 = $[3];
+  }
+
+  let t3;
+  if ($[4] !== value2) {
+    t3 = <Counter value={value2} increment={t2} />;
+    $[4] = value2;
+    $[5] = t3;
+  } else {
+    t3 = $[5];
+  }
+
+  let t4;
+  if ($[6] === Symbol.for("react.memo_cache_sentinel")) {
+    t4 = () => setValue3((v_1) => v_1 + 1);
+    $[6] = t4;
+  } else {
+    t4 = $[6];
+  }
+
+  let t5;
+  if ($[7] !== value3) {
+    t5 = <Counter value={value3} increment={t4} />;
+    $[7] = value3;
+    $[8] = t5;
+  } else {
+    t5 = $[8];
+  }
+
+  let t6;
+  if ($[9] !== value1 || $[10] !== value2 || $[11] !== value3) {
+    t6 = <Total value1={value1} value2={value2} value3={value3} />;
+    $[9] = value1;
+    $[10] = value2;
+    $[11] = value3;
+    $[12] = t6;
+  } else {
+    t6 = $[12];
+  }
+
+  let t7;
+  if ($[13] !== t1 || $[14] !== t3 || $[15] !== t5 || $[16] !== t6) {
+    t7 = (
+      <div>
+        {t1}
+        {t3}
+        {t5}
+        {t6}
+      </div>
+    );
+    $[13] = t1;
+    $[14] = t3;
+    $[15] = t5;
+    $[16] = t6;
+    $[17] = t7;
+  } else {
+    t7 = $[17];
+  }
+
+  return t7;
+}
+```
+````
+
+---
 layout: center
 ---
 
@@ -161,6 +230,12 @@ layout: center
 # Do I need a compiler?
 
 # ...
+
+---
+layout: center
+---
+
+# Let's talk about fine-grained reactivity
 
 ---
 layout: cover
@@ -207,7 +282,7 @@ background: /assets/wallpaper-1.jpg
 layout: center
 ---
 
-# Rendering in React
+# How to make our application reactive?
 
 ---
 
@@ -216,7 +291,7 @@ layout: center
 <ul>
 <li v-click>A render cycle starts...</li>
 <li v-click>Starting from the component holding the updated state...</li>
-<li v-click>An traversing the component tree until it reaches <i>leaves</i></li>
+<li v-click>And traversing the component tree until it reaches <i>leaves</i></li>
 </ul>
 
 <div style="display: grid;">
@@ -354,9 +429,23 @@ graph TD;
 
 <ul>
 
-<li v-click>The state of the component changed?</li>
-<li v-click>The component instantiating this component re-rendered?</li>
-<li v-click>The component relies on a provider whose value changed?</li>
+<li v-click="1">The state of the component changed?</li>
+<li v-click="2">
+  The component instantiating this component re-rendered?
+
+<div v-click="3">
+
+```jsx
+function MyWonderfulModal() {
+  return <Modal><MyWonderfulContent></Modal>;
+}
+```
+
+<i><kbd>MyWonderfulContent</kbd> is eligible for re-render if the state of <kbd>MyWonderfulModal</kbd> changes, but not if the one of <kbd>Modal</kbd> changes.</i>
+</div>
+
+</li>
+<li v-click="4">The component relies on a provider whose value changed?</li>
 
 </ul>
 
@@ -378,603 +467,437 @@ graph TD;
 </ul>
 
 ---
+
+## Let's improve our counter case!
+
+````md magic-move {lines: true}
+```tsx
+import { useState } from "react";
+import Counter from "./Counter";
+import Total from "./Total";
+
+export default function App() {
+  const [value1, setValue1] = useState(0);
+  const [value2, setValue2] = useState(0);
+  const [value3, setValue3] = useState(0);
+
+  return (
+    <div>
+      <Counter value={value1} increment={() => setValue1((v) => v + 1)} />
+      <Counter value={value2} increment={() => setValue2((v) => v + 1)} />
+      <Counter value={value3} increment={() => setValue3((v) => v + 1)} />
+      <Total value1={value1} value2={value2} value3={value3} />
+    </div>
+  );
+}
+```
+
+```tsx
+import { memo, useState } from "react";
+import _Counter from "./Counter";
+import Total from "./Total";
+
+const Counter = memo(_Counter_);
+
+export default function App() {
+  const [value1, setValue1] = useState(0);
+  const [value2, setValue2] = useState(0);
+  const [value3, setValue3] = useState(0);
+
+  return (
+    <div>
+      <Counter value={value1} increment={() => setValue1((v) => v + 1)} />
+      <Counter value={value2} increment={() => setValue2((v) => v + 1)} />
+      <Counter value={value3} increment={() => setValue3((v) => v + 1)} />
+      <Total value1={value1} value2={value2} value3={value3} />
+    </div>
+  );
+}
+```
+
+```tsx
+import { memo, useCallback, useState } from "react";
+import _Counter from "./Counter";
+import Total from "./Total";
+
+const Counter = memo(_Counter);
+
+export default function App() {
+  const [value1, setValue1] = useState(0);
+  const [value2, setValue2] = useState(0);
+  const [value3, setValue3] = useState(0);
+
+  const increment1 = useCallback(() => setValue1((v) => v + 1), []);
+  const increment2 = useCallback(() => setValue2((v) => v + 1), []);
+  const increment3 = useCallback(() => setValue3((v) => v + 1), []);
+
+  return (
+    <div>
+      <Counter value={value1} increment={increment1} />
+      <Counter value={value2} increment={increment2} />
+      <Counter value={value3} increment={increment3} />
+      <Total value1={value1} value2={value2} value3={value3} />
+    </div>
+  );
+}
+```
+````
+
+---
 layout: center
 ---
 
-# But is rendering a problem on itself?
-
----
-
-## The execution is divided into two phases
-
-<ul>
-  <li v-click="1">The <b>render</b> phase:<br/><i v-click="2">React calls recursively the components in order to create an updated version of the Virtual DOM</i></li>
-  <li v-click="3">The <b>commit</b> phase:<br/><i v-click="4">React applies the smallest set of changes required to replicate the Virtual DOM on the final target</i></li>
-</ul>
-
----
-
-## Render phase is interruptible
-
-<ul>
-
-<li v-click>Not anymore recursive</li>
-<li v-click>Can be paused</li>
-<li v-click>Or even restarted</li>
-
-</ul>
-
-<!-- Since React 16, the algorithm backing the render phase is **not anymore** implemented in a **recursive** way. It relies on the traversal of linked list of fibers. The traversal of this list **can be stopped** at the middle of its execution by React depending on the needs of the browser. As such React can stop and resume execution later but also stop it and rerun it from start. -->
+# Problem solved?
 
 ---
 layout: center
 ---
 
-# Rendering grids at Pigment
+# Let's discuss of Pigment
 
 ---
+
+## Boards at Pigment
+
+<div style="display: grid; grid-template-columns: 2fr 1fr">
+<img v-click.hide="3" style="grid-row: 1; grid-column: 1; height: 70%" src="/assets/pigment-board.png" />
+<img v-click="3" style="grid-row: 1; grid-column: 1; height: 70%" src="/assets/pigment-board-2.png" />
+
+<div style="grid-row: 1; grid-column: 2">
+
+<ul>
+<li v-click="1">Real-time data and figures</li>
+<li v-click="2">Huge datasets possibly reaching several millions of cells</li>
+<li v-click="4">Real-time labels synchronized and shared between components</li>
+</ul>
+
+</div>
+</div>
+
+<!--
+At Pigment we can have multiple grids, charts, KPIs, texts... all displayed on the same page.
+All of them being live-updated and sharing data between each others.
+-->
+
+---
+
+## Grids at Pigment
 
 ![Grid at Pigment](/assets/pigment-grid-reactivity.gif)
 
 ---
 
-## Some challenges
+## A simpler grid
+
+
+![Grid at Pigment](/assets/pigment-grid.png)
+
+<v-switch>
+<template #1>
+
+- lines: _data in a CSV fashion_
+- columns/rows: _columns of the CSV to use as columns (resp. rows)_
+
+</template>
+<template #2>
+
+```js
+const lines = [
+  { Poule: 'Bianca' , Year: '2020', value: 166 },
+  { Poule: 'Bianca' , Year: '2021', value: 184 },
+  { Poule: 'Bianca' , Year: '2022', value:  54 },
+  { Poule: 'Bernard', Year: '2020', value: 130 },
+  //...
+];
+const columns = ["Poule"];
+const rows = ["Year"];
+```
+
+</template>
+</v-switch>
+
+---
+
+## A simpler grid
+
+```tsx
+export default function Grid(props: Props) {
+  const { lines, columnHeaderIds, rowHeaderIds } = props;
+
+  const columnsHeaders = buildHeaders(lines, columnHeaderIds, 0);
+  const columnsSpans = extractHeaderSpans(columnsHeaders);
+  const columnsPaths = extractPathsFromSpans(columnsSpans);
+
+  const rowsHeaders = buildHeaders(lines, rowHeaderIds, 0);
+  const rowsSpans = extractHeaderSpans(rowsHeaders);
+  const rowsPaths = extractPathsFromSpans(rowsSpans);
+
+  return (
+    <div>
+      <Rows rowsSpans={rowsSpans} columnsDepth={columnsSpans.length} />
+      <Columns columnsSpans={columnsSpans} rowsDepth={rowsSpans.length} />
+      <Cells rowsPaths={rowsPaths} columnsPaths={columnsPaths} lines={lines} rowsDepth={rowsSpans.length} columnsDepth={columnsSpans.length} />
+    </div>
+  );
+}
+```
+
+<!--
+  There are several reasons to do the pivoting in front side. One of them being to make the UI as fluid as possible.
+  By avoiding calling the back whenever the user scrolls we come with a very efficient UI.
+
+  The algorithm precomputes the whole pivoted tree and do not push the computation down to the cells.
+  One of the reason being that we are highly depending on virtualization and need to quickly now the cell at a precise location.
+
+  Without React compiler the code sucks!
+-->
+
+---
+
+<h2>React Compiler to the rescue<span v-click.hide="2" style="position: absolute">🦸</span><span v-click="2" style="position: absolute">😭</span></h2>
+
+<div v-click="1">
+<img src="/assets/react-compiler-fails.gif" alt="React compiler failing on complex grids" style="width:50%"/>
+</div>
+
+---
+
+## Designing our reactivity primitives
 
 <ul>
-  <li>Up to several millions of cells</li>
-  <li>Updated in real-time</li>
-  <li>Joining multiple distinct data-sources</li>
-  <li>Half in backend for security and half in frontend for fluidity</li>
-  <li>Handling advanced navigation patterns: multiple focuses</li>
+<li v-click>Reactivity is all about <b>controlling states</b> and <b>their updates</b></li>
+<li v-click>Default primitives such as <kbd>memo</kbd>, <kbd>useMemo</kbd>... are low level and require rethinking the code</li>
 </ul>
 
----
-
-## Let's think back about our previous reactivity case against a Pigment's grid
-
-image of a grid containing indirections
+<h3 v-click style="padding-top: 24px">What if we could have the DX of <kbd>useState</kbd> but with reactivity?</h3>
 
 ---
 
-## Let's go simpler
-
-image of a simplified version of the pivot
-
-presentation of the code
-
----
-transition: fade-out
----
-
-# What is Slidev?
-
-Slidev is a slides maker and presenter designed for developers, consist of the following features
-
-- 📝 **Text-based** - focus on the content with Markdown, and then style them later
-- 🎨 **Themable** - theme can be shared and used with npm packages
-- 🧑‍💻 **Developer Friendly** - code highlighting, live coding with autocompletion
-- 🤹 **Interactive** - embedding Vue components to enhance your expressions
-- 🎥 **Recording** - built-in recording and camera view
-- 📤 **Portable** - export into PDF, PPTX, PNGs, or even a hostable SPA
-- 🛠 **Hackable** - anything possible on a webpage
-
-<br>
-<br>
-
-Read more about [Why Slidev?](https://sli.dev/guide/why)
-
-<!--
-You can have `style` tag in markdown to override the style for the current page.
-Learn more: https://sli.dev/guide/syntax#embedded-styles
--->
-
-<!--
-Here is another comment.
--->
-
----
-transition: slide-up
-level: 2
----
-
-# Navigation
-
-Hover on the bottom-left corner to see the navigation's controls panel, [learn more](https://sli.dev/guide/navigation.html)
-
-## Keyboard Shortcuts
-
-|     |     |
-| --- | --- |
-| <kbd>right</kbd> / <kbd>space</kbd>| next animation or slide |
-| <kbd>left</kbd>  / <kbd>shift</kbd><kbd>space</kbd> | previous animation or slide |
-| <kbd>up</kbd> | previous slide |
-| <kbd>down</kbd> | next slide |
-
-<!-- https://sli.dev/guide/animations.html#click-animations -->
-<img
-  v-click
-  class="absolute -bottom-9 -left-7 w-80 opacity-50"
-  src="https://sli.dev/assets/arrow-bottom-left.svg"
-  alt=""
-/>
-<p v-after class="absolute bottom-23 left-45 opacity-30 transform -rotate-10">Here!</p>
-
----
-layout: two-cols
-layoutClass: gap-16
----
-
-# Table of contents
-
-You can use the `Toc` component to generate a table of contents for your slides:
-
-```html
-<Toc minDepth="1" maxDepth="1"></Toc>
-```
-
-The title will be inferred from your slide content, or you can override it with `title` and `level` in your frontmatter.
-
-::right::
-
-<Toc v-click minDepth="1" maxDepth="2"></Toc>
-
----
-layout: image-right
-image: https://cover.sli.dev
----
-
-# Code
-
-Use code snippets and get the highlighting directly, and even types hover![^1]
-
-```ts {all|5|7|7-8|10|all} twoslash
-// TwoSlash enables TypeScript hover information
-// and errors in markdown code blocks
-// More at https://shiki.style/packages/twoslash
-
-import { computed, ref } from 'vue'
-
-const count = ref(0)
-const doubled = computed(() => count.value * 2)
-
-doubled.value = 2
-```
-
-<arrow v-click="[4, 5]" x1="350" y1="310" x2="195" y2="334" color="#953" width="2" arrowSize="1" />
-
-<!-- This allow you to embed external code blocks -->
-<<< @/snippets/external.ts#snippet
-
-<!-- Footer -->
-[^1]: [Learn More](https://sli.dev/guide/syntax.html#line-highlighting)
-
-<!-- Inline style -->
-<style>
-.footnotes-sep {
-  @apply mt-5 opacity-10;
-}
-.footnotes {
-  @apply text-sm opacity-75;
-}
-.footnote-backref {
-  display: none;
-}
-</style>
-
-<!--
-Notes can also sync with clicks
-
-[click] This will be highlighted after the first click
-
-[click] Highlighted with `count = ref(0)`
-
-[click:3] Last click (skip two clicks)
--->
-
----
-level: 2
----
-
-# Shiki Magic Move
-
-Powered by [shiki-magic-move](https://shiki-magic-move.netlify.app/), Slidev supports animations across multiple code snippets.
-
-Add multiple code blocks and wrap them with <code>````md magic-move</code> (four backticks) to enable the magic move. For example:
+## Let's take the parent component of <kbd>Grid</kbd>
 
 ````md magic-move {lines: true}
-```ts {*|2|*}
-// step 1
-const author = reactive({
-  name: 'John Doe',
-  books: [
-    'Vue 2 - Advanced Guide',
-    'Vue 3 - Basic Guide',
-    'Vue 4 - The Mystery'
-  ]
-})
+```tsx
+export default function App() {
+  const [lines, setLines] = useState([]);
+
+  return (
+    <div>
+      <HeaderButtons refreshLines={newLines => setLines(newLines)} />
+      <Grid lines={lines} rowHeaderIds={["Country", "Town"]} columnHeaderIds={["Product"]} />
+    </div>
+  );
+}
 ```
 
-```ts {*|1-2|3-4|3-4,8}
-// step 2
-export default {
-  data() {
-    return {
-      author: {
-        name: 'John Doe',
-        books: [
-          'Vue 2 - Advanced Guide',
-          'Vue 3 - Basic Guide',
-          'Vue 4 - The Mystery'
-        ]
-      }
+```tsx
+export default function App() {
+  const [lines, setLines] = usePipe([]);
+
+  return (
+    <div>
+      <HeaderButtons refreshLines={newLines => setLines(newLines)} />
+      <Grid lines={lines} rowHeaderIds={["Country", "Town"]} columnHeaderIds={["Product"]} />
+    </div>
+  );
+}
+
+function usePipe<T>(initialValue: T): [value: Shell<T>, setter: (nextValue: T) => void] {
+  // Not implemented!
+}
+```
+
+```tsx
+function usePipe<T>(initialValue: T): [value: Shell<T>, setter: (nextValue: T) => void] {
+  // Not implemented!
+}
+```
+
+```tsx
+function usePipe<T>(initialValue: T): [value$: BehaviorSubject<T>, setter: (nextValue: T) => void] {
+  const [value$] = useState(() => new BehaviorSubject(initialValue));
+  const [setter] = useState(() => (nextValue: T) => value$.next(nextValue));
+  return [value$, setter];
+}
+```
+
+```tsx
+function usePipe<T>(initialValue: T): [value$: BehaviorSubject<T>, setter: (nextValue: T) => void] {
+  const [value$] = useState(() => new BehaviorSubject(initialValue));
+  const [setter] = useState(() => (nextValue: T) => {
+    if (!isEqual(nextValue, readSync(value$))) {
+      value$.next(nextValue);
     }
-  }
+  });
+  return [value$, setter];
 }
 ```
 
-```ts
-// step 3
-export default {
-  data: () => ({
-    author: {
-      name: 'John Doe',
-      books: [
-        'Vue 2 - Advanced Guide',
-        'Vue 3 - Basic Guide',
-        'Vue 4 - The Mystery'
-      ]
+```tsx
+export default function App() {
+  const [lines$, setLines] = usePipe([]);
+
+  return (
+    <div>
+      <HeaderButtons refreshLines={newLines => setLines(newLines)} />
+      <Grid lines={lines$} rowHeaderIds={["Country", "Town"]} columnHeaderIds={["Product"]} />
+    </div>
+  );
+}
+
+function usePipe<T>(initialValue: T): [value$: BehaviorSubject<T>, setter: (nextValue: T) => void] {
+  const [value$] = useState(() => new BehaviorSubject(initialValue));
+  const [setter] = useState(() => (nextValue: T) => {
+    if (!isEqual(nextValue, readSync(value$))) {
+      value$.next(nextValue);
     }
-  })
+  });
+  return [value$, setter];
 }
-```
-
-Non-code blocks are ignored.
-
-```vue
-<!-- step 4 -->
-<script setup>
-const author = {
-  name: 'John Doe',
-  books: [
-    'Vue 2 - Advanced Guide',
-    'Vue 3 - Basic Guide',
-    'Vue 4 - The Mystery'
-  ]
-}
-</script>
 ```
 ````
 
 ---
-class: px-20
----
 
-# Themes
+## Let's take <kbd>Grid</kbd>
 
-Slidev comes with powerful theming support. Themes can provide styles, layouts, components, or even configurations for tools. Switching between themes by just **one edit** in your frontmatter:
+````md magic-move {lines: true}
+```tsx
+export default function Grid(props: Props) {
+  const { lines, columnHeaderIds, rowHeaderIds } = props;
 
-<div grid="~ cols-2 gap-2" m="t-2">
+  const columnsHeaders = buildHeaders(lines, columnHeaderIds, 0);
+  const columnsSpans = extractHeaderSpans(columnsHeaders);
+  const columnsPaths = extractPathsFromSpans(columnsSpans);
+  // Same for rows...
 
-```yaml
----
-theme: default
----
-```
-
-```yaml
----
-theme: seriph
----
-```
-
-<img border="rounded" src="https://github.com/slidevjs/themes/blob/main/screenshots/theme-default/01.png?raw=true" alt="">
-
-<img border="rounded" src="https://github.com/slidevjs/themes/blob/main/screenshots/theme-seriph/01.png?raw=true" alt="">
-
-</div>
-
-Read more about [How to use a theme](https://sli.dev/themes/use.html) and
-check out the [Awesome Themes Gallery](https://sli.dev/themes/gallery.html).
-
----
-
-# Clicks Animations
-
-You can add `v-click` to elements to add a click animation.
-
-<div v-click>
-
-This shows up when you click the slide:
-
-```html
-<div v-click>This shows up when you click the slide.</div>
-```
-
-</div>
-
-<br>
-
-<v-click>
-
-The <span v-mark.red="3"><code>v-mark</code> directive</span>
-also allows you to add
-<span v-mark.circle.orange="4">inline marks</span>
-, powered by [Rough Notation](https://roughnotation.com/):
-
-```html
-<span v-mark.underline.orange>inline markers</span>
-```
-
-</v-click>
-
-<div mt-20 v-click>
-
-[Learn More](https://sli.dev/guide/animations#click-animations)
-
-</div>
-
----
-
-# Motions
-
-Motion animations are powered by [@vueuse/motion](https://motion.vueuse.org/), triggered by `v-motion` directive.
-
-```html
-<div
-  v-motion
-  :initial="{ x: -80 }"
-  :enter="{ x: 0 }"
-  :click-3="{ x: 80 }"
-  :leave="{ x: 1000 }"
->
-  Slidev
-</div>
-```
-
-<div class="w-60 relative">
-  <div class="relative w-40 h-40">
-    <img
-      v-motion
-      :initial="{ x: 800, y: -100, scale: 1.5, rotate: -50 }"
-      :enter="final"
-      class="absolute inset-0"
-      src="https://sli.dev/logo-square.png"
-      alt=""
-    />
-    <img
-      v-motion
-      :initial="{ y: 500, x: -100, scale: 2 }"
-      :enter="final"
-      class="absolute inset-0"
-      src="https://sli.dev/logo-circle.png"
-      alt=""
-    />
-    <img
-      v-motion
-      :initial="{ x: 600, y: 400, scale: 2, rotate: 100 }"
-      :enter="final"
-      class="absolute inset-0"
-      src="https://sli.dev/logo-triangle.png"
-      alt=""
-    />
-  </div>
-
-  <div
-    class="text-5xl absolute top-14 left-40 text-[#2B90B6] -z-1"
-    v-motion
-    :initial="{ x: -80, opacity: 0}"
-    :enter="{ x: 0, opacity: 1, transition: { delay: 2000, duration: 1000 } }">
-    Slidev
-  </div>
-</div>
-
-<!-- vue script setup scripts can be directly used in markdown, and will only affects current page -->
-<script setup lang="ts">
-const final = {
-  x: 0,
-  y: 0,
-  rotate: 0,
-  scale: 1,
-  transition: {
-    type: 'spring',
-    damping: 10,
-    stiffness: 20,
-    mass: 2
-  }
+  return (
+    <div>
+      <Rows rowsSpans={rowsSpans} columnsDepth={columnsSpans.length} />
+      <Columns columnsSpans={columnsSpans} rowsDepth={rowsSpans.length} />
+      <Cells rowsPaths={rowsPaths} columnsPaths={columnsPaths} lines={lines} rowsDepth={rowsSpans.length} columnsDepth={columnsSpans.length} />
+    </div>
+  );
 }
-</script>
-
-<div
-  v-motion
-  :initial="{ x:35, y: 30, opacity: 0}"
-  :enter="{ y: 0, opacity: 1, transition: { delay: 3500 } }">
-
-[Learn More](https://sli.dev/guide/animations.html#motion)
-
-</div>
-
----
-
-# LaTeX
-
-LaTeX is supported out-of-box powered by [KaTeX](https://katex.org/).
-
-<br>
-
-Inline $\sqrt{3x-1}+(1+x)^2$
-
-Block
-$$ {1|3|all}
-\begin{array}{c}
-
-\nabla \times \vec{\mathbf{B}} -\, \frac1c\, \frac{\partial\vec{\mathbf{E}}}{\partial t} &
-= \frac{4\pi}{c}\vec{\mathbf{j}}    \nabla \cdot \vec{\mathbf{E}} & = 4 \pi \rho \\
-
-\nabla \times \vec{\mathbf{E}}\, +\, \frac1c\, \frac{\partial\vec{\mathbf{B}}}{\partial t} & = \vec{\mathbf{0}} \\
-
-\nabla \cdot \vec{\mathbf{B}} & = 0
-
-\end{array}
-$$
-
-<br>
-
-[Learn more](https://sli.dev/guide/syntax#latex)
-
----
-
-# Diagrams
-
-You can create diagrams / graphs from textual descriptions, directly in your Markdown.
-
-<div class="grid grid-cols-4 gap-5 pt-4 -mb-6">
-
-```mermaid {scale: 0.5, alt: 'A simple sequence diagram'}
-sequenceDiagram
-    Alice->John: Hello John, how are you?
-    Note over Alice,John: A typical interaction
 ```
 
-```mermaid {theme: 'neutral', scale: 0.8}
-graph TD
-B[Text] --> C{Decision}
-C -->|One| D[Result 1]
-C -->|Two| E[Result 2]
-```
+```tsx
+export default function Grid(props: Props) {
+  const { lines$, columnHeaderIds, rowHeaderIds } = props;
 
-```mermaid
-mindmap
-  root((mindmap))
-    Origins
-      Long history
-      ::icon(fa fa-book)
-      Popularisation
-        British popular psychology author Tony Buzan
-    Research
-      On effectiveness<br/>and features
-      On Automatic creation
-        Uses
-            Creative techniques
-            Strategic planning
-            Argument mapping
-    Tools
-      Pen and paper
-      Mermaid
-```
+  const columnsHeaders$ = useComputed(lines => buildHeaders(lines, columnHeaderIds, 0), [lines$]);
+  const columnsSpans$ = useComputed(columnsHeaders => extractHeaderSpans(columnsHeaders), [columnsHeaders$]);
+  const columnsPaths$ = useComputed(columnsSpans => extractPathsFromSpans(columnsSpans), [columnsSpans$]);
+  // Same for rows...
 
-```plantuml {scale: 0.7}
-@startuml
-
-package "Some Group" {
-  HTTP - [First Component]
-  [Another Component]
+  return (
+    <div>
+      <Rows rowsSpans={rowsSpans$} columnsDepth={columnsSpans.length} />
+      <Columns columnsSpans={columnsSpans$} rowsDepth={rowsSpans.length} />
+      <Cells rowsPaths={rowsPaths$} columnsPaths={columnsPaths$} lines={lines$} rowsDepth={rowsSpans.length} columnsDepth={columnsSpans.length} />
+    </div>
+  );
 }
 
-node "Other Groups" {
-  FTP - [Second Component]
-  [First Component] --> FTP
+function useComputed<T, U>(transform: (value: T) => U,  [subject$]: [BehaviorSubject<T>]): BehaviorSubject<U> {
+  // Not implemented!
 }
-
-cloud {
-  [Example 1]
-}
-
-database "MySql" {
-  folder "This is my folder" {
-    [Folder 3]
-  }
-  frame "Foo" {
-    [Frame 4]
-  }
-}
-
-[Another Component] --> [Example 1]
-[Example 1] --> [Folder 3]
-[Folder 3] --> [Frame 4]
-
-@enduml
 ```
 
+```tsx
+export default function Grid(props: Props) {
+  const { lines$, columnHeaderIds, rowHeaderIds } = props;
+
+  const columnsHeaders$ = useComputed(lines => buildHeaders(lines, columnHeaderIds, 0), [lines$]);
+  const columnsSpans$ = useComputed(columnsHeaders => extractHeaderSpans(columnsHeaders), [columnsHeaders$]);
+  const columnsPaths$ = useComputed(columnsSpans => extractPathsFromSpans(columnsSpans), [columnsSpans$]);
+  const columnsDepth = useWatch(useComputed((columnsSpans) => columnsSpans.length, [columnsSpans$]));
+  // Same for rows...
+
+  return (
+    <div>
+      <Rows rowsSpans={rowsSpans$} columnsDepth={columnsDepth} />
+      <Columns columnsSpans={columnsSpans$} rowsDepth={rowsDepth} />
+      <Cells rowsPaths={rowsPaths$} columnsPaths={columnsPaths$} lines={lines$} rowsDepth={rowsDepth} columnsDepth={columnsDepth} />
+    </div>
+  );
+}
+function useComputed<T, U>(transform: (value: T) => U,  [subject$]: [BehaviorSubject<T>]): BehaviorSubject<U> {
+  // Not implemented!
+}
+function useWatch<T>(subject$: BehaviorSubject<T>): T {
+  // Not implemented!
+}
+```
+````
+
+---
+
+## Let's build <kbd>useComputed</kbd>
+
+````md magic-move {lines: true}
+```tsx
+function useComputed<T, U>(transform: (value: T) => U,  [subject$]: [BehaviorSubject<T>]): BehaviorSubject<U> {
+  // Not implemented!
+}
+```
+
+```tsx
+function useComputed<T, U>(transform: (value: T) => U,  [subject$]: [BehaviorSubject<T>]): BehaviorSubject<U> {
+  const [mappedSubject$, setter] = usePipe(transform(readSync(subject$)));
+  // We need to update the mappedSubject whenver the source subject receives an update
+  return mappedSubject$;
+}
+```
+
+```tsx
+function useComputed<T, U>(transform: (value: T) => U,  [subject$]: [BehaviorSubject<T>]): BehaviorSubject<U> {
+  const [mappedSubject$, setter] = usePipe(transform(readSync(subject$)));
+  useEffect(() => {
+    const subscription = subject$.subscribe((value) => setter(transform(value)));
+    return () => subscription.unsubscribe();
+  }, [subject$, setter, transform]);
+  return mappedSubject$;
+}
+```
+````
+
+---
+
+## Let's build <kbd>useWatch</kbd>
+
+````md magic-move {lines: true}
+```tsx
+function useWatch<T>(subject$: BehaviorSubject<T>): T {
+  // Not implemented!
+}
+```
+```tsx
+function useWatch<T>(subject$: BehaviorSubject<T>): T {
+  const subscribe = useCallback(
+    (onChange: () => void): (() => void) => {
+      const subscription = subject$.subscribe(onChange);
+      return () => subscription.unsubscribe();
+    },
+    [subject$]
+  );
+  const getSnapshot = useCallback(() => readSync(subject$), [subject$]);
+  return useSyncExternalStore(subscribe, getSnapshot);
+}
+```
+````
+
+---
+
+## Results...
+
+<div v-click="1">
+<img src="/assets/observable-magic.gif" alt="Observables on complex grids" style="width:50%"/>
 </div>
-
-[Learn More](https://sli.dev/guide/syntax.html#diagrams)
-
----
-foo: bar
-dragPos:
-  square: 691,32,167,_,-16
----
-
-# Draggable Elements
-
-Double-click on the draggable elements to edit their positions.
-
-<br>
-
-###### Directive Usage
-
-```md
-<img v-drag="'square'" src="https://sli.dev/logo.png">
-```
-
-<br>
-
-###### Component Usage
-
-```md
-<v-drag text-3xl>
-  <carbon:arrow-up />
-  Use the `v-drag` component to have a draggable container!
-</v-drag>
-```
-
-<v-drag pos="663,206,261,_,-15">
-  <div text-center text-3xl border border-main rounded>
-    Double-click me!
-  </div>
-</v-drag>
-
-<img v-drag="'square'" src="https://sli.dev/logo.png">
-
-###### Draggable Arrow
-
-```md
-<v-drag-arrow two-way />
-```
-
-<v-drag-arrow pos="67,452,253,46" two-way op70 />
-
----
-
-# Monaco Editor
-
-Slidev provides built-in Monaco Editor support.
-
-Add `{monaco}` to the code block to turn it into an editor:
-
-```ts {monaco}
-import { ref } from 'vue'
-import { emptyArray } from './external'
-
-const arr = ref(emptyArray(10))
-```
-
-Use `{monaco-run}` to create an editor that can execute the code directly in the slide:
-
-```ts {monaco-run}
-import { version } from 'vue'
-import { emptyArray, sayHello } from './external'
-
-sayHello()
-console.log(`vue ${version}`)
-console.log(emptyArray<number>(10).reduce(fib => [...fib, fib.at(-1)! + fib.at(-2)!], [1, 1]))
-```
 
 ---
 layout: center
-class: text-center
 ---
 
-# Learn More
+# Questions
 
-[Documentations](https://sli.dev) · [GitHub](https://github.com/slidevjs/slidev) · [Showcases](https://sli.dev/showcases.html)
+Do not hesitate to visit our blog: <a href="https://engineering.pigment.com/" target="_blank">engineering.pigment.com</a>
