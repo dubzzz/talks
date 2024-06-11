@@ -895,6 +895,12 @@ function useWatch<T>(subject$: BehaviorSubject<T>): T {
 </div>
 
 ---
+
+<img src="/assets/early-optim.gif" alt="Early optims is nor great" style="width:30%"/>
+
+<div v-click>Beware of early optimizations</div>
+
+---
 layout: center
 ---
 
