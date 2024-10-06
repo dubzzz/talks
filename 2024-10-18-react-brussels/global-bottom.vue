@@ -2,7 +2,7 @@
   <footer
     v-if="$nav.currentLayout !== 'cover'"
     class="absolute bottom-0 left-0 right-0 p-2"
-    style="font-size: 0.8em; z-index: 1000; filter: invert(1)"
+    style="font-size: 0.8em; z-index: 1000"
   >
     <div style="display: flex; gap: 4px; color: #ffffff; align-items: center">
       <img

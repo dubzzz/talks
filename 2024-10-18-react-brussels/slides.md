@@ -9,7 +9,7 @@ drawings:
   persist: false
 transition: slide-left
 mdc: true # enable MDC Syntax: https://sli.dev/guide/syntax#mdc-syntax
-colorSchema: light
+colorSchema: dark
 ---
 
 <!---
@@ -108,7 +108,7 @@ That said it should cover most of the cases for free. As such it's definitely a 
 -->
 
 ---
-zoom: 1.5
+zoom: 1.0
 ---
 
 
@@ -678,7 +678,7 @@ export default function Grid(props: Props) {
 <h3 v-click style="padding-top: 24px">What if we could have the DX of <kbd>useState</kbd> but with reactivity?</h3>
 
 ---
-zoom: 1.5
+zoom: 1.0
 ---
 
 ## Let's take the parent component of <kbd>Grid</kbd>
@@ -841,7 +841,7 @@ function useWatch<T>(subject$: BehaviorSubject<T>): T {
 ````
 
 ---
-zoom: 1.5
+zoom: 1.0
 ---
 
 ## Let's build <kbd>useComputed</kbd>
@@ -874,7 +874,7 @@ function useComputed<T, U>(transform: (value: T) => U,  [subject$]: [BehaviorSub
 ````
 
 ---
-zoom: 1.5
+zoom: 1.0
 ---
 
 ## Let's build <kbd>useWatch</kbd>
