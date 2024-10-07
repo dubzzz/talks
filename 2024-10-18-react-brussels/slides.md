@@ -725,7 +725,7 @@ All of them being live-updated and sharing data between each others.
 ## A simpler grid
 
 
-![Grid at Pigment](/assets/pigment-grid.png)
+![Grid at Pigment](/assets/pigment-grid-2.png)
 
 <v-switch>
 <template #1>
@@ -738,13 +738,13 @@ All of them being live-updated and sharing data between each others.
 
 ```js
 const lines = [
-  { Hen: 'Bianca' , Year: '2020', value: 166 },
-  { Hen: 'Bianca' , Year: '2021', value: 184 },
-  { Hen: 'Bianca' , Year: '2022', value:  54 },
-  { Hen: 'Bernard', Year: '2020', value: 130 },
+  { Kind: 'Sussex', Hen: 'Bianca' , Year: '2020', value: 166 },
+  { Kind: 'Sussex', Hen: 'Bianca' , Year: '2021', value: 184 },
+  { Kind: 'Sussex', Hen: 'Bianca' , Year: '2022', value:  54 },
+  { Kind: 'Sussex', Hen: 'Bernard', Year: '2020', value: 130 },
   //...
 ];
-const columns = ["Hen"];
+const columns = ["Kind", "Hen"];
 const rows = ["Year"];
 ```
 
