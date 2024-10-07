@@ -722,7 +722,7 @@ All of them being live-updated and sharing data between each others.
 
 ---
 
-## A simpler grid
+## Let's take a simplified grid implementation
 
 
 ![Grid at Pigment](/assets/pigment-grid-2.png)
@@ -778,6 +778,12 @@ export default function Grid(props: Props) {
   );
 }
 ```
+
+<p style="text-align: right">
+
+[github.com/dubzzz/reactivity-comparison](https://github.com/dubzzz/reactivity-comparison/tree/main/stacks/react)
+
+</p>
 
 <!--
   There are several reasons to do the pivoting in front side. One of them being to make the UI as fluid as possible.
