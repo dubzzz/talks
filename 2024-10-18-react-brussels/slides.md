@@ -738,13 +738,13 @@ All of them being live-updated and sharing data between each others.
 
 ```js
 const lines = [
-  { Poule: 'Bianca' , Year: '2020', value: 166 },
-  { Poule: 'Bianca' , Year: '2021', value: 184 },
-  { Poule: 'Bianca' , Year: '2022', value:  54 },
-  { Poule: 'Bernard', Year: '2020', value: 130 },
+  { Hen: 'Bianca' , Year: '2020', value: 166 },
+  { Hen: 'Bianca' , Year: '2021', value: 184 },
+  { Hen: 'Bianca' , Year: '2022', value:  54 },
+  { Hen: 'Bernard', Year: '2020', value: 130 },
   //...
 ];
-const columns = ["Poule"];
+const columns = ["Hen"];
 const rows = ["Year"];
 ```
 
