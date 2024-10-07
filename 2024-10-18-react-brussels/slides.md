@@ -10,6 +10,9 @@ drawings:
 transition: slide-left
 mdc: true # enable MDC Syntax: https://sli.dev/guide/syntax#mdc-syntax
 colorSchema: dark
+themeConfig:
+  primary: rgb(61, 172, 225)
+  secondary: rgb(247, 147, 35)
 ---
 
 <!---
@@ -43,9 +46,24 @@ layout: center
 
 ## Let's consider a basic example
 
+<div style="display: grid;">
+<v-switch>
+<template #1>
+<div style="grid-row: 1; grid-column: 1;">
+
+<img
+  src="/assets/simple-target.png"
+  alt="Simple target"
+/>
+
+</div>
+</template>
+<template #2>
+<div style="grid-row: 1; grid-column: 1">
+
 <div grid="~ cols-2 gap-16">
 
-<div v-click style="padding-top: 48px">
+<div style="padding-top: 48px">
 
 ```mermaid
 graph TD;
@@ -58,11 +76,41 @@ graph TD;
 </div>
 
 <img
-  v-click
+  src="/assets/simple-target.png"
+  alt="Simple target"
+/>
+
+</div>
+
+</div>
+</template>
+<template #3>
+<div style="grid-row: 1; grid-column: 1">
+
+<div grid="~ cols-2 gap-16">
+
+<div style="padding-top: 48px">
+
+```mermaid
+graph TD;
+    App--v1,incrementV1-->Counter1;
+    App--v2,incrementV2-->Counter2;
+    App--v3,incrementV3-->Counter3;
+    App--v1,v2,v3-->Total;
+```
+
+</div>
+
+<img
   src="/assets/reactivity-bad.gif"
   alt="Bad reactivity example"
 />
 
+</div>
+
+</div>
+</template>
+</v-switch>
 </div>
 
 ---
@@ -91,21 +139,6 @@ layout: center
 More details about the compiler at https://react.dev/learn/react-compiler
 
 </div>
-
----
-layout: center
----
-
-<img src="/assets/compiler-effect-5.gif" style="max-width: 80%" />
-
-<!--
-While the compiler looks promising,
-
-1. It does not solve all the reactivity issues, but mostly simple ones. It cannot be as tailored as a very custom piece of optimization.
-2. It has extra runtime costs. I recommend you to play with the REPL and playground to see the generated code. While not huge, that's still an overhead that might be useless in many cases for very optimized apps.
-
-That said it should cover most of the cases for free. As such it's definitely a great option to use (once ready)!
--->
 
 ---
 zoom: 1.0
@@ -224,6 +257,118 @@ function App() {
 ````
 
 ---
+zoom: 0.28
+---
+
+
+```js
+function App() {
+  const $ = _c(18);
+  const [value1, setValue1] = useState(0);
+  const [value2, setValue2] = useState(0);
+  const [value3, setValue3] = useState(0);
+  let t0;
+  if ($[0] === Symbol.for("react.memo_cache_sentinel")) {
+    t0 = () => setValue1((v) => v + 1);
+    $[0] = t0;
+  } else {
+    t0 = $[0];
+  }
+
+  let t1;
+  if ($[1] !== value1) {
+    t1 = <Counter value={value1} increment={t0} />;
+    $[1] = value1;
+    $[2] = t1;
+  } else {
+    t1 = $[2];
+  }
+
+  let t2;
+  if ($[3] === Symbol.for("react.memo_cache_sentinel")) {
+    t2 = () => setValue2((v_0) => v_0 + 1);
+
+    $[3] = t2;
+  } else {
+    t2 = $[3];
+  }
+
+  let t3;
+  if ($[4] !== value2) {
+    t3 = <Counter value={value2} increment={t2} />;
+    $[4] = value2;
+    $[5] = t3;
+  } else {
+    t3 = $[5];
+  }
+
+  let t4;
+  if ($[6] === Symbol.for("react.memo_cache_sentinel")) {
+    t4 = () => setValue3((v_1) => v_1 + 1);
+    $[6] = t4;
+  } else {
+    t4 = $[6];
+  }
+
+  let t5;
+  if ($[7] !== value3) {
+    t5 = <Counter value={value3} increment={t4} />;
+    $[7] = value3;
+    $[8] = t5;
+  } else {
+    t5 = $[8];
+  }
+
+  let t6;
+  if ($[9] !== value1 || $[10] !== value2 || $[11] !== value3) {
+    t6 = <Total value1={value1} value2={value2} value3={value3} />;
+    $[9] = value1;
+    $[10] = value2;
+    $[11] = value3;
+    $[12] = t6;
+  } else {
+    t6 = $[12];
+  }
+
+  let t7;
+  if ($[13] !== t1 || $[14] !== t3 || $[15] !== t5 || $[16] !== t6) {
+    t7 = (
+      <div>
+        {t1}
+        {t3}
+        {t5}
+        {t6}
+      </div>
+    );
+    $[13] = t1;
+    $[14] = t3;
+    $[15] = t5;
+    $[16] = t6;
+    $[17] = t7;
+  } else {
+    t7 = $[17];
+  }
+
+  return t7;
+}
+```
+
+---
+layout: center
+---
+
+<img src="/assets/compiler-effect-5.gif" style="max-width: 80%" />
+
+<!--
+While the compiler looks promising,
+
+1. It does not solve all the reactivity issues, but mostly simple ones. It cannot be as tailored as a very custom piece of optimization.
+2. It has extra runtime costs. I recommend you to play with the REPL and playground to see the generated code. While not huge, that's still an overhead that might be useless in many cases for very optimized apps.
+
+That said it should cover most of the cases for free. As such it's definitely a great option to use (once ready)!
+-->
+
+---
 layout: center
 ---
 
@@ -250,13 +395,13 @@ background: /assets/wallpaper-1.jpg
 
 <div style="margin-top: 48px"></div>
 <h1 style="color: #fff !important">Nicolas DUBIEN</h1>
-<div style="display: flex; justify-content: center; font-size: 1.2em; margin-top: -20px">
+<div style="display: flex; justify-content: center; font-size: 1.2em; margin-top: -20px; align-items: end;">
   <span style="margin-top: 0.7em">
-    Software Engineer at
+    Software Engineer at&nbsp;
   </span>
   <img
-    src="/assets/pigment-logofull-white.png"
-    style="height: 50px; box-shadow: none"
+    src="/assets/Pigment logo.svg"
+    style="height: 31px; box-shadow: none"
   />
 </div>
 <div style="opacity: 0.5">
@@ -432,22 +577,8 @@ graph TD;
 <ul>
 
 <li v-click="1">The state of the component changed?</li>
-<li v-click="2">
-  The component instantiating this component re-rendered?
-
-<div v-click="3">
-
-```jsx
-function MyWonderfulModal() {
-  return <Modal><MyWonderfulContent/></Modal>;
-}
-```
-
-<i><kbd>MyWonderfulContent</kbd> is eligible for re-render if the state of <kbd>MyWonderfulModal</kbd> changes, but not if the one of <kbd>Modal</kbd> changes.</i>
-</div>
-
-</li>
-<li v-click="4">The component relies on a provider whose value changed?</li>
+<li v-click="2">The component instantiating this component re-rendered?</li>
+<li v-click="3">The component relies on a provider whose value changed?</li>
 
 </ul>
 
@@ -469,7 +600,7 @@ function MyWonderfulModal() {
 </ul>
 
 ---
-zoom: 1.2
+zoom: 1.0
 ---
 
 ## Let's improve our counter case!
@@ -621,7 +752,7 @@ const rows = ["Year"];
 </v-switch>
 
 ---
-zoom: 1.2
+zoom: 1.0
 ---
 
 ## A simpler grid
@@ -765,7 +896,7 @@ function usePipe<T>(initialValue: T): [value$: BehaviorSubject<T>, setter: (next
 ````
 
 ---
-zoom: 1.2
+zoom: 1.0
 ---
 
 ## Let's take <kbd>Grid</kbd>
