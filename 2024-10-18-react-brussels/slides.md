@@ -796,12 +796,367 @@ export default function Grid(props: Props) {
 -->
 
 ---
+zoom: 1.0
+---
+
+## A simpler grid in action
+
+```tsx
+export default function App() {
+  const [lines, setLines] = useState([]);
+
+  return (
+    <div>
+      <HeaderButtons refreshLines={newLines => setLines(newLines)} />
+      <Grid lines={lines} rowHeaderIds={["Country", "Town"]} columnHeaderIds={["Product"]} />
+    </div>
+  );
+}
+```
+
+<p style="text-align: right">
+
+[github.com/dubzzz/reactivity-comparison](https://github.com/dubzzz/reactivity-comparison/tree/main/stacks/react)
+
+</p>
+
+---
+
+## Let's play with it!
+
+<img src="/assets/react-compiler-fails.gif" alt="React compiler failing on complex grids" style="width:50%"/>
+
+---
 
 <h2>React Compiler to the rescue<span v-click.hide="2" style="position: absolute">🦸</span><span v-click="2" style="position: absolute">😭</span></h2>
 
 <div v-click="1">
 <img src="/assets/react-compiler-fails.gif" alt="React compiler failing on complex grids" style="width:50%"/>
 </div>
+
+---
+zoom: 1.0
+---
+
+## Let's take back our `<App/>` component
+
+```tsx {all|2}
+export default function App() {
+  const [lines, setLines] = useState([]);
+
+  return (
+    <div>
+      <HeaderButtons refreshLines={newLines => setLines(newLines)} />
+      <Grid lines={lines} rowHeaderIds={["Country", "Town"]} columnHeaderIds={["Product"]} />
+    </div>
+  );
+}
+```
+
+<!--
+Let's take back our <App/> component. As seen previously going with native primitives offered by React could work (and at the end we will rely on them under-the-scene)
+but can be very verbose and request us to change a lot the code.
+
+So we want to superseed and replace some usages of React's primitives with some new primitives we will come up with and that should not break DX.
+-->
+
+
+
+---
+zoom: 2.0
+---
+
+````md magic-move {lines: true}
+```tsx
+// ...
+const [lines, setLines] = useState([]);
+// ...
+```
+
+```tsx
+// ...
+const [lines, setLines] = useShell([]);
+// ...
+```
+````
+
+<!--
+So we want to replace useState by something that will be as simple to use but way more reactive by default.
+Note that we may drop some of the useful invariants offered by useState for the sake of reactivity (such as all states updates at the same time so there is no offset by one frame issues).
+-->
+
+---
+
+<div style="display: grid; padding-top: 100px">
+<v-switch>
+<template #0>
+<div style="grid-row: 1; grid-column: 1;">
+
+<img src="/assets/use-state-before.svg" alt="useState (before)" />
+
+</div>
+</template>
+<template #1>
+<div style="grid-row: 1; grid-column: 1;">
+
+<img src="/assets/use-state-after.svg" alt="useState (after)" />
+
+</div>
+</template>
+</v-switch>
+</div>
+
+---
+
+<div style="display: grid; padding-top: 100px">
+<v-switch>
+<template #0>
+<div style="grid-row: 1; grid-column: 1;">
+
+<img src="/assets/use-shell-before.svg" alt="useShell (before)" />
+
+</div>
+</template>
+<template #1>
+<div style="grid-row: 1; grid-column: 1;">
+
+<img src="/assets/use-shell-after.svg" alt="useShell (after)" />
+
+</div>
+</template>
+</v-switch>
+</div>
+
+---
+zoom: 1.0
+---
+
+````md magic-move {lines: true}
+```tsx
+function useShell<T>(initialValue: T): [value: Shell<T>, setter: (nextValue: T) => void] {
+  // Not implemented!
+}
+```
+
+```tsx
+type Shell<T> = BehaviorSubject<T>;
+
+function useShell<T>(initialValue: T): [value$: Shell<T>, setter: (nextValue: T) => void] {
+  // Not implemented!
+}
+```
+
+```tsx
+type Shell<T> = BehaviorSubject<T>;
+
+function useShell<T>(initialValue: T): [value$: Shell<T>, setter: (nextValue: T) => void] {
+  const [value$] = useState(() => new BehaviorSubject(initialValue));
+  const [setter] = useState(() => (nextValue: T) => value$.next(nextValue));
+  return [value$, setter];
+}
+```
+````
+
+---
+zoom: 1.0
+---
+
+## Let's use the shell within our `<Grid/>` component
+
+```tsx {all|4,5,6}
+export default function Grid(props: Props) {
+  const { lines, columnHeaderIds, rowHeaderIds } = props;
+
+  const columnsHeaders = buildHeaders(lines, columnHeaderIds, 0);
+  const columnsSpans = extractHeaderSpans(columnsHeaders);
+  const columnsPaths = extractPathsFromSpans(columnsSpans);
+
+  const rowsHeaders = buildHeaders(lines, rowHeaderIds, 0);
+  const rowsSpans = extractHeaderSpans(rowsHeaders);
+  const rowsPaths = extractPathsFromSpans(rowsSpans);
+
+  return (
+    <div>
+      <Rows rowsSpans={rowsSpans} columnsDepth={columnsSpans.length} />
+      <Columns columnsSpans={columnsSpans} rowsDepth={rowsSpans.length} />
+      <Cells rowsPaths={rowsPaths} columnsPaths={columnsPaths} lines={lines} rowsDepth={rowsSpans.length} columnsDepth={columnsSpans.length} />
+    </div>
+  );
+}
+```
+
+---
+zoom: 1.5
+---
+
+````md magic-move {lines: true}
+```tsx
+const columnsHeaders = buildHeaders(lines, columnHeaderIds, 0);
+const columnsSpans = extractHeaderSpans(columnsHeaders);
+const columnsPaths = extractPathsFromSpans(columnsSpans);
+```
+
+```tsx
+const columnsHeaders$ = useComputed(
+  lines => buildHeaders(lines, columnHeaderIds, 0),
+  [lines$],
+);
+const columnsSpans$ = useComputed(
+  columnsHeaders => extractHeaderSpans(columnsHeaders),
+  [columnsHeaders$],
+);
+const columnsPaths$ = useComputed(
+  columnsSpans => extractPathsFromSpans(columnsSpans),
+  [columnsSpans$],
+);
+```
+````
+
+---
+
+<div style="display: grid; padding-top: 100px">
+
+<img src="/assets/use-computed.svg" alt="useComputed" />
+
+</div>
+
+---
+zoom: 1.2
+---
+
+````md magic-move {lines: true}
+```tsx
+function useComputed<T, U>(transform: (value: T) => U, [shell$]: [Shell<T>]): Shell<U> {
+  // Not implemented!
+}
+```
+
+```tsx
+function useComputed<T, U>(transform: (value: T) => U, [shell$]: [Shell<T>]): Shell<U> {
+  const [mappedShell$, setter] = useShell(transform(readSync(shell$)));
+  // We need to update the mappedShell whenever the source shell receives an update
+  return mappedShell$;
+}
+```
+
+```tsx
+function useComputed<T, U>(transform: (value: T) => U, [shell$]: [Shell<T>]): Shell<U> {
+  const [mappedShell$, setter] = useShell(transform(readSync(shell$)));
+  useEffect(() => {
+    const subscription = shell$.subscribe((value) => setter(transform(value)));
+    return () => subscription.unsubscribe();
+  }, [shell$, setter, transform]);
+  return mappedShell$;
+}
+```
+````
+
+---
+zoom: 1.0
+---
+
+## Let's unwrap the shell within our `<Grid/>` component
+
+```tsx {all|11}
+export default function Grid(props: Props) {
+  const { lines$, columnHeaderIds, rowHeaderIds } = props;
+
+  const columnsHeaders$ = useComputed(lines => buildHeaders(lines, columnHeaderIds, 0), [lines$]);
+  const columnsSpans$ = useComputed(columnsHeaders => extractHeaderSpans(columnsHeaders), [columnsHeaders$]);
+  const columnsPaths$ = useComputed(columnsSpans => extractPathsFromSpans(columnsSpans), [columnsSpans$]);
+  // Same for rows...
+
+  return (
+    <div>
+      <Rows rowsSpans={rowsSpans$} columnsDepth={columnsSpans.length} />
+      <Columns columnsSpans={columnsSpans$} rowsDepth={rowsSpans.length} />
+      <Cells rowsPaths={rowsPaths$} columnsPaths={columnsPaths$} lines={lines$} rowsDepth={rowsSpans.length} columnsDepth={columnsSpans.length} />
+    </div>
+  );
+}
+```
+
+---
+zoom: 1.5
+---
+
+````md magic-move {lines: true}
+```tsx
+const columnsDepth = columnsSpans.length;
+```
+
+```tsx
+const columnsDepth$ = useComputed(
+  columnsSpans => columnsSpans.length,
+  [columnsSpans$]
+);
+const columnsDepth = ???;
+```
+
+```tsx
+const columnsDepth$ = useComputed(
+  columnsSpans => columnsSpans.length,
+  [columnsSpans$]
+);
+const columnsDepth = useWatch(columnsDepth$);
+```
+````
+
+---
+
+<div style="display: grid; padding-top: 100px">
+
+<img src="/assets/use-watch.svg" alt="useWatch" />
+
+</div>
+
+---
+zoom: 1.5
+---
+
+````md magic-move {lines: true}
+```tsx
+function useWatch<T>(shell$: Shell<T>): T {
+  // Not implemented!
+}
+```
+
+```tsx
+function useWatch<T>(shell$: Shell<T>): T {
+  const subscribe = "???";
+  const getSnapshot = "???";
+  return useSyncExternalStore(subscribe, getSnapshot);
+}
+```
+
+```tsx
+function useWatch<T>(shell$: Shell<T>): T {
+  const subscribe = useCallback(
+    (onChange: () => void): (() => void) => {
+      const subscription = shell$.subscribe(onChange);
+      return () => subscription.unsubscribe();
+    },
+    [shell$]
+  );
+  const getSnapshot = "???";
+  return useSyncExternalStore(subscribe, getSnapshot);
+}
+```
+
+```tsx
+function useWatch<T>(shell$: Shell<T>): T {
+  const subscribe = useCallback(
+    (onChange: () => void): (() => void) => {
+      const subscription = shell$.subscribe(onChange);
+      return () => subscription.unsubscribe();
+    },
+    [shell$]
+  );
+  const getSnapshot = useCallback(() => readSync(shell$), [shell$]);
+  return useSyncExternalStore(subscribe, getSnapshot);
+}
+```
+````
 
 ---
 
@@ -822,43 +1177,15 @@ zoom: 1.0
 
 ````md magic-move {lines: true}
 ```tsx
-export default function App() {
-  const [lines, setLines] = useState([]);
-
-  return (
-    <div>
-      <HeaderButtons refreshLines={newLines => setLines(newLines)} />
-      <Grid lines={lines} rowHeaderIds={["Country", "Town"]} columnHeaderIds={["Product"]} />
-    </div>
-  );
-}
-```
-
-```tsx
-export default function App() {
-  const [lines, setLines] = usePipe([]);
-
-  return (
-    <div>
-      <HeaderButtons refreshLines={newLines => setLines(newLines)} />
-      <Grid lines={lines} rowHeaderIds={["Country", "Town"]} columnHeaderIds={["Product"]} />
-    </div>
-  );
-}
-
 function usePipe<T>(initialValue: T): [value: Shell<T>, setter: (nextValue: T) => void] {
   // Not implemented!
 }
 ```
 
 ```tsx
-function usePipe<T>(initialValue: T): [value: Shell<T>, setter: (nextValue: T) => void] {
-  // Not implemented!
-}
-```
+type Shell<T> = BehaviorSubject<T>;
 
-```tsx
-function usePipe<T>(initialValue: T): [value$: BehaviorSubject<T>, setter: (nextValue: T) => void] {
+function usePipe<T>(initialValue: T): [value$: Shell<T>, setter: (nextValue: T) => void] {
   const [value$] = useState(() => new BehaviorSubject(initialValue));
   const [setter] = useState(() => (nextValue: T) => value$.next(nextValue));
   return [value$, setter];
@@ -866,30 +1193,9 @@ function usePipe<T>(initialValue: T): [value$: BehaviorSubject<T>, setter: (next
 ```
 
 ```tsx
-function usePipe<T>(initialValue: T): [value$: BehaviorSubject<T>, setter: (nextValue: T) => void] {
-  const [value$] = useState(() => new BehaviorSubject(initialValue));
-  const [setter] = useState(() => (nextValue: T) => {
-    if (!isEqual(nextValue, readSync(value$))) {
-      value$.next(nextValue);
-    }
-  });
-  return [value$, setter];
-}
-```
+type Shell<T> = BehaviorSubject<T>;
 
-```tsx
-export default function App() {
-  const [lines$, setLines] = usePipe([]);
-
-  return (
-    <div>
-      <HeaderButtons refreshLines={newLines => setLines(newLines)} />
-      <Grid lines={lines$} rowHeaderIds={["Country", "Town"]} columnHeaderIds={["Product"]} />
-    </div>
-  );
-}
-
-function usePipe<T>(initialValue: T): [value$: BehaviorSubject<T>, setter: (nextValue: T) => void] {
+function usePipe<T>(initialValue: T): [value$: Shell<T>, setter: (nextValue: T) => void] {
   const [value$] = useState(() => new BehaviorSubject(initialValue));
   const [setter] = useState(() => (nextValue: T) => {
     if (!isEqual(nextValue, readSync(value$))) {
@@ -973,66 +1279,6 @@ function useComputed<T, U>(transform: (value: T) => U,  [subject$]: [BehaviorSub
 }
 function useWatch<T>(subject$: BehaviorSubject<T>): T {
   // Not implemented!
-}
-```
-````
-
----
-zoom: 1.0
----
-
-## Let's build <kbd>useComputed</kbd>
-
-````md magic-move {lines: true}
-```tsx
-function useComputed<T, U>(transform: (value: T) => U,  [subject$]: [BehaviorSubject<T>]): BehaviorSubject<U> {
-  // Not implemented!
-}
-```
-
-```tsx
-function useComputed<T, U>(transform: (value: T) => U,  [subject$]: [BehaviorSubject<T>]): BehaviorSubject<U> {
-  const [mappedSubject$, setter] = usePipe(transform(readSync(subject$)));
-  // We need to update the mappedSubject whenver the source subject receives an update
-  return mappedSubject$;
-}
-```
-
-```tsx
-function useComputed<T, U>(transform: (value: T) => U,  [subject$]: [BehaviorSubject<T>]): BehaviorSubject<U> {
-  const [mappedSubject$, setter] = usePipe(transform(readSync(subject$)));
-  useEffect(() => {
-    const subscription = subject$.subscribe((value) => setter(transform(value)));
-    return () => subscription.unsubscribe();
-  }, [subject$, setter, transform]);
-  return mappedSubject$;
-}
-```
-````
-
----
-zoom: 1.0
----
-
-## Let's build <kbd>useWatch</kbd>
-
-````md magic-move {lines: true}
-```tsx
-function useWatch<T>(subject$: BehaviorSubject<T>): T {
-  // Not implemented!
-}
-```
-```tsx
-function useWatch<T>(subject$: BehaviorSubject<T>): T {
-  const subscribe = useCallback(
-    (onChange: () => void): (() => void) => {
-      const subscription = subject$.subscribe(onChange);
-      return () => subscription.unsubscribe();
-    },
-    [subject$]
-  );
-  const getSnapshot = useCallback(() => readSync(subject$), [subject$]);
-  return useSyncExternalStore(subscribe, getSnapshot);
 }
 ```
 ````
