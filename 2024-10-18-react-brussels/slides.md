@@ -49,65 +49,48 @@ layout: center
 <div style="display: grid;">
 <v-switch>
 <template #1>
-<div style="grid-row: 1; grid-column: 1;">
-
-<img
-  src="/assets/simple-target.png"
-  alt="Simple target"
-/>
-
+<div style="grid-row: 1; grid-column: 1;; padding-top: 16px;">
+  <img src="/assets/simple-target.png" alt="Simple target" />
 </div>
 </template>
 <template #2>
-<div style="grid-row: 1; grid-column: 1">
-
-<div grid="~ cols-2 gap-16">
-
-<div style="padding-top: 48px">
-
-```mermaid
-graph TD;
-    App--v1,incrementV1-->Counter1;
-    App--v2,incrementV2-->Counter2;
-    App--v3,incrementV3-->Counter3;
-    App--v1,v2,v3-->Total;
-```
-
-</div>
-
-<img
-  src="/assets/simple-target.png"
-  alt="Simple target"
-/>
-
-</div>
-
+<div style="grid-row: 1; grid-column: 1; padding-top: 16px;">
+  <div grid="~ cols-2 gap-16">
+    <img src="/assets/basic-1.svg" alt="Basic step number 1" />
+    <img src="/assets/simple-target.png" alt="Simple target" />
+  </div>
 </div>
 </template>
 <template #3>
-<div style="grid-row: 1; grid-column: 1">
-
-<div grid="~ cols-2 gap-16">
-
-<div style="padding-top: 48px">
-
-```mermaid
-graph TD;
-    App--v1,incrementV1-->Counter1;
-    App--v2,incrementV2-->Counter2;
-    App--v3,incrementV3-->Counter3;
-    App--v1,v2,v3-->Total;
-```
-
+<div style="grid-row: 1; grid-column: 1; padding-top: 16px;">
+  <div grid="~ cols-2 gap-16">
+    <img src="/assets/basic-2.svg" alt="Basic step number 2" />
+    <img src="/assets/simple-target.png" alt="Simple target" />
+  </div>
 </div>
-
-<img
-  src="/assets/reactivity-bad.gif"
-  alt="Bad reactivity example"
-/>
-
+</template>
+<template #4>
+<div style="grid-row: 1; grid-column: 1; padding-top: 16px;">
+  <div grid="~ cols-2 gap-16">
+    <img src="/assets/basic-3.svg" alt="Basic step number 3" />
+    <img src="/assets/simple-target.png" alt="Simple target" />
+  </div>
 </div>
-
+</template>
+<template #5>
+<div style="grid-row: 1; grid-column: 1; padding-top: 16px;">
+  <div grid="~ cols-2 gap-16">
+    <img src="/assets/basic-4.svg" alt="Basic step number 4" />
+    <img src="/assets/simple-target.png" alt="Simple target" />
+  </div>
+</div>
+</template>
+<template #6>
+<div style="grid-row: 1; grid-column: 1; padding-top: 16px;">
+  <div grid="~ cols-2 gap-16">
+    <img src="/assets/basic-4.svg" alt="Basic step number 4" />
+    <img src="/assets/reactivity-bad.gif" alt="Bad reactivity example" />
+  </div>
 </div>
 </template>
 </v-switch>
@@ -127,9 +110,9 @@ layout: center
 
 ---
 
-## Compiler to the rescue
+## 🦸‍♀️ Compiler to the rescue
 
-<div v-click>
+<div v-click style="padding-top: 16px;">
 
 <img
   src="/assets/reactivity-compiler.gif"
@@ -141,7 +124,7 @@ More details about the compiler at https://react.dev/learn/react-compiler
 </div>
 
 ---
-zoom: 1.0
+zoom: 1.4
 ---
 
 
@@ -180,79 +163,7 @@ function App() {
   let t1;
   if ($[1] !== value1) {
     t1 = <Counter value={value1} increment={t0} />;
-    $[1] = value1;
-    $[2] = t1;
-  } else {
-    t1 = $[2];
-  }
-
-  let t2;
-  if ($[3] === Symbol.for("react.memo_cache_sentinel")) {
-    t2 = () => setValue2((v_0) => v_0 + 1);
-
-    $[3] = t2;
-  } else {
-    t2 = $[3];
-  }
-
-  let t3;
-  if ($[4] !== value2) {
-    t3 = <Counter value={value2} increment={t2} />;
-    $[4] = value2;
-    $[5] = t3;
-  } else {
-    t3 = $[5];
-  }
-
-  let t4;
-  if ($[6] === Symbol.for("react.memo_cache_sentinel")) {
-    t4 = () => setValue3((v_1) => v_1 + 1);
-    $[6] = t4;
-  } else {
-    t4 = $[6];
-  }
-
-  let t5;
-  if ($[7] !== value3) {
-    t5 = <Counter value={value3} increment={t4} />;
-    $[7] = value3;
-    $[8] = t5;
-  } else {
-    t5 = $[8];
-  }
-
-  let t6;
-  if ($[9] !== value1 || $[10] !== value2 || $[11] !== value3) {
-    t6 = <Total value1={value1} value2={value2} value3={value3} />;
-    $[9] = value1;
-    $[10] = value2;
-    $[11] = value3;
-    $[12] = t6;
-  } else {
-    t6 = $[12];
-  }
-
-  let t7;
-  if ($[13] !== t1 || $[14] !== t3 || $[15] !== t5 || $[16] !== t6) {
-    t7 = (
-      <div>
-        {t1}
-        {t3}
-        {t5}
-        {t6}
-      </div>
-    );
-    $[13] = t1;
-    $[14] = t3;
-    $[15] = t5;
-    $[16] = t6;
-    $[17] = t7;
-  } else {
-    t7 = $[17];
-  }
-
-  return t7;
-}
+// ...more code...
 ```
 ````
 
