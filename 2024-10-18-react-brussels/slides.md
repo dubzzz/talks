@@ -89,7 +89,7 @@ layout: center
 <div style="grid-row: 1; grid-column: 1; padding-top: 16px;">
   <div grid="~ cols-2 gap-16">
     <img src="/assets/basic-4.svg" alt="Basic step number 4" />
-    <img src="/assets/reactivity-bad.gif" alt="Bad reactivity example" />
+    <img src="/assets/reactivity-bad-edited.gif" alt="Bad reactivity example" />
   </div>
 </div>
 </template>
@@ -115,7 +115,7 @@ layout: center
 <div v-click style="padding-top: 16px;">
 
 <img
-  src="/assets/reactivity-compiler.gif"
+  src="/assets/reactivity-compiler-edited.gif"
   alt="Better reactivity example"
 />
 
