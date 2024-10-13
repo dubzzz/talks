@@ -88,8 +88,33 @@ layout: center
 <template #6>
 <div style="grid-row: 1; grid-column: 1; padding-top: 16px;">
   <div grid="~ cols-2 gap-16">
-    <img src="/assets/basic-4.svg" alt="Basic step number 4" />
-    <img src="/assets/reactivity-bad-edited.gif" alt="Bad reactivity example" />
+
+```tsx
+function App() {
+  const [value1, setValue1] = useState(0);
+  const [value2, setValue2] = useState(0);
+  const [value3, setValue3] = useState(0);
+  return (
+    <div>
+      <Counter
+        value={value1}
+        increment={() => setValue1((v) => v + 1)} />
+      <Counter
+        value={value2}
+        increment={() => setValue2((v) => v + 1)} />
+      <Counter
+        value={value3}
+        increment={() => setValue3((v) => v + 1)} />
+      <Total
+        value1={value1}
+        value2={value2}
+        value3={value3} />
+    </div>
+  );
+}
+```
+
+<img src="/assets/reactivity-bad-edited.gif" alt="Bad reactivity example" />
   </div>
 </div>
 </template>
@@ -344,138 +369,91 @@ layout: center
 
 ---
 
-## Whenever a state changes
-
-<ul>
-<li v-click>A render cycle starts...</li>
-<li v-click>Starting from the component holding the updated state...</li>
-<li v-click>And traversing the component tree until it reaches <i>leaves</i></li>
-</ul>
+## Let's understand why it was not very reactive
 
 <div style="display: grid;">
 <v-switch>
 <template #1>
-<div style="grid-row: 1; grid-column: 1;">
-
-```mermaid
-graph TD;
-    App-->Counter1;
-    App-->Counter2;
-    App-->Counter3;
-    App-->Total;
-    style App fill:yellow
-    style Counter1 stroke:#777,stroke-width:2px,color:#777,stroke-dasharray: 5 5
-    style Counter2 stroke:#777,stroke-width:2px,color:#777,stroke-dasharray: 5 5
-    style Counter3 stroke:#777,stroke-width:2px,color:#777,stroke-dasharray: 5 5
-    style Total stroke:#777,stroke-width:2px,color:#777,stroke-dasharray: 5 5
-```
-
+<div style="grid-row: 1; grid-column: 1;; padding-top: 16px;">
+  <div grid="~ cols-2 gap-16">
+    <img src="/assets/basic-4.svg" alt="Basic step number 4" />
+    <ul></ul>
+  </div>
 </div>
 </template>
 <template #2>
-<div style="grid-row: 1; grid-column: 1;">
-
-```mermaid
-graph TD;
-    App-->Counter1;
-    App-->Counter2;
-    App-->Counter3;
-    App-->Total;
-    style App fill:#81B1DB
-```
-
+<div style="grid-row: 1; grid-column: 1;; padding-top: 16px;">
+  <div grid="~ cols-2 gap-16">
+    <img src="/assets/basic-5.svg" alt="Basic step number 5" />
+    <ul><li>Whenever the state of a component changes React has to re-render it</li></ul>
+  </div>
 </div>
 </template>
 <template #3>
-<div style="grid-row: 1; grid-column: 1;">
-
-```mermaid
-graph TD;
-    App-->Counter1;
-    Counter1-->id(???);
-    App-->Counter2;
-    App-->Counter3;
-    App-->Total;
-    style App fill:#81B1DB
-    style Counter1 fill:yellow
-    style id stroke:#777,stroke-width:2px,color:#777,stroke-dasharray: 5 5
-```
-
+<div style="grid-row: 1; grid-column: 1;; padding-top: 16px;">
+  <div grid="~ cols-2 gap-16">
+    <img src="/assets/basic-6.svg" alt="Basic step number 6" />
+    <ul>
+      <li>Whenever the state of a component changes React has to re-render it</li>
+      <li>Whenever a component re-renders React has to re-render all its children <i>(the ones instantiating by this component)</i></li>
+    </ul>
+  </div>
 </div>
 </template>
 <template #4>
-<div style="grid-row: 1; grid-column: 1;">
-
-```mermaid
-graph TD;
-    App-->Counter1;
-    App-->Counter2;
-    Counter2-->id(???);
-    App-->Counter3;
-    App-->Total;
-    style App fill:#81B1DB
-    style Counter1 fill:#81B1DB
-    style Counter2 fill:yellow
-    style id stroke:#777,stroke-width:2px,color:#777,stroke-dasharray: 5 5
-```
-
+<div style="grid-row: 1; grid-column: 1;; padding-top: 16px;">
+  <div grid="~ cols-2 gap-16">
+    <img src="/assets/basic-7.svg" alt="Basic step number 7" />
+    <ul>
+      <li>Whenever the state of a component changes React has to re-render it</li>
+      <li>Whenever a component re-renders React has to re-render all its children <i>(the ones instantiating by this component)</i></li>
+    </ul>
+  </div>
 </div>
 </template>
 <template #5>
-<div style="grid-row: 1; grid-column: 1;">
-
-```mermaid
-graph TD;
-    App-->Counter1;
-    App-->Counter2;
-    App-->Counter3;
-    Counter3-->id(???);
-    App-->Total;
-    style App fill:#81B1DB
-    style Counter1 fill:#81B1DB
-    style Counter2 fill:#81B1DB
-    style Counter3 fill:yellow
-    style id stroke:#777,stroke-width:2px,color:#777,stroke-dasharray: 5 5
-```
-
+<div style="grid-row: 1; grid-column: 1;; padding-top: 16px;">
+  <div grid="~ cols-2 gap-16">
+    <img src="/assets/basic-8.svg" alt="Basic step number 8" />
+    <ul>
+      <li>Whenever the state of a component changes React has to re-render it</li>
+      <li>Whenever a component re-renders React has to re-render all its children <i>(the ones instantiating by this component)</i></li>
+    </ul>
+  </div>
 </div>
 </template>
 <template #6>
-<div style="grid-row: 1; grid-column: 1;">
-
-```mermaid
-graph TD;
-    App-->Counter1;
-    App-->Counter2;
-    App-->Counter3;
-    App-->Total;
-    Total-->id(???);
-    style App fill:#81B1DB
-    style Counter1 fill:#81B1DB
-    style Counter2 fill:#81B1DB
-    style Counter3 fill:#81B1DB
-    style Total fill:yellow
-    style id stroke:#777,stroke-width:2px,color:#777,stroke-dasharray: 5 5
-```
-
+<div style="grid-row: 1; grid-column: 1;; padding-top: 16px;">
+  <div grid="~ cols-2 gap-16">
+    <img src="/assets/basic-9.svg" alt="Basic step number 9" />
+    <ul>
+      <li>Whenever the state of a component changes React has to re-render it</li>
+      <li>Whenever a component re-renders React has to re-render all its children <i>(the ones instantiating by this component)</i></li>
+    </ul>
+  </div>
 </div>
 </template>
 <template #7>
-<div style="grid-row: 1; grid-column: 1;">
-
-```mermaid
-graph TD;
-    App-->Counter1;
-    App-->Counter2;
-    App-->Counter3;
-    App-->Total;
-    style App fill:#81B1DB
-    style Counter1 fill:#81B1DB
-    style Counter2 fill:#81B1DB
-    style Counter3 fill:#81B1DB
-    style Total fill:#81B1DB
-```
-
+<div style="grid-row: 1; grid-column: 1;; padding-top: 16px;">
+  <div grid="~ cols-2 gap-16">
+    <img src="/assets/basic-10.svg" alt="Basic step number 10" />
+    <ul>
+      <li>Whenever the state of a component changes React has to re-render it</li>
+      <li>Whenever a component re-renders React has to re-render all its children <i>(the ones instantiating by this component)</i></li>
+    </ul>
+  </div>
+</div>
+</template>
+<template #8>
+<div style="grid-row: 1; grid-column: 1;; padding-top: 16px;">
+  <div grid="~ cols-2 gap-16">
+    <img src="/assets/basic-10.svg" alt="Basic step number 10" />
+    <ul>
+      <li>Whenever the state of a component changes React has to re-render it</li>
+      <li>Whenever a component re-renders React has to re-render all its children <i>(the ones instantiating by this component)</i></li>
+      <li>Whenever the value of a context changes, every component using this context has to re-render <i>(as if the value of the context was their own state)</i></li>
+    </ul>
+  </div>
 </div>
 </template>
 </v-switch>
@@ -483,38 +461,7 @@ graph TD;
 
 ---
 
-## Why did it re-render?
-
-<ul>
-
-<li v-click="1">The state of the component changed?</li>
-<li v-click="2">The component instantiating this component re-rendered?</li>
-<li v-click="3">The component relies on a provider whose value changed?</li>
-
-</ul>
-
----
-
-## How to avoid re-render?
-
-<ul>
-
-<li v-click="1">
-  Wrap the component within <kbd>React.memo</kbd>
-  <ul>
-    <li v-click="2">But props passed to the component have to be stabilized, possibly with <kbd>useMemo</kbd> and <kbd>useCallback</kbd></li>
-    <li v-click="3">It cannot protect from a provider</li>
-  </ul>
-</li>
-<li v-click="4">Move the state closer to the leaves</li>
-
-</ul>
-
----
-zoom: 1.0
----
-
-## Let's improve our counter case!
+## Well, why not memoizing?
 
 ````md magic-move {lines: true}
 ```tsx
@@ -538,6 +485,72 @@ export default function App() {
 }
 ```
 
+```tsx
+import { memo, useState } from "react";
+import _Counter from "./Counter";
+import Total from "./Total";
+
+const Counter = memo(_Counter);
+
+export default function App() {
+  const [value1, setValue1] = useState(0);
+  const [value2, setValue2] = useState(0);
+  const [value3, setValue3] = useState(0);
+
+  return (
+    <div>
+      <Counter value={value1} increment={() => setValue1((v) => v + 1)} />
+      <Counter value={value2} increment={() => setValue2((v) => v + 1)} />
+      <Counter value={value3} increment={() => setValue3((v) => v + 1)} />
+      <Total value1={value1} value2={value2} value3={value3} />
+    </div>
+  );
+}
+```
+````
+
+---
+
+## Is it enough?
+
+<div style="display: grid;">
+<v-switch>
+<template #1>
+<div style="grid-row: 1; grid-column: 1;; padding-top: 16px;">
+  <div grid="~ cols-2 gap-16">
+   <img src="/assets/basic-4.svg" alt="Basic step number 4" />
+  </div>
+</div>
+</template>
+<template #2>
+<div style="grid-row: 1; grid-column: 1;; padding-top: 16px;">
+  <div grid="~ cols-2 gap-16">
+   <img src="/assets/basic-memo-1.svg" alt="Memo step number 1" />
+  </div>
+</div>
+</template>
+<template #3>
+<div style="grid-row: 1; grid-column: 1;; padding-top: 16px;">
+  <div grid="~ cols-2 gap-16">
+   <img src="/assets/basic-memo-2.svg" alt="Memo step number 2" />
+  </div>
+</div>
+</template>
+<template #4>
+<div style="grid-row: 1; grid-column: 1;; padding-top: 16px;">
+  <div grid="~ cols-2 gap-16">
+   <img src="/assets/basic-memo-3.svg" alt="Memo step number 3" />
+  </div>
+</div>
+</template>
+</v-switch>
+</div>
+
+---
+
+## Memoizing even more?
+
+````md magic-move {lines: true}
 ```tsx
 import { memo, useState } from "react";
 import _Counter from "./Counter";
@@ -588,12 +601,6 @@ export default function App() {
 }
 ```
 ````
-
----
-layout: center
----
-
-# Problem solved?
 
 ---
 layout: center
