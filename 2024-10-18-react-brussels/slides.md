@@ -305,14 +305,19 @@ That said it should cover most of the cases for free. As such it's definitely a 
 -->
 
 ---
-layout: center
----
 
-# Is the compiler enough?
+# Is it fine-grained reactive?
 
-# Do I need a compiler?
+<div v-click>
 
-# ...
+> In a fine-grained reactive system an application will now have the ability to make highly _targeted_ and _specific_ updates.
+
+<p style="text-align: right">
+
+From **Solid** official documentation at [/advanced-concepts/fine-grained-reactivity](https://docs.solidjs.com/advanced-concepts/fine-grained-reactivity)
+
+</p>
+</div>
 
 ---
 layout: center
@@ -330,6 +335,7 @@ background: /assets/wallpaper-1.jpg
 </div>
 
 <div style="margin-top: 48px"></div>
+<h2 style="color: #fff !important">Fine-Grained reactivity without any compiler</h2>
 <h1 style="color: #fff !important">Nicolas DUBIEN</h1>
 <div style="display: flex; justify-content: center; font-size: 1.2em; margin-top: -20px; align-items: end;">
   <span style="margin-top: 0.7em">
