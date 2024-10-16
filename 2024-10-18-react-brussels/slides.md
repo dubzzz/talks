@@ -42,6 +42,27 @@ layout: center
 
 # What is reactivity? 🤔
 
+<div v-click>
+
+<blockquote>
+<div style="font-size: 2em; text-align: left; line-height: 1.5em;">
+When you modify them <i>(the states)</i>, the view <i>(the DOM)</i> updates. It makes state management simple and intuitive
+</div>
+</blockquote>
+
+<p style="text-align: right">
+
+From [vuejs.org](https://vuejs.org/guide/extras/reactivity-in-depth.html)
+
+</p>
+</div>
+
+<div v-click  style="text-align: center">
+<pre><code>
+DOM = f(States)
+</code></pre>
+</div>
+
 ---
 
 ## Let's consider a basic example
@@ -305,18 +326,28 @@ That said it should cover most of the cases for free. As such it's definitely a 
 -->
 
 ---
+layout: center
+---
 
-# Is it fine-grained reactive?
+# What is **fine-grained** reactivity? 🤔
 
 <div v-click>
 
-> In a fine-grained reactive system an application will now have the ability to make highly _targeted_ and _specific_ updates.
+<blockquote>
+<div style="font-size: 2em; text-align: left; line-height: 1.5em;">
+In a fine-grained reactive system an application will now have the ability to make highly targeted and specific updates.
+</div>
+</blockquote>
 
 <p style="text-align: right">
 
-From **Solid** official documentation at [/advanced-concepts/fine-grained-reactivity](https://docs.solidjs.com/advanced-concepts/fine-grained-reactivity)
+From [docs.solidjs.com](https://docs.solidjs.com/advanced-concepts/fine-grained-reactivity)
 
 </p>
+</div>
+
+<div v-click style="text-align: center">
+In such world: Only the <code>&lt;Counter/&gt;</code> being impacted and the <code>&lt;Total/&gt;</code> should recompute themselves
 </div>
 
 ---
