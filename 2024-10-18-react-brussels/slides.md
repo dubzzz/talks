@@ -793,8 +793,13 @@ layout: center
 </div>
 
 <!--
-At Pigment we can have multiple grids, charts, KPIs, texts... all displayed on the same page.
-All of them being live-updated and sharing data between each others.
+So at Pigment we display financial data. It implies grids, charts, kpis, texts and many others. All of these displayed on the same page in many cases.
+
+Our data is updated in real-time meaning that whenever someone changes part of the data I'm watching I'll see it updated on my screen. And that whatever the size of the datasets. as such we have many clients asking to show millions of cells on screen (even if it does not fit on screen, the fact to have it possibly displayed is always good for clients to confirm they have all their data and nothing is missing).
+
+We also have lots of data being shared across our widgets. And initially we went full React with contexts, and we are still happy with them as they made us able to better manage lifecycles of our caches...
+
+As such you can easily imagine that a single update if not properly handled could quickly cascade in thousands of components having to recompute themselves for just a few change for the end user (if any). So re-render and finer reactivity as quickly been a major concern for us.
 -->
 
 ---
@@ -802,6 +807,12 @@ All of them being live-updated and sharing data between each others.
 ## Grids at Pigment
 
 ![Grid at Pigment](/assets/pigment-grid-reactivity.gif)
+
+<!--
+And as you could see on this video: our grids are reactive.
+
+When someone changes something on anothre machine, we got the update and this update only re-renders the precise cells and headers. If you look closely to this video you should see that the highlightings only occur on modified pieces and not others.
+-->
 
 ---
 
@@ -833,6 +844,16 @@ const rows = ["Year"];
 
 </template>
 </v-switch>
+
+<!--
+So let's see how we did against a simplified reimplementation of Pigment.
+
+We will take a really simplified implementation of a Pivot Table component. As is a pivot table is taking a flat set of lines (one per cell to be displayed but without any precise ordering) plus a configuration of what to be put as rows or columns. Based on that it will display the data in a pivoted fashion.
+
+For instance to give you a clearer picture our grid above could be described by the data: ...giving examples from the data...
+
+Based on these lines and this configuration we can for instance know that we have one Kind called Sussex spanning on two columns. That the children headers for Sussex are Bianca and Bernard...
+-->
 
 ---
 zoom: 1.0
@@ -869,13 +890,19 @@ export default function Grid(props: Props) {
 </p>
 
 <!--
-  There are several reasons to do the pivoting in front side. One of them being to make the UI as fluid as possible.
-  By avoiding calling the back whenever the user scrolls we come with a very efficient UI.
+So now that you've the idea let see the code!
 
-  The algorithm precomputes the whole pivoted tree and do not push the computation down to the cells.
-  One of the reason being that we are highly depending on virtualization and need to quickly now the cell at a precise location.
+For the record if you really want to read through it you can have a look at the link below the code.
 
-  Without React compiler the code sucks!
+But said simply the component on the screen is taking lines plus a configuration and displaying the pivoted version of the dataset. In order to do so it has to run multiple computations:
+
+1. For each level of headers extract the relevant labels
+2. For each level x label compute the size of the headers - in other words how many columns/rows will the header span on
+3. For each most granular level compute the path of the header - in othre words for the first column it would be Sussex,Bianca...
+
+Then we can use this data to render the headers in rows, in columns and the cells.
+
+And so we have it, a naive but working implementation.
 -->
 
 ---
@@ -902,6 +929,10 @@ export default function App() {
 [github.com/dubzzz/reactivity-comparison](https://github.com/dubzzz/reactivity-comparison/tree/main/stacks/react)
 
 </p>
+
+<!--
+We can thus go futher and connect it within an app responsible to pull lines from a server, to update lines...
+-->
 
 ---
 
