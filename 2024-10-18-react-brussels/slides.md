@@ -416,6 +416,10 @@ layout: center
 
 # Let's talk about fine-grained reactivity
 
+<!--
+So let's go for fine-grained reactivity!
+-->
+
 ---
 layout: cover
 background: /assets/wallpaper-1.jpg
@@ -430,7 +434,7 @@ background: /assets/wallpaper-1.jpg
 <h1 style="color: #fff !important">Nicolas DUBIEN</h1>
 <div style="display: flex; justify-content: center; font-size: 1.2em; margin-top: -20px; align-items: end;">
   <span style="margin-top: 0.7em">
-    Software Engineer at&nbsp;
+    Principle Software Engineer at&nbsp;
   </span>
   <img
     src="/assets/Pigment logo.svg"
@@ -458,11 +462,31 @@ background: /assets/wallpaper-1.jpg
   fast-check
 </div>
 
+<!--
+But before that let me introduce myself and tell me a bit more why I wanted to speak about reactivity of React.
+
+So my name is Nicolas Dubien. I started my journey with React when I entered at Pigment. The company is working on business planning and among our key features we have dashboards made of several widgets possibly referencing charts and grids with real-time data.
+
+At Pigment, 5 years ago, there was no React Compiler, we were still at React 16 (the first version of React using hooks if I'm not wrong) and Recoil, Zustand or Jotai were not there yet. Redux and MobX existed though!
+
+So reactivity came to the scene pretty early. With grids showing millions of cells with around hundred having to be displayed (the rest being virtualized) rendering cost is not negligeable.
+
+So I'll try to describe you what we did.
+
+Before I move with reactivity, you may know me for fast-check framework. If you have never heard of it, you should probably have a look at it.
+-->
+
 ---
 layout: center
 ---
 
 # How to make our application reactive?
+
+<!--
+So the first question we asked ourselves as been: How to make our application reactive?
+
+Understanding what goes behind the scene is key if you plan to optimize it. And understanding and trying to optimize things is always simpler with small examples you can easily think of.
+-->
 
 ---
 
@@ -556,6 +580,22 @@ layout: center
 </v-switch>
 </div>
 
+<!--
+So let's apply this strategy on our toy example!
+
+Let see why we had that many renders. And let see if we find any ways to drop part of them.
+
+Let investigate what happens when we update one of our states. Considering user incremented the value of the third Counter (moving from Green to Red on the slide), React will mark this component as dirty (there is no real dirty in React, while dirty exists in Angular, but the idea is easy to get). Actually this is the first rule of re-rendering in React: ...reading...
+
+Now, that our component re-rendered React considers that children have to be too: ...reading...
+
+And so we will render 1st counter, then 2nd one, then 3rd one and finally the total.
+
+And this why everything re-rendered in our app. A classical and I'd my recommended option would be to try moving states closer to the leaves. But in our case we cannot as we need both Counters and Total to share these states. So we have to think of another solution.
+
+Before we leave the last re-render case is around context. If you're using context I pretty like to summarize it that way: when pulling from a context you can consider that the value of that context is like a state within the component doing the useContext.
+-->
+
 ---
 
 ## Well, why not memoizing?
@@ -606,6 +646,12 @@ export default function App() {
 ```
 ````
 
+<!--
+So let's optimize it! We said the React Compiler was doing memoization, maybe we can do the same. Actually when we started at Pigment we did not have this hint from the compiler but we quickly knew that memoizing stuff was a possible option.
+
+So we will put a memo around our Counter. The aim of the memo is to stop the re-rendering cascade at Counter if none of its props changed across renders.
+-->
+
 ---
 
 ## Is it enough?
@@ -642,6 +688,22 @@ export default function App() {
 </template>
 </v-switch>
 </div>
+
+<!--
+But is it enough?
+
+Well, actually Counter has been simplified a bit in our diagram. Counter is actually receiving two props: one for the value (the one we showed) and one for the increment function.
+
+And if you see where I want to go, you probably have an idea of what will happen there.
+
+So let's re-emulate our update.
+
+User asked to increment the third counter (as in previous example). As a consequence App has to be re-rendered, so it gets recomputed.
+
+But unfortunately whenvever App gets recomputed it passes a new version of the increment function to our counters. As such... memo got defeated as increment function is changing across renders.
+
+So we'd need to go even further...
+-->
 
 ---
 
@@ -698,6 +760,12 @@ export default function App() {
 }
 ```
 ````
+
+<!--
+And the last optimization I'll show you on this example is to meoize the increment callbacks across renders. Actually at the end we will probably never have to do it again with React Compiler as both memo, useMemo and useCallback will be more or less done for us for free.
+
+But having this understanding helped us to think about a better state management option for us!
+-->
 
 ---
 layout: center
