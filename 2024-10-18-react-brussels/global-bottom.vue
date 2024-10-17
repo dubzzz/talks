@@ -35,5 +35,5 @@
 </template>
 
 <script>
-await navigator.wakeLock.request("screen");
+navigator.wakeLock.request("screen");
 </script>
