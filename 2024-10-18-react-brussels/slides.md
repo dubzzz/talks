@@ -13,6 +13,10 @@ colorSchema: dark
 themeConfig:
   primary: rgb(61, 172, 225)
   secondary: rgb(247, 147, 35)
+favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b2158878cbd56bf_Pigment%20Favicon%20Webflow.png"
+#fonts:
+#  sans: DM Sans
+#  serif: Crimson Pro
 ---
 
 <div style="display:flex; justify-content: center; margin-bottom: 16px;">
@@ -516,7 +520,7 @@ Understanding what goes behind the scene is key if you plan to optimize it. And 
     <img src="/assets/basic-6.svg" alt="Basic step number 6" />
     <ul>
       <li>Whenever the state of a component changes React has to re-render it</li>
-      <li>Whenever a component re-renders React has to re-render all its children <i>(the ones instantiating by this component)</i></li>
+      <li>Whenever a component re-renders React has to re-render all its children <i>(the ones instantiated by this component)</i></li>
     </ul>
   </div>
 </div>
@@ -861,7 +865,7 @@ zoom: 1.0
 
 ## A simpler grid
 
-```tsx
+```tsx {all|2|4|5|6|14-16}
 export default function Grid(props: Props) {
   const { lines, columnHeaderIds, rowHeaderIds } = props;
 
@@ -1042,7 +1046,7 @@ Note that we may drop some of the useful invariants offered by useState for the 
 </div>
 
 ---
-zoom: 1.0
+zoom: 1.2
 ---
 
 ````md magic-move {lines: true}
