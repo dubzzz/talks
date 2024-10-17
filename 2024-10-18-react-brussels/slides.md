@@ -778,8 +778,8 @@ layout: center
 ## Boards at Pigment
 
 <div style="display: grid; grid-template-columns: 2fr 1fr">
-<img v-click.hide="3" style="grid-row: 1; grid-column: 1; height: 70%" src="/assets/pigment-board.png" />
-<img v-click="3" style="grid-row: 1; grid-column: 1; height: 70%" src="/assets/pigment-board-2.png" />
+<img v-click.hide="3" style="grid-row: 1; grid-column: 1;" src="/assets/pigment-board.png" />
+<img v-click="3" style="grid-row: 1; grid-column: 1;" src="/assets/pigment-board-2.png" />
 
 <div style="grid-row: 1; grid-column: 2">
 
