@@ -15,17 +15,6 @@ themeConfig:
   secondary: rgb(247, 147, 35)
 ---
 
-<!---
-https://x.com/posva/status/1198918347599106049
-
-https://x.com/bernhardsson/status/1523763748200382464?t=-pZG5v8Fv8STgEnOK6pkGQ
-
-https://x.com/rorypreddy/status/1142967056150728708
-
-Maybe for conclusion?
-https://www.linkedin.com/posts/alexis-hamann-845a74102_quand-tu-fais-un-hotfix-en-prod-ugcPost-6580374814211604480-A9xM/
--->
-
 <div style="display:flex; justify-content: center; margin-bottom: 16px;">
   <img src="/assets/conf-logo.webp" style="max-width: 20%" />
 </div>
@@ -35,6 +24,11 @@ https://www.linkedin.com/posts/alexis-hamann-845a74102_quand-tu-fais-un-hotfix-e
 _How did we achieve fine-grained reactivity at Pigment?_
 
 _**by Nicolas DUBIEN**_
+
+<!--
+Good morning everyone, my name is Nicolas and today we're gonna talk of reactivity.
+More precisely about fine-grained reactivity.
+-->
 
 ---
 layout: center
@@ -62,6 +56,15 @@ From [vuejs.org](https://vuejs.org/guide/extras/reactivity-in-depth.html)
 DOM = f(States)
 </code></pre>
 </div>
+
+<!--
+But before we move further, what is reactivity? And would we care about reactivity?
+Well according to VueJS... yes I know I'm in a React conference...
+But according to VueJS reactivity can be defined as follow:
+...reading...
+
+If we rephrase it in a different way, we can say that our DOM or actually whatever display target we are aiming for is a function of our states. In other words, changing our states is enough to have our display being updated.
+-->
 
 ---
 
@@ -142,17 +145,50 @@ function App() {
 </v-switch>
 </div>
 
+<!--
+So let's first confirm that React is reactive. Let's confirm it on a toy example.
+
+We are gonna implement a simple UI made of three counters and a total. On this slide you can see a very simplified UI for it with the first three rows being counters that we can increment and decrement and the last line containing the sum of all the previous counters.
+
+If we were to implement it we would probably come with the following architecture: an App component responsible to instantiate three instances of counter and one of total.
+
+Now to make it interactive, we would need to add some states. Our counters have to be interactive so let's put one state containing the value of the counter within each counter.
+
+Now let's add our total... But unfortunately, we would need to access the states of each counter to have the total. A common approach for that would be to move the state higher in our tree.
+
+By moving our three states directly within App and forwarding them to the relevant counters and to the total we should have everything wired!
+
+So we can implement it! Let's go!
+
+Here is what we could have come up with for the App component.
+
+Now that we have the code we can start playing with it. And first thing to note is: Yes it's reactive! Indeed whenever states got updated the UI updates itself. But... but... I feel there is something wrong with it. Actually on this video I enabled a feature of the React devtools, this feature is responsible to highlight any re-render (aka call to the function we wrote). And... well I feel we re-render things that are irrelevant for our changes. Indeed whenever we increment or decrement one counter we not only re-render this counter and the total but also all the other counters and the app component itself.
+-->
+
 ---
 layout: center
 ---
 
 ![](/assets/not-the-right-thing.gif)
 
+<!--
+At first it felt that React is a bit dumb there. We may have expected way better from it.
+
+(re-render does not mean updating the DOM, the sad part is just that our code is being called while we would have imagined it should not)
+-->
+
 ---
 layout: center
 ---
 
 <img src="/assets/sad-thing-no.jpg" style="max-width: 80%" />
+
+<!--
+And so 5 years ago when I started my journey with React I felt a bit sad.
+But lately things got better, I received the memo that there would be a React Compiler that should help us making our apps better.
+
+And so I tested it!
+-->
 
 ---
 
@@ -168,6 +204,12 @@ layout: center
 More details about the compiler at https://react.dev/learn/react-compiler
 
 </div>
+
+<!--
+And... it's definitely better. If we toggle on the Compiler as detailed on the official documentation, we immediatelly see improvements.
+
+This time we only re-render App, 1 Counter and Total.
+-->
 
 ---
 zoom: 1.4
@@ -212,6 +254,12 @@ function App() {
 // ...more code...
 ```
 ````
+
+<!--
+But as I like to understand what happens under the scene I started to look for the explanations of this sudden improvement. Part of the answer is that the compiler is adding automatic memoization in your code with nothing to do on your side.
+
+Problem is that it's not just two lines...
+-->
 
 ---
 zoom: 0.28
@@ -310,6 +358,12 @@ function App() {
 }
 ```
 
+<!--
+Well, not even 10. As for this very simple component it does not fit in the screen.
+
+(actually it's still not rolled-out so things may change, but it's still good to see what is the current status and honestly it's already a great improvement)
+-->
+
 ---
 layout: center
 ---
@@ -317,12 +371,8 @@ layout: center
 <img src="/assets/compiler-effect-5.gif" style="max-width: 80%" />
 
 <!--
-While the compiler looks promising,
-
-1. It does not solve all the reactivity issues, but mostly simple ones. It cannot be as tailored as a very custom piece of optimization.
-2. It has extra runtime costs. I recommend you to play with the REPL and playground to see the generated code. While not huge, that's still an overhead that might be useless in many cases for very optimized apps.
-
-That said it should cover most of the cases for free. As such it's definitely a great option to use (once ready)!
+So I felt a bit worried... Maybe good maybe not...
+Maybe I'm not using the right tool for what I'm looking for...
 -->
 
 ---
@@ -349,6 +399,16 @@ From [docs.solidjs.com](https://docs.solidjs.com/advanced-concepts/fine-grained-
 <div v-click style="text-align: center">
 In such world: Only the <code>&lt;Counter/&gt;</code> being impacted and the <code>&lt;Total/&gt;</code> should recompute themselves
 </div>
+
+<!--
+And actually is it achieving fine-grained reactivity? And well actually what do we mean with fine-grained reactivity?
+
+In order to give an answer I'd take the definition given by Solid: ...reading...
+
+In other words, applied to our case only the counter being impacted and the total should recompute themselves. As such we don't expect App to re-render with such definition.
+
+So if we go for this definition it's not totally fine-grained on this specific example. Or at least not out-of-the-box.
+-->
 
 ---
 layout: center
