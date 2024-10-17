@@ -46,7 +46,7 @@ layout: center
 
 <blockquote>
 <div style="font-size: 2em; text-align: left; line-height: 1.5em;">
-When you modify them <i>(the states)</i>, the view <i>(the DOM)</i> updates. It makes state management simple and intuitive
+When you modify [the states], the view updates. It makes state management simple and intuitive
 </div>
 </blockquote>
 
@@ -693,13 +693,13 @@ All of them being live-updated and sharing data between each others.
 
 ```js
 const lines = [
-  { Kind: 'Sussex', Hen: 'Bianca' , Year: '2020', value: 166 },
-  { Kind: 'Sussex', Hen: 'Bianca' , Year: '2021', value: 184 },
-  { Kind: 'Sussex', Hen: 'Bianca' , Year: '2022', value:  54 },
-  { Kind: 'Sussex', Hen: 'Bernard', Year: '2020', value: 130 },
+  { Kind: 'Sussex', Chicken: 'Bianca' , Year: '2020', value: 166 },
+  { Kind: 'Sussex', Chicken: 'Bianca' , Year: '2021', value: 184 },
+  { Kind: 'Sussex', Chicken: 'Bianca' , Year: '2022', value:  54 },
+  { Kind: 'Sussex', Chicken: 'Bernard', Year: '2020', value: 130 },
   //...
 ];
-const columns = ["Kind", "Hen"];
+const columns = ["Kind", "Chicken"];
 const rows = ["Year"];
 ```
 
