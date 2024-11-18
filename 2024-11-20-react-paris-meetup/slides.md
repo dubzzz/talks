@@ -1,6 +1,6 @@
 ---
 theme: seriph
-background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC-PAYSAGES-MARGERIDE-283.jpg
+background: https://media.routard.com/image/23/0/photo.1586230.w1000.jpg
 title: Réactivité granulaire en React mais sans React Compiler
 info: Réactivité granulaire en React mais sans React Compiler
 class: text-center # apply any unocss classes to the current slide
