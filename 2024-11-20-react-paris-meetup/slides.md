@@ -1,6 +1,6 @@
 ---
 theme: seriph
-background: /assets/wallpaper-1.jpg
+background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC-PAYSAGES-MARGERIDE-283.jpg
 title: Réactivité granulaire en React mais sans React Compiler
 info: Réactivité granulaire en React mais sans React Compiler
 class: text-center # apply any unocss classes to the current slide
@@ -35,8 +35,8 @@ More precisely about fine-grained reactivity.
 -->
 
 ---
-layout: center
----
+
+## layout: center
 
 # What is reactivity? 🤔
 
@@ -124,19 +124,10 @@ function App() {
   const [value3, setValue3] = useState(0);
   return (
     <div>
-      <Counter
-        value={value1}
-        increment={() => setValue1((v) => v + 1)} />
-      <Counter
-        value={value2}
-        increment={() => setValue2((v) => v + 1)} />
-      <Counter
-        value={value3}
-        increment={() => setValue3((v) => v + 1)} />
-      <Total
-        value1={value1}
-        value2={value2}
-        value3={value3} />
+      <Counter value={value1} increment={() => setValue1((v) => v + 1)} />
+      <Counter value={value2} increment={() => setValue2((v) => v + 1)} />
+      <Counter value={value3} increment={() => setValue3((v) => v + 1)} />
+      <Total value1={value1} value2={value2} value3={value3} />
     </div>
   );
 }
@@ -170,8 +161,8 @@ Now that we have the code we can start playing with it. And first thing to note 
 -->
 
 ---
-layout: center
----
+
+## layout: center
 
 ![](/assets/not-the-right-thing.gif)
 
@@ -182,8 +173,8 @@ At first it felt that React is a bit dumb there. We may have expected way better
 -->
 
 ---
-layout: center
----
+
+## layout: center
 
 <img src="/assets/sad-thing-no.jpg" style="max-width: 80%" />
 
@@ -216,9 +207,8 @@ This time we only re-render App, 1 Counter and Total.
 -->
 
 ---
-zoom: 1.4
----
 
+## zoom: 1.4
 
 ````md magic-move {lines: true}
 ```tsx
@@ -266,9 +256,8 @@ Problem is that it's not just two lines...
 -->
 
 ---
-zoom: 0.28
----
 
+## zoom: 0.28
 
 ```js
 function App() {
@@ -369,8 +358,8 @@ Well, not even 10. As for this very simple component it does not fit in the scre
 -->
 
 ---
-layout: center
----
+
+## layout: center
 
 <img src="/assets/compiler-effect-5.gif" style="max-width: 80%" />
 
@@ -380,8 +369,8 @@ Maybe I'm not using the right tool for what I'm looking for...
 -->
 
 ---
-layout: center
----
+
+## layout: center
 
 # What is **fine-grained** reactivity? 🤔
 
@@ -415,8 +404,8 @@ So if we go for this definition it's not totally fine-grained on this specific e
 -->
 
 ---
-layout: center
----
+
+## layout: center
 
 # Let's talk about fine-grained reactivity
 
@@ -425,8 +414,10 @@ So let's go for fine-grained reactivity!
 -->
 
 ---
+
 layout: cover
 background: /assets/wallpaper-1.jpg
+
 ---
 
 <div>
@@ -481,8 +472,8 @@ Before I move with reactivity, you may know me for fast-check framework. If you 
 -->
 
 ---
-layout: center
----
+
+## layout: center
 
 # How to make our application reactive?
 
@@ -772,8 +763,8 @@ But having this understanding helped us to think about a better state management
 -->
 
 ---
-layout: center
----
+
+## layout: center
 
 # Let's discuss of Pigment
 
@@ -822,7 +813,6 @@ When someone changes something on anothre machine, we got the update and this up
 
 ## Let's take a simplified grid implementation
 
-
 ![Grid at Pigment](/assets/pigment-grid-2.png)
 
 <v-switch>
@@ -836,10 +826,10 @@ When someone changes something on anothre machine, we got the update and this up
 
 ```js
 const lines = [
-  { Kind: 'Sussex', Chicken: 'Bianca' , Year: '2020', value: 166 },
-  { Kind: 'Sussex', Chicken: 'Bianca' , Year: '2021', value: 184 },
-  { Kind: 'Sussex', Chicken: 'Bianca' , Year: '2022', value:  54 },
-  { Kind: 'Sussex', Chicken: 'Bernard', Year: '2020', value: 130 },
+  { Kind: "Sussex", Chicken: "Bianca", Year: "2020", value: 166 },
+  { Kind: "Sussex", Chicken: "Bianca", Year: "2021", value: 184 },
+  { Kind: "Sussex", Chicken: "Bianca", Year: "2022", value: 54 },
+  { Kind: "Sussex", Chicken: "Bernard", Year: "2020", value: 130 },
   //...
 ];
 const columns = ["Kind", "Chicken"];
@@ -860,8 +850,8 @@ Based on these lines and this configuration we can for instance know that we hav
 -->
 
 ---
-zoom: 1.0
----
+
+## zoom: 1.0
 
 ## A simpler grid
 
@@ -881,7 +871,13 @@ export default function Grid(props: Props) {
     <div>
       <Rows rowsSpans={rowsSpans} columnsDepth={columnsSpans.length} />
       <Columns columnsSpans={columnsSpans} rowsDepth={rowsSpans.length} />
-      <Cells rowsPaths={rowsPaths} columnsPaths={columnsPaths} lines={lines} rowsDepth={rowsSpans.length} columnsDepth={columnsSpans.length} />
+      <Cells
+        rowsPaths={rowsPaths}
+        columnsPaths={columnsPaths}
+        lines={lines}
+        rowsDepth={rowsSpans.length}
+        columnsDepth={columnsSpans.length}
+      />
     </div>
   );
 }
@@ -910,8 +906,8 @@ And so we have it, a naive but working implementation.
 -->
 
 ---
-zoom: 1.0
----
+
+## zoom: 1.0
 
 ## A simpler grid in action
 
@@ -921,8 +917,12 @@ export default function App() {
 
   return (
     <div>
-      <HeaderButtons refreshLines={newLines => setLines(newLines)} />
-      <Grid lines={lines} rowHeaderIds={["Country", "Town"]} columnHeaderIds={["Product"]} />
+      <HeaderButtons refreshLines={(newLines) => setLines(newLines)} />
+      <Grid
+        lines={lines}
+        rowHeaderIds={["Country", "Town"]}
+        columnHeaderIds={["Product"]}
+      />
     </div>
   );
 }
@@ -953,8 +953,8 @@ We can thus go futher and connect it within an app responsible to pull lines fro
 </div>
 
 ---
-zoom: 1.0
----
+
+## zoom: 1.0
 
 ## Let's take back our `<App/>` component
 
@@ -964,8 +964,12 @@ export default function App() {
 
   return (
     <div>
-      <HeaderButtons refreshLines={newLines => setLines(newLines)} />
-      <Grid lines={lines} rowHeaderIds={["Country", "Town"]} columnHeaderIds={["Product"]} />
+      <HeaderButtons refreshLines={(newLines) => setLines(newLines)} />
+      <Grid
+        lines={lines}
+        rowHeaderIds={["Country", "Town"]}
+        columnHeaderIds={["Product"]}
+      />
     </div>
   );
 }
@@ -978,11 +982,9 @@ but can be very verbose and request us to change a lot the code.
 So we want to superseed and replace some usages of React's primitives with some new primitives we will come up with and that should not break DX.
 -->
 
-
-
 ---
-zoom: 2.0
----
+
+## zoom: 2.0
 
 ````md magic-move {lines: true}
 ```tsx
@@ -1046,12 +1048,14 @@ Note that we may drop some of the useful invariants offered by useState for the 
 </div>
 
 ---
-zoom: 1.2
----
+
+## zoom: 1.2
 
 ````md magic-move {lines: true}
 ```tsx
-function useShell<T>(initialValue: T): [value: Shell<T>, setter: (nextValue: T) => void] {
+function useShell<T>(
+  initialValue: T
+): [value: Shell<T>, setter: (nextValue: T) => void] {
   // Not implemented!
 }
 ```
@@ -1059,7 +1063,9 @@ function useShell<T>(initialValue: T): [value: Shell<T>, setter: (nextValue: T) 
 ```tsx
 type Shell<T> = BehaviorSubject<T>;
 
-function useShell<T>(initialValue: T): [value$: Shell<T>, setter: (nextValue: T) => void] {
+function useShell<T>(
+  initialValue: T
+): [value$: Shell<T>, setter: (nextValue: T) => void] {
   // Not implemented!
 }
 ```
@@ -1067,7 +1073,9 @@ function useShell<T>(initialValue: T): [value$: Shell<T>, setter: (nextValue: T)
 ```tsx
 type Shell<T> = BehaviorSubject<T>;
 
-function useShell<T>(initialValue: T): [value$: Shell<T>, setter: (nextValue: T) => void] {
+function useShell<T>(
+  initialValue: T
+): [value$: Shell<T>, setter: (nextValue: T) => void] {
   const [value$] = useState(() => new BehaviorSubject(initialValue));
   const [setter] = useState(() => (nextValue: T) => value$.next(nextValue));
   return [value$, setter];
@@ -1076,8 +1084,8 @@ function useShell<T>(initialValue: T): [value$: Shell<T>, setter: (nextValue: T)
 ````
 
 ---
-zoom: 1.0
----
+
+## zoom: 1.0
 
 ## Let's use the shell within our `<Grid/>` component
 
@@ -1097,15 +1105,21 @@ export default function Grid(props: Props) {
     <div>
       <Rows rowsSpans={rowsSpans} columnsDepth={columnsSpans.length} />
       <Columns columnsSpans={columnsSpans} rowsDepth={rowsSpans.length} />
-      <Cells rowsPaths={rowsPaths} columnsPaths={columnsPaths} lines={lines} rowsDepth={rowsSpans.length} columnsDepth={columnsSpans.length} />
+      <Cells
+        rowsPaths={rowsPaths}
+        columnsPaths={columnsPaths}
+        lines={lines}
+        rowsDepth={rowsSpans.length}
+        columnsDepth={columnsSpans.length}
+      />
     </div>
   );
 }
 ```
 
 ---
-zoom: 1.5
----
+
+## zoom: 1.5
 
 ````md magic-move {lines: true}
 ```tsx
@@ -1116,16 +1130,16 @@ const columnsPaths = extractPathsFromSpans(columnsSpans);
 
 ```tsx
 const columnsHeaders$ = useComputed(
-  lines => buildHeaders(lines, columnHeaderIds, 0),
-  [lines$],
+  (lines) => buildHeaders(lines, columnHeaderIds, 0),
+  [lines$]
 );
 const columnsSpans$ = useComputed(
-  columnsHeaders => extractHeaderSpans(columnsHeaders),
-  [columnsHeaders$],
+  (columnsHeaders) => extractHeaderSpans(columnsHeaders),
+  [columnsHeaders$]
 );
 const columnsPaths$ = useComputed(
-  columnsSpans => extractPathsFromSpans(columnsSpans),
-  [columnsSpans$],
+  (columnsSpans) => extractPathsFromSpans(columnsSpans),
+  [columnsSpans$]
 );
 ```
 ````
@@ -1139,18 +1153,24 @@ const columnsPaths$ = useComputed(
 </div>
 
 ---
-zoom: 1.2
----
+
+## zoom: 1.2
 
 ````md magic-move {lines: true}
 ```tsx
-function useComputed<T, U>(transform: (value: T) => U, [shell$]: [Shell<T>]): Shell<U> {
+function useComputed<T, U>(
+  transform: (value: T) => U,
+  [shell$]: [Shell<T>]
+): Shell<U> {
   // Not implemented!
 }
 ```
 
 ```tsx
-function useComputed<T, U>(transform: (value: T) => U, [shell$]: [Shell<T>]): Shell<U> {
+function useComputed<T, U>(
+  transform: (value: T) => U,
+  [shell$]: [Shell<T>]
+): Shell<U> {
   const [mappedShell$, setter] = useShell(transform(readSync(shell$)));
   // We need to update the mappedShell whenever the source shell receives an update
   return mappedShell$;
@@ -1158,7 +1178,10 @@ function useComputed<T, U>(transform: (value: T) => U, [shell$]: [Shell<T>]): Sh
 ```
 
 ```tsx
-function useComputed<T, U>(transform: (value: T) => U, [shell$]: [Shell<T>]): Shell<U> {
+function useComputed<T, U>(
+  transform: (value: T) => U,
+  [shell$]: [Shell<T>]
+): Shell<U> {
   const [mappedShell$, setter] = useShell(transform(readSync(shell$)));
   useEffect(() => {
     const subscription = shell$.subscribe((value) => setter(transform(value)));
@@ -1170,8 +1193,8 @@ function useComputed<T, U>(transform: (value: T) => U, [shell$]: [Shell<T>]): Sh
 ````
 
 ---
-zoom: 1.0
----
+
+## zoom: 1.0
 
 ## Let's unwrap the shell within our `<Grid/>` component
 
@@ -1179,24 +1202,39 @@ zoom: 1.0
 export default function Grid(props: Props) {
   const { lines$, columnHeaderIds, rowHeaderIds } = props;
 
-  const columnsHeaders$ = useComputed(lines => buildHeaders(lines, columnHeaderIds, 0), [lines$]);
-  const columnsSpans$ = useComputed(columnsHeaders => extractHeaderSpans(columnsHeaders), [columnsHeaders$]);
-  const columnsPaths$ = useComputed(columnsSpans => extractPathsFromSpans(columnsSpans), [columnsSpans$]);
+  const columnsHeaders$ = useComputed(
+    (lines) => buildHeaders(lines, columnHeaderIds, 0),
+    [lines$]
+  );
+  const columnsSpans$ = useComputed(
+    (columnsHeaders) => extractHeaderSpans(columnsHeaders),
+    [columnsHeaders$]
+  );
+  const columnsPaths$ = useComputed(
+    (columnsSpans) => extractPathsFromSpans(columnsSpans),
+    [columnsSpans$]
+  );
   // Same for rows...
 
   return (
     <div>
       <Rows rowsSpans={rowsSpans$} columnsDepth={columnsSpans.length} />
       <Columns columnsSpans={columnsSpans$} rowsDepth={rowsSpans.length} />
-      <Cells rowsPaths={rowsPaths$} columnsPaths={columnsPaths$} lines={lines$} rowsDepth={rowsSpans.length} columnsDepth={columnsSpans.length} />
+      <Cells
+        rowsPaths={rowsPaths$}
+        columnsPaths={columnsPaths$}
+        lines={lines$}
+        rowsDepth={rowsSpans.length}
+        columnsDepth={columnsSpans.length}
+      />
     </div>
   );
 }
 ```
 
 ---
-zoom: 1.5
----
+
+## zoom: 1.5
 
 ````md magic-move {lines: true}
 ```tsx
@@ -1213,7 +1251,7 @@ const columnsDepth = ???;
 
 ```tsx
 const columnsDepth$ = useComputed(
-  columnsSpans => columnsSpans.length,
+  (columnsSpans) => columnsSpans.length,
   [columnsSpans$]
 );
 const columnsDepth = useWatch(columnsDepth$);
@@ -1229,8 +1267,8 @@ const columnsDepth = useWatch(columnsDepth$);
 </div>
 
 ---
-zoom: 1.5
----
+
+## zoom: 1.5
 
 ````md magic-move {lines: true}
 ```tsx
@@ -1291,8 +1329,8 @@ function useWatch<T>(shell$: Shell<T>): T {
 <div v-click>Beware of early optimizations</div>
 
 ---
-layout: center
----
+
+## layout: center
 
 # Questions
 
