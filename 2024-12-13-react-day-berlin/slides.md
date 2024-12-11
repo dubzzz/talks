@@ -1,8 +1,8 @@
 ---
 theme: seriph
 background: https://media.routard.com/image/23/0/photo.1586230.w1000.jpg
-title: Réactivité granulaire en React mais sans React Compiler
-info: Réactivité granulaire en React mais sans React Compiler
+title: Fine-Grained Reactivity Without Any Compiler
+info: Achieving high-performance reactivity in React without compromising the developer experience has always been a key challenge. When building real-time applications designed to display hundreds of millions of rows without noticeable lag, fine-grained reactivity is essential. But when I started my journey at Pigment, neither Recoil, Jotai, nor Zustand were mature enough, and React Compiler was not yet a thing. Let's explore together how we managed to ingest, display, and update huge datasets seamlessly without sacrificing the developer or the user experience.
 class: text-center # apply any unocss classes to the current slide
 highlighter: shiki # https://sli.dev/custom/highlighters.html
 drawings:
@@ -20,12 +20,12 @@ favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b
 ---
 
 <div style="display:flex; justify-content: center; margin-bottom: 16px;">
-  <img src="/assets/conf-logo.avif" style="max-width: 40%" />
+  <img src="/assets/conf-splash-logo-nobg.png" style="max-width: 40%" />
 </div>
 
-<h1 style="color: #fff !important; line-height: 1.1em !important;">Réactivité granulaire en React mais sans React Compiler</h1>
+<h1 style="color: #fff !important; line-height: 1.1em !important;">Fine-Grained Reactivity Without Any Compiler</h1>
 
-_Comment a-t'on rendu Pigment ultra-réactif ?_
+_Our Journey to Fine-Grained Reactivity at Pigment_
 
 _**Par Nicolas DUBIEN**_
 
@@ -434,7 +434,7 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
 </div>
 
 <div style="margin-top: 48px"></div>
-<h2 style="color: #fff !important">Réactivité granulaire en React mais sans React Compiler</h2>
+<h2 style="color: #fff !important">Fine-Grained Reactivity Without Any Compiler</h2>
 <h1 style="color: #fff !important">Nicolas DUBIEN</h1>
 <div style="display: flex; justify-content: center; font-size: 1.2em; margin-top: -20px; align-items: end;">
   <span style="margin-top: 0.7em">
