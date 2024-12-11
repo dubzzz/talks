@@ -9,10 +9,10 @@ drawings:
   persist: false
 transition: slide-left
 mdc: true # enable MDC Syntax: https://sli.dev/guide/syntax#mdc-syntax
-colorSchema: dark
+colorSchema: light
 themeConfig:
-  primary: rgb(84, 213, 232)
-  secondary: rgb(222, 49, 206)
+  primary: rgb(35, 12, 234)
+  secondary: rgb(248, 211, 78)
 favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b2158878cbd56bf_Pigment%20Favicon%20Webflow.png"
 #fonts:
 #  sans: DM Sans

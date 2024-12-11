@@ -3,7 +3,7 @@
 }
 
 .dark .slidev-slide-content {
-    background: linear-gradient(180deg, #1b1542 0%, #331c63 50%, #4f2583 60%, #341b5a 65%, #110f37 75%, rgba(9,13,40,1) 100%) !important;
+    background: #f5f7f9 !important;
 }
 
 /*h1 {

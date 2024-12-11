@@ -4,21 +4,21 @@
     class="absolute bottom-0 left-0 right-0 p-2"
     style="font-size: 0.8em; z-index: 1000"
   >
-    <div style="display: flex; gap: 4px; color: rgb(222, 49, 206); align-items: center">
+    <div style="display: flex; gap: 4px; color: rgb(35, 12, 234); align-items: center">
       <img
         src="/assets/github-white.png"
-        style="height: 12px; border: none; background: none; margin: 0px"
+        style="height: 12px; border: none; background: none; margin: 0px; filter: invert(1);"
       />
       dubzzz
     </div>
-    <div style="display: flex; gap: 4px; color: rgb(222, 49, 206); align-items: center">
+    <div style="display: flex; gap: 4px; color: rgb(35, 12, 234); align-items: center">
       <img
         src="/assets/bluesky.svg"
         style="height: 12px; border: none; background: none; margin: 0px"
       />
       @nicolas.dubien.me
     </div>
-    <div style="display: flex; gap: 4px; color: rgb(222, 49, 206); align-items: center">
+    <div style="display: flex; gap: 4px; color: rgb(35, 12, 234); align-items: center">
       <img
         src="/assets/npm.png"
         style="
