@@ -939,14 +939,14 @@ We can thus go futher and connect it within an app responsible to pull lines fro
 
 ## Let's play with it!
 
-<img src="/assets/react-compiler-fails.gif" alt="React compiler failing on complex grids" style="width:50%"/>
+<img src="/assets/react-compiler-fails.gif" alt="React compiler failing on complex grids" />
 
 ---
 
 <h2>React Compiler to the rescue<span v-click.hide="2" style="position: absolute">🦸</span><span v-click="2" style="position: absolute">😭</span></h2>
 
 <div v-click="1">
-<img src="/assets/react-compiler-fails.gif" alt="React compiler failing on complex grids" style="width:50%"/>
+<img src="/assets/react-compiler-fails.gif" alt="React compiler failing on complex grids" />
 </div>
 
 ---
@@ -1278,7 +1278,7 @@ function useWatch<T>(shell$: Shell<T>): T {
 ## Results...
 
 <div v-click="1">
-<img src="/assets/observable-magic.gif" alt="Observables on complex grids" style="width:50%"/>
+<img src="/assets/observable-magic.gif" alt="Observables on complex grids" />
 </div>
 
 ---
