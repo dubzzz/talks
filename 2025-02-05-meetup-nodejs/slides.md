@@ -74,10 +74,10 @@ describe('Search engine', () => {
 <ul>
   <li v-click="1">Coverage,</li>
   <li v-click="2">Testing pyramid,</li>
-  <li v-click="2">…</li>
+  <li v-click="3">…</li>
 </ul>
 
-<p v-click="3">And… all my users are happy!</p>
+<p v-click="4">And… all my users are happy!</p>
 
 ---
 layout: image
@@ -99,7 +99,7 @@ image: /assets/papyrus.avif
 </p>
 
 <p style="color: #5C4420" v-click>
-  <span>…but got revealed 10 months after the bug appeared (11<sup>st</sup> of January 2022).</span>
+  <span>…but got revealed 10 months after the bug appeared (11<sup>th</sup> of January 2022).</span>
 </p>
 
 <p style="color: #5C4420; text-align: right; padding-top: 32px; font-weight: bold" v-click>
@@ -282,7 +282,7 @@ _\*fast-check.dev_
   <p v-click="2" style="padding-left: 16px; color: #777">generate random inputs based on specified generators</p>
   <p>such that <span style="color: rgb(90, 166, 0)">precondition(x, y, ...)</span> holds</p>
   <p v-click="3" style="padding-left: 16px; color: #777">check preconditions - <span style="color: rgb(90, 166, 0)">failure?</span> go back to previous</p>
-  <p><span style="color: rgb(90, 166, 0)">property(x, y, ...)</span> is true</p>
+  <p><span style="color: rgb(90, 166, 0)">predicate(x, y, ...)</span> is true</p>
   <p v-click="4" style="padding-left: 16px; color: #777">run the test - <span style="color: rgb(90, 166, 0)">failure?</span> shrink</p>
 </blockquote>
 
