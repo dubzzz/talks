@@ -658,6 +658,35 @@ expect(s2).toEqual(s1); // success
 layout: center
 ---
 
+# Going further?
+
+---
+
+## Extending it to E2E
+
+<v-click>
+
+> The infinite monkey theorem states that a monkey hitting keys at random on a typewriter keyboard for an infinite amount of time will almost surely type any given text, including the complete works of William Shakespeare.
+
+</v-click>
+
+<v-click>
+
+<img src="/assets/e2e.gif" style="margin-top: 16px; width: 35%" />
+
+</v-click>
+
+---
+
+## Detecting race conditions
+
+<iframe v-click width="560" height="315" src="https://www.youtube.com/embed/ysYoNrCfroo?si=csmPdbm3OekxWQLD" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
+---
+layout: center
+---
+
 # Questions
 
 Do not hesitate to visit our blog: <a href="https://engineering.pigment.com/" target="_blank">engineering.pigment.com</a>
