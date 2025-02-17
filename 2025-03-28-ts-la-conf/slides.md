@@ -347,7 +347,129 @@ layout: image
 image: /assets/papyrus.avif
 ---
 
-<h2 style="color: #cc4700">Problem #3: Type exhaustion</h2>
+<h2 style="color: #cc4700">Problem #3: Can we repeat ourselves less?</h2>
+
+<p v-click style="color: #5C4420; opacity: 1">What if we had a magic way to say <code>.fruit</code> property exists because type is <code>fruit</code>? For this example let suppose that whather the type of product, the content is the same, the name of the property is the only things that changes.</p>
+
+<pre v-click style="color: #5C4420; background: #fff5; padding: 16px; border-radius: 1px"><code>type ProductDetails = {
+  type: 'fruit' | 'vegetable';
+  fruit?: { name: string };
+  vegetable?: { name: string };
+};</code></pre>
+
+<p v-click style="color: #5C4420; opacity: 1">What if we added 100 extra types?</p>
+
+---
+
+# Mapped types
+
+Let's stop repeating ourselves
+
+<v-click>
+
+````md magic-move {lines: true}
+```ts
+type SetOfKeys = /* TODO */;
+type MyType = { [K in SetOfKeys]: ValueForKeyK };
+```
+
+```ts
+type ProductDetailsType = 'fruit' | 'vegetable';
+type ProductDetails = { [K in ProductDetailsType]: ValueForKeyK };
+```
+
+```ts
+type ProductDetailsType = 'fruit' | 'vegetable';
+type ProductDetails = { [K in ProductDetailsType]: { name: string } };
+// type ProductDetails = {
+//   fruit: { name: string; };
+//   vegetable: { name: string; };
+// }
+```
+
+```ts
+type ProductDetailsType = 'fruit' | 'vegetable';
+type ProductDetails = { [K in ProductDetailsType]: { type: K, name: string } };
+// type ProductDetails = {
+//   fruit: { type: 'fruit'; name: string; };
+//   vegetable: { type: 'vegetable'; name: string; };
+// }
+```
+
+```ts
+type ProductDetailsType = 'fruit' | 'vegetable';
+type ProductDetails = { [K in ProductDetailsType]: { type: K, [K]: { name: string } } };
+// ERROR!!!
+```
+
+```ts
+type ProductDetailsType = 'fruit' | 'vegetable';
+type ProductDetailsValueFor<K extends string> =  { type: K, [K]: { name: string } };
+type ProductDetails = { [K in ProductDetailsType]: ProductDetailsValueFor<K> };
+// ERROR!!!
+```
+
+```ts
+type ProductDetailsType = 'fruit' | 'vegetable';
+type ProductDetailsValueFor<K extends string> =  { type: K } & { [SK in K]: { name: string } };
+type ProductDetails = { [K in ProductDetailsType]: ProductDetailsValueFor<K> };
+// type ProductDetails = {
+//   fruit: { type: 'fruit'; fruit: { name: string; } };
+//   vegetable: { type: 'vegetable'; vegetable: { name: string; } };
+// }
+```
+
+```ts
+type ProductDetailsType = 'fruit' | 'vegetable';
+type ProductDetailsValueFor<K extends string> =  { type: K } & { [SK in K]: { name: string } };
+type ProductDetails = { [K in ProductDetailsType]: ProductDetailsValueFor<K> }[ProductDetailsType];
+// type ProductDetails =
+//   | { type: 'fruit'; fruit: { name: string; } }
+//   | { type: 'vegetable'; vegetable: { name: string; } };
+```
+````
+
+</v-click>
+
+<v-click>
+
+**Usages:** Strongly type external data
+
+```ts
+type Value = {
+  type: 'text' | 'numeric' | 'date';
+  textValue?: string;
+  numericValue?: number;
+  dateValue?: Date;
+};
+```
+
+</v-click>
+
+---
+
+Quick zoom on "Strongly type external data":
+
+```ts
+type ValueType = 'text' | 'numeric' | 'date';
+type Value = {
+  type: ValueType;
+  textValue?: string;
+  numericValue?: number;
+  dateValue?: Date;
+};
+
+type StronglyTypedValue = {
+  [K in Value['type']]: { type: K } & Required<Pick<Value, `${Uncapitalize<K>}Value`>>;
+}[ValueType]
+```
+
+---
+layout: image
+image: /assets/papyrus.avif
+---
+
+<h2 style="color: #cc4700">Problem #4: Type exhaustion</h2>
 
 <p v-click style="color: #5C4420; opacity: 1">Am I sure I checked all types?</p>
 
@@ -408,570 +530,154 @@ return productDetails.type === 'fruit'
 </v-click>
 
 ---
+layout: image
+image: /assets/papyrus.avif
+---
+
+<h1 style="color: #cc4700">Back to our Guiding Example</h1>
+
+<p v-click style="color: #5C4420; opacity: 1">Let's suppose we want to tell our users that they should reload the page as some external changes may have impacted the sheet. Our code might have to be adapted as follow:</p>
+
+<pre v-click style="color: #5C4420; background: #fff5; padding: 16px; border-radius: 1px"><code>function ProductSheet(props) {
+  const { storeId, productId } = props;
+  const productDetails = useFetchProductDetails(storeId, productId);
+  
+  useNotifyChanges((updatedProductDetails) => {
+    // return true if the change should be considered as impactful
+  }, productDetails);
+
+  return productDetails.type === "fruit"
+    ? &lt;div&gt;{productDetails.fruit.name}&lt;/div&gt;
+    : &lt;div&gt;{productDetails.vegetable.name}&lt;/div&gt;;
+}</code></pre>
+
+<pre v-click style="color: #5C4420; background: #fff5; padding: 16px; border-radius: 1px"><code>type SubscribableProductDetails = {
+  subscribe: (updatedValue: ProductDetails) => void;
+} & ProductDetails;</code></pre>
+
+---
+layout: image
+image: /assets/papyrus.avif
+---
+
+<h2 style="color: #cc4700">Problem #5: More generic?</h2>
+
+<p v-click style="color: #5C4420; opacity: 1">Could we make <code>Subscribable</code> more generic?</p>
+
+---
+
+# Generic
+
+Let's make things _generic_
 
 <v-click>
 
 ````md magic-move {lines: true}
 ```ts
-declare function useFetchProductDetails(
-  storeId: string,
-  productId: string
-): ProductDetails;
+type SubscribableProductDetails = {
+  subscribe: (updatedValue: ProductDetails) => void;
+} & ProductDetails;
 ```
 
 ```ts
-declare function useFetchProductDetails(
-  storeId: StoreId,
-  productId: ProductId
-): ProductDetails;
+type Subscribable<T> = {
+  subscribe: (updatedValue: T) => void;
+} & T;
 ```
 ````
 
 </v-click>
 
----
-
-<!--<p v-click style="color: #5C4420; opacity: 1">We actually have two kinds of products: <b>fruits</b> and <b>vegetables</b>, each with its own display.</p>
-
-<p v-click style="color: #5C4420; opacity: 1"><i>At the moment, we just want to display the product sheet. But we will add a few extra features over the flow.</i></p>-->
-
----
-layout: center
----
-
-# What is our issue?
-
----
-
-```ts
-describe('knuthMorrisPratt', () => {
-  it('should find word position in given text', () => {
-    expect(knuthMorrisPratt('a', '')).toBe(0);
-    expect(knuthMorrisPratt('a', 'a')).toBe(0);
-    expect(knuthMorrisPratt('abcbcglx', 'abca')).toBe(-1);
-    expect(knuthMorrisPratt('abcbcglx', 'bcgl')).toBe(3);
-    expect(knuthMorrisPratt('abcxabcdabxabcdabcdabcy', 'abcdabcy')).toBe(15);
-    expect(knuthMorrisPratt('abcxabcdabxabcdabcdabcy', 'abcdabca')).toBe(-1);
-    expect(knuthMorrisPratt('abcxabcdabxaabcdabcabcdabcdabcy', 'abcdabca')).toBe(12);
-    expect(knuthMorrisPratt('abcxabcdabxaabaabaaaabcdabcdabcy', 'aabaabaaa')).toBe(11);
-  });
-});
-```
-
-<br />
-
 <v-click>
 
-> 🙋‍♂️ Why are we covering all these cases? Aren't redundant?
-
-</v-click>
-
-<br />
-
-<v-click>
-
-> 👱‍♀️ They each cover one specific common source of issues.
-
-</v-click>
-
-<v-click>
-
-> 👱‍♀️ One for empty string, one for pattern at the beginning, one for the pattern at the end, one for the pattern at the middle…
+**Usages:** Factorizing types
 
 </v-click>
 
 ---
-
-## What is our issue, then?
-
-<v-click>
-
-> 🙋‍♂️ Why are we covering all these cases? Aren't redundant?
-
-</v-click>
-
-<v-click>
-
-> 🦹‍♂️ Don't we need others?
-
-</v-click>
-
-<v-click>
-
-> 🦹‍♂️ Why not generating some…? _given part of the issue is the limited scope of our inputs_
-
-</v-click>
-
----
-layout: center
+layout: image
+image: /assets/papyrus.avif
 ---
 
-# Going random\*…
+<h2 style="color: #cc4700">Problem #6: Typings mixing generics and variadics?</h2>
 
-<v-click>
+<p v-click style="color: #5C4420; opacity: 1">Our helper called <code>useNotifyChanges</code> should mix both variadics and generics to work well. With out initial hardcoded types not relying on generics and without variadics the thing could have been as simple as:</p>
 
-_\*But in a reproducible way_  
-_\*And not too deterministic_
-
-</v-click>
-
----
-layout: center
----
-
-## Wait a minute… 😓
-
-_Random?_
+<pre v-click style="color: #5C4420; background: #fff5; padding: 16px; border-radius: 1px"><code>declare function useNotifyChanges(
+  shouldNotify: (updatedProductDetails: ProductDetails) => boolean,
+  subscribableProductDetails: SubscribableProductDetails,
+): void;</code></pre>
 
 ---
 
-## What if the reported error is:
+# Consuming generics
 
-<v-click>
-
-```js
-text    = ".D0xjkFI{<:nx#U3lI~"
-pattern = "j>~&]&/'0Fw{?O"
-```
-
-</v-click>
-
-<v-click>
-
-```js
-text    = [1302 characters]
-pattern = [983 characters]
-```
-
-</v-click>
-
----
-layout: center
----
-
-#  Have you ever heard about _Property based testing_?
-
----
-layout: center
----
-
-![](/assets/fast-check-downloads.png)
-
-_\*fast-check.dev_
-
----
-
-## In a nutshell
-
-> We want to test properties instead of isolated cases.
-
-<br />
-
-<blockquote v-click="1">
-  <p>for all <span style="color: rgb(0, 122, 204)">(x, y, ...)</span></p>
-  <p v-click="2" style="padding-left: 16px; color: #777">generate random inputs based on specified generators</p>
-  <p>such that <span style="color: rgb(0, 122, 204)">precondition(x, y, ...)</span> holds</p>
-  <p v-click="3" style="padding-left: 16px; color: #777">check preconditions - <span style="color: rgb(0, 122, 204)">failure?</span> go back to previous</p>
-  <p><span style="color: rgb(0, 122, 204)">predicate(x, y, ...)</span> is true</p>
-  <p v-click="4" style="padding-left: 16px; color: #777">run the test - <span style="color: rgb(0, 122, 204)">failure?</span> shrink</p>
-</blockquote>
-
-<p v-click="5">
-  🔁 Run it 100 times 🔁
-</p>
-
----
-
-## Example
-
-> What if wanted to test: `knuthMorrisPratt`?
+Let's consume _generic_
 
 <v-click>
 
 ````md magic-move {lines: true}
 ```ts
-describe('knuthMorrisPratt', () => {
-  it('should find word position in given text', () => {
-    expect(knuthMorrisPratt('a', '')).toBe(0);
-    expect(knuthMorrisPratt('a', 'a')).toBe(0);
-    expect(knuthMorrisPratt('abcbcglx', 'abca')).toBe(-1);
-    expect(knuthMorrisPratt('abcbcglx', 'bcgl')).toBe(3);
-    expect(knuthMorrisPratt('abcxabcdabxabcdabcdabcy', 'abcdabcy')).toBe(15);
-    expect(knuthMorrisPratt('abcxabcdabxabcdabcdabcy', 'abcdabca')).toBe(-1);
-    expect(knuthMorrisPratt('abcxabcdabxaabcdabcabcdabcdabcy', 'abcdabca')).toBe(12);
-    expect(knuthMorrisPratt('abcxabcdabxaabaabaaaabcdabcdabcy', 'aabaabaaa')).toBe(11);
-  });
-});
+declare function useNotifyChanges(
+  shouldNotify: (updatedProductDetails: ProductDetails) => boolean,
+  subscribableProductDetails: SubscribableProductDetails,
+): void;
 ```
 
 ```ts
-describe('knuthMorrisPratt', () => {
-  it('should find word position in given text', () => {
-    expect(knuthMorrisPratt('a', '')).toBe(0);
-    expect(knuthMorrisPratt('a', 'a')).toBe(0);
-    expect(knuthMorrisPratt('abcbcglx', 'bcgl')).toBe(3);
-    expect(knuthMorrisPratt('abcxabcdabxabcdabcdabcy', 'abcdabcy')).toBe(15);
-    expect(knuthMorrisPratt('abcxabcdabxaabcdabcabcdabcdabcy', 'abcdabca')).toBe(12);
-    expect(knuthMorrisPratt('abcxabcdabxaabaabaaaabcdabcdabcy', 'aabaabaaa')).toBe(11);
-  });
-});
+declare function useNotifyChanges(
+  shouldNotify: (updatedProductDetails: ProductDetails) => boolean,
+  subscribableProductDetails: Subscribable<ProductDetails>,
+): void;
 ```
 
 ```ts
-describe('knuthMorrisPratt', () => {
-  it('should find word position in given text', () => {
-    expect(knuthMorrisPratt('' + '' + '', '')).toBe(0);
-    expect(knuthMorrisPratt('' + '' + 'a', '')).toBe(0);
-    expect(knuthMorrisPratt('' + 'a' + '', 'a')).toBe(0);
-    expect(knuthMorrisPratt('abc' + 'bcgl' + 'x', 'bcgl')).toBe(3);
-    expect(knuthMorrisPratt('abcxabcdabxabcd' + 'abcdabcy' + '', 'abcdabcy')).toBe(15);
-    expect(knuthMorrisPratt('abcxabcdabxa' + 'abcdabca' + 'bcdabcdabcy', 'abcdabca')).toBe(12);
-    expect(knuthMorrisPratt('abcxabcdabx' + 'aabaabaaa' + 'abcdabcdabcy', 'aabaabaaa')).toBe(11);
-  });
-});
-```
-
-```ts
-describe('knuthMorrisPratt', () => {
-  it('should find word position in given text', () => {
-    expect(knuthMorrisPratt('' + '' + '', '')).toBe(''.length);
-    expect(knuthMorrisPratt('' + '' + 'a', '')).toBe(''.length);
-    expect(knuthMorrisPratt('' + 'a' + '', 'a')).toBe(''.length);
-    expect(knuthMorrisPratt('abc' + 'bcgl' + 'x', 'bcgl')).toBe('abc'.length);
-    expect(knuthMorrisPratt('abcxabcdabxabcd' + 'abcdabcy' + '', 'abcdabcy')).toBe('abcxabcdabxabcd'.length);
-    expect(knuthMorrisPratt('abcxabcdabxa' + 'abcdabca' + 'bcdabcdabcy', 'abcdabca')).toBe('abcxabcdabxa'.length);
-    expect(knuthMorrisPratt('abcxabcdabx' + 'aabaabaaa' + 'abcdabcdabcy', 'aabaabaaa')).toBe('abcxabcdabx'.length);
-  });
-});
-```
-
-```ts
-describe('knuthMorrisPratt', () => {
-  it('should find word position in given text', () => {
-    // expect(knuthMorrisPratt(a + b + c, b)).toBe(a.length);
-    // :: when (a + b).slice(0, -1) does not include b
-  });
-});
-```
-
-```ts
-describe('knuthMorrisPratt', () => {
-  it('should find word position in given text', () => {
-    // expect(knuthMorrisPratt(a + b + c, b)).not.toBe(-1);
-  });
-});
+declare function useNotifyChanges<T>(
+  shouldNotify: (updatedValue: T) => boolean,
+  subscribable: Subscribable<T>,
+): void;
 ```
 ````
 
 </v-click>
 
----
-
-## Our test
-
-> for all a, b, c strings  
-> b is a substring of a + b + c
-
-<br />
-
 <v-click>
 
-```ts
-{a: "e漢}@🐱z’a", b: "eiiz", c: "漢null¤"} ✗
-```
+**Usages:** Consuming factorized types
 
 </v-click>
 
 ---
 
-## Shrinking in action
+# Variadics
+
+Let's support an elastic number of parameters
 
 <v-click>
-
-```ts
-{a: "e漢}@🐱z’a", b: "eiiz", c: "漢null¤"} ✗
-```
-
-</v-click>
-
-<v-click>
-
-```ts
-{a: "", b: "eiiz", c: "漢null¤"} ✗ 
-```
-
-</v-click>
-
-<v-click>
-
-```ts
-{a: "", b: "", c: "漢null¤"} ✓ 
-```
-
-</v-click>
-
-<v-click>
-
-```ts
-{a: "", b: "ei", c: "漢null¤"} ✓ 
-```
-
-</v-click>
-
-<v-click>
-
-```ts
-{a: "", b: "eii", c: "漢null¤"} ✗ 
-```
-
-</v-click>
-
-<v-click>
-
-```ts
-{a: "", b: "ii", c: "漢null¤"} ✗ 
-```
-
-</v-click>
-
-<v-click>
-
-```ts
-{a: "", b: "i", c: "漢null¤"} ✓ 
-```
-
-</v-click>
-
-<v-click>
-
-```ts
-{a: "", b: "ii", c: ""} ✗ 
-```
-
-</v-click>
-
----
-
-## Implementation
-
-> What if wanted to test: `knuthMorrisPratt`?
 
 ````md magic-move {lines: true}
 ```ts
-describe('knuthMorrisPratt', () => {
-  it('should find word position in given text', () => {
-    // expect(knuthMorrisPratt(a + b + c, b)).not.toBe(-1);
-  });
-});
+declare function useNotifyChanges<T>(
+  shouldNotify: (updatedValue: T) => boolean,
+  subscribable: Subscribable<T>,
+): void;
 ```
 
 ```ts
-describe('knuthMorrisPratt', () => {
-  it('should find word position in given text', () => {
-    fc.property(
-      // expect(knuthMorrisPratt(a + b + c, b)).not.toBe(-1);
-    )
-  });
-});
-```
-
-```ts
-describe('knuthMorrisPratt', () => {
-  it('should find word position in given text', () => {
-    fc.property(fc.string(), fc.string(), fc.string(), (a, b, c) => {
-      // expect(knuthMorrisPratt(a + b + c, b)).not.toBe(-1);
-    })
-  });
-});
-```
-
-```ts
-describe('knuthMorrisPratt', () => {
-  it('should find word position in given text', () => {
-    fc.property(fc.string(), fc.string(), fc.string(), (a, b, c) => {
-      expect(knuthMorrisPratt(a + b + c, b)).not.toBe(-1);
-    })
-  });
-});
-```
-
-```ts
-describe('knuthMorrisPratt', () => {
-  it('should find word position in given text', () => {
-    fc.assert(fc.property(fc.string(), fc.string(), fc.string(), (a, b, c) => {
-      expect(knuthMorrisPratt(a + b + c, b)).not.toBe(-1);
-    }))
-  });
-});
+declare function useNotifyChanges<TValues extends unknown[]>(
+  shouldNotify: (...updatedValues: TValues) => void,
+  ...subscribables: { [K in keyof TValues]: Subscribable<TValues[K]> },
+): void;
 ```
 ````
 
----
-layout: center
----
-
-# Does it work?
-
----
-layout: cover
----
-
-**Issue detected:** knuth morris pratt implementation considered "" was not a substring of ""
-
-![](/assets/pr-knuth.png)
-
-**Code example:**
-
-```ts
-knuthMorrisPratt("", "")   //=> -1
-knuthMorrisPratt("a", "a") //=> 0
-```
-
----
-layout: cover
----
-
-**Issue detected:** integer overflows and rounding issues in the implementation of rabin karp
-
-![](/assets/pr-rabin.png)
-
-**Code example:**
-
-```ts
-rabinKarp("^ !/'#'pp", " !/'#'pp") //=> -1
-// expected to be 2
-```
-
----
-layout: center
----
-
-# But...
-
-We only covered the truthy state  
-In reality our algorithm is more <em>indexOf</em>
-
----
-layout: center
----
-
-<div style="display: grid;">
-<v-switch>
-<template #0>
-<div style="grid-row: 1; grid-column: 1;; padding-top: 16px;">
-  <p style="font-size: 3rem">a = "<span style="color: rgb(0, 122, 204)">inviter</span>" , b = "<span style="color: rgb(0, 122, 204)">vite</span>"</p>
-</div>
-</template>
-<template #1>
-<div style="grid-row: 1; grid-column: 1; padding-top: 16px;">
-  <p style="font-size: 3rem">a = "<span style="color: rgb(0, 122, 204)">in<span style="color: red">vite</span>r</span>" , b = "<span style="color: rgb(0, 122, 204)">vite</span>"</p>
-</div>
-</template>
-<template #2>
-<div style="grid-row: 1; grid-column: 1; padding-top: 16px;">
-  <p style="font-size: 3rem">a = "<span style="color: rgb(0, 122, 204)">in<span style="color: red">vite</span>r</span>" , b = "<span style="color: rgb(0, 122, 204)">vite</span>"</p>
-  <br />
-  <p>knuth(a, b) == 2</p>
-</div>
-</template>
-<template #3>
-<div style="grid-row: 1; grid-column: 1; padding-top: 16px;">
-  <p style="font-size: 3rem">a = "<span style="color: rgb(0, 122, 204)">in<span style="color: red">vite</span>r</span>" , b = "<span style="color: rgb(0, 122, 204)">vite</span>"</p>
-  <br />
-  <p>knuth(a, b) == 2<br/>
-  a.substr(2, b.length) == b</p>
-</div>
-</template>
-<template #4>
-<div style="grid-row: 1; grid-column: 1; padding-top: 16px;">
-  <p style="font-size: 3rem">a = "<span style="color: rgb(0, 122, 204)">in<span style="color: red">vite</span>r</span>" , b = "<span style="color: rgb(0, 122, 204)">vite</span>"</p>
-  <br />
-  <p>knuth(a, b) == 2<br/>
-  a.substr(2, b.length) == b</p>
-  <br />
-
-> for all a, b strings and idx = knuth(a, b)  
-> idx is either -1 or position of the match
-
-</div>
-</template>
-</v-switch>
-</div>
-
----
-
-```ts
-fc.assert(
-  fc.property(
-    fc.string(), fc.string(),
-    (a, b) => {
-      const idx = knuthMorrisPratt(a, b)
-      return idx === -1 || a.substr(idx, b.length) === b
-    }
-  )
-)
-```
-
----
-layout: cover
----
-
-**Issue detected:** asymmetrical equality for 0 and 5e-324
-
-![](/assets/pr-jest-sym1.png)
-
-**Code example:**
-
-```ts
-expect(0).toStrictEqual(5e-324) // success
-expect(5e-324).toStrictEqual(0) // failure
-```
-
----
-layout: cover
----
-
-**Issue detected:** asymmetrical equality for Set
-
-![](/assets/pr-jest-sym2.png)
-
-**Code example:**
-
-```ts
-const s1 = new Set([false, true]);
-const s2 = new Set([new Boolean(true), new Boolean(true)]);
-expect(s1).toEqual(s2); // failure
-expect(s2).toEqual(s1); // success
-```
-
----
-layout: center
----
-
-# Going further?
-
----
-
-## Extending it to E2E
-
-<v-click>
-
-> The infinite monkey theorem states that a monkey hitting keys at random on a typewriter keyboard for an infinite amount of time will almost surely type any given text, including the complete works of William Shakespeare.
-
 </v-click>
 
 <v-click>
 
-<img src="/assets/e2e.gif" style="margin-top: 16px; width: 35%" />
+**Usages:** Properties in fast-check, <code>Promise.all</code>
 
 </v-click>
-
----
-
-## Detecting race conditions
-
-<iframe v-click width="560" height="315" src="https://www.youtube.com/embed/ysYoNrCfroo?si=csmPdbm3OekxWQLD" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
 
 ---
 layout: center
