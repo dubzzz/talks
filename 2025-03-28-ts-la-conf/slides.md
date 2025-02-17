@@ -1,7 +1,7 @@
 ---
 theme: seriph
 background: https://lespepitesdefrance.com/wp-content/uploads/2023/09/Top-5-des-plus-belles-rivieres-de-Lozere.png
-title: Property based testing - de la théorie à la pratique
+title: Mastering TypeScript for Real-World Applications
 info: 
 class: text-center # apply any unocss classes to the current slide
 highlighter: shiki # https://sli.dev/custom/highlighters.html
@@ -11,7 +11,7 @@ transition: slide-left
 mdc: true # enable MDC Syntax: https://sli.dev/guide/syntax#mdc-syntax
 colorSchema: light
 themeConfig:
-  primary: rgb(90, 166, 0)
+  primary: rgb(0, 122, 204)
   secondary: rgb(248, 211, 78)
 favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b2158878cbd56bf_Pigment%20Favicon%20Webflow.png"
 #fonts:
@@ -20,24 +20,58 @@ favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b
 ---
 
 <div style="display:flex; justify-content: center; margin-bottom: 16px;">
-  <img src="/assets/nodejs.svg" style="max-width: 40%; filter: drop-shadow(0 0 2rem white) contrast(1.5);" />
+  <img src="/assets/ts-conf.webp" style="max-width: 20%;" />
 </div>
 
-<h1 style="color: #fff !important; line-height: 1.1em !important;">Property based testing,</h1>
-<h2 style="color: #fff !important; line-height: 1.1em !important;">De la théorie à la pratique</h2>
+<h1 style="color: #fff !important; line-height: 1.1em !important;">Mastering TypeScript</h1>
+<h2 style="color: #fff !important; line-height: 1.1em !important;">For Real-World Applications</h2>
 
-_**Par Nicolas DUBIEN**_
+_**By Nicolas DUBIEN**_
 
 ---
 layout: center
 ---
 
-# Why the hell a new testing technic? 😠
+![](assets/runtime-error-undefined.png)
+
+---
+layout: center
+---
+
+![](assets/runtime-error-map.png)
+
+<!--
+  It may feels a bit frustrating whe nusing TypeScript to fall into such problems.
+  But in many cases, these cases happen because we are bypassing a bit TypeScript, not defining the right types...
+-->
 
 ---
 
-## We already have unit-tests…
+## Everyone did it once…
 
+<div style="display: grid; margin-top: 32px; color: white; text-align: center; font-size: 3em; position: relative">
+  <v-switch>
+    <template #1>
+      <div style="grid-row: 1; grid-column: 1">
+        <pre style="background-color: rgb(0, 122, 204);"><code>as any</code></pre>
+      </div>
+    </template>
+    <template #2>
+      <div style="grid-row: 1; grid-column: 1">
+        <pre style="background-color: #cc4700;"><code>as any</code><div style="position: absolute; top: 0; right: 0; height: 0;">😱</div></pre>
+      </div>
+    </template>
+  </v-switch>
+</div>
+
+
+---
+
+## But more generally…
+
+as
+
+````md magic-move {lines: true}
 ```ts
 describe('knuthMorrisPratt', () => {
   it('should find word position in given text', () => {
@@ -52,6 +86,7 @@ describe('knuthMorrisPratt', () => {
   });
 });
 ```
+````
 
 ---
 
@@ -278,12 +313,12 @@ _\*fast-check.dev_
 <br />
 
 <blockquote v-click="1">
-  <p>for all <span style="color: rgb(90, 166, 0)">(x, y, ...)</span></p>
+  <p>for all <span style="color: rgb(0, 122, 204)">(x, y, ...)</span></p>
   <p v-click="2" style="padding-left: 16px; color: #777">generate random inputs based on specified generators</p>
-  <p>such that <span style="color: rgb(90, 166, 0)">precondition(x, y, ...)</span> holds</p>
-  <p v-click="3" style="padding-left: 16px; color: #777">check preconditions - <span style="color: rgb(90, 166, 0)">failure?</span> go back to previous</p>
-  <p><span style="color: rgb(90, 166, 0)">predicate(x, y, ...)</span> is true</p>
-  <p v-click="4" style="padding-left: 16px; color: #777">run the test - <span style="color: rgb(90, 166, 0)">failure?</span> shrink</p>
+  <p>such that <span style="color: rgb(0, 122, 204)">precondition(x, y, ...)</span> holds</p>
+  <p v-click="3" style="padding-left: 16px; color: #777">check preconditions - <span style="color: rgb(0, 122, 204)">failure?</span> go back to previous</p>
+  <p><span style="color: rgb(0, 122, 204)">predicate(x, y, ...)</span> is true</p>
+  <p v-click="4" style="padding-left: 16px; color: #777">run the test - <span style="color: rgb(0, 122, 204)">failure?</span> shrink</p>
 </blockquote>
 
 <p v-click="5">
@@ -569,24 +604,24 @@ layout: center
 <v-switch>
 <template #0>
 <div style="grid-row: 1; grid-column: 1;; padding-top: 16px;">
-  <p style="font-size: 3rem">a = "<span style="color: rgb(90, 166, 0)">inviter</span>" , b = "<span style="color: rgb(90, 166, 0)">vite</span>"</p>
+  <p style="font-size: 3rem">a = "<span style="color: rgb(0, 122, 204)">inviter</span>" , b = "<span style="color: rgb(0, 122, 204)">vite</span>"</p>
 </div>
 </template>
 <template #1>
 <div style="grid-row: 1; grid-column: 1; padding-top: 16px;">
-  <p style="font-size: 3rem">a = "<span style="color: rgb(90, 166, 0)">in<span style="color: red">vite</span>r</span>" , b = "<span style="color: rgb(90, 166, 0)">vite</span>"</p>
+  <p style="font-size: 3rem">a = "<span style="color: rgb(0, 122, 204)">in<span style="color: red">vite</span>r</span>" , b = "<span style="color: rgb(0, 122, 204)">vite</span>"</p>
 </div>
 </template>
 <template #2>
 <div style="grid-row: 1; grid-column: 1; padding-top: 16px;">
-  <p style="font-size: 3rem">a = "<span style="color: rgb(90, 166, 0)">in<span style="color: red">vite</span>r</span>" , b = "<span style="color: rgb(90, 166, 0)">vite</span>"</p>
+  <p style="font-size: 3rem">a = "<span style="color: rgb(0, 122, 204)">in<span style="color: red">vite</span>r</span>" , b = "<span style="color: rgb(0, 122, 204)">vite</span>"</p>
   <br />
   <p>knuth(a, b) == 2</p>
 </div>
 </template>
 <template #3>
 <div style="grid-row: 1; grid-column: 1; padding-top: 16px;">
-  <p style="font-size: 3rem">a = "<span style="color: rgb(90, 166, 0)">in<span style="color: red">vite</span>r</span>" , b = "<span style="color: rgb(90, 166, 0)">vite</span>"</p>
+  <p style="font-size: 3rem">a = "<span style="color: rgb(0, 122, 204)">in<span style="color: red">vite</span>r</span>" , b = "<span style="color: rgb(0, 122, 204)">vite</span>"</p>
   <br />
   <p>knuth(a, b) == 2<br/>
   a.substr(2, b.length) == b</p>
@@ -594,7 +629,7 @@ layout: center
 </template>
 <template #4>
 <div style="grid-row: 1; grid-column: 1; padding-top: 16px;">
-  <p style="font-size: 3rem">a = "<span style="color: rgb(90, 166, 0)">in<span style="color: red">vite</span>r</span>" , b = "<span style="color: rgb(90, 166, 0)">vite</span>"</p>
+  <p style="font-size: 3rem">a = "<span style="color: rgb(0, 122, 204)">in<span style="color: red">vite</span>r</span>" , b = "<span style="color: rgb(0, 122, 204)">vite</span>"</p>
   <br />
   <p>knuth(a, b) == 2<br/>
   a.substr(2, b.length) == b</p>
