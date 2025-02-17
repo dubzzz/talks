@@ -72,79 +72,84 @@ layout: center
 
 ---
 
-## But more generally…
-
-as
+## …not sure?
 
 ````md magic-move {lines: true}
 ```ts
-describe('knuthMorrisPratt', () => {
-  it('should find word position in given text', () => {
-    expect(knuthMorrisPratt('a', '')).toBe(0);
-    expect(knuthMorrisPratt('a', 'a')).toBe(0);
-    expect(knuthMorrisPratt('abcbcglx', 'abca')).toBe(-1);
-    expect(knuthMorrisPratt('abcbcglx', 'bcgl')).toBe(3);
-    expect(knuthMorrisPratt('abcxabcdabxabcdabcdabcy', 'abcdabcy')).toBe(15);
-    expect(knuthMorrisPratt('abcxabcdabxabcdabcdabcy', 'abcdabca')).toBe(-1);
-    expect(knuthMorrisPratt('abcxabcdabxaabcdabcabcdabcdabcy', 'abcdabca')).toBe(12);
-    expect(knuthMorrisPratt('abcxabcdabxaabaabaaaabcdabcdabcy', 'aabaabaaa')).toBe(11);
-  });
-});
+type Props = {}; // should support single-select and multi-select
+
+declare function Select(props: Props);
 ```
-````
-
----
-
-## And end-to-end tests…
 
 ```ts
-describe('Search engine', () => {
-  it('should impact title on search', async () => {
-    await driver.get('https://www.google.com/ncr');
-    await driver.findElement(By.name('q')).sendKeys('webdriver', Key.RETURN);
-    await driver.wait(until.titleIs('webdriver - Google Search'), 1000);
-  })
-})
+type Props = {
+  multiple: boolean | undefined;
+  value: string | string[];
+  onChange: (newValue: string | string[]) => void;
+};
+
+declare function Select(props: Props);
 ```
 
----
+```ts
+type Props = {
+  /** Should the Select support multi-selection? */
+  multiple: boolean | undefined;
+  /*
+   * Mode multiple=false/undefined: the selected value as a string
+   * Mode multiple=true: the selected values as an array of strings
+   */
+  value: string | string[];
+  onChange: (newValue: string | string[]) => void;
+};
 
-## And on top of that we have good practices…
+declare function Select(props: Props);
+```
 
-<ul>
-  <li v-click="1">Coverage,</li>
-  <li v-click="2">Testing pyramid,</li>
-  <li v-click="3">…</li>
-</ul>
+```ts
+type Props = {
+  /** Should the Select support multi-selection? */
+  multiple: boolean | undefined;
+  /*
+   * Mode multiple=false/undefined: the selected value as a string
+   * Mode multiple=true: the selected values as an array of strings
+   */
+  value: string | string[];
+  onChange: (newValue: string | string[]) => void;
+};
 
-<p v-click="4">And… all my users are happy!</p>
+export default function Select(props: Props) {
+  const { multiple, value, onChange } = props;
+  return multiple ? (
+    <MultipleValuesSelect value={value} onChange={onChange} />
+  ) : (
+    <SingleValueSelect value={value} onChange={onChange} />
+  );
+}
+```
 
----
-layout: image
-image: /assets/papyrus.avif
----
+```ts
+type Props = {
+  /** Should the Select support multi-selection? */
+  multiple: boolean | undefined;
+  /*
+   * Mode multiple=false/undefined: the selected value as a string
+   * Mode multiple=true: the selected values as an array of strings
+   */
+  value: string | string[];
+  onChange: (newValue: string | string[]) => void;
+};
 
-<img src="/assets/express.png" style="width: 25%" />
-
-<p style="color: #5C4420">
-  <span v-click>On the 26<sup>th</sup> of November 2022, they got stroke by a severe CVE…</span>
-  <br />
-  <span v-click>…pushing to a Denial of Service.</span>
-</p>
-
-<p style="color: #5C4420" v-click>
-  <span>The trigger was as easy as forging an URL containing:</span>
-  <br />
-  <pre style="background: #fff5; padding: 16px; border-radius: 1px"><code>a[__proto__]=b&a[__proto__]&a[length]=100000000</code></pre>
-</p>
-
-<p style="color: #5C4420" v-click>
-  <span>…but got revealed 10 months after the bug appeared (11<sup>th</sup> of January 2022).</span>
-</p>
-
-<p style="color: #5C4420; text-align: right; padding-top: 32px; font-weight: bold" v-click>
-  <span>What if our tests were missing something?</span>
-</p>
+export default function Select(props: Props) {
+  const { multiple, value, onChange } = props;
+  return multiple ? (
+    <MultipleValuesSelect value={value as string[]} onChange={onChange} />
+  ) : (
+    <SingleValueSelect value={value as string} onChange={onChange} />
+  );
+}
+```
+````
 
 ---
 layout: cover
@@ -156,11 +161,11 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
 </div>
 
 <div style="margin-top: 48px"></div>
-<h2 style="color: #fff !important">Property based testing, de la théorie à la pratique</h2>
+<h2 style="color: #fff !important">Mastering TypeScript for Real-World Applications</h2>
 <h1 style="color: #fff !important">Nicolas DUBIEN</h1>
 <div style="display: flex; justify-content: center; font-size: 1.2em; margin-top: -20px; align-items: end;">
   <span style="margin-top: 0.7em">
-    At&nbsp;
+    Lead Principal Software Engineer at&nbsp;
   </span>
   <img
     src="/assets/Pigment logo.svg"
@@ -184,6 +189,251 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
   <img src="/assets/npm.png" style="height: 24px; border: none; background: none; margin: 0px" />
   fast-check
 </div>
+
+---
+layout: image
+image: /assets/papyrus.avif
+---
+
+<h1 style="color: #cc4700">Our Guiding Example</h1>
+
+<p v-click style="color: #5C4420; opacity: 1">We’re building a store management web app where each store can define and manage their product listings. Today, our focus is on the <b>Product sheet</b>.</p>
+
+<p v-click style="color: #5C4420; opacity: 1">So let’s build it!</p>
+
+<pre v-click style="color: #5C4420; background: #fff5; padding: 16px; border-radius: 1px"><code>function ProductSheet(props) {
+  const { storeId, productId } = props;
+  const productDetails = useFetchProductDetails(storeId, productId);
+  // TODO: display the content
+}</code></pre>
+
+---
+layout: image
+image: /assets/papyrus.avif
+---
+
+<h2 style="color: #cc4700">Problem #1: Order of IDs in a function call</h2>
+
+<p v-click style="color: #5C4420; opacity: 1">Is it <code>storeId, productId</code> or <code>productId, storeId</code>?</p>
+
+<pre v-click style="color: #5C4420; background: #fff5; padding: 16px; border-radius: 1px"><code>declare function useFetchProductDetails(
+  storeId: string,
+  productId: string
+): ProductDetails;</code></pre>
+
+<p v-click style="color: #5C4420; opacity: 1">Can we enforce proper ordering?</p>
+
+---
+
+# Branded Types
+
+Let’s extend type safety to ensure our ID is not just a `string`, a `number` or other…
+
+<v-click>
+
+````md magic-move {lines: true}
+```ts
+export type StoreId = string;
+```
+
+```ts
+declare const validStoreId: unique symbol;
+export type StoreId = string & { [validStoreId]: true };
+```
+
+```ts
+declare const validStoreId: unique symbol;
+export type StoreId = string & { [validStoreId]: true };
+export const toStoreId = (id: string) => id as StoreId;
+```
+````
+
+</v-click>
+
+<v-click>
+
+**Usages:** Ensure you manipulate the right IDs at the right place
+
+</v-click>
+
+---
+layout: image
+image: /assets/papyrus.avif
+---
+
+<h1 style="color: #cc4700">Back to our Guiding Example</h1>
+
+<p v-click style="color: #5C4420; opacity: 1">Let’s display our product on the page. We actually have two kinds of products: <b>fruit</b> and <b>vegetable</b>, each with its own display and its own set of attributes.</p>
+
+<pre v-click style="color: #5C4420; background: #fff5; padding: 16px; border-radius: 1px"><code>function ProductSheet(props) {
+  const { storeId, productId } = props;
+  const productDetails = useFetchProductDetails(storeId, productId);
+  return productDetails.type === "fruit"
+    ? &lt;div&gt;{productDetails.fruit.name}&lt;/div&gt;
+    : &lt;div&gt;{productDetails.vegetable.name}&lt;/div&gt;;
+}</code></pre>
+
+---
+layout: image
+image: /assets/papyrus.avif
+---
+
+<h2 style="color: #cc4700">Problem #2: Shape depending on the "type"</h2>
+
+<p v-click style="color: #5C4420; opacity: 1">Is there a <code>.fruit</code> property available if the item is of type <code>fruit</code>?</p>
+
+<pre v-click style="color: #5C4420; background: #fff5; padding: 16px; border-radius: 1px"><code>type ProductDetails = {
+  type: 'fruit' | 'vegetable';
+  fruit?: Fruit;
+  vegetable?: Vegetable;
+};</code></pre>
+
+<p v-click style="color: #5C4420; opacity: 1">We may end up with:</p>
+
+<pre v-click style="color: #5C4420; background: #fff5; padding: 16px; border-radius: 1px">
+<code>productDetails.fruit.name ➡️ productDetails.fruit!.name</code>
+<code>productDetails.fruit.name ➡️ (productDetails.fruit as Fruit).name</code>
+</pre>
+
+---
+
+# Discriminated Unions
+
+Let's group in a single type several shapes while preserving a way to split them back
+
+<v-click>
+
+````md magic-move {lines: true}
+```ts
+type ProductDetails = {
+  type: 'fruit' | 'vegetable';
+  fruit?: Fruit;
+  vegetable?: Vegetable;
+};
+```
+
+```ts
+type ProductDetails =
+  | {
+      type: 'fruit';
+      fruit: Fruit;
+    }
+  | {
+      type: 'vegetable';
+      vegetable: Vegetable;
+    };
+```
+````
+
+</v-click>
+
+<v-click>
+
+**Usages:** Strongly type external data
+
+```ts
+type Value = {
+  type: 'text' | 'numeric' | 'date';
+  textValue?: string;
+  numericValue?: number;
+  dateValue?: Date;
+};
+```
+
+</v-click>
+
+---
+layout: image
+image: /assets/papyrus.avif
+---
+
+<h2 style="color: #cc4700">Problem #3: Type exhaustion</h2>
+
+<p v-click style="color: #5C4420; opacity: 1">Am I sure I checked all types?</p>
+
+<pre v-click style="color: #5C4420; background: #fff5; padding: 16px; border-radius: 1px"><code>return productDetails.type === 'fruit'
+  ? "It's a fruit"
+  : "It's a vegetable";</code></pre>
+
+---
+
+# _\*never_
+
+Let's avoid missing one type
+
+<v-click>
+
+````md magic-move {lines: true}
+```ts
+return productDetails.type === 'fruit'
+  ? "It's a fruit"
+  : "It's a vegetable";
+```
+
+```ts
+return productDetails.type === 'fruit'
+  ? "It's a fruit"
+  : productDetails.type === 'vegetable'
+  ? "It's a vegetable"
+  : "It's not supported yet";
+```
+
+```ts
+return productDetails.type === 'fruit'
+  ? "It's a fruit"
+  : productDetails.type === 'vegetable'
+  ? "It's a vegetable"
+  : assertUnreachable(productDetails.type, "It's not supported yet");
+```
+
+```ts
+export function assertUnreachable<T>(arg: never, defaultValue: T) {
+  return defaultValue;
+}
+
+return productDetails.type === 'fruit'
+  ? "It's a fruit"
+  : productDetails.type === 'vegetable'
+  ? "It's a vegetable"
+  : assertUnreachable(productDetails.type, "It's not supported yet");
+```
+````
+
+</v-click>
+
+<v-click>
+
+**Usages:** New types need to be added over time in the API
+
+</v-click>
+
+---
+
+<v-click>
+
+````md magic-move {lines: true}
+```ts
+declare function useFetchProductDetails(
+  storeId: string,
+  productId: string
+): ProductDetails;
+```
+
+```ts
+declare function useFetchProductDetails(
+  storeId: StoreId,
+  productId: ProductId
+): ProductDetails;
+```
+````
+
+</v-click>
+
+---
+
+<!--<p v-click style="color: #5C4420; opacity: 1">We actually have two kinds of products: <b>fruits</b> and <b>vegetables</b>, each with its own display.</p>
+
+<p v-click style="color: #5C4420; opacity: 1"><i>At the moment, we just want to display the product sheet. But we will add a few extra features over the flow.</i></p>-->
 
 ---
 layout: center
