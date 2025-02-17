@@ -61,6 +61,11 @@ layout: center
         <pre style="background-color: #cc4700;"><code>as any</code><div style="position: absolute; top: 0; right: 0; height: 0;">😱</div></pre>
       </div>
     </template>
+    <template #3>
+      <div style="grid-row: 1; grid-column: 1">
+        <pre style="background-color: #cc4700;"><code><span style="font-weight: 900;">as</span> <span style="opacity: 50%">any</span></code><div style="position: absolute; top: 0; right: 0; height: 0;">😱</div></pre>
+      </div>
+    </template>
   </v-switch>
 </div>
 
