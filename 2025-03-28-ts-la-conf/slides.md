@@ -547,7 +547,7 @@ image: /assets/papyrus.avif
 }
 
 type SubscribableProductDetails = {
-  subscribe: (updatedValue: ProductDetails) => void;
+  subscribe: (onUpdate: (updatedValue: ProductDetails) => void) => void;
 } & ProductDetails;</code></pre>
 
 ---
@@ -570,13 +570,13 @@ Let's make things _generic_
 ````md magic-move {lines: true}
 ```ts
 type SubscribableProductDetails = {
-  subscribe: (updatedValue: ProductDetails) => void;
+  subscribe: (onUpdate: (updatedValue: ProductDetails) => void) => void;
 } & ProductDetails;
 ```
 
 ```ts
 type Subscribable<T> = {
-  subscribe: (updatedValue: T) => void;
+  subscribe: (onUpdate: (updatedValue: T) => void) => void;
 } & T;
 ```
 ````
@@ -660,7 +660,7 @@ declare function useNotifyChanges<T>(
 
 ```ts
 declare function useNotifyChanges<TValues extends unknown[]>(
-  shouldNotify: (...updatedValues: TValues) => void,
+  shouldNotify: (...updatedValues: TValues) => boolean,
   ...subscribables: { [K in keyof TValues]: Subscribable<TValues[K]> },
 ): void;
 ```
