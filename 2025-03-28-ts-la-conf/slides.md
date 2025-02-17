@@ -539,19 +539,14 @@ image: /assets/papyrus.avif
 <p v-click style="color: #5C4420; opacity: 1">Let's suppose we want to tell our users that they should reload the page as some external changes may have impacted the sheet. Our code might have to be adapted as follow:</p>
 
 <pre v-click style="color: #5C4420; background: #fff5; padding: 16px; border-radius: 1px"><code>function ProductSheet(props) {
-  const { storeId, productId } = props;
-  const productDetails = useFetchProductDetails(storeId, productId);
-  
+  const productDetails = useFetchProductDetails(props.storeId, props.productId);
   useNotifyChanges((updatedProductDetails) => {
     // return true if the change should be considered as impactful
   }, productDetails);
+  return ...;
+}
 
-  return productDetails.type === "fruit"
-    ? &lt;div&gt;{productDetails.fruit.name}&lt;/div&gt;
-    : &lt;div&gt;{productDetails.vegetable.name}&lt;/div&gt;;
-}</code></pre>
-
-<pre v-click style="color: #5C4420; background: #fff5; padding: 16px; border-radius: 1px"><code>type SubscribableProductDetails = {
+type SubscribableProductDetails = {
   subscribe: (updatedValue: ProductDetails) => void;
 } & ProductDetails;</code></pre>
 
