@@ -930,7 +930,7 @@ function useAlertOnChange<T>(
 ```ts
 function useAlertOnChange<T extends unknown[]>(
   onChange: (...newValues: T) => void,
-  ...subscribables: { [K in keyof TValues]: Subscribable<TValues[K]> },
+  ...subscribables: { [K in keyof T]: Subscribable<T[K]> },
 ): void;
 ```
 ````
@@ -938,9 +938,73 @@ function useAlertOnChange<T extends unknown[]>(
 </v-click>
 
 ---
-layout: center
----
 
-# Questions
+<div style="display: grid; margin-bottom: 48px; gap: 8px; grid-template-columns: repeat(2, minmax(0, 1fr));">
+  <div style="grid-row: 1; grid-column: 1">
 
-Do not hesitate to visit our blog: <a href="https://engineering.pigment.com/" target="_blank">engineering.pigment.com</a>
+### Branded Types
+
+```ts
+declare const validX: unique symbol;
+export type X = number & { [validX]: true };
+export const toX = (x: number) => x as X;
+```
+
+  </div>
+  <div style="grid-row: 1; grid-column: 2">
+
+### Discriminated Unions
+
+```ts
+type Value = NumberValue | TextValue;
+```
+
+  </div>
+  <div style="grid-row: 2; grid-column: 1">
+
+### Type predicates
+
+```ts
+function isValidValue(value: ValueFromAPI): boolean {
+  // doing stuff
+}
+```
+
+  </div>
+  <div style="grid-row: 2; grid-column: 2">
+
+### Mapped types
+
+```ts
+type Value = { [K in Keys]: ValueForK };
+```
+
+  </div>
+  <div style="grid-row: 3; grid-column: 1">
+
+### \*never
+
+```ts
+function assertUnreachable<T>(arg: never, fallback: T) {
+  return fallback;
+}
+```
+
+  </div>
+  <div style="grid-row: 3; grid-column: 2">
+
+### Generics & Variadics
+
+```ts
+function useAlertOnChange<T extends unknown[]>(
+  onChange: (...newValues: T) => void,
+  ...subs: { [K in keyof T]: Subscribable<T[K]> },
+): void;
+```
+
+  </div>
+</div>
+
+<h1 style="text-align: right">Questions?</h1>
+
+<p style="text-align: right">Do not hesitate to visit our blog: <a href="https://engineering.pigment.com/" target="_blank">engineering.pigment.com</a></p>
