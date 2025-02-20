@@ -69,7 +69,6 @@ layout: center
   </v-switch>
 </div>
 
-
 ---
 
 ## …not sure?
@@ -197,54 +196,101 @@ image: /assets/papyrus.avif
 
 <h1 style="color: #cc4700">Our Guiding Example</h1>
 
-<p v-click style="color: #5C4420; opacity: 1">We’re building a store management web app where each store can define and manage their product listings. Today, our focus is on the <b>Product sheet</b>.</p>
+<p v-click="1" style="color: #5C4420; opacity: 1">Let’s take an example inspired from <b>Pigment</b>.</p>
 
-<p v-click style="color: #5C4420; opacity: 1">So let’s build it!</p>
+<div style="display: grid; margin-top: 16px; color: white; text-align: center;">
+  <v-switch>
+    <template #0>
+      <div style="grid-row: 1; grid-column: 1">
+        <img src="/assets/pigment-board-zoom.png" />
+      </div>
+    </template>
+    <template #1>
+      <div style="grid-row: 1; grid-column: 1">
+        <img src="/assets/pigment-view-zoom.png" />
+      </div>
+    </template>
+    <template #2>
+      <div style="grid-row: 1; grid-column: 1">
+        <img src="/assets/pigment-cell-zoom.png" />
+      </div>
+    </template>
+    <template #3>
+<div style="grid-row: 1; grid-column: 1; text-align: left">
 
-<pre v-click style="color: #5C4420; background: #fff5; padding: 16px; border-radius: 1px"><code>function ProductSheet(props) {
-  const { storeId, productId } = props;
-  const productDetails = useFetchProductDetails(storeId, productId);
-  // TODO: display the content
-}</code></pre>
+```ts
+type Props = { x: number, y: number };
 
----
-layout: image
-image: /assets/papyrus.avif
----
+function Cell(props: Props) {
+  // ...
+}
+```
 
-<h2 style="color: #cc4700">Problem #1: Order of IDs in a function call</h2>
+</div>
+    </template>
+    <template #4>
+<div style="grid-row: 1; grid-column: 1; text-align: left">
 
-<p v-click style="color: #5C4420; opacity: 1">Is it <code>storeId, productId</code> or <code>productId, storeId</code>?</p>
+```ts
+type Props = { x: number, y: number };
 
-<pre v-click style="color: #5C4420; background: #fff5; padding: 16px; border-radius: 1px"><code>declare function useFetchProductDetails(
-  storeId: string,
-  productId: string
-): ProductDetails;</code></pre>
+function Cell(props: Props) {
+  const { x, y } = props;
+  const value = useCellValueAt(x, y);
+  // ...
+}
+```
 
-<p v-click style="color: #5C4420; opacity: 1">Can we enforce proper ordering?</p>
+</div>
+    </template>
+    <template #5>
+<div style="grid-row: 1; grid-column: 1; text-align: left; padding-top: 4px">
+
+```ts twoslash
+declare const validX: unique symbol;
+type X = number & { [validX]: true };
+declare const validY: unique symbol;
+type Y = number & { [validY]: true };
+declare const x: X;
+declare const y: Y;
+declare function useCellValueAt(x: X, y: Y): void;
+// ---cut-before---
+type Props = { x: number, y: number };
+
+function Cell(props: Props) {
+  const { x, y } = props;
+  const value = useCellValueAt(y, x);
+  // ...
+}
+```
+
+</div>
+    </template>
+  </v-switch>
+</div>
 
 ---
 
 # Branded Types
 
-Let’s extend type safety to ensure our ID is not just a `string`, a `number` or other…
+> It's not just a `number`, it's an `X`
 
 <v-click>
 
-````md magic-move {lines: true}
+````md magic-move {lines: true} 
 ```ts
-export type StoreId = string;
+export type X = number;
 ```
 
 ```ts
-declare const validStoreId: unique symbol;
-export type StoreId = string & { [validStoreId]: true };
+declare const validX: unique symbol;
+export type X = number & { [validX]: true };
 ```
 
 ```ts
-declare const validStoreId: unique symbol;
-export type StoreId = string & { [validStoreId]: true };
-export const toStoreId = (id: string) => id as StoreId;
+declare const validX: unique symbol;
+export type X = number & { [validX]: true };
+export const toX = (x: number) => x as X;
 ```
 ````
 
@@ -252,7 +298,46 @@ export const toStoreId = (id: string) => id as StoreId;
 
 <v-click>
 
-**Usages:** Ensure you manipulate the right IDs at the right place
+````md magic-move {lines: true} 
+```ts
+function useCellValueAt(x: number, y: number): Value {
+  // ...
+}
+
+type Props = { x: number, y: number };
+function Cell(props: Props) {
+  const { x, y } = props;
+  const value = useCellValueAt(x, y);
+  // ...
+}
+```
+
+```ts
+function useCellValueAt(x: X, y: Y): Value {
+  // ...
+}
+
+type Props = { x: number, y: number };
+function Cell(props: Props) {
+  const { x, y } = props;
+  const value = useCellValueAt(x, y);
+  // ...
+}
+```
+
+```ts
+function useCellValueAt(x: X, y: Y): Value {
+  // ...
+}
+
+type Props = { x: number, y: number };
+function Cell(props: Props) {
+  const { x, y } = props;
+  const value = useCellValueAt(toX(x), toY(y));
+  // ...
+} 
+```
+````
 
 </v-click>
 
@@ -263,64 +348,131 @@ image: /assets/papyrus.avif
 
 <h1 style="color: #cc4700">Back to our Guiding Example</h1>
 
-<p v-click style="color: #5C4420; opacity: 1">Let’s display our product on the page. We actually have two kinds of products: <b>fruit</b> and <b>vegetable</b>, each with its own display and its own set of attributes.</p>
+<div style="display: grid; margin-top: 16px; color: white; text-align: center;">
+  <v-switch>
+    <template #0>
+<div style="grid-row: 1; grid-column: 1; text-align: left">
 
-<pre v-click style="color: #5C4420; background: #fff5; padding: 16px; border-radius: 1px"><code>function ProductSheet(props) {
-  const { storeId, productId } = props;
-  const productDetails = useFetchProductDetails(storeId, productId);
-  return productDetails.type === "fruit"
-    ? &lt;div&gt;{productDetails.fruit.name}&lt;/div&gt;
-    : &lt;div&gt;{productDetails.vegetable.name}&lt;/div&gt;;
-}</code></pre>
+```ts
+type Props = { x: number, y: number };
 
----
-layout: image
-image: /assets/papyrus.avif
----
+function Cell(props: Props) {
+  const { x, y } = props;
+  const value = useCellValueAt(toX(x), toY(y));
+  // ...
+}
+```
 
-<h2 style="color: #cc4700">Problem #2: Shape depending on the "type"</h2>
+</div>
+    </template>
+    <template #1>
+<div style="grid-row: 1; grid-column: 1; text-align: left">
 
-<p v-click style="color: #5C4420; opacity: 1">Is there a <code>.fruit</code> property available if the item is of type <code>fruit</code>?</p>
+```ts
+type Props = { x: number, y: number };
 
-<pre v-click style="color: #5C4420; background: #fff5; padding: 16px; border-radius: 1px"><code>type ProductDetails = {
-  type: 'fruit' | 'vegetable';
-  fruit?: Fruit;
-  vegetable?: Vegetable;
-};</code></pre>
+type Value = {
+  type: 'number' | 'text';
+  numberValue?: number;
+  textValue?: string;
+}
 
-<p v-click style="color: #5C4420; opacity: 1">We may end up with:</p>
+function Cell(props: Props) {
+  const { x, y } = props;
+  const value = useCellValueAt(toX(x), toY(y));
+  // ...
+}
+```
 
-<pre v-click style="color: #5C4420; background: #fff5; padding: 16px; border-radius: 1px">
-<code>productDetails.fruit.name ➡️ productDetails.fruit!.name</code>
-<code>productDetails.fruit.name ➡️ (productDetails.fruit as Fruit).name</code>
-</pre>
+</div>
+    </template>
+    <template #2>
+<div style="grid-row: 1; grid-column: 1; text-align: left; padding-top: 4px">
+
+```ts twoslash
+declare function toX(n: number): number;
+declare function toY(n: number): number;
+declare function useCellValueAt(x: number, y: number): Value;
+declare function renderNumberCell(value: number): null;
+declare function renderTextCell(value: string): null;
+// ---cut-before---
+type Props = { x: number, y: number };
+
+type Value = {
+  type: 'number' | 'text';
+  numberValue?: number;
+  textValue?: string;
+}
+
+function Cell(props: Props) {
+  const { x, y } = props;
+  const value = useCellValueAt(toX(x), toY(y));
+  return value.type === 'number'
+    ? renderNumberCell(value.numberValue)
+    : renderTextCell(value.textValue);
+}
+```
+
+</div>
+    </template>
+    <template #3>
+<div style="grid-row: 1; grid-column: 1; text-align: left; padding-top: 4px">
+
+```ts twoslash
+declare function toX(n: number): number;
+declare function toY(n: number): number;
+declare function useCellValueAt(x: number, y: number): Value;
+declare function renderNumberCell(value: number): null;
+declare function renderTextCell(value: string): null;
+// ---cut-before---
+type Props = { x: number, y: number };
+
+type Value = {
+  type: 'number' | 'text';
+  numberValue?: number;
+  textValue?: string;
+}
+
+function Cell(props: Props) {
+  const { x, y } = props;
+  const value = useCellValueAt(toX(x), toY(y));
+  return value.type === 'number'
+    ? renderNumberCell(value.numberValue as number)
+    : renderTextCell(value.textValue!);
+}
+```
+
+</div>
+    </template>
+  </v-switch>
+</div>
 
 ---
 
 # Discriminated Unions
 
-Let's group in a single type several shapes while preserving a way to split them back
+> Some attributes have to be exclusive to one `type`
 
 <v-click>
 
 ````md magic-move {lines: true}
 ```ts
-type ProductDetails = {
-  type: 'fruit' | 'vegetable';
-  fruit?: Fruit;
-  vegetable?: Vegetable;
-};
+type Value = {
+  type: 'number' | 'text';
+  numberValue?: number;
+  textValue?: string;
+}
 ```
 
 ```ts
-type ProductDetails =
+type Value =
   | {
-      type: 'fruit';
-      fruit: Fruit;
+      type: 'number';
+      numberValue: number;
     }
   | {
-      type: 'vegetable';
-      vegetable: Vegetable;
+      type: 'text';
+      textValue: string;
     };
 ```
 ````
@@ -329,203 +481,31 @@ type ProductDetails =
 
 <v-click>
 
-**Usages:** Strongly type external data
-
-```ts
-type Value = {
-  type: 'text' | 'numeric' | 'date';
-  textValue?: string;
-  numericValue?: number;
-  dateValue?: Date;
-};
-```
-
-</v-click>
-
----
-layout: image
-image: /assets/papyrus.avif
----
-
-<h2 style="color: #cc4700">Problem #3: Can we repeat ourselves less?</h2>
-
-<p v-click style="color: #5C4420; opacity: 1">What if we had a magic way to say <code>.fruit</code> property exists because type is <code>fruit</code>? For this example let suppose that whather the type of product, the content is the same, the name of the property is the only things that changes.</p>
-
-<pre v-click style="color: #5C4420; background: #fff5; padding: 16px; border-radius: 1px"><code>type ProductDetails = {
-  type: 'fruit' | 'vegetable';
-  fruit?: { name: string };
-  vegetable?: { name: string };
-};</code></pre>
-
-<p v-click style="color: #5C4420; opacity: 1">What if we added 100 extra types?</p>
-
----
-
-# Mapped types
-
-Let's stop repeating ourselves
-
-<v-click>
-
 ````md magic-move {lines: true}
 ```ts
-type SetOfKeys = /* TODO */;
-type MyType = { [K in SetOfKeys]: ValueForKeyK };
-```
+type Props = { x: number, y: number };
 
-```ts
-type ProductDetailsType = 'fruit' | 'vegetable';
-type ProductDetails = { [K in ProductDetailsType]: ValueForKeyK };
-```
-
-```ts
-type ProductDetailsType = 'fruit' | 'vegetable';
-type ProductDetails = { [K in ProductDetailsType]: { name: string } };
-// type ProductDetails = {
-//   fruit: { name: string; };
-//   vegetable: { name: string; };
-// }
-```
-
-```ts
-type ProductDetailsType = 'fruit' | 'vegetable';
-type ProductDetails = { [K in ProductDetailsType]: { type: K, name: string } };
-// type ProductDetails = {
-//   fruit: { type: 'fruit'; name: string; };
-//   vegetable: { type: 'vegetable'; name: string; };
-// }
-```
-
-```ts
-type ProductDetailsType = 'fruit' | 'vegetable';
-type ProductDetails = { [K in ProductDetailsType]: { type: K, [K]: { name: string } } };
-// ERROR!!!
-```
-
-```ts
-type ProductDetailsType = 'fruit' | 'vegetable';
-type ProductDetailsValueFor<K extends string> =  { type: K, [K]: { name: string } };
-type ProductDetails = { [K in ProductDetailsType]: ProductDetailsValueFor<K> };
-// ERROR!!!
-```
-
-```ts
-type ProductDetailsType = 'fruit' | 'vegetable';
-type ProductDetailsValueFor<K extends string> =  { type: K } & { [SK in K]: { name: string } };
-type ProductDetails = { [K in ProductDetailsType]: ProductDetailsValueFor<K> };
-// type ProductDetails = {
-//   fruit: { type: 'fruit'; fruit: { name: string; } };
-//   vegetable: { type: 'vegetable'; vegetable: { name: string; } };
-// }
-```
-
-```ts
-type ProductDetailsType = 'fruit' | 'vegetable';
-type ProductDetailsValueFor<K extends string> =  { type: K } & { [SK in K]: { name: string } };
-type ProductDetails = { [K in ProductDetailsType]: ProductDetailsValueFor<K> }[ProductDetailsType];
-// type ProductDetails =
-//   | { type: 'fruit'; fruit: { name: string; } }
-//   | { type: 'vegetable'; vegetable: { name: string; } };
-```
-````
-
-</v-click>
-
-<v-click>
-
-**Usages:** Strongly type external data
-
-```ts
-type Value = {
-  type: 'text' | 'numeric' | 'date';
-  textValue?: string;
-  numericValue?: number;
-  dateValue?: Date;
-};
-```
-
-</v-click>
-
----
-
-Quick zoom on "Strongly type external data":
-
-```ts
-type ValueType = 'text' | 'numeric' | 'date';
-type Value = {
-  type: ValueType;
-  textValue?: string;
-  numericValue?: number;
-  dateValue?: Date;
-};
-
-type StronglyTypedValue = {
-  [K in Value['type']]: { type: K } & Required<Pick<Value, `${Uncapitalize<K>}Value`>>;
-}[ValueType]
-```
-
----
-layout: image
-image: /assets/papyrus.avif
----
-
-<h2 style="color: #cc4700">Problem #4: Type exhaustion</h2>
-
-<p v-click style="color: #5C4420; opacity: 1">Am I sure I checked all types?</p>
-
-<pre v-click style="color: #5C4420; background: #fff5; padding: 16px; border-radius: 1px"><code>return productDetails.type === 'fruit'
-  ? "It's a fruit"
-  : "It's a vegetable";</code></pre>
-
----
-
-# _\*never_
-
-Let's avoid missing one type
-
-<v-click>
-
-````md magic-move {lines: true}
-```ts
-return productDetails.type === 'fruit'
-  ? "It's a fruit"
-  : "It's a vegetable";
-```
-
-```ts
-return productDetails.type === 'fruit'
-  ? "It's a fruit"
-  : productDetails.type === 'vegetable'
-  ? "It's a vegetable"
-  : "It's not supported yet";
-```
-
-```ts
-return productDetails.type === 'fruit'
-  ? "It's a fruit"
-  : productDetails.type === 'vegetable'
-  ? "It's a vegetable"
-  : assertUnreachable(productDetails.type, "It's not supported yet");
-```
-
-```ts
-export function assertUnreachable<T>(arg: never, defaultValue: T) {
-  return defaultValue;
+function Cell(props: Props) {
+  const { x, y } = props;
+  const value = useCellValueAt(toX(x), toY(y));
+  return value.type === 'number'
+    ? renderNumberCell(value.numberValue as number)
+    : renderTextCell(value.textValue!);
 }
+```
 
-return productDetails.type === 'fruit'
-  ? "It's a fruit"
-  : productDetails.type === 'vegetable'
-  ? "It's a vegetable"
-  : assertUnreachable(productDetails.type, "It's not supported yet");
+```ts
+type Props = { x: number, y: number };
+
+function Cell(props: Props) {
+  const { x, y } = props;
+  const value = useCellValueAt(toX(x), toY(y));
+  return value.type === 'number'
+    ? renderNumberCell(value.numberValue)
+    : renderTextCell(value.textValue);
+}
 ```
 ````
-
-</v-click>
-
-<v-click>
-
-**Usages:** New types need to be added over time in the API
 
 </v-click>
 
@@ -536,48 +516,376 @@ image: /assets/papyrus.avif
 
 <h1 style="color: #cc4700">Back to our Guiding Example</h1>
 
-<p v-click style="color: #5C4420; opacity: 1">Let's suppose we want to tell our users that they should reload the page as some external changes may have impacted the sheet. Our code might have to be adapted as follow:</p>
+<div style="display: grid; margin-top: 16px; color: white; text-align: center;">
+  <v-switch>
+    <template #0>
+<div style="grid-row: 1; grid-column: 1; text-align: left">
 
-<pre v-click style="color: #5C4420; background: #fff5; padding: 16px; border-radius: 1px"><code>function ProductSheet(props) {
-  const productDetails = useFetchProductDetails(props.storeId, props.productId);
-  useNotifyChanges((updatedProductDetails) => {
-    // return true if the change should be considered as impactful
-  }, productDetails);
-  return ...;
+```ts
+type Props = { x: number, y: number };
+
+function Cell(props: Props) {
+  const { x, y } = props;
+  const value = useCellValueAt(toX(x), toY(y));
+  return value.type === 'number'
+    ? renderNumberCell(value.numberValue)
+    : renderTextCell(value.textValue);
+}
+```
+
+</div>
+    </template>
+    <template #1>
+<div style="grid-row: 1; grid-column: 1; text-align: left">
+
+```ts
+type Props = { x: number, y: number };
+
+function Cell(props: Props) {
+  const { x, y } = props;
+  const value = useCellValueAt(toX(x), toY(y));
+  if (!isValidValue(value)) {
+    return null;
+  }
+  return value.type === 'number'
+    ? renderNumberCell(value.numberValue)
+    : renderTextCell(value.textValue);
+}
+```
+
+</div>
+    </template>
+    <template #2>
+<div style="grid-row: 1; grid-column: 1; text-align: left; padding-top: 4px">
+
+```ts twoslash
+declare function toX(n: number): number;
+declare function toY(n: number): number;
+type ValueFromAPI = {
+  type: 'number' | 'text';
+  numberValue?: number;
+  textValue?: string;
+}
+declare function useCellValueAt(x: number, y: number): ValueFromAPI;
+declare function isValidValue(value: ValueFromAPI): boolean;
+declare function renderNumberCell(value: number): null;
+declare function renderTextCell(value: string): null;
+// ---cut-before---
+type Props = { x: number, y: number };
+
+function Cell(props: Props) {
+  const { x, y } = props;
+  const value = useCellValueAt(toX(x), toY(y));
+  if (!isValidValue(value)) {
+    return null;
+  }
+  return value.type === 'number'
+    ? renderNumberCell(value.numberValue)
+    : renderTextCell(value.textValue);
+}
+```
+
+</div>
+    </template>
+  </v-switch>
+</div>
+
+---
+
+# Type predicates
+
+> When `isValidValue` returns `true` I expect my value to be safe
+
+<v-click>
+
+````md magic-move {lines: true}
+```ts
+type ValueFromAPI = {
+  type: 'number' | 'text';
+  numberValue?: number;
+  textValue?: string;
 }
 
-type SubscribableProductDetails = {
-  subscribe: (onUpdate: (updatedValue: ProductDetails) => void) => void;
-} & ProductDetails;</code></pre>
+type Value =
+  | {
+      type: 'number';
+      numberValue: number;
+    }
+  | {
+      type: 'text';
+      textValue: string;
+    };
+
+function isValidValue(value: ValueFromAPI): boolean {
+  // doing stuff
+}
+```
+```ts
+function isValidValue(value: ValueFromAPI): boolean {
+  // doing stuff
+}
+```
+
+```ts
+function isValidValue(value: ValueFromAPI): value is Value {
+  // doing stuff
+}
+```
+````
+
+</v-click>
+
+---
+
+# Mapped types
+
+> Not fan of copying code, no?
+
+<v-click>
+
+````md magic-move {lines: true}
+```ts
+type ValueFromAPI = {
+  type: 'number' | 'text';
+  numberValue?: number;
+  textValue?: string;
+}
+```
+
+```ts
+type ValueFromAPI = {
+  type: 'number' | 'text';
+  numberValue?: number;
+  textValue?: string;
+}
+
+type Value =
+  | {
+      type: 'number';
+      numberValue: number;
+    }
+  | {
+      type: 'text';
+      textValue: string;
+    };
+```
+
+```ts
+type ValueFromAPI = {
+  type: 'number' | 'text';
+  numberValue?: number;
+  textValue?: string;
+}
+
+type Value = { [K in ???]: ??? };
+```
+
+```ts
+type ValueFromAPI = {
+  type: 'number' | 'text';
+  numberValue?: number;
+  textValue?: string;
+}
+
+type Value = { [K in ValueFromAPI['type']]: ??? };
+// {
+//   number: ???,
+//   text: ???,
+// }
+```
+
+```ts
+type ValueFromAPI = {
+  type: 'number' | 'text';
+  numberValue?: number;
+  textValue?: string;
+}
+
+type Value = { [K in ValueFromAPI['type']]: ??? }[ValueFromAPI['type']];
+// ??? | ???
+```
+
+```ts
+type ValueFromAPI = {
+  type: 'number' | 'text';
+  numberValue?: number;
+  textValue?: string;
+}
+
+type Value = { [K in ValueFromAPI['type']]: { type: K } }[ValueFromAPI['type']];
+// | { type: 'number' }
+// | { type: 'text' }
+```
+
+```ts
+type ValueFromAPI = {
+  type: 'number' | 'text';
+  numberValue?: number;
+  textValue?: string;
+}
+
+type Value = {
+  [K in ValueFromAPI['type']]: { type: K }
+}[ValueFromAPI['type']];
+// | { type: 'number' }
+// | { type: 'text' }
+```
+
+```ts
+type ValueFromAPI = {
+  type: 'number' | 'text';
+  numberValue?: number;
+  textValue?: string;
+}
+
+type Value = {
+  [K in ValueFromAPI['type']]: { type: K } & Required<Pick<ValueFromAPI, `${Uncapitalize<K>}Value`>>
+}[ValueFromAPI['type']];
+// | { type: 'number', numberValue: number}
+// | { type: 'text', textValue: string }
+```
+````
+
+</v-click>
+
+---
+
+# _\*never_
+
+> Let be future proof
+
+<v-click>
+
+````md magic-move {lines: true}
+```ts
+return value.type === 'number'
+  ? "It's a number"
+  : "It's a string"
+```
+
+```ts
+return value.type === 'number'
+  ? "It's a number"
+  : value.type === 'text'
+  ? "It's a string"
+  : "Not supported yet";
+```
+
+```ts
+return value.type === 'number'
+  ? "It's a number"
+  : value.type === 'text'
+  ? "It's a string"
+  : assertUnreachable(value.type, "Not supported yet");
+```
+
+```ts
+export function assertUnreachable<T>(arg: never, defaultValue: T) {
+  return defaultValue;
+}
+
+return value.type === 'number'
+  ? String(value.numberValue)
+  : String(value.textValue);
+  : assertUnreachable(value.type, "Not supported yet");
+```
+````
+
+</v-click>
 
 ---
 layout: image
 image: /assets/papyrus.avif
 ---
 
-<h2 style="color: #cc4700">Problem #5: More generic?</h2>
+<h1 style="color: #cc4700">Back to our Guiding Example</h1>
 
-<p v-click style="color: #5C4420; opacity: 1">Could we make <code>Subscribable</code> more generic?</p>
+<div style="display: grid; margin-top: 16px; color: white; text-align: center;">
+  <v-switch>
+    <template #0>
+<div style="grid-row: 1; grid-column: 1; text-align: left">
+
+```ts
+function Cell(props: Props) {
+  const { x, y } = props;
+  const value = useCellValueAt(toX(x), toY(y));
+
+  if (!isValidValue(value)) {
+    return null;
+  }
+
+  return value.type === 'number'
+    ? renderNumberCell(value.numberValue)
+    : renderTextCell(value.textValue);
+}
+```
+
+</div>
+    </template>
+    <template #1>
+<div style="grid-row: 1; grid-column: 1; text-align: left">
+
+```ts
+function Cell(props: Props) {
+  const { x, y } = props;
+  const value = useCellValueAt(toX(x), toY(y));
+
+  useAlertOnChange((newValue) => {
+    alert(`The value at (${x},${y}) changed to ${newValue}`);
+  }, value);
+
+  if (!isValidValue(value)) {
+    return null;
+  }
+
+  return value.type === 'number'
+    ? renderNumberCell(value.numberValue)
+    : renderTextCell(value.textValue);
+}
+```
+
+</div>
+    </template>
+    <template #3>
+<div style="grid-row: 1; grid-column: 1; text-align: left">
+
+```ts
+type SubscribableValue = Value & {
+  subscribe: (onChange: (newValue: Value) => void) => void;
+}
+
+function useCellValueAt(x: X, y: Y): SubscribableValue;
+
+function useAlertOnChange(
+  onChange: (newValue: Value) => void,
+  subscribable: SubscribableValue,
+): void;
+```
+
+</div>
+    </template>
+  </v-switch>
+</div>
 
 ---
 
 # Generic
 
-Let's make things _generic_
+> Not that re-usable...
 
 <v-click>
 
 ````md magic-move {lines: true}
 ```ts
-type SubscribableProductDetails = {
-  subscribe: (onUpdate: (updatedValue: ProductDetails) => void) => void;
-} & ProductDetails;
+type SubscribableValue = Value & {
+  subscribe: (onChange: (newValue: Value) => void) => void;
+}
 ```
 
 ```ts
-type Subscribable<T> = {
-  subscribe: (onUpdate: (updatedValue: T) => void) => void;
-} & T;
+type Subscribable<T> = T & {
+  subscribe: (onChange: (newValue: T) => void) => void;
+}
 ```
 ````
 
@@ -585,60 +893,21 @@ type Subscribable<T> = {
 
 <v-click>
 
-**Usages:** Factorizing types
-
-</v-click>
-
----
-layout: image
-image: /assets/papyrus.avif
----
-
-<h2 style="color: #cc4700">Problem #6: Typings mixing generics and variadics?</h2>
-
-<p v-click style="color: #5C4420; opacity: 1">Our helper called <code>useNotifyChanges</code> should mix both variadics and generics to work well. With out initial hardcoded types not relying on generics and without variadics the thing could have been as simple as:</p>
-
-<pre v-click style="color: #5C4420; background: #fff5; padding: 16px; border-radius: 1px"><code>declare function useNotifyChanges(
-  shouldNotify: (updatedProductDetails: ProductDetails) => boolean,
-  subscribableProductDetails: SubscribableProductDetails,
-): void;</code></pre>
-
----
-
-# Consuming generics
-
-Let's consume _generic_
-
-<v-click>
-
 ````md magic-move {lines: true}
 ```ts
-declare function useNotifyChanges(
-  shouldNotify: (updatedProductDetails: ProductDetails) => boolean,
-  subscribableProductDetails: SubscribableProductDetails,
+function useAlertOnChange(
+  onChange: (newValue: Value) => void,
+  subscribable: SubscribableValue,
 ): void;
 ```
 
 ```ts
-declare function useNotifyChanges(
-  shouldNotify: (updatedProductDetails: ProductDetails) => boolean,
-  subscribableProductDetails: Subscribable<ProductDetails>,
-): void;
-```
-
-```ts
-declare function useNotifyChanges<T>(
-  shouldNotify: (updatedValue: T) => boolean,
+function useAlertOnChange<T>(
+  onChange: (newValue: T) => void,
   subscribable: Subscribable<T>,
 ): void;
 ```
 ````
-
-</v-click>
-
-<v-click>
-
-**Usages:** Consuming factorized types
 
 </v-click>
 
@@ -646,31 +915,25 @@ declare function useNotifyChanges<T>(
 
 # Variadics
 
-Let's support an elastic number of parameters
+> Maybe we could support multiple subscribables at once
 
 <v-click>
 
 ````md magic-move {lines: true}
 ```ts
-declare function useNotifyChanges<T>(
-  shouldNotify: (updatedValue: T) => boolean,
+function useAlertOnChange<T>(
+  onChange: (newValue: T) => void,
   subscribable: Subscribable<T>,
 ): void;
 ```
 
 ```ts
-declare function useNotifyChanges<TValues extends unknown[]>(
-  shouldNotify: (...updatedValues: TValues) => boolean,
+function useAlertOnChange<T extends unknown[]>(
+  onChange: (...newValues: T) => void,
   ...subscribables: { [K in keyof TValues]: Subscribable<TValues[K]> },
 ): void;
 ```
 ````
-
-</v-click>
-
-<v-click>
-
-**Usages:** Properties in fast-check, <code>Promise.all</code>
 
 </v-click>
 
