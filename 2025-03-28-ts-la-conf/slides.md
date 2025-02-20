@@ -190,32 +190,32 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
 </div>
 
 ---
-layout: image
-image: /assets/papyrus.avif
----
 
-<h1 style="color: #cc4700">Our Guiding Example</h1>
+<div style="position: absolute; z-index: -1; inset: 0px; background-image: url(/assets/gradient-shape-CHYWUDiD.svg); background-size: cover;"></div>
+<div style="position: absolute; z-index: -1; inset: 0px; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(80px);"></div>
+
+<h1 style="color: #0355f3">Our Guiding Example <img src="/assets/Pigment logo alone.png" style="float: right; height: 1em; box-shadow: none;"></h1>
 
 <p v-click="1" style="color: #5C4420; opacity: 1">Let’s take an example inspired from <b>Pigment</b>.</p>
 
 <div style="display: grid; margin-top: 16px; color: white; text-align: center;">
   <v-switch>
-    <template #0>
+    <template #2>
       <div style="grid-row: 1; grid-column: 1">
         <img src="/assets/pigment-board-zoom.png" />
       </div>
     </template>
-    <template #1>
+    <template #3>
       <div style="grid-row: 1; grid-column: 1">
         <img src="/assets/pigment-view-zoom.png" />
       </div>
     </template>
-    <template #2>
+    <template #4>
       <div style="grid-row: 1; grid-column: 1">
         <img src="/assets/pigment-cell-zoom.png" />
       </div>
     </template>
-    <template #3>
+    <template #5>
 <div style="grid-row: 1; grid-column: 1; text-align: left">
 
 ```ts
@@ -228,7 +228,7 @@ function Cell(props: Props) {
 
 </div>
     </template>
-    <template #4>
+    <template #6>
 <div style="grid-row: 1; grid-column: 1; text-align: left">
 
 ```ts
@@ -243,7 +243,7 @@ function Cell(props: Props) {
 
 </div>
     </template>
-    <template #5>
+    <template #7>
 <div style="grid-row: 1; grid-column: 1; text-align: left; padding-top: 4px">
 
 ```ts twoslash
@@ -342,11 +342,11 @@ function Cell(props: Props) {
 </v-click>
 
 ---
-layout: image
-image: /assets/papyrus.avif
----
 
-<h1 style="color: #cc4700">Back to our Guiding Example</h1>
+<div style="position: absolute; z-index: -1; inset: 0px; background-image: url(/assets/gradient-shape-CHYWUDiD.svg); background-size: cover;"></div>
+<div style="position: absolute; z-index: -1; inset: 0px; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(80px);"></div>
+
+<h1 style="color: #0355f3">Back to our Guiding Example <img src="/assets/Pigment logo alone.png" style="float: right; height: 1em; box-shadow: none;"></h1>
 
 <div style="display: grid; margin-top: 16px; color: white; text-align: center;">
   <v-switch>
@@ -510,11 +510,11 @@ function Cell(props: Props) {
 </v-click>
 
 ---
-layout: image
-image: /assets/papyrus.avif
----
 
-<h1 style="color: #cc4700">Back to our Guiding Example</h1>
+<div style="position: absolute; z-index: -1; inset: 0px; background-image: url(/assets/gradient-shape-CHYWUDiD.svg); background-size: cover;"></div>
+<div style="position: absolute; z-index: -1; inset: 0px; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(80px);"></div>
+
+<h1 style="color: #0355f3">Back to our Guiding Example <img src="/assets/Pigment logo alone.png" style="float: right; height: 1em; box-shadow: none;"></h1>
 
 <div style="display: grid; margin-top: 16px; color: white; text-align: center;">
   <v-switch>
@@ -794,11 +794,11 @@ return value.type === 'number'
 </v-click>
 
 ---
-layout: image
-image: /assets/papyrus.avif
----
 
-<h1 style="color: #cc4700">Back to our Guiding Example</h1>
+<div style="position: absolute; z-index: -1; inset: 0px; background-image: url(/assets/gradient-shape-CHYWUDiD.svg); background-size: cover;"></div>
+<div style="position: absolute; z-index: -1; inset: 0px; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(80px);"></div>
+
+<h1 style="color: #0355f3">Back to our Guiding Example <img src="/assets/Pigment logo alone.png" style="float: right; height: 1em; box-shadow: none;"></h1>
 
 <div style="display: grid; margin-top: 16px; color: white; text-align: center;">
   <v-switch>
