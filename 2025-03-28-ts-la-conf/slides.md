@@ -701,20 +701,11 @@ type ValueFromAPI = {
   textValue?: string;
 }
 
-type Value = { [K in ValueFromAPI['type']]: ??? }[ValueFromAPI['type']];
-// ??? | ???
-```
-
-```ts
-type ValueFromAPI = {
-  type: 'number' | 'text';
-  numberValue?: number;
-  textValue?: string;
-}
-
-type Value = { [K in ValueFromAPI['type']]: { type: K } }[ValueFromAPI['type']];
-// | { type: 'number' }
-// | { type: 'text' }
+type Value = { [K in ValueFromAPI['type']]: { type: K } };
+// {
+//   number: { type: 'number' },
+//   text: { type: 'text' },
+// }
 ```
 
 ```ts
@@ -726,9 +717,11 @@ type ValueFromAPI = {
 
 type Value = {
   [K in ValueFromAPI['type']]: { type: K }
-}[ValueFromAPI['type']];
-// | { type: 'number' }
-// | { type: 'text' }
+};
+// {
+//   number: { type: 'number' },
+//   text: { type: 'text' },
+// }
 ```
 
 ```ts
@@ -739,7 +732,23 @@ type ValueFromAPI = {
 }
 
 type Value = {
-  [K in ValueFromAPI['type']]: { type: K } & Required<Pick<ValueFromAPI, `${Uncapitalize<K>}Value`>>
+  [K in ValueFromAPI['type']]: { type: K } & Required<Pick<ValueFromAPI, `${K}Value`>>
+};
+// {
+//   number: { type: 'number', numberValue: number },
+//   text: { type: 'text', textValue: string },
+// }
+```
+
+```ts
+type ValueFromAPI = {
+  type: 'number' | 'text';
+  numberValue?: number;
+  textValue?: string;
+}
+
+type Value = {
+  [K in ValueFromAPI['type']]: { type: K } & Required<Pick<ValueFromAPI, `${K}Value`>>
 }[ValueFromAPI['type']];
 // | { type: 'number', numberValue: number}
 // | { type: 'text', textValue: string }
