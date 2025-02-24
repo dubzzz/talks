@@ -786,7 +786,8 @@ export function assertUnreachable<T>(arg: never, defaultValue: T) {
 
 return value.type === 'number'
   ? String(value.numberValue)
-  : String(value.textValue);
+  : value.type === 'text'
+  ? String(value.textValue);
   : assertUnreachable(value.type, "Not supported yet");
 ```
 ````
