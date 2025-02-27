@@ -1117,7 +1117,7 @@ type Value = NumberValue | TextValue;
 ### Type predicates
 
 ```ts
-function isValidValue(value: ValueFromAPI): boolean {
+function isValidValue(value: ValueAPI): value is Value {
   // doing stuff
 }
 ```
