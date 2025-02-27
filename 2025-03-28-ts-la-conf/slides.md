@@ -758,6 +758,22 @@ type Value = {
 // | { type: 'number', numberValue: number}
 // | { type: 'text', textValue: string }
 ```
+
+```ts
+type ValueFromAPI = {
+  type: 'number' | 'text' | 'date';
+  numberValue?: number;
+  textValue?: string;
+  dateValue?: Date;
+}
+
+type Value = {
+  [K in ValueFromAPI['type']]: { type: K } & Required<Pick<ValueFromAPI, `${K}Value`>>
+}[ValueFromAPI['type']];
+// | { type: 'number', numberValue: number}
+// | { type: 'text', textValue: string }
+// | { type: 'date', dateValue: Date }
+```
 ````
 
 </v-click>
