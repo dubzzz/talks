@@ -948,9 +948,12 @@ function useAlertOnChange<T extends unknown[]>(
 </v-click>
 
 ---
+layout: cover
+background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC-PAYSAGES-MARGERIDE-283.jpg
+---
 
-<div style="display: grid; margin-bottom: 48px; gap: 8px; grid-template-columns: repeat(2, minmax(0, 1fr));">
-  <div style="grid-row: 1; grid-column: 1">
+<div style="text-align: left; display: grid; margin-bottom: 36px; gap: 8px; grid-template-columns: repeat(2, minmax(0, 1fr));">
+  <div v-click style="grid-row: 1; grid-column: 1">
 
 ### Branded Types
 
@@ -961,7 +964,7 @@ export const toX = (x: number) => x as X;
 ```
 
   </div>
-  <div style="grid-row: 1; grid-column: 2">
+  <div v-click style="grid-row: 1; grid-column: 2">
 
 ### Discriminated Unions
 
@@ -970,7 +973,7 @@ type Value = NumberValue | TextValue;
 ```
 
   </div>
-  <div style="grid-row: 2; grid-column: 1">
+  <div v-click style="grid-row: 2; grid-column: 1">
 
 ### Type predicates
 
@@ -981,7 +984,7 @@ function isValidValue(value: ValueFromAPI): boolean {
 ```
 
   </div>
-  <div style="grid-row: 2; grid-column: 2">
+  <div v-click style="grid-row: 2; grid-column: 2">
 
 ### Mapped types
 
@@ -990,7 +993,7 @@ type Value = { [K in Keys]: ValueForK };
 ```
 
   </div>
-  <div style="grid-row: 3; grid-column: 1">
+  <div v-click style="grid-row: 3; grid-column: 1">
 
 ### \*never
 
@@ -1001,7 +1004,7 @@ function assertUnreachable<T>(arg: never, fallback: T) {
 ```
 
   </div>
-  <div style="grid-row: 3; grid-column: 2">
+  <div v-click style="grid-row: 3; grid-column: 2">
 
 ### Generics & Variadics
 
@@ -1015,6 +1018,6 @@ function useAlertOnChange<T extends unknown[]>(
   </div>
 </div>
 
-<h1 style="text-align: right">Questions?</h1>
+<h1 style="text-align: right; margin-bottom: 0">Questions?</h1>
 
 <p style="text-align: right">Do not hesitate to visit our blog: <a href="https://engineering.pigment.com/" target="_blank">engineering.pigment.com</a></p>
