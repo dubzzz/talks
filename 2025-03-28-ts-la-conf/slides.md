@@ -66,6 +66,11 @@ layout: center
         <pre style="background-color: #cc4700;"><code><span style="font-weight: 900;">as</span> <span style="opacity: 50%">any</span></code><div style="position: absolute; top: 0; right: 0; height: 0;">😱</div></pre>
       </div>
     </template>
+    <template #4>
+      <div style="grid-row: 1; grid-column: 1">
+        <pre style="background-color: #cc4700;"><code><span style="opacity: 50%">nullable</span><span style="font-weight: 900;">!</span></code><div style="position: absolute; top: 0; right: 0; height: 0;">😱</div></pre>
+      </div>
+    </template>
   </v-switch>
 </div>
 
@@ -127,7 +132,7 @@ export default function Select(props: Props) {
 }
 ```
 
-```ts
+```ts{all|15,17}
 type Props = {
   /** Should the Select support multi-selection? */
   multiple: boolean | undefined;
@@ -600,6 +605,10 @@ function Cell(props: Props) {
 
 ````md magic-move {lines: true}
 ```ts
+function isValidValue(value: ValueFromAPI): boolean {
+  // doing stuff
+}
+
 type ValueFromAPI = {
   type: 'number' | 'text';
   numberValue?: number;
@@ -615,10 +624,6 @@ type Value =
       type: 'text';
       textValue: string;
     };
-
-function isValidValue(value: ValueFromAPI): boolean {
-  // doing stuff
-}
 ```
 ```ts
 function isValidValue(value: ValueFromAPI): boolean {
@@ -893,6 +898,28 @@ type SubscribableValue = Value & {
 ```
 
 ```ts
+type SubscribableValue = Value & {
+  subscribe: (onChange: (newValue: Value) => void) => void;
+}
+type SubscribableUser = User & {
+  subscribe: (onChange: (newUser: User) => void) => void;
+}
+```
+
+```ts
+type SubscribableValue = Value & {
+  subscribe: (onChange: (newValue: Value) => void) => void;
+}
+type SubscribableUser = User & {
+  subscribe: (onChange: (newUser: User) => void) => void;
+}
+type SubscribableVendor = Vendor & {
+  subscribe: (onChange: (newVendor: Vendor) => void) => void;
+}
+// and many others...
+```
+
+```ts
 type Subscribable<T> = T & {
   subscribe: (onChange: (newValue: T) => void) => void;
 }
@@ -909,6 +936,33 @@ function useAlertOnChange(
   onChange: (newValue: Value) => void,
   subscribable: SubscribableValue,
 ): void;
+```
+
+```ts
+function useAlertOnChange(
+  onChange: (newValue: Value) => void,
+  subscribable: SubscribableValue,
+): void;
+function useAlertOnChange(
+  onChange: (newUser: User) => void,
+  subscribable: SubscribableUser,
+): void;
+```
+
+```ts
+function useAlertOnChange(
+  onChange: (newValue: Value) => void,
+  subscribable: SubscribableValue,
+): void;
+function useAlertOnChange(
+  onChange: (newUser: User) => void,
+  subscribable: SubscribableUser,
+): void;
+function useAlertOnChange(
+  onChange: (newVendor: Vendor) => void,
+  subscribable: SubscribableVendor,
+): void;
+// and many others...
 ```
 
 ```ts
@@ -934,6 +988,75 @@ function useAlertOnChange<T>(
 function useAlertOnChange<T>(
   onChange: (newValue: T) => void,
   subscribable: Subscribable<T>,
+): void;
+```
+
+```ts
+function useAlertOnChange1<T1>(
+  onChange: (newValue1: T1) => void,
+  subscribable1: Subscribable<T1>,
+): void;
+```
+
+```ts
+function useAlertOnChange1<T1>(
+  onChange: (newValue1: T1) => void,
+  subscribable1: Subscribable<T1>,
+): void;
+function useAlertOnChange2<T1, T2>(
+  onChange: (newValue1: T1, newValue2: T2) => void,
+  subscribable1: Subscribable<T1>,
+  subscribable2: Subscribable<T2>,
+): void;
+```
+
+```ts
+function useAlertOnChange1<T1>(
+  onChange: (newValue1: T1) => void,
+  subscribable1: Subscribable<T1>,
+): void;
+function useAlertOnChange2<T1, T2>(
+  onChange: (newValue1: T1, newValue2: T2) => void,
+  subscribable1: Subscribable<T1>,
+  subscribable2: Subscribable<T2>,
+): void;
+function useAlertOnChange3<T1, T2, T3>(
+  onChange: (newValue1: T1, newValue2: T2, newValue3: T3) => void,
+  subscribable1: Subscribable<T1>,
+  subscribable2: Subscribable<T2>,
+  subscribable3: Subscribable<T3>,
+): void;
+// and many others...
+```
+
+```ts
+function useAlertOnChange<T1, T2, T3>(
+  onChange: (newValue1: T1, newValue2: T2, newValue3: T3) => void,
+  subscribable1: Subscribable<T1>,
+  subscribable2: Subscribable<T2>,
+  subscribable3: Subscribable<T3>,
+): void;
+```
+```
+
+```ts
+function useAlertOnChange<T1, T2, T3>(
+  onChange: (...newValues: [T1, T2, T3]) => void,
+  ...subscribables: [Subscribable<T1>, Subscribable<T2>, Subscribable<T3>],
+): void;
+```
+
+```ts
+function useAlertOnChange<T extends unknown[]>(
+  onChange: (...newValues: [T1, T2, T3]) => void,
+  ...subscribables: [Subscribable<T1>, Subscribable<T2>, Subscribable<T3>],
+): void;
+```
+
+```ts
+function useAlertOnChange<T extends unknown[]>(
+  onChange: (...newValues: T) => void,
+  ...subscribables: [Subscribable<T1>, Subscribable<T2>, Subscribable<T3>],
 ): void;
 ```
 
