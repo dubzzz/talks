@@ -68,6 +68,11 @@ layout: center
     </template>
     <template #4>
       <div style="grid-row: 1; grid-column: 1">
+        <pre style="background-color: #cc4700;"><code><span style="opacity: 50%">:</span><span style="font-weight: 900;">any</span></code><div style="position: absolute; top: 0; right: 0; height: 0;">😱</div></pre>
+      </div>
+    </template>
+    <template #5>
+      <div style="grid-row: 1; grid-column: 1">
         <pre style="background-color: #cc4700;"><code><span style="opacity: 50%">nullable</span><span style="font-weight: 900;">!</span></code><div style="position: absolute; top: 0; right: 0; height: 0;">😱</div></pre>
       </div>
     </template>
