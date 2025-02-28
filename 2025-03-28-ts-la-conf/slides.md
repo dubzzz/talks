@@ -1162,6 +1162,6 @@ function useAlertOnChange<T extends unknown[]>(
   </div>
 </div>
 
-<h1 style="text-align: right; margin-bottom: 0">Questions?</h1>
+<h1 style="text-align: right; margin-bottom: 0">Thank you</h1>
 
 <p style="text-align: right">Do not hesitate to visit our blog: <a href="https://engineering.pigment.com/" target="_blank">engineering.pigment.com</a></p>
