@@ -22,7 +22,7 @@ favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b
 
 
 <h1 style="color: #fff !important; line-height: 1.1em !important;">The tests that write themselves</h1>
-<h2 style="color: #fff !important; line-height: 1.1em !important;"><i>*Almost</i></h2>
+<h2 style="color: #fff !important; line-height: 0.8em !important; margin-top: -16px"><i>*Almost</i></h2>
 
 <div style="display:flex; justify-content: center; margin-top: 16px; margin-bottom: 16px;">
   <img src="/assets/forkit.png" style="max-width: 40%; filter: drop-shadow(0 0 2rem white) contrast(1.5);" />
@@ -34,7 +34,7 @@ _**By Nicolas DUBIEN**_
 layout: center
 ---
 
-# Why the hell a new testing technic? 😠
+# Why would I need a magic tool writing tests for me? 😠
 
 ---
 
