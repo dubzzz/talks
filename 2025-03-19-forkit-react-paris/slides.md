@@ -174,7 +174,7 @@ describe('knuthMorrisPratt', () => {
 
 <v-click>
 
-> 🙋‍♂️ Why are we covering all these cases? Aren't redundant?
+> 🙋‍♂️ Why are we covering all these cases? Aren't they redundant?
 
 </v-click>
 
@@ -267,7 +267,24 @@ layout: center
 layout: center
 ---
 
+<div style="display: grid;">
+<v-switch>
+<template #0>
+<div style="grid-row: 1; grid-column: 1">
+
 ![](/assets/fast-check-downloads.png)
+
+</div>
+</template>
+<template #1>
+<div style="grid-row: 1; grid-column: 1">
+
+![](/assets/fast-check-downloads-new.png)
+
+</div>
+</template>
+</v-switch>
+</div>
 
 _\*fast-check.dev_
 
