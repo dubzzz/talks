@@ -32,13 +32,13 @@ _**By Nicolas DUBIEN**_
 layout: center
 ---
 
-![](assets/runtime-error-undefined.png)
+![](/assets/runtime-error-undefined.png)
 
 ---
 layout: center
 ---
 
-![](assets/runtime-error-map.png)
+![](/assets/runtime-error-map.png)
 
 <!--
   It may feels a bit frustrating whe nusing TypeScript to fall into such problems.
