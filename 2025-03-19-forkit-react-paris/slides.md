@@ -75,7 +75,7 @@ describe('Search engine', () => {
 
 <ul>
   <li v-click="1">Coverage,</li>
-  <li v-click="2">Testing pyramid,</li>
+  <li v-click="2">Testing pyramid and/or Testing trophee,</li>
   <li v-click="3">…</li>
 </ul>
 
