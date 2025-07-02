@@ -1247,10 +1247,7 @@ function App() {
   return (
     <div>
       <div>
-        Hello{" "}
-        <span>
-          <i>Enter your name</i>
-        </span>
+        Hello <span><i>Enter your name</i></span>
       </div>
       <input
         value=""
@@ -1268,10 +1265,7 @@ function App() {
   return (
     <div>
       <div>
-        Hello{" "}
-        <span>
-          <i>Enter your name</i>
-        </span>
+        Hello <span>{value || <i>Enter your name</i>}</span>
       </div>
       <input
         value={value}
