@@ -27,6 +27,30 @@ favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b
 _**By Nicolas DUBIEN**_
 
 ---
+
+![](assets/target.png)
+
+---
+
+```js
+function App() {
+  const [value, setValue] = useState("abc");
+  return (
+    <div>
+      <div>
+        Hello <span>{value || <i>Enter your name</i>}</span>
+      </div>
+      <input
+        value={value}
+        placeholder="Your name"
+        onKeyDown={(event) => setValue(event.target.value + event.key)}
+      />
+    </div>
+  );
+}
+```
+
+---
 layout: center
 ---
 
@@ -47,12 +71,6 @@ layout: center
 ---
 
 # JSX
-
----
-
-Target display:
-
-![](assets/target.png)
 
 ---
 
@@ -136,14 +154,14 @@ export const jsxDEV = (type, props) => {
 _To be defined in `react`_
 
 ---
+
+![](/assets/crash-no-root.png)
+
+---
 layout: center
 ---
 
 # Creating the root
-
----
-
-![](/assets/crash-no-root.png)
 
 ---
 
@@ -485,7 +503,7 @@ function traverse(fiber) {
 ```
 
 ```js
-/** @typedef {JSX & { children?: Fiber[]; parent?: Fiber; dom?: HTMLElement; textContent?: string }} Fiber */
+/** @typedef {JSX & { children?: Fiber[]; parent?: Fiber; dom?: HTMLElement; content?: string }} Fiber */
 
 /**
  * @param {Fiber} fiber
@@ -516,7 +534,7 @@ function traverse(fiber) {
 ```
 
 ```js
-/** @typedef {JSX & { children?: Fiber[]; parent?: Fiber; dom?: HTMLElement; textContent?: string }} Fiber */
+/** @typedef {JSX & { children?: Fiber[]; parent?: Fiber; dom?: HTMLElement; content?: string }} Fiber */
 
 /**
  * @param {Fiber} fiber
@@ -548,7 +566,7 @@ function traverse(fiber) {
 ```
 
 ```js
-/** @typedef {JSX & { children?: Fiber[]; parent?: Fiber; dom?: HTMLElement; textContent?: string }} Fiber */
+/** @typedef {JSX & { children?: Fiber[]; parent?: Fiber; dom?: HTMLElement; content?: string }} Fiber */
 
 /**
  * @param {Fiber} fiber
@@ -559,7 +577,7 @@ function commit(fiber) {
 ```
 
 ```js
-/** @typedef {JSX & { children?: Fiber[]; parent?: Fiber; dom?: HTMLElement; textContent?: string }} Fiber */
+/** @typedef {JSX & { children?: Fiber[]; parent?: Fiber; dom?: HTMLElement; content?: string }} Fiber */
 
 /**
  * @param {Fiber} fiber
@@ -575,7 +593,7 @@ function commit(fiber) {
 ```
 
 ```js
-/** @typedef {JSX & { children?: Fiber[]; parent?: Fiber; dom?: HTMLElement; textContent?: string }} Fiber */
+/** @typedef {JSX & { children?: Fiber[]; parent?: Fiber; dom?: HTMLElement; content?: string }} Fiber */
 
 /**
  * @param {Fiber} fiber
@@ -593,7 +611,7 @@ function commit(fiber) {
 ```
 
 ```js
-/** @typedef {JSX & { children?: Fiber[]; parent?: Fiber; dom?: HTMLElement; textContent?: string }} Fiber */
+/** @typedef {JSX & { children?: Fiber[]; parent?: Fiber; dom?: HTMLElement; content?: string }} Fiber */
 
 /**
  * @param {Fiber} fiber
@@ -862,6 +880,8 @@ function traverse(fiber) {
  */
 function traverse(fiber) {
   if (typeof fiber.type === "function") {
+    fiber.children = [fiber.type(fiber.props)];
+    reconcile(fiber);
     return;
   }
   if (typeof fiber.type === "string") {
@@ -1003,11 +1023,11 @@ layout: center
 
 ````md magic-move {lines: true}
 ```js
-/** @typedef {JSX & { children?: Fiber[]; parent?: Fiber; dom?: HTMLElement; textContent?: string }} Fiber */
+/** @typedef {JSX & { children?: Fiber[]; parent?: Fiber; dom?: HTMLElement; content?: string }} Fiber */
 ```
 
 ```js
-/** @typedef {JSX & { children?: Fiber[]; parent?: Fiber; dom?: HTMLElement; textContent?: string; prevProps?: object }} Fiber */
+/** @typedef {JSX & { children?: Fiber[]; parent?: Fiber; dom?: HTMLElement; content?: string; prevProps?: object }} Fiber */
 ```
 
 ```js
@@ -1058,6 +1078,31 @@ function commit(fiber) {
 /**
  * @param {Fiber} fiber
  */
+function commit(fiber) {
+  const parentDom = closestParentDom(fiber);
+  if (!fiber.dom && typeof fiber.type === "string") {
+    fiber.dom =
+      fiber.type === "text"
+        ? document.createTextNode(fiber.content)
+        : document.createElement(fiber.type);
+  }
+  if (fiber.dom) {
+    updateDom(fiber.dom, fiber.prevProps || {}, fiber.props);
+    if (fiber.type === "text") {
+      fiber.dom.nodeValue = fiber.content;
+    }
+    parentDom.appendChild(fiber.dom);
+  }
+  for (const child of fiber.children) {
+    commit(child);
+  }
+}
+```
+
+```js
+/**
+ * @param {Fiber} fiber
+ */
 function traverse(fiber) {
   if (typeof fiber.type === "function") {
     fiber.children = [fiber.type(fiber.props)];
@@ -1094,6 +1139,19 @@ function traverse(fiber) {
       ? [fiber.props.children]
       : [];
     reconcile(fiber, prevChildren);
+  }
+}
+```
+
+```js
+/**
+ * @param {Fiber} fiber
+ */
+function reconcile(fiber) {
+  sanitize(fiber);
+  for (const child of fiber.children) {
+    child.parent = fiber;
+    traverse(child);
   }
 }
 ```
@@ -1116,7 +1174,8 @@ function reconcile(fiber, prevChildren) {
       if (child) {
         child.parent = fiber;
         traverse(child);
-      } else {
+      }
+      if (prevChild) {
         // TODO: handle deletions
       }
     } else {
@@ -1149,7 +1208,8 @@ function reconcile(fiber, prevChildren) {
       if (child) {
         child.parent = fiber;
         traverse(child);
-      } else {
+      }
+      if (prevChild) {
         deletions.push(prevChild);
       }
     } else {
@@ -1200,9 +1260,6 @@ export const createRoot = (rootElement) => {
  */
 function commitDeletion(fiber) {
   const parentDom = closestParentDom(fiber);
-  if (fiber.dom) {
-    parentDom.appendChild(fiber.dom);
-  }
   let current = fiber;
   while (!fiber.dom) {
     current = fiber.children[0];
@@ -1274,6 +1331,124 @@ function App() {
       />
     </div>
   );
+}
+```
+
+```js
+export const useState = (initialValue) => {
+  const state = [initialValue, () => {}];
+  return state;
+};
+// on react side
+```
+
+```js
+export const useState = (initialValue) => {
+  if (mount) {
+    const state = [
+      initialValue,
+      (newValue) => {
+        state[0] = newValue;
+        self.rerender();
+      },
+    ];
+    self.hooks[self.hookIndex++] = state;
+    return state;
+  }
+};
+// on react side
+```
+
+```js
+export const useState = (initialValue) => {
+  if (mount) {
+    const state = [
+      initialValue,
+      (newValue) => {
+        state[0] = newValue;
+        self.rerender();
+      },
+    ];
+    self.hooks[self.hookIndex++] = state;
+    return state;
+  }
+  return self.hooks[self.hookIndex++];
+};
+// on react side
+```
+
+```js
+export const useState = (initialValue) => {
+  const fiber = globalThis.currentFiber;
+  if (fiber.hookInitMode) {
+    const state = [
+      initialValue,
+      (newValue) => {
+        state[0] = newValue;
+        fiber.rerender();
+      },
+    ];
+    fiber.hooks[fiber.hookIndex++] = state;
+    return state;
+  }
+  return fiber.hooks[fiber.hookIndex++];
+};
+// on react side
+```
+
+```js
+/**
+ * @param {Fiber} fiber
+ */
+function traverse(fiber) {
+  if (typeof fiber.type === "function") {
+    const prevChildren = fiber.children;
+    fiber.children = [fiber.type(fiber.props)];
+    reconcile(fiber, prevChildren);
+    return;
+  }
+  if (typeof fiber.type === "string") {
+    const prevChildren = fiber.children;
+    fiber.children = Array.isArray(fiber.props.children)
+      ? fiber.props.children
+      : fiber.props.children != null
+      ? [fiber.props.children]
+      : [];
+    reconcile(fiber, prevChildren);
+  }
+}
+```
+
+```js
+/**
+ * @param {Fiber} fiber
+ */
+function traverse(fiber) {
+  if (typeof fiber.type === "function") {
+    globalThis.currentFiber = fiber;
+    fiber.hookInitMode = fiber.hooks == null;
+    fiber.hooks = fiber.hooks || [];
+    fiber.hookIndex = 0;
+    fiber.rerender = () => {
+      traverse(fiber);
+      deletions.forEach(commitDeletion);
+      deletions.splice(0, deletions.length);
+      commit(fiber);
+    };
+    const prevChildren = fiber.children;
+    fiber.children = [fiber.type(fiber.props)];
+    reconcile(fiber, prevChildren);
+    return;
+  }
+  if (typeof fiber.type === "string") {
+    const prevChildren = fiber.children;
+    fiber.children = Array.isArray(fiber.props.children)
+      ? fiber.props.children
+      : fiber.props.children != null
+      ? [fiber.props.children]
+      : [];
+    reconcile(fiber, prevChildren);
+  }
 }
 ```
 ````
