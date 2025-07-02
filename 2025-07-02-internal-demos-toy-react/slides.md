@@ -28,7 +28,7 @@ _**By Nicolas DUBIEN**_
 
 ---
 
-![](assets/target.png)
+![](/assets/target.png)
 
 ---
 
