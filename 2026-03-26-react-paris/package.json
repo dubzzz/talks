@@ -1,5 +1,5 @@
 {
-  "name": "fine-grained-reactivity-without-any-compiler",
+  "name": "chasing-performance-drifts",
   "type": "module",
   "private": true,
   "scripts": {

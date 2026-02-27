@@ -1,7 +1,7 @@
 ---
 theme: seriph
-background: https://lespepitesdefrance.com/wp-content/uploads/2023/09/Top-5-des-plus-belles-rivieres-de-Lozere.png
-title: Mastering TypeScript for Real-World Applications
+background: https://woody.cloudly.space/app/uploads/aubracgorgesdutarn/2023/11/thumbs/Copyright-_Remi_Flament_-_PACT_GDT_CRTLOccitanie_0037778_MD-1920x960.jpg
+title: Chasing Performance Drifts
 info: 
 class: text-center # apply any unocss classes to the current slide
 highlighter: shiki # https://sli.dev/custom/highlighters.html
@@ -20,13 +20,13 @@ favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b
 ---
 
 <div style="display:flex; justify-content: center; margin-bottom: 16px;">
-  <img src="/assets/ts-conf.webp" style="max-width: 20%;" />
+  <img src="/assets/react-paris-500px-logo.webp" style="max-width: 20%; filter: drop-shadow(0 0 8px rgba(255,255,255,0.6))" />
 </div>
 
-<h1 style="color: #fff !important; line-height: 1.1em !important;">Mastering TypeScript</h1>
-<h2 style="color: #fff !important; line-height: 1.1em !important;">For Real-World Applications</h2>
+<h1 style="color: #fff !important; line-height: 1.1em !important;">Chasing Performance Drifts</h1>
+<h2 style="color: #fff !important; line-height: 1.1em !important;">A few recipes that scaled 🧑‍🍳</h2>
 
-_**By Nicolas DUBIEN**_
+<p style="color: #002355; filter: drop-shadow(0 0 8px rgba(255,255,255,0.6))">By Nicolas DUBIEN</p>
 
 ---
 layout: center
