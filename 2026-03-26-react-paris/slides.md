@@ -170,9 +170,9 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
 </div>
 
 <div style="margin-top: 48px"></div>
-<h2 style="color: #fff !important">Mastering TypeScript for Real-World Applications</h2>
-<h1 style="color: #fff !important">Nicolas DUBIEN</h1>
-<div style="display: flex; justify-content: center; font-size: 1.2em; margin-top: -20px; align-items: end;">
+<h1 style="color: #fff !important">Chasing Performance Drifts</h1>
+<h2 style="color: #fff !important; margin-top: 24px; opacity: 0.9">Nicolas DUBIEN</h2>
+<div style="display: flex; justify-content: center; font-size: 1.2em; margin-top: -12px; align-items: end; opacity: 0.9">
   <span style="margin-top: 0.7em">
     Lead Principal Software Engineer at&nbsp;
   </span>
@@ -181,20 +181,20 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
     style="height: 31px; box-shadow: none"
   />
 </div>
-<div style="opacity: 0.5">
+<div style="opacity: 0.7">
  <a href="https://engineering.pigment.com/" target="_blank">engineering.pigment.com</a>
 </div>
 
-<div style="margin-top: 48px"></div>
-<div style="display: flex; gap: 8px; color: #ffffff; vertical-align: middle;">
+<div style="margin-top: 24px"></div>
+<div style="display: flex; gap: 8px; color: #ffffff; vertical-align: middle; opacity: 0.9">
   <img src="/assets/github-white.png" style="height: 24px; border: none; background: none; margin: 0px" />
   dubzzz
 </div>
-<div style="display: flex; gap: 8px; color: #ffffff; vertical-align: middle;">
+<div style="display: flex; gap: 8px; color: #ffffff; vertical-align: middle; opacity: 0.9">
   <img src="/assets/bluesky.svg" style="height: 24px; border: none; background: none; margin: 0px" />
   @nicolas.dubien.me
 </div>
-<div style="display: flex; gap: 8px; color: #ffffff; vertical-align: middle;">
+<div style="display: flex; gap: 8px; color: #ffffff; vertical-align: middle; opacity: 0.9">
   <img src="/assets/npm.png" style="height: 24px; border: none; background: none; margin: 0px" />
   fast-check
 </div>
