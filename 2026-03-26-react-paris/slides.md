@@ -41,13 +41,13 @@ favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b
 
 ---
 
-Marissa Mayer then Google VP in 2006:
+Marissa Mayer, then Google VP, in 2006:
 
-> +500ms on returning serach results, implied a drop of 20% in traffic
+> A 500ms delay in search results caused a 20% drop in traffic
 
-Greg Linden, former Amazon engineer, reported in 2006:
+Greg Linden, former Amazon engineer, in 2006:
 
-> +100ms on page load, implies a drop of 1% in sales
+> A 100ms increase in page load time caused a 1% drop in sales
 
 <!--
   And one of the best way to justify that is to take two studies that have been done in the past.
