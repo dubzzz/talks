@@ -29,6 +29,60 @@ favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b
 <p style="color: #002355; filter: drop-shadow(0 0 8px rgba(255,255,255,0.6))">By Nicolas DUBIEN</p>
 
 ---
+
+## Performance matters*
+
+**\*even for UI**
+
+<!--
+  Before we dig on chasing them, let's try to understand why we should care about performance!
+  So first thing: it matters! Second one: it matters even for UI!
+-->
+
+---
+
+Marissa Mayer then Google VP in 2006:
+
+> +500ms on returning serach results, implied a drop of 20% in traffic
+
+Greg Linden, former Amazon engineer, reported in 2006:
+
+> +100ms on page load, implies a drop of 1% in sales
+
+<!--
+  And one of the best way to justify that is to take two studies that have been done in the past.
+
+  One reported by Marissa Mayer then Google VP in 2006:
+  > increasing by 500ms the time it takes to perform a search on Google, dropped the traffic by 20%
+
+  Another by Greg Linden (former Amazon engineer):
+  > increasing the page load of Amazon by 100ms reduced sales by 1%
+
+  Both going in the same direction: performance matters, if you get to slow to compute, retrieve and then show the data you users may churn.
+
+  https://assets.website-files.com/61060433cb5cbb34f58da08c/61065835a1cb346f7673c592_StanfordDataMiningAmazonCaseStudy.pdf
+  >  +500 ms -20% traffic @ Google
+  >  +100 ms -1% sales @ Amazon
+  >  Speed matters!
+  By Greg Linden (former Amazon engineer)
+  https://glinden.blogspot.com/2006/11/marissa-mayer-at-web-20.html
+  >  So, Marissa ran an experiment where Google increased the number of search results to thirty. Traffic and revenue from Google searchers in the experimental group dropped by 20%.
+  >  Half a second delay caused a 20% drop in traffic. Half a second delay killed user satisfaction.
+  By Marissa Mayer then Google VP
+  https://www.conductor.com/academy/page-speed-resources/faq/amazon-page-speed-study/
+  https://www.gigaspaces.com/blog/amazon-found-every-100ms-of-latency-cost-them-1-in-sales
+-->
+
+---
+
+<!--
+  So now that we are all aligned that it matters, let me tell you that unsuring it does not drop is not simple.
+  All companies got hit one day by such drop.
+
+  Let me take a quite recent case...
+-->
+
+---
 layout: center
 ---
 
