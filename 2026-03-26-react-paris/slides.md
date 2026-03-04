@@ -30,26 +30,44 @@ favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b
 
 ---
 
-## Performance matters*
+<h2>Performance matters<span v-click="1">*</span></h2>
 
-**\*even for UI**
+<p v-click="1">*even for UI</p>
+
+<p v-click="2">
+
+<br/>
+
+**Marissa Mayer**, then Google VP, in 2006:
+
+> A 500ms delay in search results caused a 20% drop in traffic
+
+<p style="font-size: 0.5em; text-align: right; margin-top: 0px; opacity: 0.5">
+  Source:
+  <a href="https://glinden.blogspot.com/2006/11/marissa-mayer-at-web-20.html" target="_blank" rel="noopener noreferrer">https://glinden.blogspot.com/2006/11/marissa-mayer-at-web-20.html</a>
+</p>
+
+</p>
+
+<p v-click="3">
+
+<br/>
+
+**Greg Linden**, former Amazon engineer, in 2006:
+
+> A 100ms increase in page load time caused a 1% drop in sales
+
+<p style="font-size: 0.5em; text-align: right; margin-top: 0px; opacity: 0.5">
+  Source:
+  <a href="https://assets.website-files.com/61060433cb5cbb34f58da08c/61065835a1cb346f7673c592_StanfordDataMiningAmazonCaseStudy.pdf" target="_blank" rel="noopener noreferrer">https://assets.website-files.com/61060433cb5cbb34f58da08c/61065835a1cb346f7673c592_StanfordDataMiningAmazonCaseStudy.pdf</a>
+</p>
+
+</p>
 
 <!--
   Before we dig on chasing them, let's try to understand why we should care about performance!
   So first thing: it matters! Second one: it matters even for UI!
--->
-
----
-
-Marissa Mayer, then Google VP, in 2006:
-
-> A 500ms delay in search results caused a 20% drop in traffic
-
-Greg Linden, former Amazon engineer, in 2006:
-
-> A 100ms increase in page load time caused a 1% drop in sales
-
-<!--
+  
   And one of the best way to justify that is to take two studies that have been done in the past.
 
   One reported by Marissa Mayer then Google VP in 2006:
@@ -75,11 +93,15 @@ Greg Linden, former Amazon engineer, in 2006:
 
 ---
 
+<h2>But it's hard to maintain...</h2>
+
 <!--
-  So now that we are all aligned that it matters, let me tell you that unsuring it does not drop is not simple.
+  So now that we are all aligned that it matters, let me tell you that ensuring it does not drop is not simple.
   All companies got hit one day by such drop.
 
   Let me take a quite recent case...
+
+  https://www.theregister.com/2025/09/18/cloudflare_ddosed_itself
 -->
 
 ---
