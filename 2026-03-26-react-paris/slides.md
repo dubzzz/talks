@@ -30,7 +30,7 @@ favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b
 
 ---
 
-<h2>Performance matters<span v-click="1">*</span></h2>
+<h1>Performance matters<span v-click="1">*</span></h1>
 
 <p v-click="1">*even for UI</p>
 
@@ -93,7 +93,34 @@ favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b
 
 ---
 
-<h2>But it's hard to maintain...</h2>
+<h2 :class="{ 'old-times': $clicks >= 1 }" style="transition: color 1s ease;">And one subtle change can ruin it all…</h2>
+
+<div v-click="1" :class="{ 'old-bg': $clicks >= 1 }" style="position: absolute; z-index: -1; inset: 0px; background: radial-gradient(ellipse at center, #d4b896 0%, #c4a67a 30%, #a08050 100%); transition: opacity 1s ease;"></div>
+
+<style>
+.old-times {
+  font-family: "Source Sans Pro", Helvetica, sans-serif;
+  color: #3a2010 !important;
+}
+.old-bg {
+  opacity: 1;
+}
+</style>
+
+<p v-click="1" style="color: #3a2010">
+  You open your devtools and…
+</p>
+
+<img v-click="2" src="assets/cloudflare-fake.gif" />
+
+<p v-click="3" style="color: #3a2010">
+  Such bug happened to <img src="assets/cloudflare.png" style="height: 32px; display: inline" /> because of <code>useEffect</code>.
+  <br/>
+  <i style="font-size: 0.9em; opacity: 0.5">Speculative scenario — this talk will show how to quickly spot such bugs</i>
+</p>
+
+
+<!--<img src="assets/cloudflare.png" style="height: 32px" />-->
 
 <!--
   So now that we are all aligned that it matters, let me tell you that ensuring it does not drop is not simple.
@@ -102,6 +129,16 @@ favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b
   Let me take a quite recent case...
 
   https://www.theregister.com/2025/09/18/cloudflare_ddosed_itself
+
+  ---
+
+  So I'll take an example from a well-known company. A bug you probably have heard of, as it happened quite recently (September 2025).
+  Let's imagine you play with the latest version of your UI and you feel it slow... drastically slow...
+
+  So "you open your devtools".
+
+  How they found the bug? Did they detected slownesses manually? Could they have detected them?
+  Honestly I don't know, but the issue is the one that happened to Cloudflare.
 -->
 
 ---
