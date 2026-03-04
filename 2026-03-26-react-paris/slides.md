@@ -111,7 +111,7 @@ favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b
   You open your devtools and…
 </p>
 
-<img v-click="2" src="assets/cloudflare-fake.gif" />
+<img v-click="2" src="assets/cloudflare-fake.gif" style="height: 50%" />
 
 <p v-click="3" style="color: #3a2010">
   Such bug happened to <img src="assets/cloudflare.png" style="height: 32px; display: inline" /> because of <code>useEffect</code>.
