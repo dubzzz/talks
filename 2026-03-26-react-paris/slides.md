@@ -205,11 +205,12 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
 
 <h1 :class="{ 'old-times': $clicks >= 1 }">The first crack</h1>
 
-<p v-click="1" class="old-times">
-  A client reported their tabs were crashing after staying open too long.
-</p>
+<p v-click="1" class="old-times">👤 Client: “Our tabs keep crashing”</p>
 
 <img v-click="2" src="assets/oom.png" style="height: 50%" />
+
+<p v-click="3" class="old-times">🧑‍💻 Support: “Can't reproduce”</p>
+<p v-click="4" class="old-times">👤 Client: “It works fine at first. But after a while this strange message pops!”</p>
 
 ---
 
