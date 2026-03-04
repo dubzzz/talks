@@ -93,27 +93,15 @@ favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b
 
 ---
 
-<h2 :class="{ 'old-times': $clicks >= 1 }" style="transition: color 1s ease;">And one subtle change can ruin it all…</h2>
+<div :class="{ 'old-bg': $clicks >= 1, 'hide-bg': $clicks < 1 }"></div>
 
-<div v-click="1" :class="{ 'old-bg': $clicks >= 1 }" style="position: absolute; z-index: -1; inset: 0px; background: radial-gradient(ellipse at center, #d4b896 0%, #c4a67a 30%, #a08050 100%); transition: opacity 1s ease;"></div>
+<h2 :class="{ 'old-times': $clicks >= 1 }">And one subtle change can ruin it all…</h2>
 
-<style>
-.old-times {
-  font-family: "Source Sans Pro", Helvetica, sans-serif;
-  color: #3a2010 !important;
-}
-.old-bg {
-  opacity: 1;
-}
-</style>
-
-<p v-click="1" style="color: #3a2010">
-  You open your devtools and…
-</p>
+<p v-click="1" class="old-times">You open your devtools and…</p>
 
 <img v-click="2" src="assets/cloudflare-fake.gif" style="height: 50%" />
 
-<p v-click="3" style="color: #3a2010">
+<p v-click="3" class="old-times">
   Such bug happened to <img src="assets/cloudflare.png" style="height: 32px; display: inline" /> because of <code>useEffect</code>.
   <br/>
   <i style="font-size: 0.9em; opacity: 0.5">Speculative scenario — this talk will show how to quickly spot such bugs</i>
@@ -182,18 +170,18 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
 
 ---
 
-<div style="position: absolute; z-index: -1; inset: 0px; background-image: url(/assets/gradient-shape-CHYWUDiD.svg); background-size: cover;"></div>
-<div style="position: absolute; z-index: -1; inset: 0px; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(80px);"></div>
+<div :class="{ 'pigment-bg-1': true }"></div>
+<div :class="{ 'pigment-bg-2': true }"></div>
 
-<h1 style="color: #0355f3">Our Guiding Example <img src="/assets/Pigment logo alone.png" style="float: right; height: 1em; box-shadow: none;"></h1>
+<h1 style="color: #0355f3">Our “fil rouge”<span v-click="4">: The Board</span> <img src="/assets/Pigment logo alone.png" style="float: right; height: 1em; box-shadow: none;"></h1>
 
-<p v-click="1" style="color: #5C4420; opacity: 1">Let’s take an example inspired from <b>Pigment</b>.</p>
+<p v-click="1" style="color: #5C4420; opacity: 1">Let's rebuild, one after the other, the performance safety nets we built at <b>Pigment</b>.</p>
 
 <div style="display: grid; margin-top: 16px; color: white; text-align: center;">
   <v-switch>
     <template #2>
       <div style="grid-row: 1; grid-column: 1">
-        <img src="/assets/pigment-board-zoom.png" />
+        <img src="/assets/pigment-cell-zoom.png" />
       </div>
     </template>
     <template #3>
@@ -203,62 +191,25 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
     </template>
     <template #4>
       <div style="grid-row: 1; grid-column: 1">
-        <img src="/assets/pigment-cell-zoom.png" />
+        <img src="/assets/pigment-board-zoom.png" />
       </div>
-    </template>
-    <template #5>
-<div style="grid-row: 1; grid-column: 1; text-align: left">
-
-```ts
-type Props = { x: number, y: number };
-
-function Cell(props: Props) {
-  // ...
-}
-```
-
-</div>
-    </template>
-    <template #6>
-<div style="grid-row: 1; grid-column: 1; text-align: left">
-
-```ts
-type Props = { x: number, y: number };
-
-function Cell(props: Props) {
-  const { x, y } = props;
-  const value = useCellValueAt(x, y);
-  // ...
-}
-```
-
-</div>
-    </template>
-    <template #7>
-<div style="grid-row: 1; grid-column: 1; text-align: left; padding-top: 4px">
-
-```ts twoslash
-declare const validX: unique symbol;
-type X = number & { [validX]: true };
-declare const validY: unique symbol;
-type Y = number & { [validY]: true };
-declare const x: X;
-declare const y: Y;
-declare function useCellValueAt(x: X, y: Y): void;
-// ---cut-before---
-type Props = { x: number, y: number };
-
-function Cell(props: Props) {
-  const { x, y } = props;
-  const value = useCellValueAt(y, x);
-  // ...
-}
-```
-
-</div>
     </template>
   </v-switch>
 </div>
+
+---
+
+<div :class="{ 'old-bg': $clicks >= 1, 'hide-bg': $clicks < 1 }"></div>
+<div :class="{ 'pigment-bg-1': true, 'hide-bg': $clicks >= 1 }"></div>
+<div :class="{ 'pigment-bg-2': true, 'hide-bg': $clicks >= 1 }"></div>
+
+<h1 :class="{ 'old-times': $clicks >= 1 }">The first crack</h1>
+
+<p v-click="1" class="old-times">
+  A client reported their tabs were crashing after staying open too long.
+</p>
+
+<img v-click="2" src="assets/oom.png" style="height: 50%" />
 
 ---
 
