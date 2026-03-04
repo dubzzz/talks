@@ -212,6 +212,10 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
 <p v-click="3" class="old-times">🧑‍💻 Support: “Can't reproduce”</p>
 <p v-click="4" class="old-times">👤 Client: “It works fine at first. But after a while this strange message pops!”</p>
 
+<!--
+  It means that we are slowly leaking memory.
+-->
+
 ---
 
 # Branded Types
