@@ -93,7 +93,7 @@ favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b
 
 ---
 
-<div :class="{ 'old-bg': $clicks >= 1, 'hide-bg': $clicks < 1 }"></div>
+<div :class="{ 'old-bg': true, 'hide-bg': $clicks < 1 }"></div>
 
 <h2 :class="{ 'old-times': $clicks >= 1 }">And one subtle change can ruin it all…</h2>
 
@@ -199,7 +199,7 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
 
 ---
 
-<div :class="{ 'old-bg': $clicks >= 1, 'hide-bg': $clicks < 1 }"></div>
+<div :class="{ 'old-bg': true, 'hide-bg': $clicks < 1 }"></div>
 <div :class="{ 'pigment-bg-1': true, 'hide-bg': $clicks >= 1 }"></div>
 <div :class="{ 'pigment-bg-2': true, 'hide-bg': $clicks >= 1 }"></div>
 
@@ -215,6 +215,77 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
 <!--
   It means that we are slowly leaking memory.
 -->
+
+---
+
+<div :class="{ 'old-bg': true, 'hide-bg': $clicks >= 1 }"></div>
+<div :class="{ 'pigment-bg-1': true, 'hide-bg': $clicks < 1 }"></div>
+<div :class="{ 'pigment-bg-2': true, 'hide-bg': $clicks < 1 }"></div>
+
+<h2 :class="{ 'old-times': $clicks < 1 }">The culprit</h2>
+
+<p v-click>⏳ Time matters</p>
+<p v-click style="margin-left: 32px; margin-top: -12px;">↳ At Pigment, everything is real time</p>
+<p v-click style="margin-left: 32px; margin-top: -12px;">↳ Changes may occur when the tab is inactive</p>
+<p v-click style="margin-left: 32px; margin-top: -12px;">↳ The UI may redraw itself multiple times in background</p>
+<p v-click>🚰 Probably a leak</p>
+
+<p v-click="6">
+
+````md magic-move {lines: true}
+```jsx
+useEffect(() => {
+  const callback = () => {};
+  addEventListener("keydown", callback);
+  return () => removeEventListener("keyup", callback);
+}, [])
+```
+
+```jsx
+useEffect(() => {
+  const callback = () => {};
+  addEventListener("keydown", callback);
+  return () => removeEventListener("keyup", callback);
+}, [])
+```
+
+```jsx
+useEffect(() => {
+  const callback = () => {};
+  addEventListener("keydown", callback); // ⬇️ listener
+  return () => removeEventListener("keyup", callback);
+}, [])
+```
+
+```jsx
+useEffect(() => {
+  const callback = () => {};
+  addEventListener("keydown", callback); // ⬇️ listener
+  return () => removeEventListener("keyup", callback); // ❌ wrong event type
+}, [])
+```
+````
+
+</p>
+
+---
+
+<div :class="{ 'pigment-bg-1': true }"></div>
+<div :class="{ 'pigment-bg-2': true }"></div>
+
+<h2>Let's back ourselves</h2>
+
+<p v-click>🧩 <b>Our need:</b> Detect a leak</p>
+<p v-click>📍 <b>Where:</b> In complex workflows</p>
+
+<p v-click>💡 <b>The test strategy:</b></p>
+<p v-click style="margin-left: 32px; margin-top: -12px;">↳ Open the app on the homepage</p>
+<p v-click style="margin-left: 32px; margin-top: -12px;">↳ Count the number of leaky states</p>
+<p v-click style="margin-left: 32px; margin-top: -12px;">↳ Run a flow</p>
+<p v-click style="margin-left: 32px; margin-top: -12px;">↳ Go back to the homepage</p>
+<p v-click style="margin-left: 32px; margin-top: -12px;">↳ Count the number of leaky states</p>
+
+---
 
 ---
 
