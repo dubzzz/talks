@@ -275,17 +275,104 @@ useEffect(() => {
 
 <h2>Let's back ourselves</h2>
 
-<p v-click>🧩 <b>Our need:</b> Detect a leak</p>
-<p v-click>📍 <b>Where:</b> In complex workflows</p>
+<p v-click>🧩 <b>Our need:</b> Detect a leak in user flows</p>
 
 <p v-click>💡 <b>The test strategy:</b></p>
 <p v-click style="margin-left: 32px; margin-top: -12px;">↳ Open the app on the homepage</p>
-<p v-click style="margin-left: 32px; margin-top: -12px;">↳ Count the number of leaky states</p>
+<p v-click :class="{ 'font-bold': $clicks >= 8 }" style="margin-left: 32px; margin-top: -12px;">↳ Count the number of leaky states</p>
 <p v-click style="margin-left: 32px; margin-top: -12px;">↳ Run a flow</p>
 <p v-click style="margin-left: 32px; margin-top: -12px;">↳ Go back to the homepage</p>
-<p v-click style="margin-left: 32px; margin-top: -12px;">↳ Count the number of leaky states</p>
+<p v-click :class="{ 'font-bold': $clicks >= 8 }" style="margin-left: 32px; margin-top: -12px;">↳ Count the number of leaky states</p>
+
+<p v-click></p>
 
 ---
+
+<div :class="{ 'pigment-bg-1': true }"></div>
+<div :class="{ 'pigment-bg-2': true }"></div>
+
+<h2>The implementation</h2>
+
+<p v-click="1">
+
+````md magic-move {lines: true} 
+```jsx
+function ComponentName(props) {
+  useLeakProber(); // no-op in Production
+  //...
+}
+```
+
+```jsx
+function ComponentName(props) {
+  useLeakProber(); // no-op in Production
+  //...
+}
+```
+
+```jsx
+function useLeakProber() {
+ //...
+}
+```
+
+```jsx
+function useLeakProber() {
+  const {probeLeak} = useContext(LeakProberContext);
+  //...
+}
+```
+
+```jsx
+function useLeakProber() {
+  const {probeLeak} = useContext(LeakProberContext);
+  const [instance] = useState(() => ({}));
+  useEffect(() => {
+    probeLeak(instance);
+  }, [probeLeak, instance]);
+}
+```
+
+```jsx
+function LeakProberContextProvider() {
+  //...
+}
+```
+
+```jsx
+function LeakProberContextProvider() {
+  const weakRefs = useRef<WeakRef<object>[]>([]);
+
+  function probeLeak(instance: object) {
+    weakRefs.current.push(new WeakRef(instance));
+  }
+
+  return <LeakProberContext.Provider value={{probeLeak}} {...props} />;
+}
+```
+
+```jsx
+function LeakProberContextProvider() {
+  const weakRefs = useRef<WeakRef<object>[]>([]);
+
+  function probeLeak(instance: object) {
+    weakRefs.current.push(new WeakRef(instance));
+  }
+
+  function countActiveLeaks() {
+    return weakRefs.current.filter((ref) => ref.deref() !== undefined).length;
+  }
+
+  return <LeakProberContext.Provider value={{probeLeak, countActiveLeaks}} {...props} />;
+}
+```
+````
+
+</p>
+
+<p v-click>📋 <b>Where do we plug it:</b></p>
+<p v-click style="margin-left: 32px; margin-top: -12px;">↳ Cells</p>
+<p v-click style="margin-left: 32px; margin-top: -12px;">↳ Clients</p>
 
 ---
 
