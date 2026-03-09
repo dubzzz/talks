@@ -426,8 +426,6 @@ function countActiveLeaks() {
 
 <p v-click></p>
 
-
-
 ---
 
 <div :class="{ 'pigment-bg-1': true }"></div>
@@ -494,6 +492,53 @@ function useRenderCount(kind: string) {
 <p>✅ Clever reloads</p>
 <p>✅ More customers with medium grids, <span :class="{ 'line-through': $clicks >= 1, 'disappear': $clicks >= 1 }">millions</span><span v-click> billions</span> of cells</p>
 <p v-click>✅ Large set of options on each cells</p>
+
+---
+
+<div :class="{ 'old-bg': true, 'hide-bg': $clicks < 1 }"></div>
+<div :class="{ 'pigment-bg-1': true, 'hide-bg': $clicks >= 1 }"></div>
+<div :class="{ 'pigment-bg-2': true, 'hide-bg': $clicks >= 1 }"></div>
+
+<h1 :class="{ 'old-times': $clicks >= 1 }">The third crack</h1>
+
+<p v-click="1" class="old-times">👤 Client: “The app keeps freezing randomly. Sometimes the whole page becomes unresponsive”</p>
+
+<img v-click="2" src="assets/irresponsive-drama.png" style="height: 50%" />
+
+<p v-click="3" class="old-times">🧑‍💻 Support: “We clearly reproduce the issue on your dataset. We are working on it!”</p>
+
+---
+
+<div :class="{ 'old-bg': true, 'hide-bg': $clicks >= 1 }"></div>
+<div :class="{ 'pigment-bg-1': true, 'hide-bg': $clicks < 1 }"></div>
+<div :class="{ 'pigment-bg-2': true, 'hide-bg': $clicks < 1 }"></div>
+
+<h2 :class="{ 'old-times': $clicks < 1 }">The culprit</h2>
+
+<p v-click>⚡️ Time complexity matters</p>
+<p v-click style="margin-left: 32px; margin-top: -12px;">↳ Cells on enums might be backed by million of items</p>
+<p v-click style="margin-left: 32px; margin-top: -12px;">↳ That can't fit in memory</p>
+<p v-click style="margin-left: 32px; margin-top: -12px;">↳ We fetch them in a cache when first displayed</p>
+<p v-click style="margin-left: 32px; margin-top: -12px;">↳ Updating the cache was an O(n)</p>
+<p v-click style="margin-left: 32px; margin-top: -12px;">↳ We were not batching updates in such case</p>
+<p v-click>🚑️ Long running task</p>
+
+
+
+---
+
+<div :class="{ 'pigment-bg-1': true }"></div>
+<div :class="{ 'pigment-bg-2': true }"></div>
+
+<h2>Let's back ourselves</h2>
+
+<p v-click>🧩 <b>Our need:</b> Detect long tasks</p>
+
+<p v-click>💡 <b>The test strategy:</b></p>
+<p v-click style="margin-left: 32px; margin-top: -12px;">↳ Run a flow</p>
+<p v-click :class="{ 'font-bold': $clicks >= 5 }" style="margin-left: 32px; margin-top: -12px;">↳ Check for long tasks</p>
+
+<p v-click></p>
 
 ---
 layout: cover
