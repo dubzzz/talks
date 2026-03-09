@@ -535,8 +535,9 @@ function useRenderCount(kind: string) {
 <p v-click>🧩 <b>Our need:</b> Detect long tasks</p>
 
 <p v-click>💡 <b>The test strategy:</b></p>
+<p v-click :class="{ 'font-bold': $clicks >= 6 }" style="margin-left: 32px; margin-top: -12px;">↳ Check for long tasks</p>
 <p v-click style="margin-left: 32px; margin-top: -12px;">↳ Run a flow</p>
-<p v-click :class="{ 'font-bold': $clicks >= 5 }" style="margin-left: 32px; margin-top: -12px;">↳ Check for long tasks</p>
+<p v-click :class="{ 'font-bold': $clicks >= 6 }" style="margin-left: 32px; margin-top: -12px;">↳ Check for long tasks</p>
 
 <p v-click></p>
 
