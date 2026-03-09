@@ -408,10 +408,10 @@ function LeakProberContextProvider() {
 
 <h1 :class="{ 'old-times': $clicks >= 1 }">The second crack</h1>
 
-<p v-click="1" class="old-times">👤 Client: “The flow to input in grids is laggy”</p>
-<p v-click="2" class="old-times">🧑‍💻 Support: <i>Thinking...</i></p>
-<p v-click="3" class="old-times">🧑‍💻 Support: “Can you give us more details on the flow that is slow?”</p>
-<p v-click="4" class="old-times">👤 Client: “When navigating with keyboard arrows to input in your grids everything is laggy, moving from one cell to another is taking ages and sometimes my browser asked me if I want to stop the task”</p>
+<p v-click="1" class="old-times">👤 Client: “Your grid is freezing my browser”</p>
+<p v-click="2" class="old-times">🧑‍💻 Support: “Could you tell us more about what you were doing?”</p>
+<p v-click="3" class="old-times">👤 Client: “Just pressing arrow keys. One cell to another. Each keystroke hangs for seconds”</p>
+<p v-click="4" class="old-times">👤 Client: “Sometimes my browser asks me if I want to kill the page”</p>
 
 ---
 
