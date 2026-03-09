@@ -306,10 +306,14 @@ useEffect(() => {
 
 <h2>The implementation</h2>
 
-<p v-click="1">
-
 ````md magic-move {lines: true} 
 ```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+```
+
+```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+
 function ComponentName(props) {
   useLeakProber(); // no-op in Production
   //...
@@ -317,75 +321,53 @@ function ComponentName(props) {
 ```
 
 ```jsx
-function ComponentName(props) {
-  useLeakProber(); // no-op in Production
-  //...
-}
-```
+// ⚠️ Code shown here is simplified for illustration purposes.
 
-```jsx
 function useLeakProber() {
  //...
 }
 ```
 
 ```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+
 function useLeakProber() {
-  const {probeLeak} = useContext(LeakProberContext);
-  //...
+  const [instance] = useState(() => ({}));
 }
 ```
 
 ```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+
+const weakRefs = useRef<WeakRef<object>[]>([]);
+
 function useLeakProber() {
-  const {probeLeak} = useContext(LeakProberContext);
   const [instance] = useState(() => ({}));
+
   useEffect(() => {
-    probeLeak(instance);
+    weakRefs.current.push(new WeakRef(instance));
   }, [probeLeak, instance]);
 }
 ```
 
 ```jsx
-function LeakProberContextProvider() {
-  //...
-}
-```
+// ⚠️ Code shown here is simplified for illustration purposes.
 
-```jsx
-function LeakProberContextProvider() {
-  const weakRefs = useRef<WeakRef<object>[]>([]);
+const weakRefs = useRef<WeakRef<object>[]>([]);
 
-  function probeLeak(instance: object) {
+function useLeakProber() {
+  const [instance] = useState(() => ({}));
+
+  useEffect(() => {
     weakRefs.current.push(new WeakRef(instance));
-  }
-
-  return <LeakProberContext.Provider value={{probeLeak}} {...props} />;
+  }, [probeLeak, instance]);
 }
-```
 
-```jsx
-function LeakProberContextProvider() {
-  const weakRefs = useRef<WeakRef<object>[]>([]);
-
-  function probeLeak(instance: object) {
-    weakRefs.current.push(new WeakRef(instance));
-  }
-
-  function countActiveLeaks() {
-    return weakRefs.current.filter((ref) => ref.deref() !== undefined).length;
-  }
-
-  return <LeakProberContext.Provider value={{probeLeak, countActiveLeaks}} {...props} />;
+function countActiveLeaks() {
+  return weakRefs.current.filter((ref) => ref.deref() !== undefined).length;
 }
 ```
 ````
-
-</p>
-
-<p v-click>📋 <b>Where do we plug it:</b></p>
-<p v-click style="margin-left: 32px; margin-top: -12px;">↳ Cells</p>
-<p v-click style="margin-left: 32px; margin-top: -12px;">↳ Clients</p>
 
 ---
 
@@ -412,6 +394,7 @@ function LeakProberContextProvider() {
 <p v-click="2" class="old-times">🧑‍💻 Support: “Could you tell us more about what you were doing?”</p>
 <p v-click="3" class="old-times">👤 Client: “Just pressing arrow keys. One cell to another. Each keystroke hangs for seconds”</p>
 <p v-click="4" class="old-times">👤 Client: “Sometimes my browser asks me if I want to kill the page”</p>
+<img v-click="5" src="assets/re-render-drama.gif" style="height: 50%" />
 
 ---
 
@@ -421,820 +404,96 @@ function LeakProberContextProvider() {
 
 <h2 :class="{ 'old-times': $clicks < 1 }">The culprit</h2>
 
---one video of a grid re-rendering all cells at nav time
---diagram with a grid and cells, and one state for cell highlight...
+<p v-click>🐌 Re-render matters</p>
+<p v-click style="margin-left: 32px; margin-top: -12px;">↳ Our "currently selected" state is shared by all cells</p>
+<p v-click style="margin-left: 32px; margin-top: -12px;">↳ On updates all cells have to re-render just-in-case</p>
+
+<p v-click>🚚 Move shared state outside of the React tree</p>
 
 ---
 
-# Branded Types
+<div :class="{ 'pigment-bg-1': true }"></div>
+<div :class="{ 'pigment-bg-2': true }"></div>
 
-> It's not just a `number`, it's an `X`
+<h2>Let's back ourselves</h2>
 
-<v-click>
+<p v-click>🧩 <b>Our need:</b> Limit re-renders <i>at least for critical code paths</i></p>
+
+<p v-click>💡 <b>The test strategy:</b></p>
+<p v-click :class="{ 'font-bold': $clicks >= 6 }" style="margin-left: 32px; margin-top: -12px;">↳ Count the number of renders</p>
+<p v-click style="margin-left: 32px; margin-top: -12px;">↳ Run a flow</p>
+<p v-click :class="{ 'font-bold': $clicks >= 6 }" style="margin-left: 32px; margin-top: -12px;">↳ Count the number of renders</p>
+
+<p v-click></p>
+
+
+
+---
+
+<div :class="{ 'pigment-bg-1': true }"></div>
+<div :class="{ 'pigment-bg-2': true }"></div>
+
+<h2>The implementation</h2>
 
 ````md magic-move {lines: true} 
-```ts
-export type X = number;
+```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
 ```
 
-```ts
-declare const validX: unique symbol;
-export type X = number & { [validX]: true };
+```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+
+function ComponentName(props) {
+  useRenderCount(); // no-op in Production
+  //...
+}
 ```
 
-```ts
-declare const validX: unique symbol;
-export type X = number & { [validX]: true };
-export const toX = (x: number) => x as X;
+```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+
+function useRenderCount() {
+ //...
+}
+```
+
+```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+
+let renderCount = 0;
+
+function useRenderCount() {
+  useEffect(() => {
+    renderCount += 1;
+  });
+}
+```
+
+```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+
+const renderCount = new Map<string, number>();
+
+function useRenderCount(kind: string) {
+  useEffect(() => {
+    renderCount.set(kind, (renderCount.get(kind) ?? 0) + 1);
+  });
+}
 ```
 ````
-
-</v-click>
-
-<v-click>
-
-````md magic-move {lines: true} 
-```ts
-function useCellValueAt(x: number, y: number): Value {
-  // ...
-}
-
-type Props = { x: number, y: number };
-function Cell(props: Props) {
-  const { x, y } = props;
-  const value = useCellValueAt(x, y);
-  // ...
-}
-```
-
-```ts
-function useCellValueAt(x: X, y: Y): Value {
-  // ...
-}
-
-type Props = { x: number, y: number };
-function Cell(props: Props) {
-  const { x, y } = props;
-  const value = useCellValueAt(x, y);
-  // ...
-}
-```
-
-```ts
-function useCellValueAt(x: X, y: Y): Value {
-  // ...
-}
-
-type Props = { x: number, y: number };
-function Cell(props: Props) {
-  const { x, y } = props;
-  const value = useCellValueAt(toX(x), toY(y));
-  // ...
-} 
-```
-````
-
-</v-click>
 
 ---
 
-<div style="position: absolute; z-index: -1; inset: 0px; background-image: url(/assets/gradient-shape-CHYWUDiD.svg); background-size: cover;"></div>
-<div style="position: absolute; z-index: -1; inset: 0px; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(80px);"></div>
+<div :class="{ 'pigment-bg-1': true }"></div>
+<div :class="{ 'pigment-bg-2': true }"></div>
 
-<h1 style="color: #0355f3">Back to our Guiding Example <img src="/assets/Pigment logo alone.png" style="float: right; height: 1em; box-shadow: none;"></h1>
+<h2>The status</h2>
 
-<div style="display: grid; margin-top: 16px; color: white; text-align: center;">
-  <v-switch>
-    <template #0>
-<div style="grid-row: 1; grid-column: 1; text-align: left">
 
-```ts
-type Props = { x: number, y: number };
-
-function Cell(props: Props) {
-  const { x, y } = props;
-  const value = useCellValueAt(toX(x), toY(y));
-  // ...
-}
-```
-
-</div>
-    </template>
-    <template #1>
-<div style="grid-row: 1; grid-column: 1; text-align: left">
-
-```ts
-type Props = { x: number, y: number };
-
-type Value = {
-  type: 'number' | 'text';
-  numberValue?: number;
-  textValue?: string;
-}
-
-function Cell(props: Props) {
-  const { x, y } = props;
-  const value = useCellValueAt(toX(x), toY(y));
-  // ...
-}
-```
-
-</div>
-    </template>
-    <template #2>
-<div style="grid-row: 1; grid-column: 1; text-align: left; padding-top: 4px">
-
-```ts twoslash
-declare function toX(n: number): number;
-declare function toY(n: number): number;
-declare function useCellValueAt(x: number, y: number): Value;
-declare function renderNumberCell(value: number): null;
-declare function renderTextCell(value: string): null;
-// ---cut-before---
-type Props = { x: number, y: number };
-
-type Value = {
-  type: 'number' | 'text';
-  numberValue?: number;
-  textValue?: string;
-}
-
-function Cell(props: Props) {
-  const { x, y } = props;
-  const value = useCellValueAt(toX(x), toY(y));
-  return value.type === 'number'
-    ? renderNumberCell(value.numberValue)
-    : renderTextCell(value.textValue);
-}
-```
-
-</div>
-    </template>
-    <template #3>
-<div style="grid-row: 1; grid-column: 1; text-align: left; padding-top: 4px">
-
-```ts twoslash
-declare function toX(n: number): number;
-declare function toY(n: number): number;
-declare function useCellValueAt(x: number, y: number): Value;
-declare function renderNumberCell(value: number): null;
-declare function renderTextCell(value: string): null;
-// ---cut-before---
-type Props = { x: number, y: number };
-
-type Value = {
-  type: 'number' | 'text';
-  numberValue?: number;
-  textValue?: string;
-}
-
-function Cell(props: Props) {
-  const { x, y } = props;
-  const value = useCellValueAt(toX(x), toY(y));
-  return value.type === 'number'
-    ? renderNumberCell(value.numberValue as number)
-    : renderTextCell(value.textValue!);
-}
-```
-
-</div>
-    </template>
-  </v-switch>
-</div>
-
----
-
-# Discriminated Unions
-
-> Some attributes have to be exclusive to one `type`
-
-<v-click>
-
-````md magic-move {lines: true}
-```ts
-type Value = {
-  type: 'number' | 'text';
-  numberValue?: number;
-  textValue?: string;
-}
-```
-
-```ts
-type Value =
-  | {
-      type: 'number';
-      numberValue: number;
-    }
-  | {
-      type: 'text';
-      textValue: string;
-    };
-```
-````
-
-</v-click>
-
-<v-click>
-
-````md magic-move {lines: true}
-```ts
-type Props = { x: number, y: number };
-
-function Cell(props: Props) {
-  const { x, y } = props;
-  const value = useCellValueAt(toX(x), toY(y));
-  return value.type === 'number'
-    ? renderNumberCell(value.numberValue as number)
-    : renderTextCell(value.textValue!);
-}
-```
-
-```ts
-type Props = { x: number, y: number };
-
-function Cell(props: Props) {
-  const { x, y } = props;
-  const value = useCellValueAt(toX(x), toY(y));
-  return value.type === 'number'
-    ? renderNumberCell(value.numberValue)
-    : renderTextCell(value.textValue);
-}
-```
-````
-
-</v-click>
-
----
-
-<div style="position: absolute; z-index: -1; inset: 0px; background-image: url(/assets/gradient-shape-CHYWUDiD.svg); background-size: cover;"></div>
-<div style="position: absolute; z-index: -1; inset: 0px; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(80px);"></div>
-
-<h1 style="color: #0355f3">Back to our Guiding Example <img src="/assets/Pigment logo alone.png" style="float: right; height: 1em; box-shadow: none;"></h1>
-
-<div style="display: grid; margin-top: 16px; color: white; text-align: center;">
-  <v-switch>
-    <template #0>
-<div style="grid-row: 1; grid-column: 1; text-align: left">
-
-```ts
-type Props = { x: number, y: number };
-
-function Cell(props: Props) {
-  const { x, y } = props;
-  const value = useCellValueAt(toX(x), toY(y));
-  return value.type === 'number'
-    ? renderNumberCell(value.numberValue)
-    : renderTextCell(value.textValue);
-}
-```
-
-</div>
-    </template>
-    <template #1>
-<div style="grid-row: 1; grid-column: 1; text-align: left">
-
-```ts
-type Props = { x: number, y: number };
-
-function Cell(props: Props) {
-  const { x, y } = props;
-  const value = useCellValueAt(toX(x), toY(y));
-  if (!isValidValue(value)) {
-    return null;
-  }
-  return value.type === 'number'
-    ? renderNumberCell(value.numberValue)
-    : renderTextCell(value.textValue);
-}
-```
-
-</div>
-    </template>
-    <template #2>
-<div style="grid-row: 1; grid-column: 1; text-align: left; padding-top: 4px">
-
-```ts twoslash
-declare function toX(n: number): number;
-declare function toY(n: number): number;
-type ValueFromAPI = {
-  type: 'number' | 'text';
-  numberValue?: number;
-  textValue?: string;
-}
-declare function useCellValueAt(x: number, y: number): ValueFromAPI;
-declare function isValidValue(value: ValueFromAPI): boolean;
-declare function renderNumberCell(value: number): null;
-declare function renderTextCell(value: string): null;
-// ---cut-before---
-type Props = { x: number, y: number };
-
-function Cell(props: Props) {
-  const { x, y } = props;
-  const value = useCellValueAt(toX(x), toY(y));
-  if (!isValidValue(value)) {
-    return null;
-  }
-  return value.type === 'number'
-    ? renderNumberCell(value.numberValue)
-    : renderTextCell(value.textValue);
-}
-```
-
-</div>
-    </template>
-  </v-switch>
-</div>
-
----
-
-# Type predicates
-
-> When `isValidValue` returns `true` I expect my value to be safe
-
-<v-click>
-
-````md magic-move {lines: true}
-```ts
-function isValidValue(value: ValueFromAPI): boolean {
-  // doing stuff
-}
-
-type ValueFromAPI = {
-  type: 'number' | 'text';
-  numberValue?: number;
-  textValue?: string;
-}
-
-type Value =
-  | {
-      type: 'number';
-      numberValue: number;
-    }
-  | {
-      type: 'text';
-      textValue: string;
-    };
-```
-```ts
-function isValidValue(value: ValueFromAPI): boolean {
-  // doing stuff
-}
-```
-
-```ts
-function isValidValue(value: ValueFromAPI): value is Value {
-  // doing stuff
-}
-```
-````
-
-</v-click>
-
----
-
-# Mapped types
-
-> Not fan of copying code, no?
-
-<v-click>
-
-````md magic-move {lines: true}
-```ts
-type ValueFromAPI = {
-  type: 'number' | 'text';
-  numberValue?: number;
-  textValue?: string;
-}
-```
-
-```ts
-type ValueFromAPI = {
-  type: 'number' | 'text';
-  numberValue?: number;
-  textValue?: string;
-}
-
-type Value =
-  | {
-      type: 'number';
-      numberValue: number;
-    }
-  | {
-      type: 'text';
-      textValue: string;
-    };
-```
-
-```ts
-type ValueFromAPI = {
-  type: 'number' | 'text';
-  numberValue?: number;
-  textValue?: string;
-}
-
-type Value = { [K in ???]: ??? };
-```
-
-```ts
-type ValueFromAPI = {
-  type: 'number' | 'text';
-  numberValue?: number;
-  textValue?: string;
-}
-
-type Value = { [K in ValueFromAPI['type']]: ??? };
-// {
-//   number: ???,
-//   text: ???,
-// }
-```
-
-```ts
-type ValueFromAPI = {
-  type: 'number' | 'text';
-  numberValue?: number;
-  textValue?: string;
-}
-
-type Value = { [K in ValueFromAPI['type']]: { type: K } };
-// {
-//   number: { type: 'number' },
-//   text: { type: 'text' },
-// }
-```
-
-```ts
-type ValueFromAPI = {
-  type: 'number' | 'text';
-  numberValue?: number;
-  textValue?: string;
-}
-
-type Value = {
-  [K in ValueFromAPI['type']]: { type: K }
-};
-// {
-//   number: { type: 'number' },
-//   text: { type: 'text' },
-// }
-```
-
-```ts
-type ValueFromAPI = {
-  type: 'number' | 'text';
-  numberValue?: number;
-  textValue?: string;
-}
-
-type Value = {
-  [K in ValueFromAPI['type']]: { type: K } & Required<Pick<ValueFromAPI, `${K}Value`>>
-};
-// {
-//   number: { type: 'number', numberValue: number },
-//   text: { type: 'text', textValue: string },
-// }
-```
-
-```ts
-type ValueFromAPI = {
-  type: 'number' | 'text';
-  numberValue?: number;
-  textValue?: string;
-}
-
-type Value = {
-  [K in ValueFromAPI['type']]: { type: K } & Required<Pick<ValueFromAPI, `${K}Value`>>
-}[ValueFromAPI['type']];
-// | { type: 'number', numberValue: number}
-// | { type: 'text', textValue: string }
-```
-
-```ts
-type ValueFromAPI = {
-  type: 'number' | 'text' | 'date';
-  numberValue?: number;
-  textValue?: string;
-  dateValue?: Date;
-}
-
-type Value = {
-  [K in ValueFromAPI['type']]: { type: K } & Required<Pick<ValueFromAPI, `${K}Value`>>
-}[ValueFromAPI['type']];
-// | { type: 'number', numberValue: number}
-// | { type: 'text', textValue: string }
-// | { type: 'date', dateValue: Date }
-```
-````
-
-</v-click>
-
----
-
-# _\*never_
-
-> Let be future proof
-
-<v-click>
-
-````md magic-move {lines: true}
-```ts
-return value.type === 'number'
-  ? "It's a number"
-  : "It's a string"
-```
-
-```ts
-return value.type === 'number'
-  ? "It's a number"
-  : value.type === 'text'
-  ? "It's a string"
-  : "Not supported yet";
-```
-
-```ts
-return value.type === 'number'
-  ? "It's a number"
-  : value.type === 'text'
-  ? "It's a string"
-  : assertUnreachable(value.type, "Not supported yet");
-```
-
-```ts
-export function assertUnreachable<T>(arg: never, defaultValue: T) {
-  return defaultValue;
-}
-
-return value.type === 'number'
-  ? String(value.numberValue)
-  : value.type === 'text'
-  ? String(value.textValue);
-  : assertUnreachable(value.type, "Not supported yet");
-```
-````
-
-</v-click>
-
----
-
-<div style="position: absolute; z-index: -1; inset: 0px; background-image: url(/assets/gradient-shape-CHYWUDiD.svg); background-size: cover;"></div>
-<div style="position: absolute; z-index: -1; inset: 0px; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(80px);"></div>
-
-<h1 style="color: #0355f3">Back to our Guiding Example <img src="/assets/Pigment logo alone.png" style="float: right; height: 1em; box-shadow: none;"></h1>
-
-<div style="display: grid; margin-top: 16px; color: white; text-align: center;">
-  <v-switch>
-    <template #0>
-<div style="grid-row: 1; grid-column: 1; text-align: left">
-
-```ts
-function Cell(props: Props) {
-  const { x, y } = props;
-  const value = useCellValueAt(toX(x), toY(y));
-
-  if (!isValidValue(value)) {
-    return null;
-  }
-
-  return value.type === 'number'
-    ? renderNumberCell(value.numberValue)
-    : renderTextCell(value.textValue);
-}
-```
-
-</div>
-    </template>
-    <template #1>
-<div style="grid-row: 1; grid-column: 1; text-align: left">
-
-```ts
-function Cell(props: Props) {
-  const { x, y } = props;
-  const value = useCellValueAt(toX(x), toY(y));
-
-  useAlertOnChange((newValue) => {
-    alert(`The value at (${x},${y}) changed to ${newValue}`);
-  }, value);
-
-  if (!isValidValue(value)) {
-    return null;
-  }
-
-  return value.type === 'number'
-    ? renderNumberCell(value.numberValue)
-    : renderTextCell(value.textValue);
-}
-```
-
-</div>
-    </template>
-    <template #3>
-<div style="grid-row: 1; grid-column: 1; text-align: left">
-
-```ts
-type SubscribableValue = Value & {
-  subscribe: (onChange: (newValue: Value) => void) => void;
-}
-
-function useCellValueAt(x: X, y: Y): SubscribableValue;
-
-function useAlertOnChange(
-  onChange: (newValue: Value) => void,
-  subscribable: SubscribableValue,
-): void;
-```
-
-</div>
-    </template>
-  </v-switch>
-</div>
-
----
-
-# Generic
-
-> Not that re-usable...
-
-<v-click>
-
-````md magic-move {lines: true}
-```ts
-type SubscribableValue = Value & {
-  subscribe: (onChange: (newValue: Value) => void) => void;
-}
-```
-
-```ts
-type SubscribableValue = Value & {
-  subscribe: (onChange: (newValue: Value) => void) => void;
-}
-type SubscribableUser = User & {
-  subscribe: (onChange: (newUser: User) => void) => void;
-}
-```
-
-```ts
-type SubscribableValue = Value & {
-  subscribe: (onChange: (newValue: Value) => void) => void;
-}
-type SubscribableUser = User & {
-  subscribe: (onChange: (newUser: User) => void) => void;
-}
-type SubscribableVendor = Vendor & {
-  subscribe: (onChange: (newVendor: Vendor) => void) => void;
-}
-// and many others...
-```
-
-```ts
-type Subscribable<T> = T & {
-  subscribe: (onChange: (newValue: T) => void) => void;
-}
-```
-````
-
-</v-click>
-
-<v-click>
-
-````md magic-move {lines: true}
-```ts
-function useAlertOnChange(
-  onChange: (newValue: Value) => void,
-  subscribable: SubscribableValue,
-): void;
-```
-
-```ts
-function useAlertOnChange(
-  onChange: (newValue: Value) => void,
-  subscribable: SubscribableValue,
-): void;
-function useAlertOnChange(
-  onChange: (newUser: User) => void,
-  subscribable: SubscribableUser,
-): void;
-```
-
-```ts
-function useAlertOnChange(
-  onChange: (newValue: Value) => void,
-  subscribable: SubscribableValue,
-): void;
-function useAlertOnChange(
-  onChange: (newUser: User) => void,
-  subscribable: SubscribableUser,
-): void;
-function useAlertOnChange(
-  onChange: (newVendor: Vendor) => void,
-  subscribable: SubscribableVendor,
-): void;
-// and many others...
-```
-
-```ts
-function useAlertOnChange<T>(
-  onChange: (newValue: T) => void,
-  subscribable: Subscribable<T>,
-): void;
-```
-````
-
-</v-click>
-
----
-
-# Variadics
-
-> Maybe we could support multiple subscribables at once
-
-<v-click>
-
-````md magic-move {lines: true}
-```ts
-function useAlertOnChange<T>(
-  onChange: (newValue: T) => void,
-  subscribable: Subscribable<T>,
-): void;
-```
-
-```ts
-function useAlertOnChange1<T1>(
-  onChange: (newValue1: T1) => void,
-  subscribable1: Subscribable<T1>,
-): void;
-```
-
-```ts
-function useAlertOnChange1<T1>(
-  onChange: (newValue1: T1) => void,
-  subscribable1: Subscribable<T1>,
-): void;
-function useAlertOnChange2<T1, T2>(
-  onChange: (newValue1: T1, newValue2: T2) => void,
-  subscribable1: Subscribable<T1>,
-  subscribable2: Subscribable<T2>,
-): void;
-```
-
-```ts
-function useAlertOnChange1<T1>(
-  onChange: (newValue1: T1) => void,
-  subscribable1: Subscribable<T1>,
-): void;
-function useAlertOnChange2<T1, T2>(
-  onChange: (newValue1: T1, newValue2: T2) => void,
-  subscribable1: Subscribable<T1>,
-  subscribable2: Subscribable<T2>,
-): void;
-function useAlertOnChange3<T1, T2, T3>(
-  onChange: (newValue1: T1, newValue2: T2, newValue3: T3) => void,
-  subscribable1: Subscribable<T1>,
-  subscribable2: Subscribable<T2>,
-  subscribable3: Subscribable<T3>,
-): void;
-// and many others...
-```
-
-```ts
-function useAlertOnChange<T1, T2, T3>(
-  onChange: (newValue1: T1, newValue2: T2, newValue3: T3) => void,
-  subscribable1: Subscribable<T1>,
-  subscribable2: Subscribable<T2>,
-  subscribable3: Subscribable<T3>,
-): void;
-```
-```
-
-```ts
-function useAlertOnChange<T1, T2, T3>(
-  onChange: (...newValues: [T1, T2, T3]) => void,
-  ...subscribables: [Subscribable<T1>, Subscribable<T2>, Subscribable<T3>],
-): void;
-```
-
-```ts
-function useAlertOnChange<T extends unknown[]>(
-  onChange: (...newValues: [T1, T2, T3]) => void,
-  ...subscribables: [Subscribable<T1>, Subscribable<T2>, Subscribable<T3>],
-): void;
-```
-
-```ts
-function useAlertOnChange<T extends unknown[]>(
-  onChange: (...newValues: T) => void,
-  ...subscribables: [Subscribable<T1>, Subscribable<T2>, Subscribable<T3>],
-): void;
-```
-
-```ts
-function useAlertOnChange<T extends unknown[]>(
-  onChange: (...newValues: T) => void,
-  ...subscribables: { [K in keyof T]: Subscribable<T[K]> },
-): void;
-```
-````
-
-</v-click>
+<p>✅ Virtualized grids</p>
+<p>✅ Clever reloads</p>
+<p>✅ More customers with medium grids, <span :class="{ 'line-through': $clicks >= 1, 'disappear': $clicks >= 1 }">millions</span><span v-click> billions</span> of cells</p>
+<p v-click>✅ Large set of options on each cells</p>
 
 ---
 layout: cover
