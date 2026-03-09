@@ -415,6 +415,17 @@ function LeakProberContextProvider() {
 
 ---
 
+<div :class="{ 'old-bg': true, 'hide-bg': $clicks >= 1 }"></div>
+<div :class="{ 'pigment-bg-1': true, 'hide-bg': $clicks < 1 }"></div>
+<div :class="{ 'pigment-bg-2': true, 'hide-bg': $clicks < 1 }"></div>
+
+<h2 :class="{ 'old-times': $clicks < 1 }">The culprit</h2>
+
+--one video of a grid re-rendering all cells at nav time
+--diagram with a grid and cells, and one state for cell highlight...
+
+---
+
 # Branded Types
 
 > It's not just a `number`, it's an `X`
