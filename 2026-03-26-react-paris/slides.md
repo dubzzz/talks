@@ -397,7 +397,21 @@ function LeakProberContextProvider() {
 
 <p>✅ Virtualized grids</p>
 <p>✅ Clever reloads</p>
-<p>✅ Few customers with rather small grids ~1k cells</p>
+<p :class="{ 'line-through': $clicks >= 1, 'disappear': $clicks >= 1 }">✅ Few customers with rather small grids ~1k cells</p>
+<p v-click>✅ More customers with medium grids, millions of cells</p>
+
+---
+
+<div :class="{ 'old-bg': true, 'hide-bg': $clicks < 1 }"></div>
+<div :class="{ 'pigment-bg-1': true, 'hide-bg': $clicks >= 1 }"></div>
+<div :class="{ 'pigment-bg-2': true, 'hide-bg': $clicks >= 1 }"></div>
+
+<h1 :class="{ 'old-times': $clicks >= 1 }">The second crack</h1>
+
+<p v-click="1" class="old-times">👤 Client: “The flow to input in grids is laggy”</p>
+<p v-click="2" class="old-times">🧑‍💻 Support: <i>Thinking...</i></p>
+<p v-click="3" class="old-times">🧑‍💻 Support: “Can you give us more details on the flow that is slow?”</p>
+<p v-click="4" class="old-times">👤 Client: “When navigating with keyboard arrows to input in your grids everything is laggy, moving from one cell to another is taking ages and sometimes my browser asked me if I want to stop the task”</p>
 
 ---
 
