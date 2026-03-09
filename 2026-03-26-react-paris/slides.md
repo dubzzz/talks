@@ -199,6 +199,19 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
 
 ---
 
+<div :class="{ 'pigment-bg-1': true }"></div>
+<div :class="{ 'pigment-bg-2': true }"></div>
+
+<h2>The status</h2>
+
+
+<p v-click="1">✅ Virtualized grids</p>
+<p v-click="2">✅ Clever reloads</p>
+<p v-click="3">✅ Few customers with rather small grids ~1k cells</p>
+
+
+---
+
 <div :class="{ 'old-bg': true, 'hide-bg': $clicks < 1 }"></div>
 <div :class="{ 'pigment-bg-1': true, 'hide-bg': $clicks >= 1 }"></div>
 <div :class="{ 'pigment-bg-2': true, 'hide-bg': $clicks >= 1 }"></div>
@@ -373,6 +386,18 @@ function LeakProberContextProvider() {
 <p v-click>📋 <b>Where do we plug it:</b></p>
 <p v-click style="margin-left: 32px; margin-top: -12px;">↳ Cells</p>
 <p v-click style="margin-left: 32px; margin-top: -12px;">↳ Clients</p>
+
+---
+
+<div :class="{ 'pigment-bg-1': true }"></div>
+<div :class="{ 'pigment-bg-2': true }"></div>
+
+<h2>The status</h2>
+
+
+<p>✅ Virtualized grids</p>
+<p>✅ Clever reloads</p>
+<p>✅ Few customers with rather small grids ~1k cells</p>
 
 ---
 
