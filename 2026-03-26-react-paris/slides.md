@@ -34,35 +34,21 @@ favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b
 
 <p v-click="1">*even for UI</p>
 
-<p v-click="2">
+<div v-click="2" class="quote-card">
+  <div class="quote-author">Marissa Mayer, then Google VP, in 2006</div>
+  <blockquote>A 500ms delay in search results caused a <b>20% drop in traffic</b></blockquote>
+  <div class="quote-source">
+    <a href="https://glinden.blogspot.com/2006/11/marissa-mayer-at-web-20.html" target="_blank" rel="noopener noreferrer">glinden.blogspot.com</a>
+  </div>
+</div>
 
-<br/>
-
-**Marissa Mayer**, then Google VP, in 2006:
-
-> A 500ms delay in search results caused a 20% drop in traffic
-
-<p style="font-size: 0.5em; text-align: right; margin-top: 0px; opacity: 0.5">
-  Source:
-  <a href="https://glinden.blogspot.com/2006/11/marissa-mayer-at-web-20.html" target="_blank" rel="noopener noreferrer">https://glinden.blogspot.com/2006/11/marissa-mayer-at-web-20.html</a>
-</p>
-
-</p>
-
-<p v-click="3">
-
-<br/>
-
-**Greg Linden**, former Amazon engineer, in 2006:
-
-> A 100ms increase in page load time caused a 1% drop in sales
-
-<p style="font-size: 0.5em; text-align: right; margin-top: 0px; opacity: 0.5">
-  Source:
-  <a href="https://assets.website-files.com/61060433cb5cbb34f58da08c/61065835a1cb346f7673c592_StanfordDataMiningAmazonCaseStudy.pdf" target="_blank" rel="noopener noreferrer">https://assets.website-files.com/61060433cb5cbb34f58da08c/61065835a1cb346f7673c592_StanfordDataMiningAmazonCaseStudy.pdf</a>
-</p>
-
-</p>
+<div v-click="3" class="quote-card">
+  <div class="quote-author">Greg Linden, former Amazon engineer, in 2006</div>
+  <blockquote>A 100ms increase in page load time caused a <b>1% drop in sales</b></blockquote>
+  <div class="quote-source">
+    <a href="https://assets.website-files.com/61060433cb5cbb34f58da08c/61065835a1cb346f7673c592_StanfordDataMiningAmazonCaseStudy.pdf" target="_blank" rel="noopener noreferrer">Stanford Data Mining Case Study</a>
+  </div>
+</div>
 
 <!--
   Before we dig on chasing them, let's try to understand why we should care about performance!
@@ -99,12 +85,12 @@ favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b
 
 <p v-click="1" class="old-times">You open your devtools and…</p>
 
-<img v-click="2" src="assets/cloudflare-fake.gif" style="height: 50%" />
+<img v-click="2" src="assets/cloudflare-fake.gif" style="height: 45%; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); margin: 8px auto; display: block;" />
 
-<p v-click="3" class="old-times">
-  Such bug happened to <img src="assets/cloudflare.png" style="height: 32px; display: inline" /> because of <code>useEffect</code>.
+<p v-click="3" class="old-times" style="background: rgba(255,255,255,0.3); border-radius: 10px; padding: 10px 16px; margin-top: 12px;">
+  Such bug happened to <img src="assets/cloudflare.png" style="height: 32px; display: inline; vertical-align: middle;" /> because of <code style="background: rgba(0,0,0,0.08); padding: 2px 6px; border-radius: 4px;">useEffect</code>.
   <br/>
-  <i style="font-size: 0.9em; opacity: 0.5">Speculative scenario — this talk will show how to quickly spot such bugs</i>
+  <i style="font-size: 0.85em; opacity: 0.5">Speculative scenario — this talk will show how to quickly spot such bugs</i>
 </p>
 
 
@@ -173,7 +159,7 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
 <div :class="{ 'pigment-bg-1': true }"></div>
 <div :class="{ 'pigment-bg-2': true }"></div>
 
-<h1 style="color: #0355f3">Our “fil rouge”<span v-click="4">: The Board</span> <img src="/assets/Pigment logo alone.png" style="float: right; height: 1em; box-shadow: none;"></h1>
+<h1 style="color: #0355f3">Our "fil rouge"<span v-click="4">: The Board</span> <img src="/assets/Pigment logo alone.png" style="float: right; height: 1em; box-shadow: none;"></h1>
 
 <p v-click="1" style="color: #5C4420; opacity: 1">Let's rebuild, one after the other, the performance safety nets we built at <b>Pigment</b>.</p>
 
@@ -205,12 +191,21 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
 
 <h1 :class="{ 'old-times': $clicks >= 1 }">The first crack</h1>
 
-<p v-click="1" class="old-times">👤 Client: “Our tabs keep crashing”</p>
+<div v-click="1" class="chat-bubble old">
+  <div class="chat-avatar">👤</div>
+  <div class="chat-msg">"Our tabs keep crashing"</div>
+</div>
 
-<img v-click="2" src="assets/oom.png" style="height: 50%" />
+<img v-click="2" src="assets/oom.png" style="height: 45%; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); margin: 8px auto; display: block;" />
 
-<p v-click="3" class="old-times">🧑‍💻 Support: “Can't reproduce”</p>
-<p v-click="4" class="old-times">👤 Client: “It works fine at first. But after a while this strange message pops!”</p>
+<div v-click="3" class="chat-bubble support old">
+  <div class="chat-avatar">🧑‍💻</div>
+  <div class="chat-msg">"Can't reproduce"</div>
+</div>
+<div v-click="4" class="chat-bubble old">
+  <div class="chat-avatar">👤</div>
+  <div class="chat-msg">"It works fine at first. But after a while this strange message pops!"</div>
+</div>
 
 <!--
   It means that we are slowly leaking memory.
@@ -278,11 +273,13 @@ useEffect(() => {
 <p v-click>🧩 <b>Our need:</b> Detect a leak in user flows</p>
 
 <p v-click>💡 <b>The test strategy:</b></p>
-<p v-click style="margin-left: 32px; margin-top: -12px;">↳ Open the app on the homepage</p>
-<p v-click :class="{ 'font-bold': $clicks >= 8 }" style="margin-left: 32px; margin-top: -12px;">↳ Count the number of leaky states</p>
-<p v-click style="margin-left: 32px; margin-top: -12px;">↳ Run a flow</p>
-<p v-click style="margin-left: 32px; margin-top: -12px;">↳ Go back to the homepage</p>
-<p v-click :class="{ 'font-bold': $clicks >= 8 }" style="margin-left: 32px; margin-top: -12px;">↳ Count the number of leaky states</p>
+<div class="step-list" style="margin-top: 8px;">
+  <div v-click class="step-item">Open the app on the homepage</div>
+  <div v-click :class="['step-item', { 'highlight': $clicks >= 8 }]">Count the number of leaky states</div>
+  <div v-click class="step-item">Run a flow</div>
+  <div v-click class="step-item">Go back to the homepage</div>
+  <div v-click :class="['step-item', { 'highlight': $clicks >= 8 }]">Count the number of leaky states</div>
+</div>
 
 <p v-click></p>
 
@@ -364,11 +361,23 @@ function countActiveLeaks() {
 
 <h1 v-click="1" :class="{ 'old-times': $clicks >= 2 }">The second crack</h1>
 
-<p v-click="2" class="old-times">👤 Client: “Your grid is freezing my browser”</p>
-<p v-click="3" class="old-times">🧑‍💻 Support: “Could you tell us more about what you were doing?”</p>
-<p v-click="4" class="old-times">👤 Client: “Just pressing arrow keys. One cell to another. Each keystroke hangs for seconds”</p>
-<p v-click="5" class="old-times">👤 Client: “Sometimes my browser asks me if I want to kill the page”</p>
-<img v-click="6" src="assets/re-render-drama.gif" style="height: 50%" />
+<div v-click="2" class="chat-bubble old">
+  <div class="chat-avatar">👤</div>
+  <div class="chat-msg">"Your grid is freezing my browser"</div>
+</div>
+<div v-click="3" class="chat-bubble support old">
+  <div class="chat-avatar">🧑‍💻</div>
+  <div class="chat-msg">"Could you tell us more about what you were doing?"</div>
+</div>
+<div v-click="4" class="chat-bubble old">
+  <div class="chat-avatar">👤</div>
+  <div class="chat-msg">"Just pressing arrow keys. One cell to another. Each keystroke hangs for seconds"</div>
+</div>
+<div v-click="5" class="chat-bubble old">
+  <div class="chat-avatar">👤</div>
+  <div class="chat-msg">"Sometimes my browser asks me if I want to kill the page"</div>
+</div>
+<img v-click="6" src="assets/re-render-drama.gif" style="height: 45%; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); margin: 4px auto; display: block;" />
 
 ---
 
@@ -394,9 +403,11 @@ function countActiveLeaks() {
 <p v-click>🧩 <b>Our need:</b> Limit re-renders <i>at least for critical code paths</i></p>
 
 <p v-click>💡 <b>The test strategy:</b></p>
-<p v-click :class="{ 'font-bold': $clicks >= 6 }" style="margin-left: 32px; margin-top: -12px;">↳ Count the number of renders</p>
-<p v-click style="margin-left: 32px; margin-top: -12px;">↳ Run a flow</p>
-<p v-click :class="{ 'font-bold': $clicks >= 6 }" style="margin-left: 32px; margin-top: -12px;">↳ Count the number of renders</p>
+<div class="step-list" style="margin-top: 8px;">
+  <div v-click :class="['step-item', { 'highlight': $clicks >= 6 }]">Count the number of renders</div>
+  <div v-click class="step-item">Run a flow</div>
+  <div v-click :class="['step-item', { 'highlight': $clicks >= 6 }]">Count the number of renders</div>
+</div>
 
 <p v-click></p>
 
@@ -462,12 +473,21 @@ function useRenderCount(kind: string) {
 
 <h1 v-click="1" :class="{ 'old-times': $clicks >= 2 }">The third crack</h1>
 
-<p v-click="2" class="old-times">👤 Client: “The app keeps freezing randomly. Sometimes the whole page becomes unresponsive”</p>
-<p v-click="3" class="old-times">👤 Client: “Notably when scrolling far in my grids”</p>
+<div v-click="2" class="chat-bubble old">
+  <div class="chat-avatar">👤</div>
+  <div class="chat-msg">"The app keeps freezing randomly. Sometimes the whole page becomes unresponsive"</div>
+</div>
+<div v-click="3" class="chat-bubble old">
+  <div class="chat-avatar">👤</div>
+  <div class="chat-msg">"Notably when scrolling far in my grids"</div>
+</div>
 
-<img v-click="4" src="assets/irresponsive-drama.png" style="height: 50%" />
+<img v-click="4" src="assets/irresponsive-drama.png" style="height: 45%; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); margin: 8px auto; display: block;" />
 
-<p v-click="5" class="old-times">🧑‍💻 Support: “We clearly reproduce slownesses on your grid. We are working on it!”</p>
+<div v-click="5" class="chat-bubble support old">
+  <div class="chat-avatar">🧑‍💻</div>
+  <div class="chat-msg">"We clearly reproduce slownesses on your grid. We are working on it!"</div>
+</div>
 
 ---
 
@@ -494,9 +514,11 @@ function useRenderCount(kind: string) {
 <p v-click>🧩 <b>Our need:</b> Detect long tasks</p>
 
 <p v-click>💡 <b>The test strategy:</b></p>
-<p v-click :class="{ 'font-bold': $clicks >= 6 }" style="margin-left: 32px; margin-top: -12px;">↳ Check for long tasks</p>
-<p v-click style="margin-left: 32px; margin-top: -12px;">↳ Run a flow</p>
-<p v-click :class="{ 'font-bold': $clicks >= 6 }" style="margin-left: 32px; margin-top: -12px;">↳ Check for long tasks</p>
+<div class="step-list" style="margin-top: 8px;">
+  <div v-click :class="['step-item', { 'highlight': $clicks >= 6 }]">Check for long tasks</div>
+  <div v-click class="step-item">Run a flow</div>
+  <div v-click :class="['step-item', { 'highlight': $clicks >= 6 }]">Check for long tasks</div>
+</div>
 
 <p v-click></p>
 
@@ -547,18 +569,19 @@ layout: cover
 background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC-PAYSAGES-MARGERIDE-283.jpg
 ---
 
-<div style="text-align: left; display: grid; margin-bottom: 36px; gap: 8px; grid-template-columns: repeat(2, minmax(0, 1fr));">
-  <div v-click style="grid-row: 1; grid-column: 1">
+<div style="text-align: left; display: grid; margin-bottom: 24px; gap: 16px; grid-template-columns: repeat(2, minmax(0, 1fr));">
+  <div v-click style="grid-row: 1; grid-column: 1; background: rgba(255,255,255,0.15); backdrop-filter: blur(4px); border-radius: 14px; padding: 18px 20px; border: 1px solid rgba(255,255,255,0.25);">
 
 ### Common approach
 
-<p>💡 <b>The test strategy:</b></p>
-<p style="margin-left: 32px; margin-top: -12px;">↳ Check and measure <i>something</i></p>
-<p style="margin-left: 32px; margin-top: -12px;">↳ Run a flow</p>
-<p style="margin-left: 32px; margin-top: -12px;">↳ Check and measure <i>something</i></p>
+<div class="step-list" style="margin-top: 8px;">
+  <div class="step-item" style="background: rgba(255,255,255,0.15);">Check and measure <i>something</i></div>
+  <div class="step-item" style="background: rgba(255,255,255,0.15);">Run a flow</div>
+  <div class="step-item" style="background: rgba(255,255,255,0.15);">Check and measure <i>something</i></div>
+</div>
 
   </div>
-  <div v-click style="grid-row: 1; grid-column: 2">
+  <div v-click style="grid-row: 1; grid-column: 2; background: rgba(255,255,255,0.15); backdrop-filter: blur(4px); border-radius: 14px; padding: 18px 20px; border: 1px solid rgba(255,255,255,0.25);">
 
 ### Our last safety net
 
@@ -574,4 +597,4 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
 
 <h1 style="text-align: right; margin-bottom: 0">Thank you</h1>
 
-<p style="text-align: right">Do not hesitate to visit our blog: <a href="https://engineering.pigment.com/" target="_blank">engineering.pigment.com</a></p>
+<p style="text-align: right">Visit our blog: <a href="https://engineering.pigment.com/" target="_blank">engineering.pigment.com</a></p>
