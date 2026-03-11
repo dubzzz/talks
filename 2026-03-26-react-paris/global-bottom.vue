@@ -35,7 +35,7 @@
   <!-- Pigment Timeline -->
   <div
     v-if="$nav.currentPage >= 7 && $nav.currentPage <= 20 && $nav.currentLayout !== 'cover'"
-    :class="['pigment-timeline', { 'pigment-timeline-old': $nav.currentPage === 7 && $nav.clicks >= 1 || ($nav.currentPage === 11 || $nav.currentPage === 16) && $nav.clicks >= 2 || ($nav.currentPage === 8 || $nav.currentPage === 13 || $nav.currentPage === 18) && $nav.clicks < 1 }]"
+    :class="['pigment-timeline', { 'pigment-timeline-old': $nav.currentPage === 7 && $nav.clicks >= 1 || ($nav.currentPage === 12 || $nav.currentPage === 17) && $nav.clicks >= 2 || ($nav.currentPage === 8 || $nav.currentPage === 13 || $nav.currentPage === 18) && $nav.clicks < 1 }]"
   >
     <div class="pigment-timeline-items">
       <span class="pigment-timeline-pill">Virtualized grids</span>
@@ -44,36 +44,36 @@
       <span class="pigment-timeline-sep"></span>
 
       <!-- Phase 1: ~1k cells (slides 5-9) -->
-      <span v-if="$nav.currentPage < 11" class="pigment-timeline-pill">~1k cells</span>
+      <span v-if="$nav.currentPage < 12" class="pigment-timeline-pill">~1k cells</span>
 
-      <!-- Phase 2: Millions (slides 11-15) -->
+      <!-- Phase 2: Millions (slides 12-15) -->
       <span
-        v-if="$nav.currentPage >= 11 && $nav.currentPage < 16"
-        :class="['pigment-timeline-pill', { 'pigment-timeline-highlight': $nav.currentPage === 11 }]"
+        v-if="$nav.currentPage >= 12 && $nav.currentPage < 17"
+        :class="['pigment-timeline-pill', { 'pigment-timeline-highlight': $nav.currentPage === 12 }]"
       >Millions of cells</span>
 
-      <!-- Phase 3: Billions (slides 16-20) -->
+      <!-- Phase 3: Billions (slides 17-20) -->
       <span
-        v-if="$nav.currentPage >= 16"
-        :class="['pigment-timeline-pill', { 'pigment-timeline-highlight': $nav.currentPage === 16 }]"
+        v-if="$nav.currentPage >= 17"
+        :class="['pigment-timeline-pill', { 'pigment-timeline-highlight': $nav.currentPage === 17 }]"
       >Billions of cells</span>
 
-      <template v-if="$nav.currentPage >= 16">
+      <template v-if="$nav.currentPage >= 17">
         <span class="pigment-timeline-sep"></span>
         <span
-          :class="['pigment-timeline-pill', { 'pigment-timeline-highlight': $nav.currentPage === 16 }]"
+          :class="['pigment-timeline-pill', { 'pigment-timeline-highlight': $nav.currentPage === 17 }]"
         >Large set of options</span>
       </template>
     </div>
 
-    <!-- Toast on crack 2 (slide 10) -->
-    <div v-if="$nav.currentPage === 11 && $nav.clicks === 0" class="pigment-timeline-toast">
+    <!-- Toast on crack 2 (slide 12) -->
+    <div v-if="$nav.currentPage === 12 && $nav.clicks === 0" class="pigment-timeline-toast">
       <span style="font-size: 1.3em">📈</span>
       <span>The product grew &mdash; <b>Millions of cells</b></span>
     </div>
 
-    <!-- Toast on crack 3 (slide 16) -->
-    <div v-if="$nav.currentPage === 16 && $nav.clicks === 0" class="pigment-timeline-toast">
+    <!-- Toast on crack 3 (slide 17) -->
+    <div v-if="$nav.currentPage === 17 && $nav.clicks === 0" class="pigment-timeline-toast">
       <span style="font-size: 1.3em">📈</span>
       <span>The product grew &mdash; <b>Billions of cells</b> &amp; <b>Large set of options</b></span>
     </div>
