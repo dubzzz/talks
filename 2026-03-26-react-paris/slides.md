@@ -88,7 +88,7 @@ favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b
 <img v-click="2" src="assets/cloudflare-fake.gif" style="height: 45%; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); margin: 8px auto; display: block;" />
 
 <p v-click="3" class="old-times" style="background: rgba(255,255,255,0.3); border-radius: 10px; padding: 10px 16px; margin-top: 12px;">
-  Such bug happened to <img src="assets/cloudflare.png" style="height: 32px; display: inline; vertical-align: middle;" /> because of <code style="background: rgba(0,0,0,0.08); padding: 2px 6px; border-radius: 4px;">useEffect</code>.
+  Such a bug happened to <img src="assets/cloudflare.png" style="height: 32px; display: inline; vertical-align: middle;" /> because of <code style="background: rgba(0,0,0,0.08); padding: 2px 6px; border-radius: 4px;">useEffect</code>.
   <br/>
   <i style="font-size: 0.85em; opacity: 0.5">Speculative scenario — this talk will show how to quickly spot such bugs</i>
 </p>
