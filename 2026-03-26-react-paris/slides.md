@@ -324,26 +324,26 @@ useEffect(() => {
 
 <h2>Counting leaky states</h2>
 
-<div v-click class="culprit-card">
+<div v-click="1" class="culprit-card">
   <div class="culprit-icon">🔍</div>
   <div class="culprit-content">
     <div class="culprit-title">Observation</div>
     <ul class="culprit-details">
-      <li>Keep the entire React tree alive — <i>components, state, closures, all of it</i></li>
-      <li>Stay even if the components were unmount</li>
+      <li v-click="2">Keep the entire React tree alive<span v-click="3"> — <i>components, state, closures, all of it</i></span></li>
+      <li v-click="4">Stay even if the components were unmount</li>
     </ul>
   </div>
 </div>
 
-<div v-click class="culprit-card">
+<div v-click="5" class="culprit-card">
   <div class="culprit-icon">🪝</div>
   <div class="culprit-content">
     <div class="culprit-title">The probe idea</div>
     <ul class="culprit-details">
-      <li>Plant a unique object inside the component</li>
-      <li>Track it with a <b><code>WeakRef</code></b></li>
-      <li>Check if still there using <code>ref.deref() !== undefined</code></li>
-      <li>Always force GC execution</li>
+      <li v-click="6">Plant a unique object inside the component</li>
+      <li v-click="7">Track it with a <b><code>WeakRef</code></b></li>
+      <li v-click="8">Check if still there using <code>ref.deref() !== undefined</code></li>
+      <li v-click="9">Always force GC execution</li>
     </ul>
   </div>
 </div>
