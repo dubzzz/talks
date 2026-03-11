@@ -279,7 +279,7 @@ h1, h2, h3, p {
     padding-bottom: 1.875rem;
 }*/
 
-/* Offset slide content when timeline is shown (slides 7-18) */
+/* Offset slide content when timeline is shown (slides 7-21) */
 .slidev-page-7 .slidev-layout,
 .slidev-page-8 .slidev-layout,
 .slidev-page-9 .slidev-layout,
@@ -291,7 +291,10 @@ h1, h2, h3, p {
 .slidev-page-15 .slidev-layout,
 .slidev-page-16 .slidev-layout,
 .slidev-page-17 .slidev-layout,
-.slidev-page-18 .slidev-layout {
+.slidev-page-18 .slidev-layout,
+.slidev-page-19 .slidev-layout,
+.slidev-page-20 .slidev-layout,
+.slidev-page-21 .slidev-layout {
   padding-top: 60px;
 }
 

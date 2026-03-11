@@ -322,6 +322,37 @@ useEffect(() => {
 <div :class="{ 'pigment-bg-1': true }"></div>
 <div :class="{ 'pigment-bg-2': true }"></div>
 
+<h2>Counting leaky states</h2>
+
+<div v-click class="culprit-card">
+  <div class="culprit-icon">🔍</div>
+  <div class="culprit-content">
+    <div class="culprit-title">Observation</div>
+    <ul class="culprit-details">
+      <li>Keep the entire React tree alive — <i>components, state, closures, all of it</i></li>
+      <li>Stay even if the components were unmount</li>
+    </ul>
+  </div>
+</div>
+
+<div v-click class="culprit-card">
+  <div class="culprit-icon">🪝</div>
+  <div class="culprit-content">
+    <div class="culprit-title">The probe idea</div>
+    <ul class="culprit-details">
+      <li>Plant a unique object inside the component</li>
+      <li>Track it with a <b><code>WeakRef</code></b></li>
+      <li>Check if still there using <code>ref.deref() !== undefined</code></li>
+      <li>Always force GC execution</li>
+    </ul>
+  </div>
+</div>
+
+---
+
+<div :class="{ 'pigment-bg-1': true }"></div>
+<div :class="{ 'pigment-bg-2': true }"></div>
+
 <h2>The implementation</h2>
 
 ````md magic-move {lines: true} 
@@ -554,6 +585,19 @@ function expectLeaks(c) {
 <div :class="{ 'pigment-bg-1': true }"></div>
 <div :class="{ 'pigment-bg-2': true }"></div>
 
+<h2>The number of renders</h2>
+
+Observations:
+
+Idea:
+
+- each time a component re-render increment a counter
+
+---
+
+<div :class="{ 'pigment-bg-1': true }"></div>
+<div :class="{ 'pigment-bg-2': true }"></div>
+
 <h2>The implementation</h2>
 
 ````md magic-move {lines: true} 
@@ -666,12 +710,28 @@ function useRenderCount(kind: string) {
 
 <p v-click>💡 <b>The test strategy:</b></p>
 <div class="step-list" style="margin-top: 8px;">
-  <div v-click :class="['step-item', { 'highlight': $clicks >= 6 }]">Check for long tasks</div>
+  <div v-click :class="['step-item', { 'highlight': $clicks >= 6 }]">Check for slow code</div>
   <div v-click class="step-item">Run a flow</div>
-  <div v-click :class="['step-item', { 'highlight': $clicks >= 6 }]">Check for long tasks</div>
+  <div v-click :class="['step-item', { 'highlight': $clicks >= 6 }]">Check for slow code</div>
 </div>
 
 <p v-click></p>
+
+---
+
+<div :class="{ 'pigment-bg-1': true }"></div>
+<div :class="{ 'pigment-bg-2': true }"></div>
+
+<h2>The number of "slow code"</h2>
+
+Observations:
+
+- when facing slow code, users generally suffer from freeze, browser not being responsive anymore for a few seconds and others
+
+Idea:
+
+- long tasks will be triggered in such cases
+- browser come with an API to be notified whenevr they occur, we can count them
 
 ---
 
