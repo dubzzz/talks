@@ -607,7 +607,7 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
 
 ### Common approach
 
-<div class="step-list" style="margin-top: 8px;">
+<div class="step-list step-list-conclusion" style="margin-top: 8px;">
   <div class="step-item" style="background: rgba(255,255,255,0.15);">Check and measure something</div>
   <div class="step-item" style="background: rgba(255,255,255,0.15);">Run a flow</div>
   <div class="step-item" style="background: rgba(255,255,255,0.15);">Check and measure something</div>

@@ -191,6 +191,10 @@ h1, h2, h3, p {
   font-size: 0.85em;
 }
 
+.step-list-conclusion .step-item::before {
+  background: rgba(255, 255, 255, 0.3);
+}
+
 .step-item.highlight {
   background: rgba(3, 85, 243, 0.1);
   font-weight: 600;
