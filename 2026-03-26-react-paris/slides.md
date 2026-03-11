@@ -221,11 +221,24 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
 
 <h2 :class="{ 'old-times': $clicks < 1 }">The culprit</h2>
 
-<p v-click>⏳ Time matters</p>
-<p v-click style="margin-left: 32px; margin-top: -12px;">↳ At Pigment, everything is real time</p>
-<p v-click style="margin-left: 32px; margin-top: -12px;">↳ Changes may occur when the tab is inactive</p>
-<p v-click style="margin-left: 32px; margin-top: -12px;">↳ The UI may redraw itself multiple times in background</p>
-<p v-click>🚰 Probably a leak</p>
+<div v-click class="culprit-card">
+  <div class="culprit-icon">⏳</div>
+  <div class="culprit-content">
+    <div class="culprit-title">Time matters</div>
+    <ul class="culprit-details">
+      <li v-click>At Pigment, everything is real time</li>
+      <li v-click>Changes may occur when the tab is inactive</li>
+      <li v-click>The UI may redraw itself multiple times in background</li>
+    </ul>
+  </div>
+</div>
+
+<div v-click class="culprit-card">
+  <div class="culprit-icon">🚰</div>
+  <div class="culprit-content">
+    <div class="culprit-title">Probably a leak</div>
+  </div>
+</div>
 
 <p v-click="6">
 
@@ -385,11 +398,23 @@ function countActiveLeaks() {
 
 <h2 :class="{ 'old-times': $clicks < 1 }">The culprit</h2>
 
-<p v-click>🐌 Re-render matters</p>
-<p v-click style="margin-left: 32px; margin-top: -12px;">↳ Our "currently selected" state is shared by all cells</p>
-<p v-click style="margin-left: 32px; margin-top: -12px;">↳ On updates all cells have to re-render just-in-case</p>
+<div v-click class="culprit-card">
+  <div class="culprit-icon">🐌</div>
+  <div class="culprit-content">
+    <div class="culprit-title">Re-render matters</div>
+    <ul class="culprit-details">
+      <li v-click>Our "currently selected" state is shared by all cells</li>
+      <li v-click>On updates all cells have to re-render just-in-case</li>
+    </ul>
+  </div>
+</div>
 
-<p v-click>🚚 Move shared state outside of the React tree</p>
+<div v-click class="culprit-card">
+  <div class="culprit-icon">🚚</div>
+  <div class="culprit-content">
+    <div class="culprit-title">Move shared state outside of the React tree</div>
+  </div>
+</div>
 
 ---
 
@@ -492,12 +517,25 @@ function useRenderCount(kind: string) {
 
 <h2 :class="{ 'old-times': $clicks < 1 }">The culprit</h2>
 
-<p v-click>⚡️ Time complexity matters</p>
-<p v-click style="margin-left: 32px; margin-top: -12px;">↳ Cells on enums might be backed by millions of items</p>
-<p v-click style="margin-left: 32px; margin-top: -12px;">↳ That can't fit in memory</p>
-<p v-click style="margin-left: 32px; margin-top: -12px;">↳ We fetch them in a cache when first displayed</p>
-<p v-click style="margin-left: 32px; margin-top: -12px;">↳ Updating the cache was an O(n)</p>
-<p v-click>🚑️ Batching operations</p>
+<div v-click class="culprit-card">
+  <div class="culprit-icon">⚡️</div>
+  <div class="culprit-content">
+    <div class="culprit-title">Time complexity matters</div>
+    <ul class="culprit-details">
+      <li v-click>Cells on enums might be backed by millions of items</li>
+      <li v-click>That can't fit in memory</li>
+      <li v-click>We fetch them in a cache when first displayed</li>
+      <li v-click>Updating the cache was an O(n)</li>
+    </ul>
+  </div>
+</div>
+
+<div v-click class="culprit-card">
+  <div class="culprit-icon">🚑️</div>
+  <div class="culprit-content">
+    <div class="culprit-title">Batching operations</div>
+  </div>
+</div>
 
 ---
 
