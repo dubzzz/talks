@@ -259,7 +259,7 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
   </div>
 </div>
 
-<p v-click="6">
+<p v-click="3">
 
 ````md magic-move {lines: true}
 ```jsx
