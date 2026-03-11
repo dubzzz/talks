@@ -549,43 +549,24 @@ function expectLeaks(c) {
 <div :class="{ 'pigment-bg-1': true }"></div>
 <div :class="{ 'pigment-bg-2': true }"></div>
 
-<h2>Let's back ourselves</h2>
+<h2>Setting the trap</h2>
 
-<p v-click>🧩 <b>Our need:</b> Limit re-renders <i>at least for critical code paths</i></p>
-
-<p v-click>💡 <b>The test strategy:</b></p>
-<div class="step-list" style="margin-top: 8px;">
-  <div v-click :class="['step-item', { 'highlight': $clicks >= 6 }]">Count the number of renders</div>
-  <div v-click class="step-item">Run a flow</div>
-  <div v-click :class="['step-item', { 'highlight': $clicks >= 6 }]">Count the number of renders</div>
-</div>
-
-<p v-click></p>
-
----
-
-<div :class="{ 'pigment-bg-1': true }"></div>
-<div :class="{ 'pigment-bg-2': true }"></div>
-
-<h2>Counting renders</h2>
-
-<div v-click="1" class="culprit-card">
-  <div class="culprit-icon">🔍</div>
-  <div class="culprit-content">
-    <div class="culprit-title">Observation</div>
-    <ul class="culprit-details">
-      <li v-click="2">Re-renders are not free</li>
-    </ul>
+<p v-click="1">💡 <b>The test strategy:</b> Detect re-renders</p>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; margin-top: 8px;">
+  <div class="step-list" style="margin-top: 8px;">
+    <div v-click="2" class="step-item">Count the number of renders</div>
+    <div v-click="3" class="step-item">Run a flow</div>
+    <div v-click="4" class="step-item">Count the number of renders</div>
   </div>
-</div>
 
-<div v-click="3" class="culprit-card">
-  <div class="culprit-icon">🔢</div>
-  <div class="culprit-content">
-    <div class="culprit-title">The counter idea</div>
-    <ul class="culprit-details">
-      <li v-click="4">Increment a counter on each render</li>
-    </ul>
+  <div v-click="5" class="culprit-card">
+    <div class="culprit-icon">🔢</div>
+    <div class="culprit-content">
+      <div class="culprit-title">The counter idea</div>
+      <ul class="culprit-details">
+        <li v-click="6">Increment a counter on each render</li>
+      </ul>
+    </div>
   </div>
 </div>
 
@@ -700,46 +681,40 @@ function useRenderCount(kind: string) {
 <div :class="{ 'pigment-bg-1': true }"></div>
 <div :class="{ 'pigment-bg-2': true }"></div>
 
-<h2>Let's back ourselves</h2>
+<h2>Setting the trap</h2>
 
-<p v-click>🧩 <b>Our need:</b> Detect slow code paths</p>
+<p v-click="1">💡 <b>The test strategy:</b> Detect slow paths</p>
 
-<p v-click>💡 <b>The test strategy:</b></p>
-<div class="step-list" style="margin-top: 8px;">
-  <div v-click :class="['step-item', { 'highlight': $clicks >= 6 }]">Check for slow code</div>
-  <div v-click class="step-item">Run a flow</div>
-  <div v-click :class="['step-item', { 'highlight': $clicks >= 6 }]">Check for slow code</div>
-</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; margin-top: 8px;">
+  <div class="step-list" style="margin-top: 8px;">
+    <div v-click="2" class="step-item">Check for slow code</div>
+    <div v-click="3" class="step-item">Run a flow</div>
+    <div v-click="4" class="step-item">Check for slow code</div>
+  </div>
 
-<p v-click></p>
+  <div>
+    <div v-click="6" class="culprit-card">
+      <div class="culprit-icon">🔍</div>
+      <div class="culprit-content">
+        <div class="culprit-title">Observation</div>
+        <ul class="culprit-details">
+          <li v-click="7">Synchronous operations block the browser</li>
+          <li v-click="8">No scroll, no input, no animation until done</li>
+        </ul>
+      </div>
+    </div>
 
----
-
-<div :class="{ 'pigment-bg-1': true }"></div>
-<div :class="{ 'pigment-bg-2': true }"></div>
-
-<h2>Counting slow tasks?</h2>
-
-<div v-click="1" class="culprit-card">
-  <div class="culprit-icon">🔍</div>
-  <div class="culprit-content">
-    <div class="culprit-title">Observation</div>
-    <ul class="culprit-details">
-      <li v-click="2">Slow synchronous operations blocks the entire browser</li>
-      <li v-click="3">For the user: no scroll, no input, no animation until it's done</li>
-    </ul>
+  <div v-click="9" class="culprit-card">
+    <div class="culprit-icon">⏱️</div>
+    <div class="culprit-content">
+      <div class="culprit-title">The Long Tasks</div>
+      <ul class="culprit-details">
+        <li v-click="10">Task blocking the main thread for 50ms+</li>
+        <li v-click="11">Exposed via <b><code>PerformanceObserver</code></b></li>
+      </ul>
+    </div>
   </div>
 </div>
-
-<div v-click="4" class="culprit-card">
-  <div class="culprit-icon">⏱️</div>
-  <div class="culprit-content">
-    <div class="culprit-title">The Long Tasks</div>
-    <ul class="culprit-details">
-      <li v-click="5">Any task blocking the main thread for more than 50ms</li>
-      <li v-click="6">Exposed via <b><code>PerformanceObserver</code></b></li>
-    </ul>
-  </div>
 </div>
 
 ---
