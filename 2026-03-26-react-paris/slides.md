@@ -585,13 +585,27 @@ function expectLeaks(c) {
 <div :class="{ 'pigment-bg-1': true }"></div>
 <div :class="{ 'pigment-bg-2': true }"></div>
 
-<h2>The number of renders</h2>
+<h2>Counting renders</h2>
 
-Observations:
+<div v-click="1" class="culprit-card">
+  <div class="culprit-icon">🔍</div>
+  <div class="culprit-content">
+    <div class="culprit-title">Observation</div>
+    <ul class="culprit-details">
+      <li v-click="2">Re-renders are not free</li>
+    </ul>
+  </div>
+</div>
 
-Idea:
-
-- each time a component re-render increment a counter
+<div v-click="3" class="culprit-card">
+  <div class="culprit-icon">🔢</div>
+  <div class="culprit-content">
+    <div class="culprit-title">The counter idea</div>
+    <ul class="culprit-details">
+      <li v-click="4">Increment a counter on each render</li>
+    </ul>
+  </div>
+</div>
 
 ---
 
@@ -722,16 +736,29 @@ function useRenderCount(kind: string) {
 <div :class="{ 'pigment-bg-1': true }"></div>
 <div :class="{ 'pigment-bg-2': true }"></div>
 
-<h2>The number of "slow code"</h2>
+<h2>Counting slow tasks?</h2>
 
-Observations:
+<div v-click="1" class="culprit-card">
+  <div class="culprit-icon">🔍</div>
+  <div class="culprit-content">
+    <div class="culprit-title">Observation</div>
+    <ul class="culprit-details">
+      <li v-click="2">Slow synchronous operations blocks the entire browser</li>
+      <li v-click="3">For the user: no scroll, no input, no animation until it's done</li>
+    </ul>
+  </div>
+</div>
 
-- when facing slow code, users generally suffer from freeze, browser not being responsive anymore for a few seconds and others
-
-Idea:
-
-- long tasks will be triggered in such cases
-- browser come with an API to be notified whenevr they occur, we can count them
+<div v-click="4" class="culprit-card">
+  <div class="culprit-icon">⏱️</div>
+  <div class="culprit-content">
+    <div class="culprit-title">The Long Tasks</div>
+    <ul class="culprit-details">
+      <li v-click="5">Any task blocking the main thread for more than 50ms</li>
+      <li v-click="6">Exposed via <b><code>PerformanceObserver</code></b></li>
+    </ul>
+  </div>
+</div>
 
 ---
 
