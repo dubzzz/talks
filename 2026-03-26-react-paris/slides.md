@@ -605,7 +605,9 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
 <div style="text-align: left; display: grid; margin-bottom: 24px; gap: 16px; grid-template-columns: repeat(2, minmax(0, 1fr));">
   <div v-click style="grid-row: 1; grid-column: 1; background: rgba(255,255,255,0.15); backdrop-filter: blur(4px); border-radius: 14px; padding: 18px 20px; border: 1px solid rgba(255,255,255,0.25);">
 
-### Common approach
+### The safety net
+
+<p>🕸️ A last layer to catch what others miss:</p>
 
 <div class="step-list step-list-conclusion" style="margin-top: 8px;">
   <div class="step-item" style="background: rgba(255,255,255,0.15);">Check and measure something</div>
@@ -616,14 +618,14 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
   </div>
   <div v-click style="grid-row: 1; grid-column: 2; background: rgba(255,255,255,0.15); backdrop-filter: blur(4px); border-radius: 14px; padding: 18px 20px; border: 1px solid rgba(255,255,255,0.25);">
 
-### Our last safety net
+### The other defenses
 
-<p>🛡️ These tests are <b>our last layer</b> of defense.</p>
-<p style="margin-top: -12px;">At our core, we rely on more focused layers:</p>
+<p>🛡️ Our basic safety checks catch <b>most</b> issues:</p>
 <p style="margin-left: 32px; margin-top: -12px;">↳ Unit tests</p>
 <p style="margin-left: 32px; margin-top: -12px;">↳ Code reviews</p>
 <p style="margin-left: 32px; margin-top: -12px;">↳ Linting & static analysis</p>
 <p style="margin-left: 32px; margin-top: -12px;">↳ ...</p>
+<p style="margin-top: 4px;">When they miss some, the <b>safety net</b> steps in.</p>
 
   </div>
 </div>
