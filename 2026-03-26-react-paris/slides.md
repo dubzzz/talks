@@ -30,11 +30,9 @@ favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b
 
 ---
 
-<h1>Performance matters<span v-click="1">*</span></h1>
+<h1>Performance matters</h1>
 
-<p v-click="1">*even for UI</p>
-
-<div v-click="2" class="quote-card">
+<div v-click="1" class="quote-card">
   <div class="quote-author">Marissa Mayer, then Google VP, in 2006</div>
   <blockquote>A 500ms delay in search results caused a <b>20% drop in traffic</b></blockquote>
   <div class="quote-source">
@@ -42,7 +40,7 @@ favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b
   </div>
 </div>
 
-<div v-click="3" class="quote-card">
+<div v-click="2" class="quote-card">
   <div class="quote-author">Greg Linden, former Amazon engineer, in 2006</div>
   <blockquote>A 100ms increase in page load time caused a <b>1% drop in sales</b></blockquote>
   <div class="quote-source">
@@ -50,7 +48,7 @@ favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b
   </div>
 </div>
 
-<div v-click="4" class="quote-card">
+<div v-click="3" class="quote-card">
   <div class="quote-author">Ko-Hsin Liang — 500-repo static analysis study, Feb 2026</div>
   <blockquote><b>86% of repositories</b> have at least one missing-cleanup pattern — each leaking ~8 KB per navigation cycle, compounding silently in production</blockquote>
   <div class="quote-source">
@@ -91,6 +89,12 @@ favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b
   https://www.conductor.com/academy/page-speed-resources/faq/amazon-page-speed-study/
   https://www.gigaspaces.com/blog/amazon-found-every-100ms-of-latency-cost-them-1-in-sales
 -->
+
+---
+
+<h2>Even more for UI</h2>
+
+<img v-click="1" src="assets/hello-pigment.png" style="height: 90%; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); margin: 4px auto; display: block;" />
 
 ---
 
