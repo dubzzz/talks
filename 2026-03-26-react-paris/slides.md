@@ -226,9 +226,9 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
   <div class="culprit-content">
     <div class="culprit-title">Time matters</div>
     <ul class="culprit-details">
-      <li v-click>At Pigment, everything is real time</li>
-      <li v-click>Changes may occur when the tab is inactive</li>
-      <li v-click>The UI may redraw itself multiple times in background</li>
+      <li>At Pigment, everything is real time</li>
+      <li>Changes may occur when the tab is inactive</li>
+      <li>The UI may redraw itself multiple times in background</li>
     </ul>
   </div>
 </div>
@@ -403,8 +403,8 @@ function countActiveLeaks() {
   <div class="culprit-content">
     <div class="culprit-title">Re-render matters</div>
     <ul class="culprit-details">
-      <li v-click>Our "currently selected" state is shared by all cells</li>
-      <li v-click>On updates all cells have to re-render just-in-case</li>
+      <li>Our "currently selected" state is shared by all cells</li>
+      <li>On updates all cells have to re-render just-in-case</li>
     </ul>
   </div>
 </div>
@@ -522,10 +522,10 @@ function useRenderCount(kind: string) {
   <div class="culprit-content">
     <div class="culprit-title">Time complexity matters</div>
     <ul class="culprit-details">
-      <li v-click>Cells on enums might be backed by millions of items</li>
-      <li v-click>That can't fit in memory</li>
-      <li v-click>We fetch them in a cache when first displayed</li>
-      <li v-click>Updating the cache was an O(n)</li>
+      <li>Cells on enums might be backed by millions of items</li>
+      <li>That can't fit in memory</li>
+      <li>We fetch them in a cache when first displayed</li>
+      <li>Updating the cache was an O(n)</li>
     </ul>
   </div>
 </div>
