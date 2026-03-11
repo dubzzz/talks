@@ -597,6 +597,18 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
 <p style="margin-left: 32px; margin-top: -12px;">↳ Check and measure <i>something</i></p>
 
   </div>
+  <div v-click style="grid-row: 1; grid-column: 2">
+
+### Our last safety net
+
+<p>🛡️ These tests are <b>our last layer</b> of defense.</p>
+<p style="margin-top: -12px;">At our core, we rely on more focused layers:</p>
+<p style="margin-left: 32px; margin-top: -12px;">↳ Unit tests</p>
+<p style="margin-left: 32px; margin-top: -12px;">↳ Code reviews</p>
+<p style="margin-left: 32px; margin-top: -12px;">↳ Linting & static analysis</p>
+<p style="margin-left: 32px; margin-top: -12px;">↳ ...</p>
+
+  </div>
 </div>
 
 <h1 style="text-align: right; margin-bottom: 0">Thank you</h1>
