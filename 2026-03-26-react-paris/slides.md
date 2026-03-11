@@ -358,17 +358,17 @@ function countActiveLeaks() {
 
 ---
 
-<div :class="{ 'old-bg': true, 'hide-bg': $clicks < 1 }"></div>
-<div :class="{ 'pigment-bg-1': true, 'hide-bg': $clicks >= 1 }"></div>
-<div :class="{ 'pigment-bg-2': true, 'hide-bg': $clicks >= 1 }"></div>
+<div :class="{ 'old-bg': true, 'hide-bg': $clicks < 2 }"></div>
+<div :class="{ 'pigment-bg-1': true, 'hide-bg': $clicks >= 2 }"></div>
+<div :class="{ 'pigment-bg-2': true, 'hide-bg': $clicks >= 2 }"></div>
 
-<h1 :class="{ 'old-times': $clicks >= 1 }">The second crack</h1>
+<h1 v-click="1" :class="{ 'old-times': $clicks >= 2 }">The second crack</h1>
 
-<p v-click="1" class="old-times">👤 Client: “Your grid is freezing my browser”</p>
-<p v-click="2" class="old-times">🧑‍💻 Support: “Could you tell us more about what you were doing?”</p>
-<p v-click="3" class="old-times">👤 Client: “Just pressing arrow keys. One cell to another. Each keystroke hangs for seconds”</p>
-<p v-click="4" class="old-times">👤 Client: “Sometimes my browser asks me if I want to kill the page”</p>
-<img v-click="5" src="assets/re-render-drama.gif" style="height: 50%" />
+<p v-click="2" class="old-times">👤 Client: “Your grid is freezing my browser”</p>
+<p v-click="3" class="old-times">🧑‍💻 Support: “Could you tell us more about what you were doing?”</p>
+<p v-click="4" class="old-times">👤 Client: “Just pressing arrow keys. One cell to another. Each keystroke hangs for seconds”</p>
+<p v-click="5" class="old-times">👤 Client: “Sometimes my browser asks me if I want to kill the page”</p>
+<img v-click="6" src="assets/re-render-drama.gif" style="height: 50%" />
 
 ---
 
@@ -456,18 +456,18 @@ function useRenderCount(kind: string) {
 
 ---
 
-<div :class="{ 'old-bg': true, 'hide-bg': $clicks < 1 }"></div>
-<div :class="{ 'pigment-bg-1': true, 'hide-bg': $clicks >= 1 }"></div>
-<div :class="{ 'pigment-bg-2': true, 'hide-bg': $clicks >= 1 }"></div>
+<div :class="{ 'old-bg': true, 'hide-bg': $clicks < 2 }"></div>
+<div :class="{ 'pigment-bg-1': true, 'hide-bg': $clicks >= 2 }"></div>
+<div :class="{ 'pigment-bg-2': true, 'hide-bg': $clicks >= 2 }"></div>
 
-<h1 :class="{ 'old-times': $clicks >= 1 }">The third crack</h1>
+<h1 v-click="1" :class="{ 'old-times': $clicks >= 2 }">The third crack</h1>
 
-<p v-click="1" class="old-times">👤 Client: “The app keeps freezing randomly. Sometimes the whole page becomes unresponsive”</p>
-<p v-click="2" class="old-times">👤 Client: “Notably when scrolling far in my grids”</p>
+<p v-click="2" class="old-times">👤 Client: “The app keeps freezing randomly. Sometimes the whole page becomes unresponsive”</p>
+<p v-click="3" class="old-times">👤 Client: “Notably when scrolling far in my grids”</p>
 
-<img v-click="3" src="assets/irresponsive-drama.png" style="height: 50%" />
+<img v-click="4” src="assets/irresponsive-drama.png” style="height: 50%” />
 
-<p v-click="4" class="old-times">🧑‍💻 Support: “We clearly reproduce slownesses on your grid. We are working on it!”</p>
+<p v-click="5" class="old-times">🧑‍💻 Support: “We clearly reproduce slownesses on your grid. We are working on it!”</p>
 
 ---
 
