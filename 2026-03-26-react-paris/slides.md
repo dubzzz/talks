@@ -50,10 +50,18 @@ favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b
   </div>
 </div>
 
+<div v-click="4" class="quote-card">
+  <div class="quote-author">Ko-Hsin Liang — 500-repo static analysis study, Feb 2026</div>
+  <blockquote><b>86% of repositories</b> have at least one missing-cleanup pattern — each leaking ~8 KB per navigation cycle, compounding silently in production</blockquote>
+  <div class="quote-source">
+    <a href="https://stackinsight.dev/blog/frontend-memory-leaks-500-repos" target="_blank" rel="noopener noreferrer">stackinsight.dev</a>
+  </div>
+</div>
+
 <!--
   Before we dig on chasing them, let's try to understand why we should care about performance!
   So first thing: it matters! Second one: it matters even for UI!
-  
+
   And one of the best way to justify that is to take two studies that have been done in the past.
 
   One reported by Marissa Mayer then Google VP in 2006:
@@ -63,6 +71,13 @@ favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b
   > increasing the page load of Amazon by 100ms reduced sales by 1%
 
   Both going in the same direction: performance matters, if you get too slow to compute, retrieve and then show the data your users may churn.
+
+  And now a more recent one — a 2026 study scanning 500 public repos (including Next.js, Kibana, AFFiNE):
+  > 86% had at least one missing cleanup: a useEffect without a return, a subscribe() without unsubscribe(), a setInterval without clearInterval.
+  > Each one invisible in dev. Each one leaking ~8 KB per navigation cycle in production.
+  > The heap climbs 200 MB, 300 MB, 400 MB — with no sign of leveling off.
+  This is the other face of performance: not a sudden spike, but a slow, silent drift.
+  That's exactly what this talk is about.
 
   https://assets.website-files.com/61060433cb5cbb34f58da08c/61065835a1cb346f7673c592_StanfordDataMiningAmazonCaseStudy.pdf
   >  +500 ms -20% traffic @ Google
