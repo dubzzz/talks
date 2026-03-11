@@ -465,7 +465,7 @@ function useRenderCount(kind: string) {
 <p v-click="2" class="old-times">👤 Client: “The app keeps freezing randomly. Sometimes the whole page becomes unresponsive”</p>
 <p v-click="3" class="old-times">👤 Client: “Notably when scrolling far in my grids”</p>
 
-<img v-click="4” src="assets/irresponsive-drama.png” style="height: 50%” />
+<img v-click="4" src="assets/irresponsive-drama.png" style="height: 50%" />
 
 <p v-click="5" class="old-times">🧑‍💻 Support: “We clearly reproduce slownesses on your grid. We are working on it!”</p>
 
