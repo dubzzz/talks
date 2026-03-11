@@ -195,8 +195,10 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
   <div class="chat-avatar">👤</div>
   <div class="chat-msg">"Our tabs keep crashing"</div>
 </div>
-
-<img v-click="2" src="assets/oom.png" style="height: 45%; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); margin: 8px auto; display: block;" />
+<div v-click="2" class="chat-bubble old">
+  <div class="chat-avatar">👤</div>
+  <div class="chat-msg"><img src="assets/oom.png" style="max-height: 180px; border-radius: 6px;" /></div>
+</div>
 
 <div v-click="3" class="chat-bubble support old">
   <div class="chat-avatar">🧑‍💻</div>
@@ -575,9 +577,9 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
 ### Common approach
 
 <div class="step-list" style="margin-top: 8px;">
-  <div class="step-item" style="background: rgba(255,255,255,0.15);">Check and measure <i>something</i></div>
+  <div class="step-item" style="background: rgba(255,255,255,0.15);">Check and measure something</div>
   <div class="step-item" style="background: rgba(255,255,255,0.15);">Run a flow</div>
-  <div class="step-item" style="background: rgba(255,255,255,0.15);">Check and measure <i>something</i></div>
+  <div class="step-item" style="background: rgba(255,255,255,0.15);">Check and measure something</div>
 </div>
 
   </div>
