@@ -511,7 +511,7 @@ function useRenderCount(kind: string) {
 
 <h2>Let's back ourselves</h2>
 
-<p v-click>🧩 <b>Our need:</b> Detect long tasks</p>
+<p v-click>🧩 <b>Our need:</b> Detect slow code paths</p>
 
 <p v-click>💡 <b>The test strategy:</b></p>
 <div class="step-list" style="margin-top: 8px;">
