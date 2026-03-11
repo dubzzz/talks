@@ -31,6 +31,53 @@
       fast-check
     </div>
   </footer>
+
+  <!-- Pigment Timeline -->
+  <div
+    v-if="$nav.currentPage >= 6 && $nav.currentPage <= 17 && $nav.currentLayout !== 'cover'"
+    class="pigment-timeline"
+  >
+    <div class="pigment-timeline-items">
+      <span class="pigment-timeline-pill">Virtualized grids</span>
+      <span class="pigment-timeline-sep"></span>
+      <span class="pigment-timeline-pill">Clever reloads</span>
+      <span class="pigment-timeline-sep"></span>
+
+      <!-- Phase 1: ~1k cells (slides 5-9) -->
+      <span v-if="$nav.currentPage < 10" class="pigment-timeline-pill">~1k cells</span>
+
+      <!-- Phase 2: Millions (slides 10-13) -->
+      <span
+        v-if="$nav.currentPage >= 10 && $nav.currentPage < 14"
+        :class="['pigment-timeline-pill', { 'pigment-timeline-highlight': $nav.currentPage === 10 }]"
+      >Millions of cells</span>
+
+      <!-- Phase 3: Billions (slides 14-17) -->
+      <span
+        v-if="$nav.currentPage >= 14"
+        :class="['pigment-timeline-pill', { 'pigment-timeline-highlight': $nav.currentPage === 14 }]"
+      >Billions of cells</span>
+
+      <template v-if="$nav.currentPage >= 14">
+        <span class="pigment-timeline-sep"></span>
+        <span
+          :class="['pigment-timeline-pill', { 'pigment-timeline-highlight': $nav.currentPage === 14 }]"
+        >Large set of options</span>
+      </template>
+    </div>
+
+    <!-- Toast on crack 2 (slide 10) -->
+    <div v-if="$nav.currentPage === 10 && $nav.clicks === 0" class="pigment-timeline-toast">
+      <span style="font-size: 1.3em">📈</span>
+      <span>The product grew &mdash; <b>Millions of cells</b></span>
+    </div>
+
+    <!-- Toast on crack 3 (slide 14) -->
+    <div v-if="$nav.currentPage === 14 && $nav.clicks === 0" class="pigment-timeline-toast">
+      <span style="font-size: 1.3em">📈</span>
+      <span>The product grew &mdash; <b>Billions of cells</b> &amp; <b>Large set of options</b></span>
+    </div>
+  </div>
 </template>
 
 <script>

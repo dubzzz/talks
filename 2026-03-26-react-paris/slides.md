@@ -199,19 +199,6 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
 
 ---
 
-<div :class="{ 'pigment-bg-1': true }"></div>
-<div :class="{ 'pigment-bg-2': true }"></div>
-
-<h2>The status</h2>
-
-
-<p v-click="1">✅ Virtualized grids</p>
-<p v-click="2">✅ Clever reloads</p>
-<p v-click="3">✅ Few customers with rather small grids ~1k cells</p>
-
-
----
-
 <div :class="{ 'old-bg': true, 'hide-bg': $clicks < 1 }"></div>
 <div :class="{ 'pigment-bg-1': true, 'hide-bg': $clicks >= 1 }"></div>
 <div :class="{ 'pigment-bg-2': true, 'hide-bg': $clicks >= 1 }"></div>
@@ -371,19 +358,6 @@ function countActiveLeaks() {
 
 ---
 
-<div :class="{ 'pigment-bg-1': true }"></div>
-<div :class="{ 'pigment-bg-2': true }"></div>
-
-<h2>The status</h2>
-
-
-<p>✅ Virtualized grids</p>
-<p>✅ Clever reloads</p>
-<p :class="{ 'line-through': $clicks >= 1, 'disappear': $clicks >= 1 }">✅ Few customers with rather small grids ~1k cells</p>
-<p v-click>✅ More customers with medium grids, millions of cells</p>
-
----
-
 <div :class="{ 'old-bg': true, 'hide-bg': $clicks < 1 }"></div>
 <div :class="{ 'pigment-bg-1': true, 'hide-bg': $clicks >= 1 }"></div>
 <div :class="{ 'pigment-bg-2': true, 'hide-bg': $clicks >= 1 }"></div>
@@ -479,19 +453,6 @@ function useRenderCount(kind: string) {
 }
 ```
 ````
-
----
-
-<div :class="{ 'pigment-bg-1': true }"></div>
-<div :class="{ 'pigment-bg-2': true }"></div>
-
-<h2>The status</h2>
-
-
-<p>✅ Virtualized grids</p>
-<p>✅ Clever reloads</p>
-<p>✅ More customers with medium grids, <span :class="{ 'line-through': $clicks >= 1, 'disappear': $clicks >= 1 }">millions</span><span v-click> billions</span> of cells</p>
-<p v-click>✅ Large set of options on each cell</p>
 
 ---
 

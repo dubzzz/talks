@@ -73,3 +73,80 @@ h1, h2, h3, p {
     color: #6ba3cc ;
     padding-bottom: 1.875rem;
 }*/
+
+/* Pigment Timeline */
+.pigment-timeline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: linear-gradient(135deg, rgba(3, 85, 243, 0.07), rgba(3, 85, 243, 0.03));
+  border-bottom: 1px solid rgba(3, 85, 243, 0.12);
+  padding: 5px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pigment-timeline-items {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.6em;
+  color: #0355f3;
+}
+
+.pigment-timeline-pill {
+  background: rgba(3, 85, 243, 0.08);
+  padding: 1px 10px;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+.pigment-timeline-pill::before {
+  content: '\2713  ';
+  font-weight: bold;
+  opacity: 0.6;
+}
+
+.pigment-timeline-sep {
+  width: 16px;
+  height: 2px;
+  background: rgba(3, 85, 243, 0.2);
+  border-radius: 1px;
+}
+
+.pigment-timeline-highlight {
+  background: rgba(3, 85, 243, 0.22);
+  font-weight: 600;
+  animation: timeline-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes timeline-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(3, 85, 243, 0.3); }
+  50% { box-shadow: 0 0 0 5px rgba(3, 85, 243, 0); }
+}
+
+.pigment-timeline-toast {
+  position: absolute;
+  top: 100%;
+  margin-top: 10px;
+  background: white;
+  border: 1px solid rgba(3, 85, 243, 0.18);
+  border-radius: 8px;
+  padding: 10px 18px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  font-size: 0.8em;
+  color: #1a1a2e;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: toast-in 0.4s ease-out;
+  z-index: 101;
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
