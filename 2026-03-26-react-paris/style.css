@@ -81,8 +81,8 @@ h1, h2, h3, p {
   left: 0;
   right: 0;
   z-index: 100;
-  background: linear-gradient(135deg, rgba(3, 85, 243, 0.07), rgba(3, 85, 243, 0.03));
-  border-bottom: 1px solid rgba(3, 85, 243, 0.12);
+  background: linear-gradient(135deg, rgba(3, 85, 243, 0.14), rgba(3, 85, 243, 0.07));
+  border-bottom: 2px solid rgba(3, 85, 243, 0.2);
   padding: 5px 24px;
   display: flex;
   flex-direction: column;
@@ -100,7 +100,7 @@ h1, h2, h3, p {
 }
 
 .pigment-timeline-pill {
-  background: rgba(3, 85, 243, 0.08);
+  background: rgba(3, 85, 243, 0.13);
   padding: 1px 10px;
   border-radius: 10px;
   white-space: nowrap;
@@ -157,8 +157,8 @@ h1, h2, h3, p {
 
 /* Old-bg (sepia) overrides for the timeline */
 .pigment-timeline-old {
-  background: linear-gradient(135deg, rgba(160, 128, 80, 0.12), rgba(160, 128, 80, 0.05));
-  border-bottom-color: rgba(160, 128, 80, 0.2);
+  background: linear-gradient(135deg, rgba(160, 128, 80, 0.18), rgba(160, 128, 80, 0.1));
+  border-bottom-color: rgba(160, 128, 80, 0.3);
 }
 
 .pigment-timeline-old .pigment-timeline-items {
@@ -166,15 +166,15 @@ h1, h2, h3, p {
 }
 
 .pigment-timeline-old .pigment-timeline-pill {
-  background: rgba(160, 128, 80, 0.15);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .pigment-timeline-old .pigment-timeline-sep {
-  background: rgba(160, 128, 80, 0.3);
+  background:  rgba(92, 68, 32, 0.5);
 }
 
 .pigment-timeline-old .pigment-timeline-highlight {
-  background: rgba(160, 128, 80, 0.3);
+  background: rgba(160, 128, 80, 0.16);
   animation: timeline-pulse-old 1.5s ease-in-out infinite;
 }
 
