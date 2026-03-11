@@ -76,7 +76,7 @@ favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b
   Another by Greg Linden (former Amazon engineer):
   > increasing the page load of Amazon by 100ms reduced sales by 1%
 
-  Both going in the same direction: performance matters, if you get to slow to compute, retrieve and then show the data you users may churn.
+  Both going in the same direction: performance matters, if you get too slow to compute, retrieve and then show the data your users may churn.
 
   https://assets.website-files.com/61060433cb5cbb34f58da08c/61065835a1cb346f7673c592_StanfordDataMiningAmazonCaseStudy.pdf
   >  +500 ms -20% traffic @ Google
@@ -125,7 +125,7 @@ favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b
 
   So "you open your devtools".
 
-  How they found the bug? Did they detected slownesses manually? Could they have detected them?
+  How they found the bug? Did they detect slownesses manually? Could they have detected them?
   Honestly I don't know, but the issue is the one that happened to Cloudflare.
 -->
 
@@ -491,7 +491,7 @@ function useRenderCount(kind: string) {
 <p>✅ Virtualized grids</p>
 <p>✅ Clever reloads</p>
 <p>✅ More customers with medium grids, <span :class="{ 'line-through': $clicks >= 1, 'disappear': $clicks >= 1 }">millions</span><span v-click> billions</span> of cells</p>
-<p v-click>✅ Large set of options on each cells</p>
+<p v-click>✅ Large set of options on each cell</p>
 
 ---
 
@@ -517,7 +517,7 @@ function useRenderCount(kind: string) {
 <h2 :class="{ 'old-times': $clicks < 1 }">The culprit</h2>
 
 <p v-click>⚡️ Time complexity matters</p>
-<p v-click style="margin-left: 32px; margin-top: -12px;">↳ Cells on enums might be backed by million of items</p>
+<p v-click style="margin-left: 32px; margin-top: -12px;">↳ Cells on enums might be backed by millions of items</p>
 <p v-click style="margin-left: 32px; margin-top: -12px;">↳ That can't fit in memory</p>
 <p v-click style="margin-left: 32px; margin-top: -12px;">↳ We fetch them in a cache when first displayed</p>
 <p v-click style="margin-left: 32px; margin-top: -12px;">↳ Updating the cache was an O(n)</p>
