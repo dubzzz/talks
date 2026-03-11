@@ -193,7 +193,7 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
 
 <div v-click="1" class="chat-bubble old">
   <div class="chat-avatar">👤</div>
-  <div class="chat-msg">"Our tabs keep crashing"</div>
+  <div class="chat-msg">Our tabs keep crashing</div>
 </div>
 <div v-click="2" class="chat-bubble old">
   <div class="chat-avatar">👤</div>
@@ -202,11 +202,11 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
 
 <div v-click="3" class="chat-bubble support old">
   <div class="chat-avatar">🧑‍💻</div>
-  <div class="chat-msg">"Can't reproduce"</div>
+  <div class="chat-msg">Can't reproduce</div>
 </div>
 <div v-click="4" class="chat-bubble old">
   <div class="chat-avatar">👤</div>
-  <div class="chat-msg">"It works fine at first. But after a while this strange message pops!"</div>
+  <div class="chat-msg">It works fine at first. But after a while this strange message pops!</div>
 </div>
 
 <!--
@@ -365,15 +365,15 @@ function countActiveLeaks() {
 
 <div v-click="2" class="chat-bubble old">
   <div class="chat-avatar">👤</div>
-  <div class="chat-msg">"Browsing through our grids feels super sluggish, it's really frustrating"</div>
+  <div class="chat-msg">Browsing through our grids feels super sluggish, it's really frustrating</div>
 </div>
 <div v-click="3" class="chat-bubble support old">
   <div class="chat-avatar">🧑‍💻</div>
-  <div class="chat-msg">"Could you tell us more about what you were doing?"</div>
+  <div class="chat-msg">Could you tell us more about what you were doing?</div>
 </div>
 <div v-click="4" class="chat-bubble old">
   <div class="chat-avatar">👤</div>
-  <div class="chat-msg">"Just navigating with arrow keys. Each keystroke hangs for seconds"</div>
+  <div class="chat-msg">Just navigating with arrow keys. Each keystroke hangs for seconds</div>
 </div>
 <img v-click="5" src="assets/re-render-drama.gif" style="height: 45%; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); margin: 4px auto; display: block;" />
 
@@ -473,18 +473,18 @@ function useRenderCount(kind: string) {
 
 <div v-click="2" class="chat-bubble old">
   <div class="chat-avatar">👤</div>
-  <div class="chat-msg">"The app keeps freezing randomly. Sometimes the whole page becomes unresponsive"</div>
+  <div class="chat-msg">The app keeps freezing randomly. Sometimes the whole page becomes unresponsive</div>
 </div>
 <div v-click="3" class="chat-bubble old">
   <div class="chat-avatar">👤</div>
-  <div class="chat-msg">"Notably when scrolling far in my grids"</div>
+  <div class="chat-msg">Notably when scrolling far in my grids</div>
 </div>
 
 <img v-click="4" src="assets/irresponsive-drama.png" style="height: 45%; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); margin: 8px auto; display: block;" />
 
 <div v-click="5" class="chat-bubble support old">
   <div class="chat-avatar">🧑‍💻</div>
-  <div class="chat-msg">"We clearly reproduce slownesses on your grid. We are working on it!"</div>
+  <div class="chat-msg">We clearly reproduce slownesses on your grid. We are working on it!</div>
 </div>
 
 ---
