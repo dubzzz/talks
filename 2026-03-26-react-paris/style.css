@@ -87,6 +87,7 @@ h1, h2, h3, p {
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: background 1s ease, border-bottom-color 1s ease;
 }
 
 .pigment-timeline-items {
@@ -95,6 +96,7 @@ h1, h2, h3, p {
   gap: 6px;
   font-size: 0.6em;
   color: #0355f3;
+  transition: color 1s ease;
 }
 
 .pigment-timeline-pill {
@@ -102,6 +104,7 @@ h1, h2, h3, p {
   padding: 1px 10px;
   border-radius: 10px;
   white-space: nowrap;
+  transition: background 1s ease, color 1s ease, box-shadow 1s ease;
 }
 
 .pigment-timeline-pill::before {
@@ -115,6 +118,7 @@ h1, h2, h3, p {
   height: 2px;
   background: rgba(3, 85, 243, 0.2);
   border-radius: 1px;
+  transition: background 1s ease;
 }
 
 .pigment-timeline-highlight {
@@ -149,4 +153,38 @@ h1, h2, h3, p {
 @keyframes toast-in {
   from { opacity: 0; transform: translateY(-6px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* Old-bg (sepia) overrides for the timeline */
+.pigment-timeline-old {
+  background: linear-gradient(135deg, rgba(160, 128, 80, 0.12), rgba(160, 128, 80, 0.05));
+  border-bottom-color: rgba(160, 128, 80, 0.2);
+}
+
+.pigment-timeline-old .pigment-timeline-items {
+  color: #5c4420;
+}
+
+.pigment-timeline-old .pigment-timeline-pill {
+  background: rgba(160, 128, 80, 0.15);
+}
+
+.pigment-timeline-old .pigment-timeline-sep {
+  background: rgba(160, 128, 80, 0.3);
+}
+
+.pigment-timeline-old .pigment-timeline-highlight {
+  background: rgba(160, 128, 80, 0.3);
+  animation: timeline-pulse-old 1.5s ease-in-out infinite;
+}
+
+@keyframes timeline-pulse-old {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(160, 128, 80, 0.3); }
+  50% { box-shadow: 0 0 0 5px rgba(160, 128, 80, 0); }
+}
+
+.pigment-timeline-old .pigment-timeline-toast {
+  background: #f0e6d4;
+  border-color: rgba(160, 128, 80, 0.25);
+  color: #3a2010;
 }

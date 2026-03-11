@@ -35,7 +35,7 @@
   <!-- Pigment Timeline -->
   <div
     v-if="$nav.currentPage >= 6 && $nav.currentPage <= 17 && $nav.currentLayout !== 'cover'"
-    class="pigment-timeline"
+    :class="['pigment-timeline', { 'pigment-timeline-old': ($nav.currentPage === 6 || $nav.currentPage === 10 || $nav.currentPage === 14) && $nav.clicks >= 1 || ($nav.currentPage === 7 || $nav.currentPage === 11 || $nav.currentPage === 15) && $nav.clicks < 1 }]"
   >
     <div class="pigment-timeline-items">
       <span class="pigment-timeline-pill">Virtualized grids</span>
