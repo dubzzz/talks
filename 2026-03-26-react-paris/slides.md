@@ -502,10 +502,11 @@ function useRenderCount(kind: string) {
 <h1 :class="{ 'old-times': $clicks >= 1 }">The third crack</h1>
 
 <p v-click="1" class="old-times">👤 Client: “The app keeps freezing randomly. Sometimes the whole page becomes unresponsive”</p>
+<p v-click="2" class="old-times">👤 Client: “Notably when scrolling far in my grids”</p>
 
-<img v-click="2" src="assets/irresponsive-drama.png" style="height: 50%" />
+<img v-click="3" src="assets/irresponsive-drama.png" style="height: 50%" />
 
-<p v-click="3" class="old-times">🧑‍💻 Support: “We clearly reproduce the issue on your dataset. We are working on it!”</p>
+<p v-click="4" class="old-times">🧑‍💻 Support: “We clearly reproduce slownesses on your grid. We are working on it!”</p>
 
 ---
 
@@ -520,10 +521,7 @@ function useRenderCount(kind: string) {
 <p v-click style="margin-left: 32px; margin-top: -12px;">↳ That can't fit in memory</p>
 <p v-click style="margin-left: 32px; margin-top: -12px;">↳ We fetch them in a cache when first displayed</p>
 <p v-click style="margin-left: 32px; margin-top: -12px;">↳ Updating the cache was an O(n)</p>
-<p v-click style="margin-left: 32px; margin-top: -12px;">↳ We were not batching updates in such case</p>
-<p v-click>🚑️ Long running task</p>
-
-
+<p v-click>🚑️ Batching operations</p>
 
 ---
 
@@ -542,6 +540,48 @@ function useRenderCount(kind: string) {
 <p v-click></p>
 
 ---
+
+<div :class="{ 'pigment-bg-1': true }"></div>
+<div :class="{ 'pigment-bg-2': true }"></div>
+
+<h2>The implementation</h2>
+
+````md magic-move {lines: true}
+```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+```
+
+```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+
+const longTasks = [];
+// Detect and capture long tasks...
+```
+
+```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+
+const longTasks = [];
+
+const observer = new PerformanceObserver(/* ... */);
+observer.observe({ entryTypes: ['longtask'] });
+```
+
+```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+
+const longTasks = [];
+
+const observer = new PerformanceObserver((list) => {
+  for (const entry of list.getEntriesByType('longtask')) {
+    longTasks.push(entry.duration);
+  }
+});
+observer.observe({ entryTypes: ['longtask'] });
+```
+````
+
+---
 layout: cover
 background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC-PAYSAGES-MARGERIDE-283.jpg
 ---
@@ -549,65 +589,12 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
 <div style="text-align: left; display: grid; margin-bottom: 36px; gap: 8px; grid-template-columns: repeat(2, minmax(0, 1fr));">
   <div v-click style="grid-row: 1; grid-column: 1">
 
-### Branded Types
+### Common approach
 
-```ts
-declare const validX: unique symbol;
-export type X = number & { [validX]: true };
-export const toX = (x: number) => x as X;
-```
-
-  </div>
-  <div v-click style="grid-row: 1; grid-column: 2">
-
-### Discriminated Unions
-
-```ts
-type Value = NumberValue | TextValue;
-```
-
-  </div>
-  <div v-click style="grid-row: 2; grid-column: 1">
-
-### Type predicates
-
-```ts
-function isValidValue(value: ValueAPI): value is Value {
-  // doing stuff
-}
-```
-
-  </div>
-  <div v-click style="grid-row: 2; grid-column: 2">
-
-### Mapped types
-
-```ts
-type Value = { [K in Keys]: ValueForK };
-```
-
-  </div>
-  <div v-click style="grid-row: 3; grid-column: 1">
-
-### \*never
-
-```ts
-function assertUnreachable<T>(arg: never, fallback: T) {
-  return fallback;
-}
-```
-
-  </div>
-  <div v-click style="grid-row: 3; grid-column: 2">
-
-### Generics & Variadics
-
-```ts
-function useAlertOnChange<T extends unknown[]>(
-  onChange: (...newValues: T) => void,
-  ...subs: { [K in keyof T]: Subscribable<T[K]> },
-): void;
-```
+<p>💡 <b>The test strategy:</b></p>
+<p style="margin-left: 32px; margin-top: -12px;">↳ Check and measure <i>something</i></p>
+<p style="margin-left: 32px; margin-top: -12px;">↳ Run a flow</p>
+<p style="margin-left: 32px; margin-top: -12px;">↳ Check and measure <i>something</i></p>
 
   </div>
 </div>
