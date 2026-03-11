@@ -302,49 +302,31 @@ useEffect(() => {
 <div :class="{ 'pigment-bg-1': true }"></div>
 <div :class="{ 'pigment-bg-2': true }"></div>
 
-<h2>Let's back ourselves</h2>
+<h2>Setting the trap</h2>
 
-<p v-click>🧩 <b>Our need:</b> Detect a leak in user flows</p>
-
-<p v-click>💡 <b>The test strategy:</b></p>
-<div class="step-list" style="margin-top: 8px;">
-  <div v-click class="step-item">Open the app on the homepage</div>
-  <div v-click :class="['step-item', { 'highlight': $clicks >= 8 }]">Count the number of leaky states</div>
-  <div v-click class="step-item">Run a flow</div>
-  <div v-click class="step-item">Go back to the homepage</div>
-  <div v-click :class="['step-item', { 'highlight': $clicks >= 8 }]">Count the number of leaky states</div>
-</div>
-
-<p v-click></p>
-
----
-
-<div :class="{ 'pigment-bg-1': true }"></div>
-<div :class="{ 'pigment-bg-2': true }"></div>
-
-<h2>Counting leaky states</h2>
-
-<div v-click="1" class="culprit-card">
-  <div class="culprit-icon">🔍</div>
-  <div class="culprit-content">
-    <div class="culprit-title">Observation</div>
-    <ul class="culprit-details">
-      <li v-click="2">Keep the entire React tree alive<span v-click="3"> — <i>components, state, closures, all of it</i></span></li>
-      <li v-click="4">Stay even if the components were unmount</li>
-    </ul>
+<p v-click="1">💡 <b>The test strategy:</b> Detect leaks in user flows</p>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; margin-top: 8px;">
+  <div class="step-list">
+    <div v-click="2" class="step-item">Open the app on the homepage</div>
+    <div v-click="3" class="step-item">Count the number of leaky states</div>
+    <div v-click="4" class="step-item">Run a flow</div>
+    <div v-click="5" class="step-item">Go back to the homepage</div>
+    <div v-click="6" class="step-item">Count the number of leaky states</div>
   </div>
-</div>
 
-<div v-click="5" class="culprit-card">
-  <div class="culprit-icon">🪝</div>
-  <div class="culprit-content">
-    <div class="culprit-title">The probe idea</div>
-    <ul class="culprit-details">
-      <li v-click="6">Plant a unique object inside the component</li>
-      <li v-click="7">Track it with a <b><code>WeakRef</code></b></li>
-      <li v-click="8">Check if still there using <code>ref.deref() !== undefined</code></li>
-      <li v-click="9">Always force GC execution</li>
-    </ul>
+  <div v-click="7">
+    <div class="culprit-card">
+      <div class="culprit-icon">🪝</div>
+      <div class="culprit-content">
+        <div class="culprit-title">The probe idea</div>
+        <ul class="culprit-details">
+          <li v-click="8">Plant a unique object inside the component</li>
+          <li v-click="9">Track it with a <b><code>WeakRef</code></b></li>
+          <li v-click="10">Check if still alive with <code>ref.deref()</code></li>
+          <li v-click="11">Always force GC execution</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
 
