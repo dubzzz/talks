@@ -350,39 +350,135 @@ function useLeakProber() {
 // ⚠️ Code shown here is simplified for illustration purposes.
 
 function useLeakProber() {
-  const [instance] = useState(() => ({}));
+  const [probe] = useState(() => ({}));
 }
 ```
 
 ```jsx
 // ⚠️ Code shown here is simplified for illustration purposes.
 
-const weakRefs = useRef<WeakRef<object>[]>([]);
+const probes = useRef<WeakRef<object>[]>([]);
 
 function useLeakProber() {
-  const [instance] = useState(() => ({}));
+  const [probe] = useState(() => ({}));
 
   useEffect(() => {
-    weakRefs.current.push(new WeakRef(instance));
-  }, [probeLeak, instance]);
+    probes.current.push(new WeakRef(probe));
+  }, [probeLeak, probe]);
 }
 ```
 
 ```jsx
 // ⚠️ Code shown here is simplified for illustration purposes.
 
-const weakRefs = useRef<WeakRef<object>[]>([]);
+const probes = useRef<WeakRef<object>[]>([]);
 
 function useLeakProber() {
-  const [instance] = useState(() => ({}));
+  const [probe] = useState(() => ({}));
 
   useEffect(() => {
-    weakRefs.current.push(new WeakRef(instance));
-  }, [probeLeak, instance]);
+    probes.current.push(new WeakRef(probe));
+  }, [probeLeak, probe]);
 }
 
 function countActiveLeaks() {
-  return weakRefs.current.filter((ref) => ref.deref() !== undefined).length;
+  return probes.current.filter((ref) => ref.deref() !== undefined).length;
+}
+```
+
+```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+
+window.countActiveLeaks = function countActiveLeaks() {
+  return probes.current.filter((ref) => ref.deref() !== undefined).length;
+}
+```
+
+```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+
+describe('No leak', () => {
+  it('should not leak', () => {
+    //...
+  });
+});
+```
+
+```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+
+describe('No leak', () => {
+  it('should not leak', () => {
+    login();
+    navigateToHomePage();
+    flow();
+    navigateToHomePage();
+  });
+});
+```
+
+```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+
+describe('No leak', () => {
+  it('should not leak', () => {
+    login();
+    navigateToHomePage();
+    countLeaks().then((c) => {
+      flow();
+      navigateToHomePage();
+      expectLeaks(c);
+    });
+  });
+});
+
+function countLeaks() { /* ... */ }
+
+function expectLeaks(c) { /* ... */ }
+```
+
+```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+
+function countLeaks() { /* ... */ }
+
+function expectLeaks(c) { /* ... */ }
+```
+
+```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+
+function countLeaks() {
+  cy.gc();
+  return cy.window().then((window) => {
+    if (typeof window.gc === 'function') {
+      window.gc();
+    }
+    return window.countActiveLeaks();
+  });
+}
+
+function expectLeaks(c) { /* ... */ }
+```
+
+```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+
+function countLeaks() {
+  cy.gc();
+  return cy.window().then((window) => {
+    window.gc?.();
+    return window.countActiveLeaks();
+  });
+}
+
+function expectLeaks(c) {
+  cy.gc();
+  cy.window({ timeout: pageLoadTimeout }).should((window) => {
+    window.gc?.();
+    const activeLeaks = window.countActiveLeaks()
+    expect(activeLeaks).to.be.at.most(count);
+  });
 }
 ```
 ````
