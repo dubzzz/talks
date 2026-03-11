@@ -509,6 +509,9 @@ function useRenderCount(kind: string) {
   <div class="chat-msg">Just scrolling through my grids. The further I scroll, the worse it gets</div>
 </div>
 
+<img v-click="5" src="assets/slow-load-freeze-slow-network.gif" style="height: 40%; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); margin: 4px auto; display: block;" />
+<p v-click="5" style="text-align: center; font-size: 0.7em; opacity: 0.5; margin-top: 2px;">Recorded with slow network throttling enabled</p>
+
 ---
 
 <div :class="{ 'old-bg': true, 'hide-bg': $clicks >= 1 }"></div>
