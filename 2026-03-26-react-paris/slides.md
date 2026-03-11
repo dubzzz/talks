@@ -365,7 +365,7 @@ function countActiveLeaks() {
 
 <div v-click="2" class="chat-bubble old">
   <div class="chat-avatar">👤</div>
-  <div class="chat-msg">"Your grid is freezing my browser"</div>
+  <div class="chat-msg">"Browsing through our grids feels super sluggish, it's really frustrating"</div>
 </div>
 <div v-click="3" class="chat-bubble support old">
   <div class="chat-avatar">🧑‍💻</div>
@@ -373,13 +373,9 @@ function countActiveLeaks() {
 </div>
 <div v-click="4" class="chat-bubble old">
   <div class="chat-avatar">👤</div>
-  <div class="chat-msg">"Just pressing arrow keys. One cell to another. Each keystroke hangs for seconds"</div>
+  <div class="chat-msg">"Just navigating with arrow keys. Each keystroke hangs for seconds"</div>
 </div>
-<div v-click="5" class="chat-bubble old">
-  <div class="chat-avatar">👤</div>
-  <div class="chat-msg">"Sometimes my browser asks me if I want to kill the page"</div>
-</div>
-<img v-click="6" src="assets/re-render-drama.gif" style="height: 45%; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); margin: 4px auto; display: block;" />
+<img v-click="5" src="assets/re-render-drama.gif" style="height: 45%; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); margin: 4px auto; display: block;" />
 
 ---
 
