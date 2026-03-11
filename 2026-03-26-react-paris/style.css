@@ -174,7 +174,7 @@ h1, h2, h3, p {
 }
 
 .pigment-timeline-old .pigment-timeline-highlight {
-  background: rgba(160, 128, 80, 0.16);
+  background: rgba(255, 255, 255, 0.5);
   animation: timeline-pulse-old 1.5s ease-in-out infinite;
 }
 
