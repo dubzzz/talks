@@ -532,7 +532,7 @@ function countLeaks() {
 
 function expectAtMostLeaks(c) {
   cy.gc();
-  cy.window({ timeout: pageLoadTimeout }).should((window) => {
+  cy.window().should((window) => {
     window.gc?.();
     const activeLeaks = window.countActiveLeaks()
     expect(activeLeaks).to.be.at.most(count);
@@ -664,6 +664,131 @@ const renderCount = new Map<string, number>();
 function useRenderCount(kind: string) {
   useEffect(() => {
     renderCount.set(kind, (renderCount.get(kind) ?? 0) + 1);
+  });
+}
+```
+
+```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+
+describe('No leak', () => {
+  it('should not leak', () => {
+    login();
+    visitHome();
+    countLeaks().then((c) => {
+      flow();
+      visitHome();
+      expectAtMostLeaks(c);
+    });
+  });
+});
+
+function countLeaks() { /* ... */ }
+
+function expectAtMostLeaks(c) { /* ... */ }
+```
+
+```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+
+describe('No unwanted re-render', () => {
+  it('should not re-render', () => {
+    login();
+    visitPage();
+    countRenders().then((c) => {
+      flow();
+      expectRenderCount(c);
+    });
+  });
+});
+
+function countRenders() { /* ... */ }
+
+function expectRenderCount(c) { /* ... */ }
+```
+
+```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+
+describe('No unwanted re-render', () => {
+  it('should not re-render', () => {
+    login();
+    visitPage();
+    resetRenderCounters();
+    flow();
+    expectRenderCount('kind-a', countA);
+    // And maybe others: expectRenderCount('kind-b', countB);
+  });
+});
+
+function resetRenderCounters() { /* ... */ }
+
+function expectRenderCount(kind, count) { /* ... */ }
+```
+
+```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+
+describe('No unwanted re-render on keyboard navigation', () => {
+  it('should not re-render the whole grid when navigating from one cell to another', () => {
+    login();
+    visitGrid('grid-name');
+    focusOnCell(0, 0);
+    resetRenderCounters();
+    pressArrowDown();
+    expectRenderCount('cell', 2);
+    expectRenderCount('header', 0);
+  });
+});
+
+function resetRenderCounters() { /* ... */ }
+
+function expectRenderCount(kind, count) { /* ... */ }
+```
+
+```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+
+describe('No unwanted re-render', () => {
+  it('should not re-render', () => {
+    login();
+    visitPage();
+    resetRenderCounters();
+    flow();
+    expectRenderCount('kind-a', countA);
+    // And maybe others: expectRenderCount('kind-b', countB);
+  });
+});
+
+function resetRenderCounters() { /* ... */ }
+
+function expectRenderCount(kind, count) { /* ... */ }
+```
+
+```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+
+describe('No unwanted re-render', () => {
+  it('should not re-render', () => {
+    login();
+    visitPage();
+    resetRenderCounters();
+    flow();
+    expectRenderCount('kind-a', countA);
+    // And maybe others: expectRenderCount('kind-b', countB);
+  });
+});
+
+function resetRenderCounters() {
+  cy.window().should((window) => {
+    window.renderCount.clear();
+  });
+}
+
+function expectRenderCount(kind, count) {
+  cy.window().should((window) => {
+    const observedCount = window.renderCount.get(kind)
+    expect(observedCount).to.be.eq(count);
   });
 }
 ```
