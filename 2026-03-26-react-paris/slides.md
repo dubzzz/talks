@@ -94,7 +94,20 @@ favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b
 
 <h2>Even more for UI</h2>
 
-<img v-click="1" src="assets/hello-pigment.png" style="height: 90%; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); margin: 4px auto; display: block;" />
+<div style="display: grid; margin-top: 16px; color: white; text-align: center; gap: 16px; grid-template-rows: repeat(2, 1fr); grid-template-columns: repeat(2, 1fr); height: calc(100% - 60px); overflow: hidden;">
+  <div style="grid-row: 1; grid-column: 1; overflow: hidden; min-height: 0;">
+    <img v-click="1" src="assets/proton.png" style="border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); width: 100%; height: 100%; object-fit: contain; object-position: right bottom; display: block;" />
+  </div>
+  <div style="grid-row: 1; grid-column: 2; overflow: hidden; min-height: 0;">
+    <img v-click="2" src="assets/qwant.png" style="border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); width: 100%; height: 100%; object-fit: contain; object-position: left bottom; display: block;" />
+  </div>
+  <div style="grid-row: 2; grid-column: 1; overflow: hidden; min-height: 0;">
+    <img v-click="3" src="assets/mistral.png" style="border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); width: 100%; height: 100%; object-fit: contain; object-position: right top; display: block;" />
+  </div>
+  <div style="grid-row: 2; grid-column: 2; overflow: hidden; min-height: 0;">
+    <img v-click="4" src="assets/bluesky.png" style="border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); width: 100%; height: 100%; object-fit: contain; object-position: left top; display: block;" />
+  </div>
+</div>
 
 ---
 
@@ -196,7 +209,7 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
     </template>
     <template #4>
       <div style="grid-row: 1; grid-column: 1">
-        <img src="/assets/pigment-board-zoom.png" />
+        <img src="/assets/hello-pigment.png" />
       </div>
     </template>
   </v-switch>
