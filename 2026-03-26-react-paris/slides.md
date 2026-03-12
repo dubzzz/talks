@@ -787,7 +787,7 @@ function resetRenderCounters() {
 
 function expectRenderCount(kind, count) {
   cy.window().should((window) => {
-    const observedCount = window.renderCount.get(kind)
+    const observedCount = window.renderCount.get(kind);
     expect(observedCount).to.be.eq(count);
   });
 }
@@ -926,6 +926,84 @@ const observer = new PerformanceObserver((list) => {
   }
 });
 observer.observe({ entryTypes: ['longtask'] });
+```
+
+```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+
+describe('No unwanted re-render', () => {
+  it('should not re-render', () => {
+    login();
+    visitPage();
+    resetRenderCounters();
+    flow();
+    expectRenderCount('kind-a', countA);
+    // And maybe others: expectRenderCount('kind-b', countB);
+  });
+});
+
+function resetRenderCounters() {
+  cy.window().should((window) => {
+    window.renderCount.clear();
+  });
+}
+
+function expectRenderCount(kind, count) {
+  cy.window().should((window) => {
+    const observedCount = window.renderCount.get(kind);
+    expect(observedCount).to.be.eq(count);
+  });
+}
+```
+
+```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+
+describe('No long tasks', () => {
+  it('should not block main thread', () => {
+    login();
+    visitPage();
+    resetLongTaskCounter();
+    flow();
+    expectNoLongTask();
+  });
+});
+
+function resetLongTaskCounter() {
+  cy.window().should((window) => {
+    window.longTasks.splice(0);
+  });
+}
+
+function expectNoLongTask(kind, count) {
+  cy.window().should((window) => {
+    const observedCount = window.longTasks;
+    expect(observedCount).to.be.eq(0);
+  });
+}
+```
+
+```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+
+describe('No long tasks', () => {
+  afterEach(() => {
+    expectNoLongTask();
+  });
+
+  it('should not block main thread', () => {
+    login();
+    visitPage();
+    flow();
+  });
+});
+
+function expectNoLongTask(kind, count) {
+  cy.window().should((window) => {
+    const observedCount = window.longTasks;
+    expect(observedCount).to.be.eq(0);
+  });
+}
 ```
 ````
 
