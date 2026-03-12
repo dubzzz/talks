@@ -509,9 +509,7 @@ function expectAtMostLeaks(c) { /* ... */ }
 function countLeaks() {
   cy.gc();
   return cy.window().then((window) => {
-    if (typeof window.gc === 'function') {
-      window.gc();
-    }
+    window.gc?.();
     return window.countActiveLeaks();
   });
 }
@@ -780,7 +778,7 @@ describe('No unwanted re-render', () => {
 });
 
 function resetRenderCounters() {
-  cy.window().should((window) => {
+  cy.window().then((window) => {
     window.renderCount.clear();
   });
 }
@@ -943,7 +941,7 @@ describe('No unwanted re-render', () => {
 });
 
 function resetRenderCounters() {
-  cy.window().should((window) => {
+  cy.window().then((window) => {
     window.renderCount.clear();
   });
 }
@@ -970,14 +968,14 @@ describe('No long tasks', () => {
 });
 
 function resetLongTaskCounter() {
-  cy.window().should((window) => {
+  cy.window().then((window) => {
     window.longTasks.splice(0);
   });
 }
 
 function expectNoLongTask(kind, count) {
   cy.window().should((window) => {
-    const observedCount = window.longTasks;
+    const observedCount = window.longTasks.length;
     expect(observedCount).to.be.eq(0);
   });
 }
@@ -1000,7 +998,7 @@ describe('No long tasks', () => {
 
 function expectNoLongTask(kind, count) {
   cy.window().should((window) => {
-    const observedCount = window.longTasks;
+    const observedCount = window.longTasks.length;
     expect(observedCount).to.be.eq(0);
   });
 }
