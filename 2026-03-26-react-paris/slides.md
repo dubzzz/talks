@@ -436,9 +436,9 @@ describe('No leak', () => {
 describe('No leak', () => {
   it('should not leak', () => {
     login();
-    navigateToHomePage();
+    visitHome();
     flow();
-    navigateToHomePage();
+    visitHome();
   });
 });
 ```
@@ -449,18 +449,50 @@ describe('No leak', () => {
 describe('No leak', () => {
   it('should not leak', () => {
     login();
-    navigateToHomePage();
+    visitHome();
     countLeaks().then((c) => {
       flow();
-      navigateToHomePage();
-      expectLeaks(c);
+      visitHome();
+      expectAtMostLeaks(c);
+    });
+  });
+});
+```
+
+```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+
+describe('No leak', () => {
+  it('should not leak when browsing a Board', () => {
+    login();
+    visitHome();
+    countLeaks().then((c) => {
+      visitBoard('board-xyz');
+      visitHome();
+      expectAtMostLeaks(c);
+    });
+  });
+});
+```
+
+```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+
+describe('No leak', () => {
+  it('should not leak', () => {
+    login();
+    visitHome();
+    countLeaks().then((c) => {
+      flow();
+      visitHome();
+      expectAtMostLeaks(c);
     });
   });
 });
 
 function countLeaks() { /* ... */ }
 
-function expectLeaks(c) { /* ... */ }
+function expectAtMostLeaks(c) { /* ... */ }
 ```
 
 ```jsx
@@ -468,7 +500,7 @@ function expectLeaks(c) { /* ... */ }
 
 function countLeaks() { /* ... */ }
 
-function expectLeaks(c) { /* ... */ }
+function expectAtMostLeaks(c) { /* ... */ }
 ```
 
 ```jsx
@@ -484,7 +516,7 @@ function countLeaks() {
   });
 }
 
-function expectLeaks(c) { /* ... */ }
+function expectAtMostLeaks(c) { /* ... */ }
 ```
 
 ```jsx
@@ -498,7 +530,7 @@ function countLeaks() {
   });
 }
 
-function expectLeaks(c) {
+function expectAtMostLeaks(c) {
   cy.gc();
   cy.window({ timeout: pageLoadTimeout }).should((window) => {
     window.gc?.();
