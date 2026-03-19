@@ -35,7 +35,7 @@
   <!-- Pigment Timeline -->
   <div
     v-if="$nav.currentPage >= 7 && $nav.currentPage <= 20 && $nav.currentLayout !== 'cover'"
-    :class="['pigment-timeline', { 'pigment-timeline-old': $nav.currentPage === 7 && $nav.clicks >= 1 || ($nav.currentPage === 11 || $nav.currentPage === 15) && $nav.clicks >= 2 || ($nav.currentPage === 8 || $nav.currentPage === 13 || $nav.currentPage === 18) && $nav.clicks < 1 }]"
+    :class="['pigment-timeline', { 'pigment-timeline-old': $nav.currentPage === 7 && $nav.clicks >= 1 || ($nav.currentPage === 11 || $nav.currentPage === 15) && $nav.clicks >= 2 || ($nav.currentPage === 8 || $nav.currentPage === 12 || $nav.currentPage === 16) && $nav.clicks < 1 }]"
   >
     <div class="pigment-timeline-items">
       <span class="pigment-timeline-pill">Virtualized grids</span>
