@@ -115,7 +115,7 @@ favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b
 
 <h2 :class="{ 'old-times': $clicks >= 1 }">And one subtle change can ruin it all…</h2>
 
-<p v-click="1" class="old-times">Figma's FigJam team ships a new sticky note animation…</p>
+<p v-click="1" class="old-times">Back in 2023, Figma's FigJam team shipped a new sticky note animation…</p>
 
 <img v-click="2" src="assets/figma-animation.gif" style="height: 42%; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); margin: 8px auto; display: block;" />
 
