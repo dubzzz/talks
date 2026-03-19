@@ -115,37 +115,17 @@ favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b
 
 <h2 :class="{ 'old-times': $clicks >= 1 }">And one subtle change can ruin it all…</h2>
 
-<p v-click="1" class="old-times">You open your devtools and…</p>
+<p v-click="1" class="old-times">Figma's FigJam team ships a new sticky note animation…</p>
 
-<img v-click="2" src="assets/cloudflare-fake.gif" style="height: 45%; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); margin: 8px auto; display: block;" />
+<img v-click="2" src="assets/figma-animation.gif" style="height: 42%; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); margin: 8px auto; display: block;" />
 
 <p v-click="3" class="old-times" style="background: rgba(255,255,255,0.3); border-radius: 10px; padding: 10px 16px; margin-top: 12px;">
-  Such a bug happened to <img src="assets/cloudflare.png" style="height: 32px; display: inline; vertical-align: middle;" /> because of <code style="background: rgba(0,0,0,0.08); padding: 2px 6px; border-radius: 4px;">useEffect</code>.
+  Frame duration jumped from <strong>28ms → 80ms</strong> — a <strong>3× slowdown</strong> across the entire canvas.
   <br/>
-  <i style="font-size: 0.85em; opacity: 0.5">Speculative scenario — this talk will show how to quickly spot such bugs</i>
+  Caused by a single CSS line found on Stack Overflow: <code style="background: rgba(0,0,0,0.08); padding: 2px 6px; border-radius: 4px;">backdrop-filter: blur(0)</code> propagating GPU layers everywhere.
+  <br/>
+  <a href="https://x.com/finerflame/status/1636163183898673152" style="font-size: 0.8em; opacity: 0.6">x.com/finerflame/status/1636163183898673152</a>
 </p>
-
-
-<!--<img src="assets/cloudflare.png" style="height: 32px" />-->
-
-<!--
-  So now that we are all aligned that it matters, let me tell you that ensuring it does not drop is not simple.
-  All companies got hit one day by such drop.
-
-  Let me take a quite recent case...
-
-  https://www.theregister.com/2025/09/18/cloudflare_ddosed_itself
-
-  ---
-
-  So I'll take an example from a well-known company. A bug you probably have heard of, as it happened quite recently (September 2025).
-  Let's imagine you play with the latest version of your UI and you feel it slow... drastically slow...
-
-  So "you open your devtools".
-
-  How they found the bug? Did they detect slownesses manually? Could they have detected them?
-  Honestly I don't know, but the issue is the one that happened to Cloudflare.
--->
 
 ---
 layout: cover
