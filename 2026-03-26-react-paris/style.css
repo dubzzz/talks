@@ -37,14 +37,14 @@
   background-size: 100% 100%;
 }
 
-.old-bg:not(.hide-bg)::after {
-  animation: crack-spread 1.2s cubic-bezier(0.25, 0, 0.3, 1) both;
-  animation-delay: 0.2s;
+.old-bg::after {
+  clip-path: circle(150% at 100% 100%); /* fully visible by default — no replay on slide change */
+  transition: clip-path 1.2s cubic-bezier(0.25, 0, 0.3, 1) 0.2s;
 }
 
-@keyframes crack-spread {
-  from { clip-path: circle(0% at 100% 100%); }
-  to   { clip-path: circle(150% at 100% 100%); }
+.old-bg.hide-bg::after {
+  clip-path: circle(0% at 100% 100%);
+  transition: none; /* instant reset so the forward transition always plays */
 }
 .pigment-bg-1 {
   position: absolute;
