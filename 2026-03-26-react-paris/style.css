@@ -21,6 +21,21 @@
   background: radial-gradient(ellipse at center, #d4b896 0%, #c4a67a 30%, #a08050 100%);
   transition: opacity 1s ease;
 }
+
+/* Broken glass effect — bottom-right corner impact */
+.old-bg::before {
+  content: none;
+}
+
+.old-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  /* SVG with actual branching crack lines and triangular glass shards */
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 960 540'><defs><radialGradient id='g' cx='100%25' cy='100%25' r='18%25'><stop offset='0%25' stop-color='white' stop-opacity='0.08'/><stop offset='100%25' stop-color='white' stop-opacity='0'/></radialGradient></defs><polygon points='960,540 783,392 916,358 960,410' fill='white' fill-opacity='0.015'/><polygon points='960,540 783,392 664,482 594,540' fill='white' fill-opacity='0.008'/><polygon points='960,540 916,358 960,410' fill='white' fill-opacity='0.02'/><polygon points='783,392 916,358 826,278 661,252' fill='white' fill-opacity='0.01'/><polygon points='783,392 661,252 562,318 452,424 594,540 664,482' fill='white' fill-opacity='0.008'/><polygon points='661,252 826,278 742,158 582,98' fill='white' fill-opacity='0.008'/><polygon points='916,358 960,178 960,410' fill='white' fill-opacity='0.01'/><polygon points='960,540 862,491 782,540' fill='white' fill-opacity='0.012'/><polygon points='862,491 813,422 762,332 826,278 916,358 960,540' fill='white' fill-opacity='0.005'/><g stroke='white' stroke-opacity='0.18' stroke-width='1.4' fill='none' stroke-linecap='round' stroke-linejoin='round'><path d='M960,540 L783,392 L661,252 L582,98 L518,20'/><path d='M783,392 L664,482 L594,540'/><path d='M661,252 L562,318 L452,424 L378,540'/><path d='M960,540 L916,358 L960,178'/><path d='M916,358 L826,278 L742,158'/><path d='M960,540 L862,491 L782,540'/><path d='M862,491 L813,422 L762,332'/><path d='M661,252 L700,200 L742,158'/></g><rect width='960' height='540' fill='url(%23g)'/></svg>");
+  background-size: 100% 100%;
+}
 .pigment-bg-1 {
   position: absolute;
   z-index: -1;
