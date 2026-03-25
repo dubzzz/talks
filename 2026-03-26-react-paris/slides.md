@@ -363,7 +363,7 @@ function useLeakProber() {
 ```jsx
 // ⚠️ Code shown here is simplified for illustration purposes.
 
-const probes = useRef<WeakRef<object>[]>([]);
+const probes: WeakRef<object>[] = [];
 
 function useLeakProber() {
   const [probe] = useState(() => ({}));
@@ -377,7 +377,7 @@ function useLeakProber() {
 ```jsx
 // ⚠️ Code shown here is simplified for illustration purposes.
 
-const probes = useRef<WeakRef<object>[]>([]);
+const probes: WeakRef<object>[] = [];
 
 function useLeakProber() {
   const [probe] = useState(() => ({}));
