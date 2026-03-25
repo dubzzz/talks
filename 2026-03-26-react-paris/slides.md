@@ -301,10 +301,10 @@ useEffect(() => {
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; margin-top: 8px;">
   <div class="step-list">
     <div v-click="2" class="step-item">Open the app on the homepage</div>
-    <div v-click="3" class="step-item">Count the number of leaky states</div>
+    <div v-click="3" class="step-item">Count the number of probed states</div>
     <div v-click="4" class="step-item">Run a flow</div>
     <div v-click="5" class="step-item">Go back to the homepage</div>
-    <div v-click="6" class="step-item">Count the number of leaky states</div>
+    <div v-click="6" class="step-item">Count the number of probed states</div>
   </div>
 
   <div v-click="7">
@@ -809,10 +809,8 @@ function expectRenderCount(kind, count) {
   <div class="culprit-content">
     <div class="culprit-title">Time complexity matters</div>
     <ul class="culprit-details">
-      <li>Cells on enums might be backed by millions of items</li>
-      <li>That can't fit in memory</li>
-      <li>We fetch them in a cache when first displayed</li>
-      <li>Updating the cache was an O(n)</li>
+      <li>Cells on enums might be backed by millions of items fetched when first displayed</li>
+      <li>Unitary updates to the cache was an O(n)</li>
     </ul>
   </div>
 </div>
@@ -841,24 +839,24 @@ function expectRenderCount(kind, count) {
   </div>
 
   <div>
-    <div v-click="6" class="culprit-card">
+    <div v-click="5" class="culprit-card">
       <div class="culprit-icon">🔍</div>
       <div class="culprit-content">
         <div class="culprit-title">Observation</div>
         <ul class="culprit-details">
-          <li v-click="7">Synchronous operations block the browser</li>
-          <li v-click="8">No scroll, no input, no animation until done</li>
+          <li v-click="6">Synchronous operations block the browser</li>
+          <li v-click="7">No scroll, no input, no animation until done</li>
         </ul>
       </div>
     </div>
 
-  <div v-click="9" class="culprit-card">
+  <div v-click="8" class="culprit-card">
     <div class="culprit-icon">⏱️</div>
     <div class="culprit-content">
       <div class="culprit-title">The Long Tasks</div>
       <ul class="culprit-details">
-        <li v-click="10">Task blocking the main thread for 50ms+</li>
-        <li v-click="11">Exposed via <b><code>PerformanceObserver</code></b></li>
+        <li v-click="9">Task blocking the main thread for 50ms+</li>
+        <li v-click="10">Exposed via <b><code>PerformanceObserver</code></b></li>
       </ul>
     </div>
   </div>

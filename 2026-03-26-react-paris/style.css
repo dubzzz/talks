@@ -11,14 +11,14 @@
 }
 
 .old-times {
-  color: #3a2010 !important;
+  color: #1a0b01 !important;
 }
 
 .old-bg {
   position: absolute;
   z-index: -1;
   inset: 0px;
-  background: radial-gradient(ellipse at center, #d4b896 0%, #c4a67a 30%, #a08050 100%);
+  background: radial-gradient(ellipse at center, #edcda6 0%, #e2bf8b 30%, #d7ac6b 100%);
   transition: opacity 1s ease;
 }
 
