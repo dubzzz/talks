@@ -254,6 +254,8 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
 
 <p v-click="3">
 
+<Transform :scale="1.5" origin="top left">
+
 ````md magic-move {lines: true}
 ```jsx
 useEffect(() => {
@@ -287,6 +289,8 @@ useEffect(() => {
 }, [])
 ```
 ````
+
+</Transform>
 
 </p>
 
@@ -329,6 +333,8 @@ useEffect(() => {
 <div :class="{ 'pigment-bg-2': true }"></div>
 
 <h2>The implementation</h2>
+
+<Transform :scale="1.5" origin="top left">
 
 ````md magic-move {lines: true} 
 ```jsx
@@ -469,9 +475,7 @@ describe('No leak', () => {
     });
   });
 });
-
 function countLeaks() { /* ... */ }
-
 function expectAtMostLeaks(c) { /* ... */ }
 ```
 
@@ -500,13 +504,7 @@ function expectAtMostLeaks(c) { /* ... */ }
 ```jsx
 // ⚠️ Code shown here is simplified for illustration purposes.
 
-function countLeaks() {
-  cy.gc();
-  return cy.window().then((window) => {
-    window.gc?.();
-    return window.countActiveLeaks();
-  });
-}
+function countLeaks() { /* ... */ }
 
 function expectAtMostLeaks(c) {
   cy.gc();
@@ -518,6 +516,8 @@ function expectAtMostLeaks(c) {
 }
 ```
 ````
+
+</Transform>
 
 ---
 
@@ -600,6 +600,8 @@ function expectAtMostLeaks(c) {
 
 <h2>The implementation</h2>
 
+<Transform :scale="1.5" origin="top left">
+
 ````md magic-move {lines: true} 
 ```jsx
 // ⚠️ Code shown here is simplified for illustration purposes.
@@ -660,9 +662,7 @@ describe('No leak', () => {
     });
   });
 });
-
 function countLeaks() { /* ... */ }
-
 function expectAtMostLeaks(c) { /* ... */ }
 ```
 
@@ -679,9 +679,7 @@ describe('No unwanted re-render', () => {
     });
   });
 });
-
 function countRenders() { /* ... */ }
-
 function expectRenderCount(c) { /* ... */ }
 ```
 
@@ -698,9 +696,7 @@ describe('No unwanted re-render', () => {
     // And maybe others: expectRenderCount('kind-b', countB);
   });
 });
-
 function resetRenderCounters() { /* ... */ }
-
 function expectRenderCount(kind, count) { /* ... */ }
 ```
 
@@ -708,7 +704,7 @@ function expectRenderCount(kind, count) { /* ... */ }
 // ⚠️ Code shown here is simplified for illustration purposes.
 
 describe('No unwanted re-render on keyboard navigation', () => {
-  it('should not re-render the whole grid when navigating from one cell to another', () => {
+  it('should not re-render all grid when moving between cells', () => {
     login();
     visitGrid('grid-name');
     focusOnCell(0, 0);
@@ -718,9 +714,7 @@ describe('No unwanted re-render on keyboard navigation', () => {
     expectRenderCount('header', 0);
   });
 });
-
 function resetRenderCounters() { /* ... */ }
-
 function expectRenderCount(kind, count) { /* ... */ }
 ```
 
@@ -737,25 +731,14 @@ describe('No unwanted re-render', () => {
     // And maybe others: expectRenderCount('kind-b', countB);
   });
 });
-
 function resetRenderCounters() { /* ... */ }
-
 function expectRenderCount(kind, count) { /* ... */ }
 ```
 
 ```jsx
 // ⚠️ Code shown here is simplified for illustration purposes.
 
-describe('No unwanted re-render', () => {
-  it('should not re-render', () => {
-    login();
-    visitPage();
-    resetRenderCounters();
-    flow();
-    expectRenderCount('kind-a', countA);
-    // And maybe others: expectRenderCount('kind-b', countB);
-  });
-});
+describe('No unwanted re-render', () => { /* ... */ });
 
 function resetRenderCounters() {
   cy.window().then((window) => {
@@ -771,6 +754,8 @@ function expectRenderCount(kind, count) {
 }
 ```
 ````
+
+</Transform>
 
 ---
 
@@ -870,6 +855,8 @@ function expectRenderCount(kind, count) {
 
 <h2>The implementation</h2>
 
+<Transform :scale="1.5" origin="top left">
+
 ````md magic-move {lines: true}
 ```jsx
 // ⚠️ Code shown here is simplified for illustration purposes.
@@ -917,17 +904,41 @@ describe('No unwanted re-render', () => {
     // And maybe others: expectRenderCount('kind-b', countB);
   });
 });
+function resetRenderCounters() { /* ... */ }
+function expectRenderCount(kind, count) { /* ... */ }
+```
 
-function resetRenderCounters() {
+```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+
+describe('No long tasks', () => {
+  it('should not block main thread', () => {
+    login();
+    visitPage();
+    resetLongTaskCounter();
+    flow();
+    expectNoLongTask();
+  });
+});
+function resetLongTaskCounter() { /* ... */ }
+function expectNoLongTask() { /* ... */ }
+```
+
+```jsx
+// ⚠️ Code shown here is simplified for illustration purposes.
+
+describe('No long tasks', () => { /* ... */ });
+
+function resetLongTaskCounter() {
   cy.window().then((window) => {
-    window.renderCount.clear();
+    window.longTasks.splice(0);
   });
 }
 
-function expectRenderCount(kind, count) {
+function expectNoLongTask() {
   cy.window().should((window) => {
-    const observedCount = window.renderCount.get(kind);
-    expect(observedCount).to.be.eq(count);
+    const observedCount = window.longTasks.length;
+    expect(observedCount).to.be.eq(0);
   });
 }
 ```
@@ -944,19 +955,8 @@ describe('No long tasks', () => {
     expectNoLongTask();
   });
 });
-
-function resetLongTaskCounter() {
-  cy.window().then((window) => {
-    window.longTasks.splice(0);
-  });
-}
-
-function expectNoLongTask(kind, count) {
-  cy.window().should((window) => {
-    const observedCount = window.longTasks.length;
-    expect(observedCount).to.be.eq(0);
-  });
-}
+function resetLongTaskCounter() { /* ... */ }
+function expectNoLongTask() { /* ... */ }
 ```
 
 ```jsx
@@ -974,14 +974,11 @@ describe('No long tasks', () => {
   });
 });
 
-function expectNoLongTask(kind, count) {
-  cy.window().should((window) => {
-    const observedCount = window.longTasks.length;
-    expect(observedCount).to.be.eq(0);
-  });
-}
+function expectNoLongTask() { /* ... */ }
 ```
 ````
+
+</Transform>
 
 ---
 layout: cover
