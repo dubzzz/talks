@@ -148,9 +148,6 @@ background: https://www.margeride-en-gevaudan.com/wp-content/uploads/2020/01/JSC
     style="height: 31px; box-shadow: none"
   />
 </div>
-<div style="opacity: 0.7">
- <a href="https://engineering.pigment.com/" target="_blank">engineering.pigment.com</a>
-</div>
 
 <div style="margin-top: 24px"></div>
 <div style="display: flex; gap: 8px; color: #ffffff; vertical-align: middle; opacity: 0.9">
