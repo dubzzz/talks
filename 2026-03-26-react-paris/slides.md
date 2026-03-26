@@ -52,7 +52,7 @@ favicon: "https://cdn.prod.website-files.com/6605b12132f6a8b5d23896bd/66d9efed1b
   <div class="quote-author">Ko-Hsin Liang — 500-repo static analysis study, Feb 2026</div>
   <blockquote><b>86% of repositories</b> have at least one missing-cleanup pattern — each leaking ~8 KB per navigation cycle, compounding silently in production</blockquote>
   <div class="quote-source">
-    <a href="https://stackinsight.dev/blog/frontend-memory-leaks-500-repos" target="_blank" rel="noopener noreferrer">stackinsight.dev</a>
+    <a href="https://stackinsight.dev/blog/memory-leak-empirical-study/" target="_blank" rel="noopener noreferrer">stackinsight.dev</a>
   </div>
 </div>
 
