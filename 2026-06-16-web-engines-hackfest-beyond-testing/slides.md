@@ -236,4 +236,209 @@ layout: fact
 
 ### Properties over Isolated Cases
 
+---
+layout: fact
+---
 
+<div style="text-align: left">
+<div class="font-mono text-lg leading-relaxed">
+<span class="text-gray-600">for all (x, y, ...)</span>
+<v-click><div class="pl-6 text-blue-600">generate random inputs based on specified generators</div></v-click>
+<span class="text-gray-600">such that precondition(x, y, ...) holds</span>
+<v-click><div class="pl-6 text-yellow-600">check preconditions — failure? go back to previous</div></v-click>
+<span class="text-gray-600">property(x, y, ...) is true</span>
+<v-click><div class="pl-6 text-green-600">run the test — failure? shrink</div></v-click>
+</div>
+</div>
+
+<v-click>
+
+<div class="mt-8 text-2xl text-center">🔁 Run it 100 times 🔁</div>
+
+</v-click>
+
+---
+layout: fact
+---
+
+### Back to <code>isSubstring</code>
+
+---
+layout: fact
+---
+
+<div style="text-align: left">
+<div class="font-mono text-lg leading-relaxed">
+<span class="text-gray-600">for all <b>(x, y, ...)</b></span>
+<br/><span class="text-gray-600">such that <b>precondition(x, y, ...)</b> holds</span>
+<br/><span class="text-gray-600"><b>property(x, y, ...)</b> is true</span>
+</div>
+</div>
+
+<div style="text-align: right">
+<div class="font-mono text-lg leading-relaxed">
+<span class="text-gray-600">for all <b>a, b, c strings</b></span>
+<br/><span class="text-gray-600"><b>b</b> is a substring of <b>a + b + c</b></span>
+</div>
+</div>
+
+
+---
+layout: fact
+---
+
+### Our tests today rewritten
+
+<div style="text-align: left">
+
+````md magic-move {lines: true}
+```ts
+import { expect, describe, it } from 'vitest'
+import { isSubstring } from './isSubstring.js'
+
+describe('isSubstring', () => {
+  it('should find "niddle" inside the text', () => {
+    // Arrange
+    const pattern = `niddle`
+    const text = `text with niddle into it!`
+
+    // Act
+    const out = isSubstring(pattern, text)
+
+    // Assert
+    expect(out).toBe(true)
+  })
+})
+```
+
+```ts
+import { expect, describe, it } from 'vitest'
+import { isSubstring } from './isSubstring.js'
+
+describe('isSubstring', () => {
+  it('should find "niddle" inside the text', () => {
+    // Arrange
+    const pattern = `niddle`
+    const text = `text with ${pattern} into it!`
+
+    // Act
+    const out = isSubstring(pattern, text)
+
+    // Assert
+    expect(out).toBe(true)
+  })
+})
+```
+
+```ts
+import { expect, describe, it } from 'vitest'
+import { isSubstring } from './isSubstring.js'
+
+describe('isSubstring', () => {
+  it('should find "niddle" inside the text', () => {
+    // Arrange
+    const pattern = `niddle`
+    const prefix = `text with `
+    const suffix = ` into it!`
+    const text = `${prefix}${pattern}${suffix}`
+
+    // Act
+    const out = isSubstring(pattern, text)
+
+    // Assert
+    expect(out).toBe(true)
+  })
+})
+```
+
+```ts
+import * as fc from "fast-check"
+import { expect, describe, it } from 'vitest'
+import { isSubstring } from './isSubstring.js'
+
+describe('isSubstring', () => {
+  it('should find <pattern> inside the <prefix><pattern><suffix>', () => {
+    fc.assert(
+      fc.property(fc.string(), fc.string(), fc.string(), (pattern, prefix, suffix) => {
+        // Arrange
+        const text = `${prefix}${pattern}${suffix}`
+
+        // Act
+        const out = isSubstring(pattern, text)
+
+        // Assert
+        expect(out).toBe(true)
+      })
+    )
+  })
+})
+```
+````
+
+</div>
+
+
+---
+layout: fact
+---
+
+### <code>fast-check</code> unpacked
+
+
+<div style="text-align: left">
+
+````md magic-move {lines: true}
+```ts
+import * as fc from "fast-check"
+import { expect, describe, it } from 'vitest'
+import { isSubstring } from './isSubstring.js'
+
+describe('isSubstring', () => {
+  it('should find <pattern> inside the <prefix><pattern><suffix>', () => {
+    fc.assert(
+      fc.property(fc.string(), fc.string(), fc.string(), (pattern, prefix, suffix) => {
+        // Arrange
+        const text = `${prefix}${pattern}${suffix}`
+
+        // Act
+        const out = isSubstring(pattern, text)
+
+        // Assert
+        expect(out).toBe(true)
+      })
+    )
+  })
+})
+```
+
+```ts
+fc.assert(
+  fc.property(fc.string(), fc.string(), fc.string(), (pattern, prefix, suffix) => {
+    // Arrange
+    const text = `${prefix}${pattern}${suffix}`
+
+    // Act
+    const out = isSubstring(pattern, text)
+
+     // Assert
+     expect(out).toBe(true)
+  })
+)
+```
+
+```ts
+fc.assert(
+  fc.property(...arbitraries, (...generatedValues) => {
+    // ...predicate code
+  })
+)
+```
+````
+
+</div>
+
+---
+layout: center
+---
+
+# 👋 Done with the quick introduction/demo!
