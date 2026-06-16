@@ -441,4 +441,4 @@ fc.assert(
 layout: center
 ---
 
-# 👋 Done with the quick introduction/demo!
+# 👋 Your turn now!
