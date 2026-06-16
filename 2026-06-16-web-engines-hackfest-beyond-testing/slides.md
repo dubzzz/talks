@@ -113,3 +113,127 @@ layout: fact
 ---
 
 ### Not enough
+
+---
+layout: center
+---
+
+## **What's missing?**
+
+---
+layout: fact
+---
+
+### Our tests today
+
+<div style="text-align: left">
+
+````md magic-move {lines: true}
+```ts
+import { expect, describe, it } from 'vitest'
+import { isSubstring } from './isSubstring.js'
+
+describe('isSubstring', () => {
+  // ...
+})
+```
+
+```ts
+import { expect, describe, it } from 'vitest'
+import { isSubstring } from './isSubstring.js'
+
+describe('isSubstring', () => {
+  it('should find "niddle" inside the text', () => {
+    // ...
+  })
+})
+```
+
+```ts
+import { expect, describe, it } from 'vitest'
+import { isSubstring } from './isSubstring.js'
+
+describe('isSubstring', () => {
+  it('should find "niddle" inside the text', () => {
+    // Arrange
+    const pattern = "niddle"
+    const text = "text with niddle into it!"
+
+    // Act
+    const out = isSubstring(pattern, text)
+
+    // Assert
+    expect(out).toBe(true)
+  })
+})
+```
+
+```ts
+import { expect, describe, it } from 'vitest'
+import { isSubstring } from './isSubstring.js'
+
+describe('isSubstring', () => {
+  it('should find "niddle" inside the text', () => {
+    // Arrange
+    const pattern = "niddle"
+    //              ^ ⚠️ Is it an hardcoded value?!!
+    const text = "text with niddle into it!"
+    //           ^ ⚠️ Is it an hardcoded value?!!
+
+    // Act
+    const out = isSubstring(pattern, text)
+
+    // Assert
+    expect(out).toBe(true)
+  })
+})
+```
+````
+
+</div>
+
+---
+layout: fact
+---
+
+### Limited scope of inputs covered
+
+---
+layout: center
+---
+
+## **Property-Based Testing**
+
+<br/>
+
+<v-click>
+
+> Going random*
+
+</v-click>
+
+<v-click>
+
+> *But in reproducible way
+
+</v-click>
+
+<v-click>
+
+> *New inputs at each run
+
+</v-click>
+
+<v-click>
+
+> *With shrinking in mind
+
+</v-click>
+
+---
+layout: fact
+---
+
+### Properties over Isolated Cases
+
+
