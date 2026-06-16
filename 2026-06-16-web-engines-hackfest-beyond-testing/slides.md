@@ -275,7 +275,7 @@ layout: fact
 </div>
 </div>
 
-<div style="text-align: right">
+<div style="text-align: right" v-click>
 <div class="font-mono text-lg leading-relaxed">
 <span class="text-gray-600">for all <b>a, b, c strings</b></span>
 <br/><span class="text-gray-600"><b>b</b> is a substring of <b>a + b + c</b></span>
