@@ -159,6 +159,39 @@ describe('isSubstring', () => {
     const pattern = "niddle"
     const text = "text with niddle into it!"
 
+    // ...
+  })
+})
+```
+
+```ts
+import { expect, describe, it } from 'vitest'
+import { isSubstring } from './isSubstring.js'
+
+describe('isSubstring', () => {
+  it('should find "niddle" inside the text', () => {
+    // Arrange
+    const pattern = "niddle"
+    const text = "text with niddle into it!"
+
+    // Act
+    const out = isSubstring(pattern, text)
+
+    // ...
+  })
+})
+```
+
+```ts
+import { expect, describe, it } from 'vitest'
+import { isSubstring } from './isSubstring.js'
+
+describe('isSubstring', () => {
+  it('should find "niddle" inside the text', () => {
+    // Arrange
+    const pattern = "niddle"
+    const text = "text with niddle into it!"
+
     // Act
     const out = isSubstring(pattern, text)
 
@@ -263,25 +296,6 @@ layout: fact
 
 ### Back to <code>isSubstring</code>
 
----
-layout: fact
----
-
-<div style="text-align: left">
-<div class="font-mono text-lg leading-relaxed">
-<span class="text-gray-600">for all <b>(x, y, ...)</b></span>
-<br/><span class="text-gray-600">such that <b>precondition(x, y, ...)</b> holds</span>
-<br/><span class="text-gray-600"><b>property(x, y, ...)</b> is true</span>
-</div>
-</div>
-
-<div style="text-align: right" v-click>
-<div class="font-mono text-lg leading-relaxed">
-<span class="text-gray-600">for all <b>a, b, c strings</b></span>
-<br/><span class="text-gray-600"><b>b</b> is a substring of <b>a + b + c</b></span>
-</div>
-</div>
-
 
 ---
 layout: fact
@@ -375,6 +389,25 @@ describe('isSubstring', () => {
 ```
 ````
 
+</div>
+
+---
+layout: fact
+---
+
+<div style="text-align: left">
+<div class="font-mono text-lg leading-relaxed">
+<span class="text-gray-600">for all <b>(x, y, ...)</b></span>
+<br/><span class="text-gray-600">such that <b>precondition(x, y, ...)</b> holds</span>
+<br/><span class="text-gray-600"><b>property(x, y, ...)</b> is true</span>
+</div>
+</div>
+
+<div style="text-align: right" v-click>
+<div class="font-mono text-lg leading-relaxed">
+<span class="text-gray-600">for all <b>a, b, c strings</b></span>
+<br/><span class="text-gray-600"><b>b</b> is a substring of <b>a + b + c</b></span>
+</div>
 </div>
 
 
